@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://raw.githubusercontent.com/h-ibaldo/Raleway_Fixed_Numerals/master/css/rawline.css');
 
 * {
     margin: 0;
@@ -142,13 +143,6 @@ body {
     top: 0; 
 }
 
-.grid-2 { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 40px; 
-    padding: 100px 0; 
-}
-
 .text-block h2 {
     font-family: 'Mulish';
     font-size: 40px;
@@ -158,37 +152,78 @@ body {
     text-transform: uppercase;
     position: relative;
     top: 10px;
-
     margin-top: 15px;   
     margin-left: 35px;
 }
 
-.content-block p {
-    font-size: 18px;
-    font-weight: 300;
-    color: #FFFFFF;
-    margin-bottom: 30px;
-    max-width: 500px;
-    line-height: 1.6;
+
+.advantages-section .text-block h2 {
+    top: -40px; 
+    margin-top: 0;
 }
 
-.content-block ul {
-    list-style: none;
-    margin-bottom: 30px;
+.grid-2 { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 40px; 
+    padding: 100px 0; 
 }
 
-.content-block ul li {
-    margin-bottom: 10px;
-    font-weight: 300;
+.clinic-info .content-block p {
+    font-family: 'rawline', sans-serif; 
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+    color: #E5E5E5;
+    line-height: 140%;
+    letter-spacing: 0.4px;
+    max-width: 630px;    
+    margin-top: 30px;
+    margin-left: -135px;
+    margin-bottom: 40px; 
 }
 
-.image-gallery { display: flex; justify-content: center; gap: 30px; padding-bottom: 100px; }
-.img-left { width: 350px; margin-top: 100px; }
-.img-right { width: 750px; }
+.clinic-info .content-block .btn-outline {
+    margin-left: -135px; 
+    margin-top: 9px;
+    position: relative;
+    top: 0;
+}
+
+.image-gallery { 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start;
+    gap: 30px; 
+    padding-bottom: 100px; 
+}
+
+.img-left { 
+    width: 405px;
+    height: 557px;
+    margin-top: 300px; 
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.img-right { 
+    width: 980px;
+    height: 653px;
+    overflow: hidden; 
+    margin-left: 25px;
+    flex-shrink: 0;
+}
+
+.image-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .image-gallery-alt { display: flex; justify-content: center; gap: 40px; padding: 40px 50px 120px 50px; }
 .img-bottom-left { width: 650px; }
 .img-bottom-right { width: 450px; margin-top: 180px; }
-img { width: 100%; display: block; }
 
 .footer {
     background-color: rgba(255, 255, 255, 0.25);
@@ -213,7 +248,6 @@ img { width: 100%; display: block; }
 
 .footer-line {
     width: 100%;
-    border: none;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     margin: 20px 0;
 }
@@ -224,4 +258,3 @@ img { width: 100%; display: block; }
 
 .footer-socials { display: flex; gap: 20px; margin-top: 10px; }
 .footer-socials img { width: 24px; height: 24px; filter: brightness(0) invert(1); }
-
