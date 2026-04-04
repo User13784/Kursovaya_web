@@ -35,18 +35,15 @@ body, html {
     z-index: 2;
 }
 
-/* --- НАСТРОЙКА ФОТО CLOSE --- */
 .close-btn {
     background: none;
     border: none;
     cursor: pointer;
     position: absolute;
     
-    /* Координаты: меняй их, чтобы двигать кнопку */
     top: 130px;
     left: 22px;
     
-    /* Область клика кнопки */
     width: 40px; 
     height: 40px;
     
@@ -58,7 +55,6 @@ body, html {
 }
 
 .close-btn img {
-    /* Размер самого изображения close */
     width: 36px; 
     height: 36px;
     object-fit: contain;
@@ -67,7 +63,7 @@ body, html {
 
 .close-btn:hover img {
     opacity: 0.7;
-    transform: rotate(90deg); /* Эффект при наведении */
+    transform: rotate(90deg); 
 }
 
 .services-nav {
@@ -180,7 +176,6 @@ body, html {
     display: block;
 }
 
-/* ИНДИВИДУАЛЬНЫЕ СДВИГИ МЕНЮ */
 .menu-list li:nth-child(1) a { transform: translate(-61px, 89px); }
 .menu-list li:nth-child(2) a { transform: translate(-60px, 95px); }
 .menu-list li:nth-child(3) a { transform: translate(-60px, 100px); }
