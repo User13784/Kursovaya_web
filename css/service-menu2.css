@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://raw.githubusercontent.com/h-ibaldo/Raleway_Fixed_Numerals/master/css/rawline.css');
 
 * {
     margin: 0;
@@ -7,15 +8,19 @@
 }
 
 body {
-    font-family: 'Mulish', sans-serif;
+    font-family: 'Mulish', 'Helvetica', 'Arial', sans-serif;
     background-color: #2F353B;
+    color: #FFFFFF;
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
+/* --- HERO --- */
 .hero-diagnostics {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
-                      url('../assets/images/service-menu2-page/service-menu2.jpg'); 
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                      url('../assets/images/service-menu2-page/service-menu2.jpg');
     width: 100%;
-    height: 100vh; 
+    height: 900px;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -25,35 +30,155 @@ body {
     position: relative;
 }
 
-.hero-content {
-    z-index: 2;
+.hero-content { 
+    position: relative; 
+    top: 48px; 
 }
 
-.hero-content h1 {
-    font-size: 64px;
-    font-weight: 300;
-    color: #FFFFFF;
-    letter-spacing: 2px;
-    margin-bottom: 40px;
+.hero-diagnostics h1 { 
+    font-size: 60px; 
+    font-weight: 300; 
+    margin-bottom: 78px; 
     text-transform: uppercase;
+    letter-spacing: 0px;
 }
 
 .btn-white {
     width: 317px;
     height: 57px;
+    border-radius: 30px; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    font-family: 'Mulish'; 
+    font-weight: 400;          
+    color: #777C88;            
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;               
     background-color: #FFFFFF;
-    color: #777C88;
-    border: none;
+    font-size: 18px;           
+    transition: 0.3s; 
+    text-decoration: none;
+    position: relative;
+    top: -43px; 
+}
+
+/* --- КОНТЕНТ --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    margin-bottom: 120px;
+}
+
+.info-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.info-text {
+    flex: 1;
+}
+
+.accent-line {
+    width: 80px;
+    height: 2px;
+    background-color: #A5C33C; 
+    margin-bottom: 30px;
+}
+
+.info-text p {
+    font-family: 'rawline', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    color: #E5E5E5;
+    line-height: 140%;
+}
+
+/* Специфические настройки для первого блока текста */
+.first-text-block {
+    position: relative;
+    top: -220px;
+    left: -8px;
+    flex: 2; /* Позволяет блоку расширяться */
+    max-width: 900px;
+}
+
+.first-text-block p {
+    margin-top: 5px;
+    margin-left: 185px;
+    letter-spacing: 0.36px;
+}
+
+/* Кнопка с обводкой */
+.btn-outline {
+    background: transparent;
+    border: 1.5px solid #FFFFFF;
+    color: #FFFFFF;
+    width: 317px;
+    height: 57px;
     border-radius: 30px;
-    font-family: 'Mulish', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
+    font-family: 'Mulish';
+    font-size: 16px;
+    transition: 0.3s;
 }
 
-.btn-white:hover {
-    opacity: 0.9;
+/* --- ИЗОБРАЖЕНИЯ --- */
+.info-image img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
+.side-img img {
+    width: 405px;
+    height: 557px;
+    object-fit: cover;
+    margin-top: 237px;
+    margin-left: -140px;
+}
+
+.full-width-section {
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    margin-bottom: 70px;
+}
+
+.full-width-section img {
+    width: 980px;
+    height: 653px;
+    object-fit: cover;
+    margin-left: 460px;
+    margin-top: -475px;
+}
+
+.double-img {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Список */
+.steps-list {
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.steps-list li {
+    font-family: 'rawline', sans-serif;
+    font-size: 17px;
+    margin-bottom: 12px;
+}
