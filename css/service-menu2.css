@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Mulish', sans-serif;
+    background-color: #2F353B;
+}
+
+.hero-diagnostics {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
+                      url('../assets/images/service-menu2-page/service-menu2.jpg'); 
+    width: 100%;
+    height: 100vh; 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content {
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 64px;
+    font-weight: 300;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+.btn-white {
+    width: 317px;
+    height: 57px;
+    background-color: #FFFFFF;
+    color: #777C88;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.btn-white:hover {
+    opacity: 0.9;
+}
+
