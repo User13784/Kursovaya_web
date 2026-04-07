@@ -121,6 +121,8 @@
     margin-bottom: 62px;
     color: #E5E5E5;
     line-height: 140%;
+    flex: 1;
+    transform: translate(-660px, 0);
 }
 
 .first-text-block {
@@ -161,7 +163,7 @@
     letter-spacing: 0px;
     transition: 0.3s;
     position: relative;
-    transform: translate(185px, -55px);
+    transform: translate(-620px, -115px);
     cursor: pointer;
 }
 
@@ -176,12 +178,15 @@
     display: block;
 }
 
+.side-img {
+    margin-top: 237px;  
+}
+
 .side-img img {
     width: 405px;
     height: 557px;
     object-fit: cover;
-    margin-top: 237px;
-    margin-left: -140px;
+position: relative;
 }
 
 .full-width-section {
@@ -216,3 +221,72 @@
     margin-bottom: 12px;
 }
 
+.info-row.reverse .info-image img {
+    width: 556px;
+    height: 489px;
+    object-fit: cover; 
+    display: block;
+    transform: translate(744px, -45px);
+}
+
+.diagnostic-intro {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 30px;
+    position: relative;
+    left: 40px;
+    top: 75px;
+    width: 110%;           
+    display: block;
+    letter-spacing: 0.4px;
+}
+
+.tomograph-text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #3a4249;
+    margin-bottom: 25px;
+    position: relative;
+    left: 40px;
+    top: 30px;
+    width: 120%;           
+    display: block;
+        letter-spacing: 0.2px;
+
+}
+
+.safety-text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #555e66;
+    line-height: 1.6;
+    position: relative;
+    left: 40px;
+    top: -18px;
+    width: 123%;           
+    display: block;
+            letter-spacing: 0.36px;
+
+}
+
+.diagnocam-text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #4a555e;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    position: relative;
+        left: 40px;
+    top: -62px;
+    width: 120%;           
+    display: block;
+    letter-spacing: 0.1px;
+}
+
+/* Первая полоса в reverse блоке */
+.info-row.reverse .info-text .accent-line:first-child {
+    position: relative;
+    left: -795px;
+    top: 15px;
+}
