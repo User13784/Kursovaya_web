@@ -190,7 +190,6 @@ body {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 8px;
 }
 
 .side-img img {
@@ -245,27 +244,169 @@ body {
     font-weight: 400;
     color: #2F353B;
     margin-bottom: 20px;
+        position: relative;
+    top: 44px;
+    left: 14px;
+    letter-spacing: 0px;
+        width: 700px;       
+    max-width: 120%;        
+    min-width: 300px;  
+    line-height: 1.4;    
 }
 
 .tomograph-text {
     font-size: 20px;
     font-weight: 400;
-    color: #3a4249;
+    color: #2F353B;
     margin-bottom: 20px;
+        position: relative;
+    top: 40px;
+    left: 14px;
+    letter-spacing: 0px;
+        width: 700px;      
+    max-width: 120%;     
+    min-width: 300px;  
+    line-height: 1.4; 
 }
 
 .safety-text {
-    font-size: 20px;
+      font-size: 20px;
     font-weight: 400;
-    color: #555e66;
-    line-height: 1.6;
+    color: #2F353B;
     margin-bottom: 20px;
+        position: relative;
+    top: 36px;
+    left: 14px;
+    letter-spacing: 0px;
+        width: 750px;           
+    max-width: 126%;        
+    min-width: 300px;  
+    line-height: 1.4; 
 }
 
 .diagnocam-text {
+     font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+        position: relative;
+    top: 32px;
+    left: 14px;
+    letter-spacing: 0px;
+        width: 750px;          
+    max-width: 126%;        
+    min-width: 300px;  
+    line-height: 1.4;
+}
+
+.diagnost-btn {
+    position: relative;
+    top: 34px;       
+    left: 15px;      
+}
+
+.white-bg-section .info-row.reverse {
+    flex-direction: row;  
+}
+
+.white-bg-section .info-row .info-image img {
+    width: 556px;
+    height: 489px;
+    object-fit: cover;  
+      position: relative;
+    right: -140px;      
+    top: 30px;       
+    border-radius: 0;  
+}
+
+.white-bg-section .info-text .accent-line:first-child {
+    position: relative;
+    top: 75px;
+    left: -143px;
+}
+
+.specialists-line {
+    position: relative;
+    top: -40px;     
+    left: -30px;    
+}
+
+.specialists-text {
     font-size: 20px;
     font-weight: 400;
-    color: #4a555e;
-    line-height: 1.5;
+    color: #2F353B;
     margin-bottom: 20px;
+        position: relative;
+    top: -140px;
+    left: -140px;
+    letter-spacing: 0px;
+        width: 750px;           
+    max-width: 126%;       
+    min-width: 300px;  
+    line-height: 1.4;
+}
+
+.team-text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+        position: relative;
+    top: -142px;
+    left: -142px;
+    letter-spacing: 0px;
+        width: 750px;          
+    max-width: 126%;        
+    min-width: 300px;  
+    line-height: 1.4;
+}
+
+.white-bg-section .info-row .info-image .specialists-img {
+    width: 980px;
+    height: 654px;
+    object-fit: cover;
+    position: relative;
+    right: 140px;      
+    top: 330px;         
+    border-radius: 0;   
+}
+
+.specialists-text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    top: -778px;
+    left: 490px;
+    letter-spacing: 0px;
+    width: 700px;
+    max-width: 100%;
+    min-width: 300px;
+    line-height: 1.4;
+}
+
+.team-text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    top: -781px;
+    left: 493px;
+    letter-spacing: 0px;
+    width: 600px;
+    max-width: 100%;
+    min-width: 300px;
+    line-height: 1.4;
+}
+
+.white-bg-section .double-img .microscope-img {
+    width: 405px !important;
+    height: 557px !important;
+    object-fit: cover ;
+    position: relative;
+    right: -290px !important;      
+    top: -610px !important;        
+    border-radius: 0;  
 }
