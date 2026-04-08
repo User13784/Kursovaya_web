@@ -233,10 +233,7 @@
     gap: 30px;
 }
 
-.steps-list {
-    margin-left: 20px;
-    margin-bottom: 30px;
-}
+
 
 
 
@@ -341,30 +338,15 @@
 }
 
 
-.team-text {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-        position: relative;
-    top: -142px;
-    left: -142px;
-    letter-spacing: 0px;
-        width: 750px;          
-    max-width: 126%;        
-    min-width: 300px;  
-    line-height: 1.4;
-    font-family: 'rawline';
 
-}
 
 .white-bg-section .info-row .info-image .specialists-img {
-    width: 980px;
-    height: 654px;
+    width: 873px;
+    height: 583px;
     object-fit: cover;
     position: relative;
-    right: 140px;      
-    top: 330px;         
+    right: -427px;      
+    top: -311px;         
     border-radius: 0;   
 }
 
@@ -391,10 +373,10 @@
     color: #2F353B;
     margin-bottom: 20px;
     position: relative;
-    top: -782px;
-    left: 495px;
+    top: -386px;
+    left: 18px;
     letter-spacing: 0px;
-    width: 600px;
+    width: 650px;
     max-width: 100%;
     min-width: 300px;
     line-height: 1.4;
@@ -436,102 +418,48 @@
     color: #2F353B;
     margin-bottom: 20px;
     position: relative;
-    left: 495px;
+    left: 15px;
     letter-spacing: 0px;
     width: 700px;
     max-width: 120%;
     min-width: 300px;
     line-height: 1.4;
     font-family: 'rawline';
-    transform: translateY(-218px);
+    transform: translateY(-270px);
+}
+
+.steps-list {
+    margin-left: 20px;
+    margin-bottom: 30px;
+    padding: 0; 
 }
 
 
 
-.step-1 {
+.steps-list li {
     font-size: 20px;
     font-weight: 400;
     color: #2F353B;
     margin-bottom: 20px;
     position: relative;
     left: 504px;
-    letter-spacing: 0px;
-    width: 700px;
-    max-width: 120%;
-    min-width: 300px;
+    width: 630px;
     line-height: 1.4;
     font-family: 'rawline';
-    transform: translateY(-220px);
 }
 
-.step-2 {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    left: 504px;
-    letter-spacing: 0px;
-    width: 700px;
-    max-width: 120%;
-    min-width: 300px;
-    line-height: 1.4;
-    font-family: 'rawline';
-    transform: translateY(-225px);
-}
+.steps-list li:nth-child(1) { transform: translate(-480px, -274px); }  
+.steps-list li:nth-child(2) { transform: translate(-480px, -293px); }
+.steps-list li:nth-child(3) { transform: translate(-480px, -314px); }
+.steps-list li:nth-child(4) { transform: translate(-480px, -333px); }
+.steps-list li:nth-child(5) { transform: translate(-480px, -354px); }
+.steps-list li:nth-child(6) { transform: translate(-480px, -373px); }
 
-.step-3 {
-     font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    left: 504px;
-    letter-spacing: 0px;
-    width: 700px;
-    max-width: 120%;
-    min-width: 300px;
-    line-height: 1.4;
-    font-family: 'rawline';
-    transform: translateY(-229px);
-}
-
-.step-4 {
-     font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    left: 504px;
-    letter-spacing: 0px;
-    width: 700px;
-    max-width: 120%;
-    min-width: 300px;
-    line-height: 1.4;
-    font-family: 'rawline';
-    transform: translateY(-232px);
-}
-
-.step-5 {
-     font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    left: 504px;
-    letter-spacing: 0px;
-    width: 700px;
-    max-width: 120%;
-    min-width: 300px;
-    line-height: 1.4;
-    font-family: 'rawline';
-    transform: translateY(-237px);
-}
 
 .steps-btn {
     position: relative;
-    top: -245px;        
-    left: 495px;       
+    top: -385px;        
+    left: 17px;       
 }
 
 .team-img {
@@ -572,3 +500,4 @@ transform: translateY(-430px);
 .tomograph-row .info-image {
     order: 1;  
 }
+
