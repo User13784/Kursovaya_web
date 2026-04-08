@@ -85,7 +85,9 @@
     margin-top: -205px;   
     position: relative;
     z-index: 1;
-     padding-bottom: 417px;  
+     padding-bottom: 0px;  
+         margin-bottom: -57px;   
+
 }
 
 .diagnosis-text {
@@ -531,7 +533,33 @@
 
 .steps-btn {
     position: relative;
-    top: -100px;        
-    left: 500px;       
+    top: -245px;        
+    left: 495px;       
 }
 
+.team-img {
+    width: 556px;       
+    height: 489px;       
+    object-fit: cover;   
+    position: relative;
+    left: -745px;         
+transform: translateY(-430px);
+}
+
+#footer-placeholder {
+    margin-top: -505px;   
+    position: relative;
+    z-index: 2;
+}
+
+.specialists-line {
+    position: relative;
+    top: -745px !important;     
+    left: 1213px !important;      
+}
+
+.steps-accent {
+    position: relative;
+    top: -182px !important;
+    left: 1213px !important;
+}
