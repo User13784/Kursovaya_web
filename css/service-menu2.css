@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
-@import url('https://raw.githubusercontent.com/h-ibaldo/Raleway_Fixed_Numerals/master/css/rawline.css');
+@font-face {
+    font-family: 'rawline';
+    src: url('../fonts/rawline-400.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
 * {
     margin: 0;
@@ -7,9 +13,7 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'rawline', 'Mulish', sans-serif;
-}
+
 
 .hero-diagnostics {
     background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
@@ -86,19 +90,21 @@ body {
 
 .diagnosis-text {
     position: relative;
-    top: -110px;
-    left: -100px;
+    top: -111px;
+    left: -99px;
     font-size: 20px;       
     max-width: 730px;       
     width: 120%;            
     line-height: 1.4;       
     font-weight: 400;
     letter-spacing: 0px;
+        font-family: 'rawline';
+
 }
 
 .first-text-block .btn-outline {
     position: relative;
-    top: -90px;     
+    top: -88px;     
     left: -100px;     
 }
 
@@ -109,7 +115,7 @@ body {
 }
 
 .white-bg-section .info-text p,
-.white-bg-section .steps-list li {
+.white-bg-section {
     color: #2F353B;
 }
 
@@ -233,11 +239,7 @@ body {
     margin-bottom: 30px;
 }
 
-.steps-list li {
-    font-family: 'rawline', sans-serif;
-    font-size: 17px;
-    margin-bottom: 12px;
-}
+
 
 .diagnostic-intro {
     font-size: 20px;
@@ -246,12 +248,14 @@ body {
     margin-bottom: 20px;
         position: relative;
     top: 44px;
-    left: 14px;
+    left: 15px;
     letter-spacing: 0px;
         width: 700px;       
     max-width: 120%;        
     min-width: 300px;  
     line-height: 1.4;    
+    font-family: 'rawline';
+
 }
 
 .tomograph-text {
@@ -261,12 +265,14 @@ body {
     margin-bottom: 20px;
         position: relative;
     top: 40px;
-    left: 14px;
+    left: 17px;
     letter-spacing: 0px;
         width: 700px;      
     max-width: 120%;     
     min-width: 300px;  
     line-height: 1.4; 
+    font-family: 'rawline';
+
 }
 
 .safety-text {
@@ -276,12 +282,14 @@ body {
     margin-bottom: 20px;
         position: relative;
     top: 36px;
-    left: 14px;
+    left: 15px;
     letter-spacing: 0px;
-        width: 750px;           
+        width: 650px;           
     max-width: 126%;        
     min-width: 300px;  
     line-height: 1.4; 
+    font-family: 'rawline';
+
 }
 
 .diagnocam-text {
@@ -291,12 +299,14 @@ body {
     margin-bottom: 20px;
         position: relative;
     top: 32px;
-    left: 14px;
+    left: 17px;
     letter-spacing: 0px;
         width: 750px;          
     max-width: 126%;        
     min-width: 300px;  
     line-height: 1.4;
+    font-family: 'rawline';
+
 }
 
 .diagnost-btn {
@@ -331,20 +341,6 @@ body {
     left: -30px;    
 }
 
-.specialists-text {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-        position: relative;
-    top: -140px;
-    left: -140px;
-    letter-spacing: 0px;
-        width: 750px;           
-    max-width: 126%;       
-    min-width: 300px;  
-    line-height: 1.4;
-}
 
 .team-text {
     font-size: 20px;
@@ -359,6 +355,8 @@ body {
     max-width: 126%;        
     min-width: 300px;  
     line-height: 1.4;
+    font-family: 'rawline';
+
 }
 
 .white-bg-section .info-row .info-image .specialists-img {
@@ -378,12 +376,14 @@ body {
     margin-bottom: 20px;
     position: relative;
     top: -778px;
-    left: 490px;
+    left: 495px;
     letter-spacing: 0px;
     width: 700px;
     max-width: 100%;
     min-width: 300px;
     line-height: 1.4;
+    font-family: 'rawline';
+
 }
 
 .team-text {
@@ -392,13 +392,15 @@ body {
     color: #2F353B;
     margin-bottom: 20px;
     position: relative;
-    top: -781px;
-    left: 493px;
+    top: -782px;
+    left: 495px;
     letter-spacing: 0px;
     width: 600px;
     max-width: 100%;
     min-width: 300px;
     line-height: 1.4;
+    font-family: 'rawline';
+
 }
 
 .white-bg-section .double-img .microscope-img {
@@ -410,3 +412,126 @@ body {
     top: -610px !important;        
     border-radius: 0;  
 }
+
+
+
+.steps-description {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    left: 495px;
+    letter-spacing: 0px;
+    width: 700px;
+    max-width: 120%;
+    min-width: 300px;
+    line-height: 1.4;
+    font-family: 'rawline';
+    transform: translateY(-213px);  
+}
+
+.steps-title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    left: 495px;
+    letter-spacing: 0px;
+    width: 700px;
+    max-width: 120%;
+    min-width: 300px;
+    line-height: 1.4;
+    font-family: 'rawline';
+    transform: translateY(-218px);
+}
+
+
+
+.step-1 {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    left: 504px;
+    letter-spacing: 0px;
+    width: 700px;
+    max-width: 120%;
+    min-width: 300px;
+    line-height: 1.4;
+    font-family: 'rawline';
+    transform: translateY(-220px);
+}
+
+.step-2 {
+    font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    left: 504px;
+    letter-spacing: 0px;
+    width: 700px;
+    max-width: 120%;
+    min-width: 300px;
+    line-height: 1.4;
+    font-family: 'rawline';
+    transform: translateY(-225px);
+}
+
+.step-3 {
+     font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    left: 504px;
+    letter-spacing: 0px;
+    width: 700px;
+    max-width: 120%;
+    min-width: 300px;
+    line-height: 1.4;
+    font-family: 'rawline';
+    transform: translateY(-229px);
+}
+
+.step-4 {
+     font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    left: 504px;
+    letter-spacing: 0px;
+    width: 700px;
+    max-width: 120%;
+    min-width: 300px;
+    line-height: 1.4;
+    font-family: 'rawline';
+    transform: translateY(-232px);
+}
+
+.step-5 {
+     font-size: 20px;
+    font-weight: 400;
+    color: #2F353B;
+    margin-bottom: 20px;
+    position: relative;
+    left: 504px;
+    letter-spacing: 0px;
+    width: 700px;
+    max-width: 120%;
+    min-width: 300px;
+    line-height: 1.4;
+    font-family: 'rawline';
+    transform: translateY(-237px);
+}
+
+.steps-btn {
+    position: relative;
+    top: -100px;        
+    left: 500px;       
+}
+
