@@ -1,1 +1,348 @@
-g
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+@font-face {
+    font-family: 'rawline';
+    src: url('../fonts/rawline-400.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden; 
+}
+
+.hero-diagnostics {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                      url('../assets/images/service-menu3-page/service-menu2.jpg');
+    width: 100%;
+    height: 900px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content { position: relative; top: 27px; }
+
+.hero-diagnostics h1 { 
+    font-size: 60px; 
+    font-weight: 300; 
+    margin-bottom: 38px; 
+    text-transform: uppercase;
+    color: white;
+}
+
+.btn-white {
+    width: 317px;
+    height: 57px;
+    border-radius: 30px; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    font-family: 'Mulish'; 
+    color: #777C88; 
+    background-color: #FFFFFF;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    font-size: 18px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.diagnostics-wrapper {
+    background-color: #2F353B;
+    padding-bottom: 350px; 
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+.info-row {
+    display: flex;
+    gap: 80px;
+    margin-bottom: 120px;
+}
+
+.side-img img {
+    width: 559px;
+    height: 769px;
+    object-fit: cover;
+}
+
+
+
+.full-width-section img {
+    width: 830px;
+    height: 553px;
+    object-fit: cover;
+
+    margin-top: -482px;  
+
+    margin-left: -140px;  
+    
+    position: relative;
+    right: auto;
+    top: auto;
+}
+
+.white-bg-section {
+    background-color: #FFFFFF;
+    color: #2F353B;
+    margin-top: -280px; 
+    position: relative;
+    z-index: 5;
+    padding-top: 100px;
+}
+
+.white-bg-section .info-row .info-image .tomograph-img {
+    width: 535px;
+    height: 736px;
+    object-fit: cover;
+}
+
+.white-bg-section .info-row .info-image .specialists-img {
+    width: 873px;
+    height: 583px;
+    object-fit: cover;
+}
+
+.white-bg-section .double-img .microscope-img {
+    width: 535px !important;
+    height: 736px !important;
+    object-fit: cover;
+    transform: translate(140px, -419px);
+}
+
+.team-img {
+    width: 849px !important;
+    height: 746px !important;
+    object-fit: cover;
+    transform: translate(174px, -157px);
+}
+
+.diagnosis-text, .tomograph-text, .safety-text, .diagnocam-text, 
+.specialists-text, .team-text, .steps-title, .steps-description {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    font-family: 'rawline';
+    margin-bottom: 20px;
+    margin-left: 10px;
+    letter-spacing: 0px;
+     width: 650px;           
+    max-width: 100%; 
+    margin-top: -60px; 
+    margin-right: 16px;
+}
+
+.accent-line {
+    width: 88px;
+    height: 4px;
+    background-color: #FF9825;
+    margin-bottom: 30px;
+    transform: translate(-140px, 74px);
+}
+
+
+.steps-list {
+    list-style-position: outside !important;
+    list-style-type: disc !important;
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.steps-list li {
+    
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-family: 'rawline';
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1.5px solid #2F353B;
+    color: #2F353B;
+    width: 317px;
+    height: 57px;
+    border-radius: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: 'Mulish';
+    font-size: 18px;
+    transition: 0.3s;
+    cursor: pointer;
+    margin-top: 50px; 
+        margin-left: 15px;
+
+
+    position: relative;
+    top: 0;
+}
+
+.diagnostics-wrapper .btn-outline {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+
+.btn-outline:hover {
+    background-color: #2F353B;
+    color: #FFFFFF;
+}
+
+#footer-placeholder {
+    background: #fff; 
+    margin-top: -308px ; 
+    position: relative;
+    z-index: 100; 
+}
+
+.info-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.info-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.info-image.side-img {
+    flex: 1;
+    position: relative;
+    top: 0;
+    left: -12px;
+
+    margin-top: 125px;  
+    margin-left: -7px; 
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.safety-text {
+    margin-top: -3px !important; 
+    
+    display: block; 
+}
+
+.diagnost-btn {
+    margin-top: 21px !important;
+    margin-left: 10px !important;
+}
+
+.tomograph-accent {
+    transform: translate(730px, -25px) !important; 
+    background-color: #80315B !important;
+}
+
+.tomograph-image {
+    margin-top: -24px; 
+margin-right: 10px !important;    
+    position: relative;
+    z-index: 1;
+}
+
+.specialists-image {
+    margin-top: -395px !important; 
+
+    transform: translateX(426px); 
+    
+    margin-left: 0 !important;
+
+    position: relative;
+    z-index: 1; 
+}
+
+.specialists-text-block {
+
+
+    margin-left: -948px !important;
+    margin-top: 369px !important;
+
+    position: relative;
+    z-index: 15;
+}
+
+.specialists-text-block {
+    width: 630px !important; 
+    line-height: 1.4;
+
+    word-wrap: break-word;
+}
+
+.specialists-text-block .steps-title,
+.specialists-text-block .steps-list {
+    width: 100% !important;
+}
+
+.steps-list li:nth-child(1) {
+    transform: translate(40px, -6px) !important;
+}
+
+.steps-list li:nth-child(2) {
+    transform: translate(39px, -20px) !important;
+}
+
+.steps-list li:nth-child(3) {
+    transform: translate(39px, -33px) !important;
+}
+
+.steps-list li:nth-child(4) {
+    transform: translate(39px, -48px) !important;
+}
+
+.steps-list li:nth-child(5) {
+    transform: translate(39px, -65px) !important;
+}
+
+.steps-list li:nth-child(6) {
+    transform: translate(40px, -80px) !important;
+}
+
+.team-text {
+    transform: translate(2px, -33px) !important;
+    position: relative;
+    z-index: 10;
+}
+
+.steps-btn {
+    margin-top: -10px !important; 
+    transform: translateX(-4px); 
+    
+    position: relative;
+    z-index: 20;
+}
+
+.specialists-line {
+    transform: translate(-145px, -30px); 
+    
+    position: relative;
+    z-index: 20;
+}
+
+.white-bg-section .container {
+    padding-bottom: 65px !important; 
+}
+
+.first-text-block .diagnosis-text {
+    margin-top: 71px;
+    margin-left: 15px;
+}
