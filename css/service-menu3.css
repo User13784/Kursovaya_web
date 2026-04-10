@@ -157,11 +157,17 @@ body {
 
 
 .steps-list {
+    /* Возвращаем стандартные круглые точки */
+  /* Меняем inside на outside, чтобы точка была "снаружи" и ее можно было придвинуть */
+    list-style-position: outside !important;
+    list-style-type: disc !important;
     list-style: none;
     margin-bottom: 30px;
 }
 
 .steps-list li {
+    
+    /* Расстояние между точкой и текстом */
     font-size: 20px;
     margin-bottom: 15px;
     font-family: 'rawline';
@@ -257,10 +263,70 @@ margin-right: 10px !important;
 .specialists-image {
     margin-top: -395px !important; 
 
-
-    margin-left: 426px !important; 
+    transform: translateX(426px); 
+    
+    margin-left: 0 !important;
 
     position: relative;
     z-index: 1; 
 }
 
+.specialists-text-block {
+
+
+    margin-left: -948px !important;
+    margin-top: 369px !important;
+
+    position: relative;
+    z-index: 15;
+}
+
+.specialists-text-block {
+    width: 630px !important; 
+    line-height: 1.4;
+
+    word-wrap: break-word;
+}
+
+.specialists-text-block .steps-title,
+.specialists-text-block .steps-list {
+    width: 100% !important;
+}
+
+.steps-list li:nth-child(1) {
+    transform: translate(40px, -6px) !important;
+}
+
+.steps-list li:nth-child(2) {
+    transform: translate(39px, -20px) !important;
+}
+
+.steps-list li:nth-child(3) {
+    transform: translate(39px, -33px) !important;
+}
+
+.steps-list li:nth-child(4) {
+    transform: translate(39px, -48px) !important;
+}
+
+.steps-list li:nth-child(5) {
+    transform: translate(39px, -65px) !important;
+}
+
+.steps-list li:nth-child(6) {
+    transform: translate(40px, -80px) !important;
+}
+
+.team-text {
+    transform: translate(2px, -33px) !important;
+    position: relative;
+    z-index: 10;
+}
+
+.steps-btn {
+    margin-top: -10px !important; 
+    transform: translateX(-4px); 
+    
+    position: relative;
+    z-index: 20;
+}
