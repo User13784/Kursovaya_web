@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 @font-face {
     font-family: 'rawline';
     src: url('../fonts/rawline-400.ttf') format('truetype');
@@ -13,7 +14,9 @@
     box-sizing: border-box;
 }
 
-
+body {
+    overflow-x: hidden; 
+}
 
 .hero-diagnostics {
     background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
@@ -29,17 +32,13 @@
     position: relative;
 }
 
-.hero-content { 
-    position: relative; 
-    top: 48px; 
-}
+.hero-content { position: relative; top: 27px; }
 
 .hero-diagnostics h1 { 
     font-size: 60px; 
     font-weight: 300; 
-    margin-bottom: 78px; 
+    margin-bottom: 38px; 
     text-transform: uppercase;
-    letter-spacing: 0px;
     color: white;
 }
 
@@ -50,23 +49,20 @@
     cursor: pointer; 
     text-transform: uppercase; 
     font-family: 'Mulish'; 
-    font-weight: 400;           
-    color: #777C88;           
+    color: #777C88; 
+    background-color: #FFFFFF;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    border: none;               
-    background-color: #FFFFFF;
-    font-size: 18px;           
-    transition: 0.3s; 
+    border: none;
+    font-size: 18px;
+    transition: 0.3s;
     text-decoration: none;
-      position: relative;
-    top: -42px;  
 }
 
-.btn-white:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.02);
+.diagnostics-wrapper {
+    background-color: #2F353B;
+    padding-bottom: 350px; 
 }
 
 .container {
@@ -75,429 +71,196 @@
     padding: 80px 20px;
 }
 
-.diagnostics-wrapper {
-    background-color: #2F353B; 
-}
-
-.white-bg-section {
-    background-color: #FFFFFF;
-    color: #2F353B;
-    margin-top: -315px;   
-    position: relative;
-    z-index: 1;
-     padding-bottom: 0px;  
-         margin-bottom: -57px;   
-
-}
-
-.diagnosis-text {
-    position: relative;
-    top: -203px;
-    left: 16px;
-    font-size: 20px;       
-    max-width: 750px;       
-    width: 123%;            
-    line-height: 1.4;       
-    font-weight: 400;
-    letter-spacing: 0px;
-        font-family: 'rawline';
-
-}
-
-.first-text-block .btn-outline {
-    position: relative;
-    top: -153px;     
-    left: 15px;     
-}
-
-.first-text-block .accent-line {
-    position: relative;
-    top: -172px;      
-    left: -140px;     
-}
-
-.white-bg-section .info-text p,
-.white-bg-section {
-    color: #2F353B;
-}
-
-.white-bg-section .btn-outline {
-    border-color: #2F353B;
-    color: #2F353B;
-}
-
-.white-bg-section .btn-outline:hover {
-    background-color: #2F353B;
-    color: #FFFFFF;
-}
-
-.white-bg-section .accent-line {
-    background-color: #FF9825;
-}
-
 .info-row {
     display: flex;
-    align-items: center;
     gap: 80px;
     margin-bottom: 120px;
-    flex-wrap: wrap;
-}
-
-.info-row.reverse {
-    flex-direction: row-reverse;
-}
-
-.info-text {
-    flex: 1;
-    min-width: 280px;
-}
-
-.accent-line {
-    width: 88px;
-    height: 4px;
-    background-color: #FF9825; 
-    margin-bottom: 30px;
-}
-
-
-
-.white-bg-section .info-text p {
-    color: #2F353B;
-}
-
-.btn-outline {
-    background: transparent;
-    border: 1.5px solid #FFFFFF;
-    color: #FFFFFF;
-    width: 317px;
-    height: 57px;
-    border-radius: 30px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-family: 'Mulish';
-    font-size: 18px;
-    font-weight: 400;
-    transition: 0.3s;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-.btn-outline:hover {
-    background-color: #FFFFFF;
-    color: #2F353B;
-}
-
-.info-image {
-    flex: 1;
-}
-
-.info-image img {
-    width: 100%;
-    height: auto;
-    display: block;
 }
 
 .side-img img {
     width: 559px;
     height: 769px;
     object-fit: cover;
-    position: relative;
-    top: 125px;      
-    left: 140px;
 }
 
-.full-width-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-}
+
 
 .full-width-section img {
-    width: 830px;          
-    height: 553px;          
-    max-width: 100%;        
-    aspect-ratio: 830 / 553; 
+    width: 830px;
+    height: 553px;
     object-fit: cover;
+
+    margin-top: -482px;  
+
+    margin-left: -140px;  
+    
     position: relative;
-    right: 305px;    
-    top: -350px;      
+    right: auto;
+    top: auto;
 }
 
-.double-img {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-
-
-
-
-.diagnostic-intro {
-    font-size: 20px;
-    font-weight: 400;
+.white-bg-section {
+    background-color: #FFFFFF;
     color: #2F353B;
-    margin-bottom: 20px;
-        position: relative;
-    top: 44px;
-    left: 15px;
-    letter-spacing: 0px;
-        width: 700px;       
-    max-width: 120%;        
-    min-width: 300px;  
-    line-height: 1.4;    
-    font-family: 'rawline';
-
-}
-
-.tomograph-text {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-        position: relative;
-    top: -150px;
-    left: -128px;
-    letter-spacing: 0px;
-        width: 700px;      
-    max-width: 120%;     
-    min-width: 300px;  
-    line-height: 1.4; 
-    font-family: 'rawline';
-
-}
-
-.safety-text {
-      font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-        position: relative;
-    top: -155px;
-    left: -128px;
-    letter-spacing: 0px;
-        width: 650px;           
-    max-width: 126%;        
-    min-width: 300px;  
-    line-height: 1.4; 
-    font-family: 'rawline';
-
-}
-
-.diagnocam-text {
-     font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-        position: relative;
-    top: 32px;
-    left: 17px;
-    letter-spacing: 0px;
-        width: 750px;          
-    max-width: 126%;        
-    min-width: 300px;  
-    line-height: 1.4;
-    font-family: 'rawline';
-
-}
-
-.diagnost-btn {
+    margin-top: -280px; 
     position: relative;
-    top: -152px;       
-    left: -128px;      
+    z-index: 5;
+    padding-top: 100px;
 }
 
-.white-bg-section .info-row.reverse {
-    flex-direction: row;  
-}
-
-.white-bg-section .info-row .info-image img {
+.white-bg-section .info-row .info-image .tomograph-img {
     width: 535px;
     height: 736px;
-    object-fit: cover;  
-      position: relative;
-    right: 140px;      
-    top: 78px;       
-    border-radius: 0;  
+    object-fit: cover;
 }
-
-.white-bg-section .info-text .accent-line:first-child {
-    position: relative;
-    top: -120px;
-    left: 593px;
-}
-
-.specialists-line {
-    position: relative;
-    top: -40px;     
-    left: -30px;    
-}
-
-
-
 
 .white-bg-section .info-row .info-image .specialists-img {
     width: 873px;
     height: 583px;
     object-fit: cover;
-    position: relative;
-    right: -427px;      
-    top: -311px;         
-    border-radius: 0;   
-}
-
-.specialists-text {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    top: -778px;
-    left: 495px;
-    letter-spacing: 0px;
-    width: 700px;
-    max-width: 100%;
-    min-width: 300px;
-    line-height: 1.4;
-    font-family: 'rawline';
-
-}
-
-.team-text {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    top: -386px;
-    left: 18px;
-    letter-spacing: 0px;
-    width: 650px;
-    max-width: 100%;
-    min-width: 300px;
-    line-height: 1.4;
-    font-family: 'rawline';
-
 }
 
 .white-bg-section .double-img .microscope-img {
-    width: 405px !important;
-    height: 557px !important;
-    object-fit: cover ;
-    position: relative;
-    right: -290px !important;      
-    top: -610px !important;        
-    border-radius: 0;  
-}
-
-
-
-.steps-description {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    left: 495px;
-    letter-spacing: 0px;
-    width: 700px;
-    max-width: 120%;
-    min-width: 300px;
-    line-height: 1.4;
-    font-family: 'rawline';
-    transform: translateY(-213px);  
-}
-
-.steps-title {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    left: 15px;
-    letter-spacing: 0px;
-    width: 700px;
-    max-width: 120%;
-    min-width: 300px;
-    line-height: 1.4;
-    font-family: 'rawline';
-    transform: translateY(-270px);
-}
-
-.steps-list {
-    margin-left: 20px;
-    margin-bottom: 30px;
-    padding: 0; 
-}
-
-
-
-.steps-list li {
-    font-size: 20px;
-    font-weight: 400;
-    color: #2F353B;
-    margin-bottom: 20px;
-    position: relative;
-    left: 504px;
-    width: 630px;
-    line-height: 1.4;
-    font-family: 'rawline';
-}
-
-.steps-list li:nth-child(1) { transform: translate(-480px, -274px); }  
-.steps-list li:nth-child(2) { transform: translate(-480px, -293px); }
-.steps-list li:nth-child(3) { transform: translate(-480px, -314px); }
-.steps-list li:nth-child(4) { transform: translate(-480px, -333px); }
-.steps-list li:nth-child(5) { transform: translate(-480px, -354px); }
-.steps-list li:nth-child(6) { transform: translate(-480px, -373px); }
-
-
-.steps-btn {
-    position: relative;
-    top: -385px;        
-    left: 17px;       
+    width: 535px !important;
+    height: 736px !important;
+    object-fit: cover;
 }
 
 .team-img {
-    width: 556px;       
-    height: 489px;       
-    object-fit: cover;   
+    width: 849px !important;
+    height: 746px !important;
+    object-fit: cover;
+}
+
+.diagnosis-text, .tomograph-text, .safety-text, .diagnocam-text, 
+.specialists-text, .team-text, .steps-title, .steps-description {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    font-family: 'rawline';
+    margin-bottom: 20px;
+    margin-left: 10px;
+    letter-spacing: 0px;
+     width: 650px;           
+    max-width: 100%; 
+    margin-top: -60px; 
+    margin-right: 16px;
+}
+
+.accent-line {
+    width: 88px;
+    height: 4px;
+    background-color: #FF9825;
+    margin-bottom: 30px;
+    transform: translate(-140px, 74px);
+}
+
+
+.steps-list {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.steps-list li {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-family: 'rawline';
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1.5px solid #2F353B;
+    color: #2F353B;
+    width: 317px;
+    height: 57px;
+    border-radius: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: 'Mulish';
+    font-size: 18px;
+    transition: 0.3s;
+    cursor: pointer;
+    margin-top: 50px; 
+        margin-left: 15px;
+
+
     position: relative;
-    left: -745px;         
-transform: translateY(-430px);
+    top: 0;
+}
+
+.diagnostics-wrapper .btn-outline {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+
+.btn-outline:hover {
+    background-color: #2F353B;
+    color: #FFFFFF;
 }
 
 #footer-placeholder {
-    margin-top: -505px;   
+    margin-top: 0; 
     position: relative;
-    z-index: 2;
+    z-index: 10;
+    background: #fff; 
 }
 
-.specialists-line {
+.info-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.info-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.info-image.side-img {
+    flex: 1;
     position: relative;
-    top: -745px !important;     
-    left: 1213px !important;      
+    top: 0;
+    left: 0;
+
+    margin-top: 125px;  
+    margin-left: -7px; 
 }
 
-.steps-accent {
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
     position: relative;
-    top: -182px !important;
-    left: 1213px !important;
 }
 
-.tomograph-row {
-    flex-direction: row;  
+.safety-text {
+    margin-top: -3px !important; 
+    
+    display: block; 
 }
 
-.tomograph-row .info-text {
-    order: 2;  
+.diagnost-btn {
+    margin-top: 21px !important;
+    margin-left: 10px !important;
 }
 
-.tomograph-row .info-image {
-    order: 1;  
+.tomograph-accent {
+    transform: translate(730px, -25px) !important; 
+}
+
+.tomograph-image {
+    margin-top: -24px; 
+margin-right: 10px !important;    
+    position: relative;
+    z-index: 1;
+}
+
+.specialists-image {
+    margin-top: -395px !important; 
+
+
+    margin-left: 426px !important; 
+
+    position: relative;
+    z-index: 1; 
 }
 
