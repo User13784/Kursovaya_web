@@ -78,6 +78,7 @@ body {
     position: relative;
     z-index: 5;
     padding-top: 100px;
+    padding-bottom: 702px !important;
 }
 
 .white-bg-section .container {
@@ -117,7 +118,7 @@ body {
     object-fit: cover;
     position: relative !important;
     
-    transform: translate(765px, -225px) !important;
+    transform: translate(765px, -78px) !important;
 }
 
 .info-row {
@@ -190,7 +191,7 @@ body {
 
 #footer-placeholder {
     background: #fff; 
-    margin-top: -308px; 
+    margin-top: 508px; 
     position: relative;
     z-index: 100; 
 }
@@ -250,7 +251,7 @@ body {
 
     position: relative !important;
 
-    transform: translate(-30px, 328px) !important;
+    transform: translate(304px, 328px) !important;
 
     max-width: none !important;
     margin: 0 !important;
@@ -266,4 +267,71 @@ body {
     transform: translate(-30px, -188px) !important;
     letter-spacing: 0px;
     margin: 0 !important;
+}
+
+.specialists-text-block {
+    width: 550px !important; 
+
+    position: relative !important;
+    transform: translate(-600px, 440px) ;
+
+    display: block !important;
+}
+
+.specialists-text-block .safety-text:nth-of-type(2) {
+    position: relative !important;
+    transform: translate(0px, -15px) !important;
+
+    width: 650px !important;
+
+    margin-top: 30px !important;
+}
+.specialists-text-block .safety-text:nth-of-type(3) {
+    position: relative !important;
+    transform: translate(0px, -23px) !important;
+
+    width: 640px !important;
+
+    margin-top: 25px !important;
+    
+    display: block !important;
+}
+
+.specialists-text-block .steps-btn {
+    position: relative !important;
+
+    transform: translate(-0px, -2px) !important;
+
+    margin-top: 0 !important;
+    
+    z-index: 20;
+}
+
+.specialists-line {
+    position: relative;
+
+    transform: translate(-155px, 32px);
+
+    background-color: #98B25F; 
+}
+
+.white-bg-section .steps-row {
+    flex-direction: row !important;
+    
+    gap: 80px; 
+}
+
+.white-bg-section .double-img img {
+    width: 535px !important;
+    height: 736px !important;
+    object-fit: cover;
+    
+    transform: translate(-140px, 438px) !important;
+}
+
+.steps-text-block {
+    position: relative;
+    transform: translate(0, 100px) !important;
+    width: 100%;
+    max-width: 600px;
 }
