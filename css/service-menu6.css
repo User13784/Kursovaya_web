@@ -93,20 +93,20 @@ body {
 }
 
 .side-img img {
-    width: 405px; 
-    height: 557px;
-    object-fit: cover;
+    width: 559px; 
+    height: 769px;
+    object-fit: cover; 
 }
 
 .full-width-section img {
-    width: 983px ;  
-    height: 653px ; 
+    width: 830px ;  
+    height: 553px ; 
     
     object-fit: cover;
     
 
     margin-top: -482px;  
-    margin-left: 320px;   
+    margin-left: -140px;   
     position: relative;
     right: auto;
     top: auto;
@@ -115,12 +115,12 @@ body {
 
 
 .white-bg-section .specialists-img {
-    width: 535px;
-    height: 736px;
+    width: 873px;
+    height: 583px;
     object-fit: cover;
     position: relative;
     
-    transform: translate(-140px, -358px);
+    transform: translate(427px, -418px);
 }
 
 .info-row {
@@ -138,8 +138,8 @@ body {
     font-size: 20px;
     line-height: 1.4;
     margin-bottom: 20px;
-    max-width: 650px;
-    width: 100%;
+    max-width: 850px;
+    width: 210%;
 }
 
 .accent-line {
@@ -150,10 +150,10 @@ body {
 }
 
 .tomograph-accent {
-    background-color: #0500AB;
+    background-color: #FF9825;
     position: relative; 
 
-    transform: translate(-650px, -25px) ;
+    transform: translate(705px, -25px) ;
 
 }
 
@@ -193,7 +193,7 @@ body {
 
 #footer-placeholder {
     background: #fff; 
-    margin-top: -545px; 
+    margin-top: 245px; 
     position: relative;
     z-index: 100; 
 }
@@ -201,9 +201,9 @@ body {
 .info-image.side-img {
     flex: 1;
     position: relative;
-    margin-top: 238px;  
+    margin-top: 125px;  
     
-    margin-left: -860px; 
+    margin-left: 345px; 
 }
 
 .first-text-block {
@@ -213,8 +213,7 @@ body {
 }
 
 .first-btn {
-    transform: translateX(1px);
-    transform: translateY(28px);
+    transform: translateY(3px);
     
     position: relative;
     
@@ -224,8 +223,8 @@ body {
 .first-accent {
     position: relative; 
 
-    transform: translate(693px, 31px) ;
-    background-color: #1D1B5B ;
+    transform: translate(-160px, 32px) ;
+    background-color: #FF9825 ;
 }
 
 .tomograph-text-block .steps-title {
@@ -246,14 +245,14 @@ body {
 }
 
 .white-bg-section .tomograph-img {
-    width: 849px;
-    height: 746px;
+    width: 535px;
+    height: 736px;
 
     object-fit: cover;
 
     position: relative;
 
-    transform: translate(870px, 245px);
+    transform: translate(-35px, -23px);
 
     max-width: none ;
     margin: 0;
@@ -266,14 +265,14 @@ body {
     position: relative;
     
   
-    transform: translate(-495px, -58px);
+    transform: translate(-832px, -215px);
     letter-spacing: 0px;
     margin: 0;
 }
 
 .diagnost-btn {
     position: relative;
-    transform: translate(-495px, -14px); 
+    transform: translate(-18px, -35px); 
 }
 
 .specialists-text-block {
@@ -317,9 +316,9 @@ body {
 .specialists-line {
     position: relative;
 
-    transform: translate(-653px, -25px);
+    transform: translate(-993px, -185px);
 
-    background-color: #0500AB; 
+    background-color: #FF9825; 
 }
 
 .white-bg-section .steps-row {
