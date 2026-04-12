@@ -121,7 +121,7 @@ body {
     object-fit: cover;
     position: relative;
     
-    transform: translate(765px, -78px);
+    transform: translate(-140px, -265px);
 }
 
 .info-row {
@@ -151,7 +151,7 @@ body {
 }
 
 .tomograph-accent {
-    background-color: #98B25F;
+    background-color: #0500AB;
     position: relative; 
 
     transform: translate(-650px, -25px) ;
@@ -194,7 +194,7 @@ body {
 
 #footer-placeholder {
     background: #fff; 
-    margin-top: -60px; 
+    margin-top: -474px; 
     position: relative;
     z-index: 100; 
 }
@@ -247,14 +247,14 @@ body {
 }
 
 .white-bg-section .tomograph-img {
-    width: 873px;
-    height: 583px;
+    width: 980px;
+    height: 653px;
 
     object-fit: cover;
 
     position: relative;
 
-    transform: translate(304px, 328px);
+    transform: translate(1000px, 338px);
 
     max-width: none ;
     margin: 0;
@@ -267,23 +267,28 @@ body {
     position: relative;
     
   
-    transform: translate(-30px, -188px);
+    transform: translate(-495px, -58px);
     letter-spacing: 0px;
     margin: 0;
 }
 
+.diagnost-btn {
+    position: relative;
+    transform: translate(-495px, -14px); 
+}
+
 .specialists-text-block {
-    width: 550px; 
+    width: 650px; 
 
     position: relative;
-    transform: translate(-600px, 440px) ;
+    transform: translate(-104px, 595px) ;
 
     display: block;
 }
 
 .specialists-text-block .safety-text:nth-of-type(2) {
     position: relative;
-    transform: translate(0px, -15px);
+    transform: translate(-495px, -71px);
 
     width: 650px;
 
@@ -291,9 +296,9 @@ body {
 }
 .specialists-text-block .safety-text:nth-of-type(3) {
     position: relative;
-    transform: translate(0px, -23px);
-
-    width: 640px;
+    transform: translate(-495px, -80px);
+    max-width: 100%;
+    width: 700px;
 
     margin-top: 25px;
     
@@ -303,7 +308,7 @@ body {
 .specialists-text-block .steps-btn {
     position: relative;
 
-    transform: translate(-0px, -2px);
+    transform: translate(-495px, -40px);
 
     margin-top: 0;
     
@@ -313,9 +318,9 @@ body {
 .specialists-line {
     position: relative;
 
-    transform: translate(-155px, 32px);
+    transform: translate(-653px, -25px);
 
-    background-color: #98B25F; 
+    background-color: #0500AB; 
 }
 
 .white-bg-section .steps-row {
@@ -350,7 +355,47 @@ body {
     object-fit: cover;
 }
 
-.steps-text-block .steps-title,
+.specialists-text-block .steps-title {
+    font-family: 'rawline', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #2F353B;
+    display: block;
+    position: relative;
+    transform: translate(-495px, -40px); 
+    
+    margin-bottom: 15px;
+}
+
+.specialists-text-block .steps-list {
+    position: relative;
+    list-style-type: none;
+    transform: translate(-484px, -42px); 
+}
+
+
+
+.specialists-text-block .steps-list li:nth-child(1) {
+    position: relative;
+    transform: translate(-20px, 1px); 
+    line-height: 1.5;
+}
+
+.specialists-text-block .steps-list li:nth-child(2) {
+    position: relative;
+    transform: translate(-22px, -1px); 
+}
+
+.specialists-text-block .steps-list li:nth-child(3) {
+    position: relative;
+    transform: translate(-23px, -6px); 
+}
+
+.specialists-text-block .steps-list li:nth-child(4) {
+    position: relative;
+    transform: translate(-22px, -9px); 
+}
+
 .steps-text-block p strong {
     font-family: 'rawline', sans-serif;
     font-size: 20px;
@@ -358,7 +403,6 @@ body {
     color: #2F353B;
     display: block;
     position: relative;
-    
     transform: translate(-122px, 100px); 
     margin-bottom: 15px;
 }
@@ -374,8 +418,9 @@ body {
     width: 600px;
 }
 
+
 .steps-text-block .steps-list li:nth-child(1) {
-    transform: translate(-112px, 80px);
+    transform: translate(-112px, 80px) !important;
 }
 
 .steps-text-block .steps-list li:nth-child(2) {
@@ -454,4 +499,14 @@ body {
 main {
     overflow: hidden; 
     width: 100%;
+}
+
+.white-bg-section .microscope-img {
+    width: 559px !important;  
+    height: 769px !important; 
+    object-fit: cover;      
+
+    position: relative;
+    
+    transform: translate(741px, -409px) !important; 
 }
