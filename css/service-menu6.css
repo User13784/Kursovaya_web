@@ -1,0 +1,512 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+@font-face {
+    font-family: 'rawline';
+    src: url('../fonts/rawline-400.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'rawline', sans-serif;
+
+}
+
+.hero-diagnostics {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                      url('../assets/images/service-menu6-page/service-menu1.jpg');
+    width: 100%;
+    height: 900px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content { position: relative; top: 27px; }
+
+
+
+.hero-diagnostics h1 { 
+    font-size: 60px; 
+    font-weight: 300; 
+    margin-bottom: 38px; 
+    text-transform: uppercase;
+    color: white;
+    position: relative;
+    font-family: 'Mulish';
+}
+
+.btn-white {
+    width: 317px;
+    height: 57px;
+    border-radius: 30px; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    font-family: 'Mulish'; 
+    color: #777C88; 
+    background-color: #FFFFFF;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+
+.diagnostics-wrapper {
+    background-color: #2F353B;
+    padding-bottom: 350px; 
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+.white-bg-section {
+    background-color: #FFFFFF;
+    color: #2F353B;
+    margin-top: -280px; 
+    position: relative;
+    z-index: 5;
+    padding-top: 100px;
+    padding-bottom: 50px;
+
+}
+
+.white-bg-section .container {
+    padding-bottom: 65px; 
+}
+
+.side-img img {
+    width: 405px; 
+    height: 557px;
+    object-fit: cover;
+}
+
+.full-width-section img {
+    width: 983px ;  
+    height: 653px ; 
+    
+    object-fit: cover;
+    
+
+    margin-top: -482px;  
+    margin-left: 320px;   
+    position: relative;
+    right: auto;
+    top: auto;
+}
+
+
+
+.white-bg-section .specialists-img {
+    width: 535px;
+    height: 736px;
+    object-fit: cover;
+    position: relative;
+    
+    transform: translate(-140px, -358px);
+}
+
+.info-row {
+    display: flex;
+    gap: 80px;
+    margin-bottom: 120px;
+    align-items: flex-start;
+}
+
+.info-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.diagnosis-text, .tomograph-text, .safety-text, .steps-title {
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    max-width: 650px;
+    width: 100%;
+}
+
+.accent-line {
+    width: 88px;
+    height: 4px;
+    background-color: #FF9825;
+    margin-bottom: 30px;
+}
+
+.tomograph-accent {
+    background-color: #0500AB;
+    position: relative; 
+
+    transform: translate(-650px, -25px) ;
+
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1.5px solid #2F353B;
+    color: #2F353B;
+    width: 317px;
+    height: 57px;
+    border-radius: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: 'Mulish';
+    font-size: 18px;
+    transition: 0.3s;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.diagnostics-wrapper .btn-outline {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+
+.steps-list {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.steps-list li {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#footer-placeholder {
+    background: #fff; 
+    margin-top: -545px; 
+    position: relative;
+    z-index: 100; 
+}
+
+.info-image.side-img {
+    flex: 1;
+    position: relative;
+    margin-top: 238px;  
+    
+    margin-left: -860px; 
+}
+
+.first-text-block {
+    position: relative; 
+    
+    transform: translate(18px, 42px);
+}
+
+.first-btn {
+    transform: translateX(1px);
+    transform: translateY(28px);
+    
+    position: relative;
+    
+    margin-left: 0;
+}
+
+.first-accent {
+    position: relative; 
+
+    transform: translate(693px, 31px) ;
+    background-color: #1D1B5B ;
+}
+
+.tomograph-text-block .steps-title {
+    font-family: 'Mulish', sans-serif; 
+    font-size: 40px;               
+    font-weight: 500;               
+    color: #2F353B;                
+    text-transform: uppercase;       
+    letter-spacing: 0px;          
+    line-height: 1.25;
+    margin-bottom: 30px;        
+    width: 100px;
+    position: relative;
+
+    transform: translate(-493px, -60px); 
+    
+    display: inline-block; 
+}
+
+.white-bg-section .tomograph-img {
+    width: 849px;
+    height: 746px;
+
+    object-fit: cover;
+
+    position: relative;
+
+    transform: translate(870px, 245px);
+
+    max-width: none ;
+    margin: 0;
+}
+
+.tomograph-text {
+
+    width: 650px; 
+    max-width: 100%;
+    position: relative;
+    
+  
+    transform: translate(-495px, -58px);
+    letter-spacing: 0px;
+    margin: 0;
+}
+
+.diagnost-btn {
+    position: relative;
+    transform: translate(-495px, -14px); 
+}
+
+.specialists-text-block {
+    width: 650px; 
+
+    position: relative;
+    transform: translate(-104px, 502px) ;
+
+    display: block;
+}
+
+.specialists-text-block .safety-text:nth-of-type(2) {
+    position: relative;
+    transform: translate(-495px, -71px);
+
+    width: 650px;
+
+    margin-top: 30px;
+}
+.specialists-text-block .safety-text:nth-of-type(3) {
+    position: relative;
+    transform: translate(-495px, -80px);
+    max-width: 100%;
+    width: 700px;
+
+    margin-top: 25px;
+    
+    display: block;
+}
+
+.specialists-text-block .steps-btn {
+    position: relative;
+
+    transform: translate(-495px, -40px);
+
+    margin-top: 0;
+    
+    z-index: 20;
+}
+
+.specialists-line {
+    position: relative;
+
+    transform: translate(-653px, -25px);
+
+    background-color: #0500AB; 
+}
+
+.white-bg-section .steps-row {
+    flex-direction: row;
+    
+    gap: 80px; 
+}
+
+.white-bg-section .double-img img {
+    width: 535px;
+    height: 736px;
+    object-fit: cover;
+    
+    transform: translate(-140px, 438px);
+}
+
+.steps-text-block {
+    position: relative;
+    transform: translate(0, 100px);
+    width: 140%;
+    max-width: 700px;
+}
+
+.double-img {
+    display: flex;
+    gap: 20px; 
+}
+
+.double-img img {
+    width: 48%; 
+    height: auto; 
+    object-fit: cover;
+}
+
+.specialists-text-block .steps-title {
+    font-family: 'rawline', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #2F353B;
+    display: block;
+    position: relative;
+    transform: translate(-495px, -40px); 
+    
+    margin-bottom: 15px;
+}
+
+.specialists-text-block .steps-list {
+    position: relative;
+    list-style-type: none;
+    transform: translate(-484px, -42px); 
+}
+
+
+
+.specialists-text-block .steps-list li:nth-child(1) {
+    position: relative;
+    transform: translate(-20px, 1px); 
+    line-height: 1.5;
+}
+
+.specialists-text-block .steps-list li:nth-child(2) {
+    position: relative;
+    transform: translate(-22px, -1px); 
+}
+
+.specialists-text-block .steps-list li:nth-child(3) {
+    position: relative;
+    transform: translate(-23px, -6px); 
+}
+
+.specialists-text-block .steps-list li:nth-child(4) {
+    position: relative;
+    transform: translate(-22px, -9px); 
+}
+
+.steps-text-block p strong {
+    font-family: 'rawline', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #2F353B;
+    display: block;
+    position: relative;
+    transform: translate(-122px, 100px); 
+    margin-bottom: 15px;
+}
+
+.steps-text-block .steps-list li {
+    font-family: 'rawline', sans-serif;
+    font-size: 20px;
+    position: relative; 
+    display: block; 
+    margin-bottom: 10px;
+    display: list-item; 
+    list-style-type: disc;
+    width: 600px;
+}
+
+
+.steps-text-block .steps-list li:nth-child(1) {
+    transform: translate(-112px, 80px) !important;
+}
+
+.steps-text-block .steps-list li:nth-child(2) {
+    transform: translate(-112px, 65px);
+        line-height: 1.5;
+
+}
+
+.steps-text-block .steps-list li:nth-child(3) {
+    transform: translate(-112px, 52px);
+}
+
+.steps-text-block .steps-list li:nth-child(4) {
+    transform: translate(-112px, 38px);
+}
+
+.steps-text-block .steps-list li:nth-child(5) {
+    transform: translate(-112px, 23px);
+}
+
+.steps-text-block p:nth-of-type(3) {
+    position: relative;
+    transform: translate(0px, -95px);
+    
+    font-family: 'rawline', sans-serif;
+    font-size: 20px;
+    margin-top: 0;
+}
+
+.steps-text-block .steps-list:nth-of-type(2) li:nth-child(1) {
+    transform: translate(-112px, -13px);
+}
+
+.steps-text-block .steps-list:nth-of-type(2) li:nth-child(2) {
+    transform: translate(-112px, -25px);
+}
+
+.steps-text-block .steps-list:nth-of-type(2) li:nth-child(3) {
+    transform: translate(-112px, -38px);
+}
+
+.steps-text-block .steps-list:nth-of-type(2) li:nth-child(4) {
+    transform: translate(-112px, -52px);
+}
+
+.steps-text-block .steps-list:nth-of-type(2) li:nth-child(5) {
+    transform: translate(-112px, -66px);
+}
+
+.steps-line {
+    position: relative ;
+    transform: translate(597px, 132px);
+
+    background-color: #98B25F; 
+    
+    z-index: 10;
+}
+
+.extra-service-img {
+    position: absolute;
+    transform: translate(-164px, 3px); 
+    width: 849px; 
+    height: 746px;
+    z-index: 1;
+}
+
+.last-step-btn {
+    position: absolute;
+    transform: translate(-195px, 1485px);
+    white-space: nowrap; 
+    z-index: 10;
+}
+
+.diagnostics-wrapper, 
+.white-bg-section,
+main {
+    overflow: hidden; 
+    width: 100%;
+}
+
+.white-bg-section .microscope-img {
+    width: 559px !important;  
+    height: 769px !important; 
+    object-fit: cover;      
+
+    position: relative;
+    
+    transform: translate(741px, -502px) !important; 
+}
+
