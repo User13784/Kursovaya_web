@@ -17,6 +17,7 @@
 body {
     overflow-x: hidden;
     font-family: 'rawline', sans-serif;
+
 }
 
 .hero-diagnostics {
@@ -82,6 +83,7 @@ body {
     z-index: 5;
     padding-top: 100px;
     padding-bottom: 50px;
+
 }
 
 .white-bg-section .container {
@@ -108,12 +110,7 @@ body {
     top: auto;
 }
 
-.white-bg-section .tomograph-img, 
-.white-bg-section .microscope-img {
-    width: 535px;
-    height: 736px;
-    object-fit: cover;
-}
+
 
 .white-bg-section .specialists-img {
     width: 535px;
@@ -121,7 +118,7 @@ body {
     object-fit: cover;
     position: relative;
     
-    transform: translate(-140px, -265px);
+    transform: translate(-140px, -358px);
 }
 
 .info-row {
@@ -194,7 +191,7 @@ body {
 
 #footer-placeholder {
     background: #fff; 
-    margin-top: -474px; 
+    margin-top: -545px; 
     position: relative;
     z-index: 100; 
 }
@@ -247,14 +244,14 @@ body {
 }
 
 .white-bg-section .tomograph-img {
-    width: 980px;
-    height: 653px;
+    width: 849px;
+    height: 746px;
 
     object-fit: cover;
 
     position: relative;
 
-    transform: translate(1000px, 338px);
+    transform: translate(870px, 245px);
 
     max-width: none ;
     margin: 0;
@@ -281,7 +278,7 @@ body {
     width: 650px; 
 
     position: relative;
-    transform: translate(-104px, 595px) ;
+    transform: translate(-104px, 502px) ;
 
     display: block;
 }
@@ -508,5 +505,6 @@ main {
 
     position: relative;
     
-    transform: translate(741px, -409px) !important; 
+    transform: translate(741px, -502px) !important; 
 }
+
