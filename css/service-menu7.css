@@ -67,7 +67,7 @@ body {
 
 .diagnostics-wrapper {
     background-color: #2F353B;
-    padding-bottom: 80px; 
+    padding-bottom: 119px; 
      margin-top: -1px; 
     position: relative;
     z-index: 1;
@@ -80,12 +80,12 @@ body {
 }
 
 .white-bg-section {
-    background-color: #FFFFFF;
+    background-color: #D7D8D8;
     color: #2F353B;
     position: relative;
     z-index: 5;
     padding-top: 100px;
-    padding-bottom: 368px; 
+    padding-bottom: 420px; 
     margin-bottom: -1140px; 
         margin-top: -10px; 
 
@@ -115,7 +115,7 @@ body {
     height: 583px;
     object-fit: cover;
     position: relative;
-    transform: translate(427px, -418px);
+    transform: translate(-140px, -222px);
 }
 
 .info-row {
@@ -163,7 +163,7 @@ body {
 .tomograph-accent {
     background-color: #FF9825;
     position: relative; 
-    transform: translate(705px, -25px);
+    transform: translate(-556px, -25px);
 }
 
 .btn-outline {
@@ -221,18 +221,35 @@ body {
     height: 736px;
     object-fit: cover;
     position: relative;
-    transform: translate(-35px, -23px);
+    transform: translate(965px, 95px);
 }
 
 .tomograph-text {
-    width: 650px; 
+    width: 745px; 
     position: relative;
-    transform: translate(-17px, -58px);
+    transform: translate(-450px, -57px);
 }
+
+.tomograph-text.first-paragraph {
+    transform: translate(-425px, -57px);
+}
+
+.tomograph-text.second-paragraph {
+    transform: translate(-425px, -67px); 
+    margin-top: -10px;  
+}
+
+.tomograph-text.third-paragraph {
+    transform: translate(-425px, -40px);  
+    margin-top: -20px;
+    width: 730px;
+}
+
+
 
 .diagnost-btn {
     position: relative;
-    transform: translate(-18px, -55px); 
+    transform: translate(-427px, -38px); 
 }
 
 .specialists-text-block {
@@ -249,7 +266,7 @@ body {
 
 .specialists-text-block .steps-btn {
     position: relative;
-    transform: translate(-833px, -214px);
+    transform: translate(-354px, -72px);
     z-index: 20;
 }
 
@@ -287,10 +304,12 @@ body {
 }
 
 .white-bg-section .microscope-img {
-    width: 535px !important;  
-    height: 736px !important; 
+    width: 873px !important;  
+    height: 583px !important; 
     position: relative;
-    transform: translate(540px, -1203px) !important; 
+    transform: translate(540px, -771px) !important; 
+            object-fit: cover;
+
 }
 
 .safety-text {
@@ -298,17 +317,19 @@ body {
 }
 
 .photo-7 {
-    width: 849px;
-    height: 746px;
+    width: 535px;
+    height: 736px;
     position: relative;
-    transform: translate(-990px, -113px); 
+    transform: translate(-990px, -150px); 
+        object-fit: cover;
+
 }
 
 .photo-8 {
     width: 556px;
     height: 489px;
     position: relative;
-    transform: translate(-990px, -20px); 
+    transform: translate(-105px, 25px); 
 }
 
 .steps-text-block .steps-btn {
@@ -327,12 +348,15 @@ main {
     font-size: 20px;
     font-weight: 500;
     position: relative;
-    transform: translate(0px, -4px); 
+    transform: translate(-477px, 693px); 
+        width: 400px;       
+
 }
 
 .steps-text-block .steps-list li:nth-child(1) {
-    transform: translate(30px, -9px);
+    transform: translate(-450px, 705px);
     line-height: 1.4;
+    width: 700px;
 }
 
 .steps-text-block .steps-list li:nth-child(2) {
@@ -348,4 +372,18 @@ main {
 .steps-text-block .steps-list li:nth-child(4) {
     transform: translate(31px, -39px);
     line-height: 1.4;
+}
+
+.specialists-text-block .specialist-first {
+    position: relative;
+    transform: translate(-353px, -75px);
+    z-index: 10;
+    width: 650px;
+}
+
+.specialists-text-block .specialist-second {
+    position: relative;
+    transform: translate(-353px, -73px);  
+    margin-top: 20px;
+    width: 650px;
 }
