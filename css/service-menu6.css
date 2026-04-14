@@ -63,7 +63,7 @@ body {
     border: none;
     font-size: 18px;
     transition: 0.3s;
-    transform: translateY(-2px);
+    transform: translateY(0px);
 }
 
 .diagnostics-wrapper {
@@ -78,7 +78,7 @@ body {
 }
 
 .white-bg-section {
-    background-color: #FFFFFF;
+    background-color: #D7D8D8;
     color: #2F353B;
     margin-top: -10px; 
     position: relative;
@@ -320,6 +320,8 @@ body {
     height: 746px;
     position: relative;
     transform: translate(-990px, -113px); 
+        object-fit: cover;
+
 }
 
 .photo-8 {
@@ -327,6 +329,8 @@ body {
     height: 489px;
     position: relative;
     transform: translate(-990px, -20px); 
+        object-fit: cover;
+
 }
 
 .steps-text-block .steps-btn {
@@ -381,5 +385,5 @@ main {
 }
 
 body, main {
-    background-color: #FFFFFF;
+    background-color: #D7D8D8;
 }
