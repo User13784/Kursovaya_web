@@ -119,7 +119,7 @@ body {
     height: 583px;
     object-fit: cover;
     position: relative;
-    transform: translate(-140px, -222px);
+    transform: translate(-140px, -387px);
 }
 
 .info-row {
@@ -227,7 +227,7 @@ body {
     height: 736px;
     object-fit: cover;
     position: relative;
-    transform: translate(965px, 95px);
+    transform: translate(965px, 72px);
 }
 
 .tomograph-text {
@@ -255,7 +255,7 @@ body {
 
 .diagnost-btn {
     position: relative;
-    transform: translate(-427px, -38px); 
+    transform: translate(-400px, -80px); 
 }
 
 .specialists-text-block {
@@ -265,8 +265,9 @@ body {
 }
 
 .specialists-text-block .tomograph-text {
+        width: 670px; 
     position: relative;
-    transform: translate(-832px, -215px); 
+    transform: translate(-370px, -307px); 
     z-index: 10;
 }
 
@@ -291,7 +292,7 @@ body {
 
 .steps-text-block {
     position: relative;
-    transform: translate(-347px, -806px);
+    transform: translate(90px, -0px);
     width: 100%;
     max-width: 320px;
 }
@@ -301,7 +302,7 @@ body {
     gap: 20px; 
 }
 
-.steps-text-block .steps-list li {
+.tomograph-text-block .steps-list li {
     font-size: 20px;
     position: relative; 
     margin-bottom: 10px;
@@ -310,10 +311,10 @@ body {
 }
 
 .white-bg-section .microscope-img {
-    width: 873px !important;  
-    height: 583px !important; 
+    width: 535px !important;  
+    height: 736px !important; 
     position: relative;
-    transform: translate(540px, -771px) !important; 
+    transform: translate(-367px, -130px) !important; 
             object-fit: cover;
 
 }
@@ -345,7 +346,7 @@ body {
 
 .steps-text-block .steps-btn {
     position: relative !important;
-    transform: translate(-477px, 55px) !important; 
+    transform: translate(-452px, -80px) !important; 
     z-index: 100; 
 }
 
@@ -364,40 +365,40 @@ main {
 
 }
 
-.steps-text-block .steps-list li:nth-child(1) {
-    transform: translate(-448px, 706px);
+.tomograph-text-block .steps-list li:nth-child(1) {
+    transform: translate(-369px, -61px);
     line-height: 1.4;
     width: 600px;
 }
 
-.steps-text-block .steps-list li:nth-child(2) {
-    transform: translate(-447px, 697px);
+.tomograph-text-block .steps-list li:nth-child(2) {
+    transform: translate(-369px, -71px);
     line-height: 1.4;
 }
 
-.steps-text-block .steps-list li:nth-child(3) {
-    transform: translate(-448px, 686px);
+.tomograph-text-block .steps-list li:nth-child(3) {
+    transform: translate(-369px, -81px);
     line-height: 1.4;
-    width: 500px;
+    width: 600px;
 }
 
-.steps-text-block .steps-list li:nth-child(4) {
-    transform: translate(31px, -39px);
+.tomograph-text-block .steps-list li:nth-child(4) {
+    transform: translate(-369px, -91px);
     line-height: 1.4;
 }
 
 .specialists-text-block .specialist-first {
     position: relative;
-    transform: translate(-353px, -75px);
+    transform: translate(-370px, -284px);
     z-index: 10;
     width: 650px;
 }
 
 .specialists-text-block .specialist-second {
     position: relative;
-    transform: translate(-353px, -73px);  
+    transform: translate(-368px, -295px);  
     margin-top: 20px;
-    width: 650px;
+    width: 660px;
 }
 
 .steps-accent {
@@ -406,5 +407,33 @@ main {
     background-color: #843D82;
     margin-bottom: 20px;  
         transform: translate(-635px, 715px);  
+
+}
+
+.specialists-text-block h2 {
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    position: relative;
+    transform: translate(-834px, -228px);   
+        font-family: 'Mulish';
+
+}
+
+.step-text-second {
+    position: relative;
+    transform: translate(-450px, -57px);  
+}
+
+.custom-text {
+    position: relative;
+    transform: translate(-450px, -70px);   
+    width: 660px;
+}
+
+.step-text-third {
+    position: relative;
+    transform: translate(-450px, -81px);   
+        width: 660px;
 
 }
