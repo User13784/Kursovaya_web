@@ -37,6 +37,8 @@ body {
 .hero-content { 
     position: relative; 
     top: 27px; 
+        transform: translateY(2px);  
+
 }
 
 .hero-diagnostics h1 { 
@@ -63,6 +65,8 @@ body {
     border: none;
     font-size: 18px;
     transition: 0.3s;
+        transform: translateY(-4px); 
+
 }
 
 .diagnostics-wrapper {
@@ -85,7 +89,7 @@ body {
     position: relative;
     z-index: 5;
     padding-top: 100px;
-    padding-bottom: 420px; 
+    padding-bottom: 590px; 
     margin-bottom: -1140px; 
         margin-top: -10px; 
 
@@ -191,7 +195,7 @@ body {
 
 #footer-placeholder {
     background: #fff; 
-    margin-top: -30px; 
+    margin-top: -80px; 
     position: relative;
     z-index: 100; 
 }
@@ -212,8 +216,10 @@ body {
 
 .first-accent {
     position: relative; 
-    transform: translate(693px, 32px);
+    transform: translate(694px, 32px);
     background-color: #FF9825;
+    z-index: 1;
+    
 }
 
 .white-bg-section .tomograph-img {
@@ -272,7 +278,7 @@ body {
 
 .specialists-line {
     position: relative;
-    transform: translate(-993px, -185px);
+    transform: translate(364px, -43px);
     background-color: #FF9825; 
 }
 
@@ -285,7 +291,7 @@ body {
 
 .steps-text-block {
     position: relative;
-    transform: translate(-347px, -782px);
+    transform: translate(-347px, -806px);
     width: 100%;
     max-width: 320px;
 }
@@ -314,6 +320,9 @@ body {
 
 .safety-text {
     margin-top: 650px; 
+        transform: translate(-476px, 52px);  
+        width: 600px;
+
 }
 
 .photo-7 {
@@ -330,11 +339,13 @@ body {
     height: 489px;
     position: relative;
     transform: translate(-105px, 25px); 
+            object-fit: cover;
+
 }
 
 .steps-text-block .steps-btn {
     position: relative !important;
-    transform: translate(0px, -28px) !important; 
+    transform: translate(-477px, 55px) !important; 
     z-index: 100; 
 }
 
@@ -354,19 +365,20 @@ main {
 }
 
 .steps-text-block .steps-list li:nth-child(1) {
-    transform: translate(-450px, 705px);
+    transform: translate(-448px, 706px);
     line-height: 1.4;
-    width: 700px;
+    width: 600px;
 }
 
 .steps-text-block .steps-list li:nth-child(2) {
-    transform: translate(30px, -19px);
+    transform: translate(-447px, 697px);
     line-height: 1.4;
 }
 
 .steps-text-block .steps-list li:nth-child(3) {
-    transform: translate(30px, -29px);
+    transform: translate(-448px, 686px);
     line-height: 1.4;
+    width: 500px;
 }
 
 .steps-text-block .steps-list li:nth-child(4) {
@@ -386,4 +398,13 @@ main {
     transform: translate(-353px, -73px);  
     margin-top: 20px;
     width: 650px;
+}
+
+.steps-accent {
+    width: 88px;
+    height: 4px;
+    background-color: #FF9825;
+    margin-bottom: 20px;  
+        transform: translate(-635px, 715px);  
+
 }
