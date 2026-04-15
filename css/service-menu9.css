@@ -113,7 +113,7 @@ body {
     height: 870px;
     object-fit: cover;
     position: relative;
-    transform: translate(-267px, -480px);
+    transform: translate(-270px, -480px);
 }
 
 .info-row {
@@ -151,9 +151,9 @@ body {
 }
 
 .tomograph-accent {
-    background-color: #843D82;
+    background-color: #0500AB;
     position: relative; 
-    transform: translate(-556px, -25px);
+    transform: translate(-673px, -25px);
 }
 
 .btn-outline {
@@ -210,8 +210,8 @@ body {
 
 .first-accent {
     position: relative; 
-    transform: translate(694px, 32px);
-    background-color: #843D82;
+    transform: translate(-665px, 32px);
+    background-color: #0500AB;
     z-index: 1;
 }
 
@@ -244,7 +244,6 @@ body {
 .diagnost-btn {
     position: relative;
     transform: translate(-15px, 728px); 
-        display: none;
 
 }
 
@@ -264,7 +263,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Новый класс для второго абзаца */
 .specialists-text-block .specialists-text-second {
     width: 650px;
     position: relative;
@@ -318,7 +316,7 @@ body {
 
 .steps-text-block .steps-btn {
     position: relative !important;
-    transform: translate(-451px, 2px) !important; 
+    transform: translate(-451px, -26px) !important; 
     z-index: 100; 
 }
 
@@ -332,7 +330,7 @@ main {
     font-size: 20px;
     font-weight: 500;
     position: relative;
-    transform: translate(260px, -652px);   
+    transform: translate(-57px, -922px);   
     width: 400px;
 }
 
@@ -376,11 +374,11 @@ main {
 }
 
 .white-bg-section .specialists-img-six {
-    width: 535px;
-    height: 736px;
+    width: 605px;
+    height: 832px;
     object-fit: cover;
     position: relative;
-    transform: translate(175px, -362px);  
+    transform: translate(-140px, -640px);  
 }
 
 .steps-text-block .steps-text-1 {
@@ -409,4 +407,49 @@ main {
     line-height: 1.4;
     margin-bottom: 20px;
     width: 560px;
+}
+
+
+
+.specialists-text-block .steps-list li:nth-child(1) {
+    transform: translate(-46px, -935px);
+        list-style-type: none;
+        width: 600px;
+
+}
+
+.specialists-text-block .steps-list li:nth-child(2) {
+    transform: translate(-50px, -905px);
+        list-style-type: none;
+
+}
+
+.specialists-text-block .steps-list li:nth-child(3) {
+    transform: translate(-50px, -905px);
+        list-style-type: none;
+
+}
+
+.specialists-text-block .steps-list li:nth-child(4) {
+    transform: translate(-50px, -902px);
+        list-style-type: none;
+
+}
+
+.specialists-text-block .steps-list li:nth-child(5) {
+    transform: translate(-50px, -901px);
+        list-style-type: none;
+
+}
+
+.specialists-text-block .steps-list li:nth-child(6) {
+    transform: translate(-50px, -900px);
+        list-style-type: none;
+
+}
+
+.specialists-text-block .steps-list li:nth-child(7) {
+    transform: translate(-48px, -900px);
+        list-style-type: none;
+
 }
