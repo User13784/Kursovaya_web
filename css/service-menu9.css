@@ -38,6 +38,8 @@ body {
 .hero-content { 
     position: relative; 
     top: 27px; 
+        transform: translate(0, 2px); 
+
 }
 
 .hero-diagnostics h1 { 
@@ -64,6 +66,10 @@ body {
     border: none;
     font-size: 18px;
     transition: 0.3s;
+}
+
+.btn-white {
+    transform: translateY(-3px);
 }
 
 .diagnostics-wrapper {
@@ -146,7 +152,7 @@ body {
 .accent-line {
     width: 88px;
     height: 4px;
-    background-color: #FF9825;
+    background-color: #0500AB;
     margin-bottom: 30px;
 }
 
@@ -183,6 +189,8 @@ body {
     background: #fff; 
     position: relative;
     z-index: 100; 
+        margin-top: -340px;
+
 }
 
 .info-image.side-img {
@@ -211,7 +219,7 @@ body {
 .first-accent {
     position: relative; 
     transform: translate(-665px, 32px);
-    background-color: #0500AB;
+    background-color: #1D1B5B;
     z-index: 1;
 }
 
@@ -283,8 +291,8 @@ body {
 
 .specialists-line {
     position: relative;
-    transform: translate(-990px, -188px);
-    background-color: #843D82; 
+    transform: translate(-750px, 43px);
+    background-color: #0500AB; 
 }
 
 .white-bg-section .double-img img {
@@ -326,13 +334,7 @@ main {
     background-color: #FFFFFF;
 }
 
-.specialists-text-block .steps-title {
-    font-size: 20px;
-    font-weight: 500;
-    position: relative;
-    transform: translate(-57px, -922px);   
-    width: 400px;
-}
+
 
 .specialists-text-block .steps-list li {
     font-size: 20px;
@@ -409,47 +411,53 @@ main {
     width: 560px;
 }
 
-
+.specialists-text-block .steps-title {
+    font-size: 20px;
+    font-weight: 500;
+    position: relative;
+    transform: translate(-57px, -959px);   
+    width: 400px;
+}
 
 .specialists-text-block .steps-list li:nth-child(1) {
-    transform: translate(-46px, -935px);
+    transform: translate(-46px, -943px);
         list-style-type: none;
         width: 600px;
 
 }
 
 .specialists-text-block .steps-list li:nth-child(2) {
-    transform: translate(-50px, -905px);
+    transform: translate(-50px, -942px);
         list-style-type: none;
 
 }
 
 .specialists-text-block .steps-list li:nth-child(3) {
-    transform: translate(-50px, -905px);
+    transform: translate(-50px, -942px);
         list-style-type: none;
 
 }
 
 .specialists-text-block .steps-list li:nth-child(4) {
-    transform: translate(-50px, -902px);
+    transform: translate(-50px, -942px);
         list-style-type: none;
 
 }
 
 .specialists-text-block .steps-list li:nth-child(5) {
-    transform: translate(-50px, -901px);
+    transform: translate(-50px, -940px);
         list-style-type: none;
 
 }
 
 .specialists-text-block .steps-list li:nth-child(6) {
-    transform: translate(-50px, -900px);
+    transform: translate(-50px, -940px);
         list-style-type: none;
 
 }
 
 .specialists-text-block .steps-list li:nth-child(7) {
-    transform: translate(-48px, -900px);
+    transform: translate(-48px, -938px);
         list-style-type: none;
 
 }
