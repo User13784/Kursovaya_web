@@ -68,7 +68,7 @@ body {
 
 .diagnostics-wrapper {
     background-color: #2F353B;
-    padding-bottom: 103px; 
+    padding-bottom: 70px; 
     position: relative;
     z-index: 1;
 }
@@ -103,17 +103,17 @@ body {
     width: 980px;  
     height: 653px; 
     object-fit: cover;
-    margin-top: -481px;  
+    margin-top: -458px;  
     margin-left: 320px;   
     position: relative;
 }
 
 .white-bg-section .specialists-img {
-    width: 873px;
-    height: 583px;
+    width: 632px;
+    height: 870px;
     object-fit: cover;
     position: relative;
-    transform: translate(-140px, -387px);
+    transform: translate(-267px, -480px);
 }
 
 .info-row {
@@ -138,7 +138,9 @@ body {
 .diagnosis-text.first-part {
     max-width: 600px;
     width: 210%;
-    margin-bottom: 20px;
+    margin-bottom: -43px;
+        transform: translateY(-64px);
+
 }
 
 .accent-line {
@@ -188,12 +190,22 @@ body {
     position: relative;
     margin-top: 214px;  
     margin-left: 345px; 
-    transform: translateX(-895px); 
+        transform: translate(-895px, 23px);
+
 }
 
 .first-text-block {
     position: relative; 
     transform: translate(521px, 43px);
+}
+
+.first-text-block h2 {
+        transform: translate(-505px, -8px);
+
+    font-size: 40px;
+    font-weight: 500;
+        font-family: 'Mulish';
+
 }
 
 .first-accent {
@@ -204,11 +216,11 @@ body {
 }
 
 .white-bg-section .tomograph-img {
-    width: 535px;
-    height: 736px;
+    width: 778px;
+    height: 518px;
     object-fit: cover;
     position: relative;
-    transform: translate(965px, 72px);
+    transform: translate(850px, 165px);
 }
 
 .tomograph-text {
@@ -218,12 +230,22 @@ body {
 }
 
 .tomograph-text.first-paragraph {
-    transform: translate(-400px, -57px);
+    transform: translate(-8px, -122px);
+    width: 630px;
+}
+
+.tomograph-text-block h2 {
+    transform: translate(-515px, -66px); 
+    font-size: 40px;
+    font-weight: 500;
+    font-family: 'Mulish';
 }
 
 .diagnost-btn {
     position: relative;
-    transform: translate(-400px, -80px); 
+    transform: translate(-15px, 728px); 
+        display: none;
+
 }
 
 .specialists-text-block {
@@ -232,11 +254,25 @@ body {
     transform: translate(-104px, 502px);
 }
 
-.specialists-text-block .tomograph-text {
-    width: 670px; 
+.specialists-text-block .specialists-text-first {
+    width: 600px;
     position: relative;
-    transform: translate(-370px, -307px); 
+    transform: translate(-85px, -456px);
     z-index: 10;
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+/* Новый класс для второго абзаца */
+.specialists-text-block .specialists-text-second {
+    width: 650px;
+    position: relative;
+    transform: translate(-85px, -460px);
+    z-index: 10;
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 20px;
 }
 
 .specialists-text-block .steps-btn {
@@ -262,7 +298,7 @@ body {
 
 .steps-text-block {
     position: relative;
-    transform: translate(90px, -0px);
+    transform: translate(-374px, -430px);
     width: 100%;
     max-width: 320px;
 }
@@ -273,16 +309,16 @@ body {
 }
 
 .white-bg-section .microscope-img {
-    width: 535px !important;  
-    height: 736px !important; 
+    width: 565px !important;  
+    height: 769px !important; 
     position: relative;
-    transform: translate(-367px, -130px) !important; 
+    transform: translate(543px, -439px) !important; 
     object-fit: cover;
 }
 
 .steps-text-block .steps-btn {
     position: relative !important;
-    transform: translate(-452px, -55px) !important; 
+    transform: translate(-451px, 2px) !important; 
     z-index: 100; 
 }
 
@@ -345,4 +381,32 @@ main {
     object-fit: cover;
     position: relative;
     transform: translate(175px, -362px);  
+}
+
+.steps-text-block .steps-text-1 {
+    position: relative;
+    transform: translate(-450px, -20px); 
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    width: 565px;
+}
+
+.steps-text-block .steps-text-2 {
+    position: relative;
+    transform: translate(-450px, -24px); 
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    width: 570px;
+
+}
+
+.steps-text-block .steps-text-3 {
+    position: relative;
+    transform: translate(-450px, -28px); 
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    width: 560px;
 }
