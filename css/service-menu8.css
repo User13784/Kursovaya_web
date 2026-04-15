@@ -195,7 +195,7 @@ body {
 
 #footer-placeholder {
     background: #fff; 
-    margin-top: 180px; 
+    margin-top: -60px; 
     position: relative;
     z-index: 100; 
 }
@@ -348,7 +348,7 @@ body {
 
 .steps-text-block .steps-btn {
     position: relative !important;
-    transform: translate(-452px, -80px) !important; 
+    transform: translate(-452px, -55px) !important; 
     z-index: 100; 
 }
 
@@ -433,18 +433,18 @@ main {
 
 .step-text-second {
     position: relative;
-    transform: translate(-450px, -57px);  
+    transform: translate(-450px, -33px);  
 }
 
 .custom-text {
     position: relative;
-    transform: translate(-450px, -70px);   
+    transform: translate(-450px, -45px);   
     width: 660px;
 }
 
 .step-text-third {
     position: relative;
-    transform: translate(-450px, -81px);   
+    transform: translate(-449px, -57px);   
         width: 660px;
 
 }
@@ -457,21 +457,24 @@ main {
     transform: translate(175px, -362px);  
 }
 
+.specialists-text-block .steps-list li:nth-child(1) {
+    transform: translate(290px,-635px);
+}
 
 .specialists-text-block .steps-list li:nth-child(2) {
-    transform: translate(290px,-636px);
+    transform: translate(290px,-650px);
 }
 
 .specialists-text-block .steps-list li:nth-child(3) {
-    transform: translate(290px, -651px);
-}
-
-.specialists-text-block .steps-list li:nth-child(4) {
     transform: translate(290px, -666px);
 }
 
+.specialists-text-block .steps-list li:nth-child(4) {
+    transform: translate(290px, -681px);
+}
+
 .specialists-text-block .steps-list li:nth-child(5) {
-    transform: translate(290px, -680px);
+    transform: translate(290px, -696px);
 }
 
 .specialists-text-block .steps-list li:nth-child(6) {
@@ -531,3 +534,4 @@ main {
 .specialists-text-block .steps-list2 li:nth-child(5) {
     transform: translate(290px, -735px);
 }
+
