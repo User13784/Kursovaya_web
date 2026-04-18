@@ -31,11 +31,11 @@
         <div class="container">
           <div class="team-grid">
             <!-- 1-й врач -->
-            <div class="team-item">
+            <div class="team-item" data-doctor-id="1">
               <div class="team-image">
                 <img
                   src="../assets/images/team/team-menu2.jpg"
-                  alt="Шеголев Дмитрий Владиславович"
+                  alt="Волкова Екатерина Андреевна"
                 />
               </div>
 
@@ -47,11 +47,11 @@
             </div>
 
             <!-- 2-й врач -->
-            <div class="team-item">
+            <div class="team-item" data-doctor-id="2">
               <div class="team-image">
                 <img
                   src="../assets/images/team/team-menu3.jpg"
-                  alt="Врач Dental Club"
+                  alt="Кузнецов Андрей Владимирович"
                 />
               </div>
 
@@ -63,11 +63,11 @@
             </div>
 
             <!-- 3-й врач -->
-            <div class="team-item">
+            <div class="team-item" data-doctor-id="3">
               <div class="team-image">
                 <img
                   src="../assets/images/team/team-menu4.jpg"
-                  alt="Врач Dental Club"
+                  alt="Соколова Мария Александровна"
                 />
               </div>
 
@@ -79,11 +79,11 @@
             </div>
 
             <!-- 4-й врач -->
-            <div class="team-item">
+            <div class="team-item" data-doctor-id="4">
               <div class="team-image">
                 <img
                   src="../assets/images/team/team-menu5.jpg"
-                  alt="Анна Сергеевна Петрова"
+                  alt="Новикова Валентина Сергеевна"
                 />
               </div>
 
@@ -95,11 +95,11 @@
             </div>
 
             <!-- 5-й врач -->
-            <div class="team-item">
+            <div class="team-item" data-doctor-id="5">
               <div class="team-image">
                 <img
                   src="../assets/images/team/team-menu6.jpg"
-                  alt="Михаил Андреевич Соколов"
+                  alt="Щеголев Дмитрий Владиславович"
                 />
               </div>
 
@@ -111,11 +111,11 @@
             </div>
 
             <!-- 6-й врач -->
-            <div class="team-item">
+            <div class="team-item" data-doctor-id="6">
               <div class="team-image">
                 <img
                   src="../assets/images/team/team-menu7.jpg"
-                  alt="Елена Владимировна Ковальчук"
+                  alt="Ковальчук Анастасия Дмитриевна"
                 />
               </div>
 
@@ -133,5 +133,18 @@
     <div id="footer-placeholder"></div>
 
     <script src="../js/components.js"></script>
+    <script>
+      const teamItems = document.querySelectorAll('.team-item');
+      
+      teamItems.forEach((item) => {
+        item.style.cursor = 'pointer';
+        
+        item.addEventListener('click', () => {
+          const doctorId = item.getAttribute('data-doctor-id');
+          sessionStorage.setItem('selectedDoctorId', doctorId);
+          window.location.href = 'team-details.html';
+        });
+      });
+    </script>
   </body>
 </html>

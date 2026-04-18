@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Щеголев Дмитрий Владиславович | Dental Club</title>
+    <title>Врач | Dental Club</title>
     <link rel="stylesheet" href="../css/index.css" />
     <link rel="stylesheet" href="../css/team-details.css" />
 </head>
@@ -14,36 +14,36 @@
         <div class="container">
             <div class="doctor-card">
                 <div class="doctor-photo">
-                    <img src="../assets/images/team-details/team-details-menu5.jpg" alt="Щеголев Дмитрий Владиславович" />
+                    <img id="doctor-photo" src="" alt="Фото врача" />
                 </div>
 
                 <div class="doctor-details">
-                    <p class="doctor-subtitle">Стоматолог- имплантолог, ортопед</p>
-                    <h1 class="doctor-name">ЩЕГОЛЕВ<br>ДМИТРИЙ<br>ВЛАДИСЛАВОВИЧ</h1>
+                    <p id="doctor-subtitle" class="doctor-subtitle"></p>
+                    <h1 id="doctor-name" class="doctor-name"></h1>
 
                     <div class="info-block spec">
                         <h4 class="spec-title">Специализация:</h4>
-                        <p class="spec-desc">Челюстно-лицевая хирургия, дентальная имплантология, протезирование, эстетическая стоматология.</p>
+                        <p id="spec-desc" class="spec-desc"></p>
                     </div>
 
                     <div class="info-block edu">
                         <h4 class="edu-title">Образование:</h4>
-                        <p class="edu-desc">Алма-Атинский Государственный Медицинский Институт (1986 г) (диплом с отличием)</p>
+                        <p id="edu-desc" class="edu-desc"></p>
                     </div>
 
                     <div class="info-block exp">
                         <h4 class="exp-title">Опыт работы:</h4>
-                        <p class="exp-desc">более 30 лет</p>
+                        <p id="exp-desc" class="exp-desc"></p>
                     </div>
 
                     <div class="info-block improve">
                         <h4 class="improve-title">Усовершенствования:</h4>
-                        <p class="improve-desc">Неоднократно проходил курсы повышения квалификации, <br>а также мастер-классы от профессоров мировой величины.</p>
+                        <p id="improve-desc" class="improve-desc"></p>
                     </div>
 
                     <div class="info-block time">
                         <h4 class="time-title">Время приема:</h4>
-                        <p class="time-desc">Пн-Пт, 10:00 - 19:00</p>
+                        <p id="time-desc" class="time-desc"></p>
                     </div>
 
                     <button class="btn-submit">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
@@ -53,6 +53,26 @@
     </main>
 
     <div id="footer-placeholder"></div>
+    
     <script src="../js/components.js"></script>
+    <script src="../js/doctors-data.js"></script>
+    <script>
+        const doctorId = sessionStorage.getItem('selectedDoctorId') || 1;
+        const doctor = doctorsData[doctorId];
+        
+        if (doctor) {
+            document.getElementById('doctor-photo').src = doctor.photo;
+            document.getElementById('doctor-subtitle').textContent = doctor.subtitle;
+            document.getElementById('doctor-name').innerHTML = doctor.name;
+            document.getElementById('spec-desc').textContent = doctor.specialization;
+            document.getElementById('edu-desc').textContent = doctor.education;
+            document.getElementById('exp-desc').textContent = doctor.experience;
+            document.getElementById('improve-desc').textContent = doctor.improvement;
+            document.getElementById('time-desc').textContent = doctor.schedule;
+            
+            const plainName = doctor.name.replace(/<br>/g, ' ');
+            document.title = `${plainName} | Dental Club`;
+        }
+    </script>
 </body>
 </html>
