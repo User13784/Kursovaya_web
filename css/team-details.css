@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;600&display=swap');
+
+@font-face {
+    font-family: 'rawline';
+    src: url('../fonts/rawline-400.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    background-color: #2F353B;
+    margin: 0;
+    padding: 0;
+    font-family: 'Mulish', sans-serif;
+    color: #ffffff;
+        overflow-x: hidden; 
+
+}
+
+.doctor-profile {
+    padding: 100px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    
+}
+
+.doctor-card {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+
+
+.doctor-photo img {
+    width: 600px;
+    height: 1090px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.9);
+        transform: translate(-140px, -100px); 
+
+}
+
+.doctor-details {
+    flex: 1;
+}
+
+.doctor-subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    line-height: 140%;
+    letter-spacing: 0px;
+    font-family: 'Rawline';
+        transform: translate(-100px, 63px);  
+
+}
+
+.doctor-name {
+    font-size: 60px;
+    line-height: 140%;
+    font-weight: 300;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    letter-spacing: 0px;
+    font-family: 'Mulish';
+        transform: translate(-100px, 56px); 
+
+}
+
+.info-block {
+    margin-bottom: 25px;
+}
+
+.info-block h4 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #ffffff;
+    line-height: 140%;
+    letter-spacing: 0px;
+    font-family: 'rawline';
+}
+
+.info-block p {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    color: #ffffff;
+    line-height: 140%;
+    letter-spacing: 0px;
+    font-family: 'rawline';
+}
+
+.btn-submit {
+    margin-top: 40px;
+    width: 317px;
+    height: 56px;
+    background-color: #ffffff;
+    color: #2F353B;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0px;
+        transform: translate(-100px, 175px);  
+
+}
+
+.btn-submit:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.spec-title {
+    transform: translate(-99px, 76px);  
+}
+
+.spec-desc {
+    transform: translate(-99px, 82px);  
+}
+
+.edu-title {
+    transform: translate(-100px, 120px);  
+}
+
+.edu-desc {
+    transform: translate(-100px, 127px);  
+}
+
+.exp-title {
+    transform: translate(-99px, 164px);  
+}
+
+.exp-desc {
+    transform: translate(39px, 130px);  
+}
+
+.improve-title {
+    transform: translate(-99px, 168px);  
+}
+
+.improve-desc {
+    transform: translate(-99px, 175px);  
+    width: 600px;
+}
+
+.time-title {
+    transform: translate(-99px, 213px);  
+}
+
+.time-desc {
+    transform: translate(53px, 180px);  
+        width: 300px;
+
+}
+
+#footer-placeholder {
+    position: relative;
+    z-index: 100; 
+        margin-top: 250px;
+
+}
+
+body {
+    position: relative;
+    background-color: #2F353B;  
+    
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 58.4%;
+    height: 68.2%;  
+    background-color: #202428;
+    z-index: -1;
+}
+
+@media (max-width: 992px) {
+    .doctor-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .doctor-photo {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .doctor-name {
+        font-size: 36px;
+    }
+    
+    .btn-submit {
+        margin: 40px auto 0;
+    }
+}
