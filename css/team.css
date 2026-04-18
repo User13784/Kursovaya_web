@@ -249,7 +249,14 @@ body {
     background-color: #7F7E7E;
 }
 
+.team-item {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
 
+.team-item:hover {
+    transform: translateY(-5px);
+}
 
 @media (max-width: 992px) {
     .team-grid {
