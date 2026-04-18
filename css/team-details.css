@@ -107,7 +107,7 @@ body {
     width: 317px;
     height: 56px;
     background-color: #ffffff;
-    color: #2F353B;
+    color: #777C88;
     border: none;
     border-radius: 25px;
     font-family: 'Mulish', sans-serif;
@@ -157,6 +157,8 @@ body {
 .improve-desc {
     transform: translate(-99px, 175px);  
     width: 600px;
+        white-space: pre-line;  
+
 }
 
 .time-title {
@@ -192,6 +194,8 @@ body::after {
     background-color: #202428;
     z-index: -1;
 }
+
+
 
 @media (max-width: 992px) {
     .doctor-card {
