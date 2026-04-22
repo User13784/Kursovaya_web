@@ -563,3 +563,220 @@ body {
     pointer-events: none;  
     z-index: 10;
 }
+
+.modal-content {
+    background-color: #D9D9D9; 
+    margin: 10% auto;
+    padding: 60px; 
+    width: 90%;
+    max-width: 900px; 
+    position: relative;
+    border-radius: 0; 
+}
+
+.modal-body {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.modal-left {
+    flex: 1;
+}
+
+.modal-left h2 {
+    font-family: 'Mulish', sans-serif;
+    font-size: 48px; 
+    color: #171717;
+    text-align: left;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.modal-right {
+    flex: 1.2;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-form input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #9F9F9F;
+    padding: 15px 0;
+    font-size: 18px;
+    font-family: 'rawline', sans-serif;
+    outline: none;
+    color: #171717;
+}
+
+.modal-form input::placeholder {
+    color: #171717;
+}
+
+.modal-submit-btn {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid #7C7C7C;
+    padding: 12px 40px;
+    border-radius: 30px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 16px;
+    color: #7C7C7C;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+    width: 420.53px;      
+    height: 54.33px;      
+                transform: translate(1px, -14px);  
+
+}
+
+.modal-submit-btn:hover {
+    background: #7C7C7C;
+    color: #fff;
+}
+
+.modal-close {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    font-size: 35px;
+    color: #7C7C7C;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #D9D9D9;
+    margin: 10% auto;
+    padding: 33px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 20px;
+    position: relative;
+    animation: modalSlide 0.3s ease;
+}
+
+@keyframes modalSlide {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #171717;
+}
+
+.modal-close:hover {
+    color: #7C7C7C;
+}
+
+.modal-content h2 {
+    font-family: 'Mulish', sans-serif;
+    font-size: 28px;
+    color: #171717;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 500;
+                transform: translate(1px, 6px);  
+
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-form input,
+.modal-form textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #9F9F9F;
+    padding: 12px 0;
+    font-size: 18px;
+    font-family: 'rawline', sans-serif;
+    outline: none;
+    color: #171717;
+}
+
+.modal-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal-form input::placeholder,
+.modal-form textarea::placeholder {
+    color: #9F9F9F;
+}
+
+.modal-submit-btn {
+    background: transparent;
+    border: 1px solid #7C7C7C;
+    padding: 15px;
+    border-radius: 30px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 18px;
+    color: #7C7C7C;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+                transform: translate(7px, -8px);  
+
+}
+
+.modal-submit-btn:hover {
+    background: #7C7C7C;
+    color: #fff;
+}
+
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-form input:nth-of-type(1) {
+            transform: translate(7px, 4px);  
+}
+
+.modal-form input:nth-of-type(2) {
+            transform: translate(7px, 1px);  
+}
+
+.modal-form input:nth-of-type(3) {
+            transform: translate(11px, -4px);  
+}
+
+.modal-form textarea {
+            transform: translate(7px, -8px);  
+}
