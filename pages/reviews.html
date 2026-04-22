@@ -14,7 +14,7 @@
         <section class="hero-reviews">
             <div class="hero-content">
                 <h1>ОТЗЫВЫ НАШИХ КЛИЕНТОВ</h1>
-                <button class="btn-white-caps">ОТПРАВИТЬ СВОЙ ОТЗЫВ</button>
+                <button class="btn-white-caps" id="openReviewModal">ОТПРАВИТЬ СВОЙ ОТЗЫВ</button>
             </div>
             <div class="scroll-down-arrow"></div>
         </section>
@@ -92,7 +92,7 @@
                     <input type="text" placeholder="Ваше имя">
                     <input type="email" placeholder="Email">
                     <input type="tel" placeholder="+7 (___) ___ __ __">
-                    <input placeholder="Введите ваш вопрос"></input>
+                    <input placeholder="Введите ваш вопрос">
                     <button type="submit" class="btn-dark-outline">ОТПРАВИТЬ ЗАЯВКУ</button>
                 </form>
             </div>
@@ -105,8 +105,7 @@
                 </div>
                 <div class="video-item central-video">
                     <img src="../assets/images/reviews/reviews5.png" alt="Video 2">
-                    <div class="video-overlay">
-                    </div>
+                    <div class="video-overlay"></div>
                 </div>
                 <div class="video-item3">
                     <img src="../assets/images/reviews/reviews6.png" alt="Video 3">
@@ -117,7 +116,22 @@
     </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../js/components.js"></script>
 
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>НАПИШИТЕ СВОЙ ОТЗЫВ</h2>
+            <form class="modal-form" id="reviewForm">
+                <input type="text" placeholder="Ваше имя" required>
+                <input type="email" placeholder="Email" required>
+                <input type="tel" placeholder="+7 (___) ___ __ __" required>
+                <textarea placeholder="Ваш отзыв" rows="5" required></textarea>
+                <button type="submit" class="modal-submit-btn">ОТПРАВИТЬ ОТЗЫВ</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/reviews-modal.js"></script>
 </body>
 </html>
