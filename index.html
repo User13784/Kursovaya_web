@@ -2,14 +2,25 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Dental Club — Стоматологическая клиника в Алматы</title>
     
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="media/index_media.css">
 </head>
 <body>
 
     <div id="header-placeholder"></div>
+
+    <!-- МОБИЛЬНОЕ МЕНЮ -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <a href="#" class="mobile-lang-selector">RUS</a>
+            <a href="#" class="mobile-login-link">ВОЙТИ</a>
+        </nav>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
         <section class="hero">
@@ -65,5 +76,57 @@
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
     <script src="js/index.js"></script>
+
+    <!-- СКРИПТ ДЛЯ БУРГЕР-МЕНЮ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const burgerIcon = document.getElementById('burgerIcon');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('menuOverlay');
+                const body = document.body;
+
+                function openMenu() {
+                    if (burgerIcon) burgerIcon.classList.add('active');
+                    if (mobileMenu) mobileMenu.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                }
+
+                function closeMenu() {
+                    if (burgerIcon) burgerIcon.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                }
+
+                if (burgerIcon) {
+                    burgerIcon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (mobileMenu && mobileMenu.classList.contains('active')) {
+                            closeMenu();
+                        } else {
+                            openMenu();
+                        }
+                    });
+                }
+
+                if (menuOverlay) {
+                    menuOverlay.addEventListener('click', closeMenu);
+                }
+
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }, 100);
+        });
+    </script>
 </body>
 </html>
