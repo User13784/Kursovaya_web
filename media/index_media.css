@@ -1,0 +1,881 @@
+@media (min-width: 1201px) and (max-width: 1436px) {
+    .container {
+        padding: 0 25px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        margin-left: 0;
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .advantages .content-block .btn-outline,
+    .clinic-info .content-block .btn-outline {
+        margin-left: 0;
+        margin: 20px auto;
+    }
+
+    .text-block h2 {
+        margin-left: 0;
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    .image-gallery {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .img-left {
+        margin-top: 0;
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        aspect-ratio: 405 / 557;
+    }
+
+    .img-right {
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+        margin-left: 0;
+        aspect-ratio: 980 / 653;
+    }
+
+    .image-gallery-alt {
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 25px 80px 25px;
+        gap: 20px;
+    }
+
+    .img-bottom-left,
+    .img-bottom-right {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        margin-top: 0;
+        transform: none;
+    }
+
+    .hero {
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .advantages .text-block {
+        margin-top: 80px;
+    }
+    
+    .advantages .content-block {
+        margin-top: 40px;
+    }
+
+    /* Футер */
+    .footer-container {
+        padding: 0 30px;
+    }
+
+    .footer-line {
+        width: 100%;
+    }
+
+    .footer-nav {
+        margin-left: 0;
+    }
+
+    .footer-socials {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 25px;
+    }
+
+    .header-container {
+        padding: 20px 30px;
+    }
+
+    .menu-btn {
+        margin-left: 20px;
+        font-size: 16px;
+    }
+
+    .logo {
+        margin-right: 100px;
+    }
+
+    .logo img {
+        width: 110px;
+        height: auto;
+    }
+
+    .login-link {
+        left: -30px;
+        font-size: 16px;
+    }
+
+    .hero {
+        height: 750px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .btn {
+        margin-top: 20px;
+        position: relative;
+        top: 0;
+        width: 280px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .grid-2 {
+        gap: 30px;
+        padding: 60px 25px;
+    }
+
+    .text-block h2 {
+        margin-left: 0;
+        font-size: 36px;
+        padding: 0 15px;
+        text-align: center;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        margin-left: 0;
+        max-width: 100%;
+        padding: 0 15px;
+        font-size: 18px;
+    }
+
+    .advantages .content-block .btn-outline,
+    .clinic-info .content-block .btn-outline {
+        margin-left: 0;
+        margin: 20px auto;
+        width: 280px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    /* Отступы для преимуществ */
+    .advantages .text-block {
+        margin-top: 80px;
+    }
+    
+    .advantages .content-block {
+        margin-top: 40px;
+    }
+
+    .image-gallery {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .img-left {
+        margin-top: 0;
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        aspect-ratio: 405 / 557;
+    }
+
+    .img-right {
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+        margin-left: 0;
+        aspect-ratio: 980 / 653;
+    }
+
+    .image-gallery-alt {
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 25px 80px 25px;
+        gap: 20px;
+    }
+
+    .img-bottom-left,
+    .img-bottom-right {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        margin-top: 0;
+        transform: none;
+    }
+
+    .footer-container {
+        padding: 0 30px;
+    }
+
+    .footer-logo img {
+        width: 180px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 18px;
+    }
+
+    .footer-links-row {
+        gap: 40px;
+    }
+
+    .footer-socials img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .footer-line {
+        width: 100%;
+    }
+
+    .footer-nav {
+        margin-left: 0;
+    }
+
+    .footer-socials {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        position: relative;
+    }
+
+    .burger-icon {
+        display: flex;
+    }
+    
+    .header-left {
+        display: none;
+    }
+    
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-right: 0;
+        order: 2;
+    }
+    
+    .logo img {
+        width: 100px;
+        height: auto;
+    }
+    
+    .header-right {
+        order: 3;
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+    }
+    
+    .login-link {
+        display: none;
+    }
+
+    .hero {
+        height: 600px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+        margin-bottom: 40px;
+        padding: 0 20px;
+    }
+
+    .hero h1 .city-text {
+        padding-left: 10px;
+    }
+
+    .btn {
+        width: 260px;
+        height: 48px;
+        font-size: 15px;
+        position: relative;
+        top: 0;
+        margin-top: 20px;
+    }
+
+    .btn-outline {
+        top: 0;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 40px 25px;
+    }
+
+    .text-block h2 {
+        font-size: 32px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .advantages-title {
+        transform: none;
+    }
+
+    .advantages .text-block {
+        margin-top: 20px;
+    }
+    
+    .advantages .content-block {
+        margin-top: -20px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 18px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .advantages .content-block ul {
+        text-align: left;
+        padding: 0 30px;
+    }
+
+    .advantages .content-block li {
+        font-size: 17px;
+        margin-bottom: 12px;
+    }
+
+    .clinic-info .content-block .btn-outline,
+    .advantages .content-block .btn-outline {
+        display: block;
+        margin: 20px auto;
+        width: 260px;
+        height: 48px;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .image-gallery-alt {
+        padding: 30px 20px 60px 20px;
+    }
+
+    .footer-logo img {
+        width: 160px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 16px;
+    }
+
+    .footer-links-row {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .footer-socials {
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .footer-socials img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .header-container {
+        padding: 12px 15px;
+    }
+
+    .burger-icon {
+        width: 26px;
+        height: 20px;
+    }
+
+    .burger-icon span {
+        background-color: #FFFFFF;
+    }
+
+    .burger-icon.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .burger-icon.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .logo img {
+        width: 85px;
+        height: auto;
+    }
+
+    .hero {
+        height: 500px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .hero-content {
+        top: 20px;
+        padding: 0 15px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+        margin-bottom: 30px;
+        line-height: 1.3;
+        padding: 0 15px;
+    }
+
+    .hero h1 br {
+        display: none;
+    }
+
+    .hero h1 .city-text {
+        display: block;
+        padding-left: 0;
+        margin-top: 5px;
+    }
+
+    .btn {
+        width: 230px;
+        height: 45px;
+        font-size: 14px;
+        margin-top: 20px;
+        position: relative;
+        top: 0;
+    }
+
+    .scroll-down {
+        bottom: 20px;
+    }
+
+    .scroll-down::before {
+        width: 6px;
+        height: 6px;
+        border-width: 2px;
+    }
+
+    .grid-2 {
+        padding: 40px 20px;
+    }
+
+    .text-block h2 {
+        font-size: 28px;
+        padding: 0 15px;
+    }
+    
+    .advantages .text-block {
+        margin-top: 20px;
+    }
+    
+    .advantages .content-block {
+        margin-top: -20px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 16px;
+        line-height: 1.5;
+        padding: 0 15px;
+    }
+
+    .advantages .content-block ul {
+        padding: 0 20px;
+    }
+
+    .advantages .content-block li {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    .clinic-info .content-block .btn-outline,
+    .advantages .content-block .btn-outline {
+        width: 230px;
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .image-gallery,
+    .image-gallery-alt {
+        padding: 20px 20px 40px 20px;
+    }
+
+    .footer {
+        padding: 40px 0;
+        margin-top: 30px;
+    }
+
+    .footer-logo img {
+        width: 140px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 15px;
+    }
+
+    .footer-links-row {
+        gap: 15px;
+    }
+
+    .footer-socials img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .footer-line {
+        margin: 15px 0;
+    }
+
+    .mobile-menu {
+        padding: 80px 25px 30px;
+        width: 85%;
+    }
+    
+    .mobile-menu .mobile-menu-btn,
+    .mobile-menu .mobile-lang-selector {
+        font-size: 18px;
+        padding: 14px 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .header-container {
+        gap: 10px;
+        padding: 10px 15px;
+    }
+
+    .logo img {
+        width: 70px;
+        height: auto;
+    }
+
+    .burger-icon {
+        width: 24px;
+        height: 18px;
+    }
+
+    .hero {
+        height: 450px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+        margin-bottom: 25px;
+        padding: 0 15px;
+    }
+
+    .btn {
+        width: 210px;
+        height: 42px;
+        font-size: 13px;
+        margin-top: 15px;
+    }
+
+    .grid-2 {
+        padding: 30px 15px;
+    }
+
+    .text-block h2 {
+        font-size: 24px;
+        padding: 0 10px;
+    }
+    
+    .advantages .text-block {
+        margin-top: 20px;
+    }
+    
+    .advantages .content-block {
+        margin-top: -20px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .advantages .content-block ul {
+        padding: 0 15px;
+    }
+
+    .advantages .content-block li {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .btn-outline {
+        width: 210px;
+        height: 42px;
+        font-size: 13px;
+        margin: 20px auto;
+    }
+
+    .image-gallery-alt {
+        padding: 20px 15px 40px 15px;
+    }
+
+    .footer-logo img {
+        width: 120px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 14px;
+    }
+
+    .footer-links-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .footer-socials {
+        gap: 12px;
+    }
+
+    .footer-socials img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .mobile-menu {
+        width: 90%;
+        padding: 70px 20px 25px;
+    }
+}
+
+@media (max-width: 375px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    .hero {
+        height: 400px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .hero h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding: 0 12px;
+    }
+
+    .btn {
+        width: 190px;
+        height: 40px;
+        font-size: 12px;
+        margin-top: 15px;
+    }
+
+    .btn-outline {
+        width: 190px;
+    }
+
+    .grid-2 {
+        padding: 30px 12px;
+    }
+
+    .text-block h2 {
+        font-size: 22px;
+        padding: 0 10px;
+    }
+    
+    .advantages .text-block {
+        margin-top: 20px;
+    }
+    
+    .advantages .content-block {
+        margin-top: -20px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 13px;
+        padding: 0 10px;
+    }
+
+    .advantages .content-block ul {
+        padding: 0 12px;
+    }
+
+    .advantages .content-block li {
+        font-size: 12px;
+    }
+
+    .logo img {
+        width: 60px;
+        height: auto;
+    }
+
+    .burger-icon {
+        width: 22px;
+        height: 16px;
+    }
+    
+    .burger-icon.active span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+    }
+    .burger-icon.active span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    .footer-logo img {
+        width: 100px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 12px;
+    }
+
+    .footer-socials img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    .hero {
+        height: 380px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .hero h1 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        padding: 0 10px;
+    }
+
+    .btn {
+        width: 170px;
+        height: 38px;
+        font-size: 11px;
+        margin-top: 15px;
+    }
+
+    .btn-outline {
+        width: 170px;
+    }
+
+    .grid-2 {
+        padding: 25px 10px;
+    }
+
+    .text-block h2 {
+        font-size: 20px;
+        padding: 0 8px;
+    }
+    
+    .advantages .text-block {
+        margin-top: 20px;
+    }
+    
+    .advantages .content-block {
+        margin-top: -20px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 12px;
+        line-height: 1.4;
+        padding: 0 8px;
+    }
+
+    .advantages .content-block ul {
+        padding: 0 10px;
+    }
+
+    .advantages .content-block li {
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+
+    .footer-logo img {
+        width: 90px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 11px;
+    }
+
+    .footer-socials img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .footer-line {
+        margin: 10px 0;
+    }
+
+    .burger-icon {
+        width: 20px;
+        height: 14px;
+    }
+
+    .header-container {
+        padding: 8px 10px;
+    }
+
+    .logo img {
+        width: 55px;
+        height: auto;
+    }
+}
