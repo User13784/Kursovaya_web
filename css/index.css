@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
-@import url('https://raw.githubusercontent.com/h-ibaldo/Raleway_Fixed_Numerals/master/css/rawline.css');
 
 * {
     margin: 0;
@@ -182,25 +181,26 @@ body {
 }
 
 .clinic-info .content-block p, .advantages .content-block ul {
-    font-family: 'rawline', sans-serif; 
+    font-family: 'Mulish', sans-serif; 
     font-size: 20px;
     font-weight: 400;
     color: #E5E5E5;
     line-height: 140%;
-    letter-spacing: 0.4px;
+    letter-spacing: 0px;
     max-width: 630px;    
     margin-top: 30px;
     margin-left: -135px;
     margin-bottom: 40px; 
     transform: translateY(-3px);
+    max-width: 650px;
 }
 
 .advantages .content-block ul {
-    font-family: 'rawline', sans-serif; 
+    font-family: 'Mulish', sans-serif; 
     font-size: 20px;            
     font-weight: 400;          
     color: #E5E5E5;             
-    letter-spacing: 0.3px;      
+    letter-spacing: 0px;      
     
     max-width: 700px;           
     margin-left: -120px;        

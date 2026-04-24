@@ -1,11 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;600&display=swap');
 
-@font-face {
-    font-family: 'rawline';
-    src: url('../fonts/rawline-400.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+* {
+    font-family: 'Mulish', sans-serif !important;
 }
 
 body {
@@ -61,7 +57,7 @@ body {
     line-height: 140%;
     letter-spacing: 0px;
     font-family: 'Rawline';
-        transform: translate(-100px, 63px);  
+        transform: translate(-101px, 63px);  
 
 }
 
@@ -99,7 +95,7 @@ body {
     color: #ffffff;
     line-height: 140%;
     letter-spacing: 0px;
-    font-family: 'rawline';
+    font-family: 'mulish';
 }
 
 .btn-submit {
@@ -127,46 +123,46 @@ body {
 }
 
 .spec-title {
-    transform: translate(-99px, 76px);  
+    transform: translate(-101px, 76px);  
 }
 
 .spec-desc {
-    transform: translate(-99px, 82px);  
+    transform: translate(-101px, 82px);  
 }
 
 .edu-title {
-    transform: translate(-100px, 120px);  
+    transform: translate(-101px, 120px);  
 }
 
 .edu-desc {
-    transform: translate(-100px, 127px);  
+    transform: translate(-101px, 127px);  
 }
 
 .exp-title {
-    transform: translate(-99px, 164px);  
+    transform: translate(-101px, 164px);  
 }
 
 .exp-desc {
-    transform: translate(39px, 130px);  
+    transform: translate(41px, 130px);  
 }
 
 .improve-title {
-    transform: translate(-99px, 168px);  
+    transform: translate(-101px, 168px);  
 }
 
 .improve-desc {
-    transform: translate(-99px, 175px);  
-    width: 600px;
+    transform: translate(-101px, 175px);  
+    width: 580px;
         white-space: pre-line;  
 
 }
 
 .time-title {
-    transform: translate(-99px, 213px);  
+    transform: translate(-101px, 213px);  
 }
 
 .time-desc {
-    transform: translate(53px, 180px);  
+    transform: translate(51px, 180px);  
         width: 300px;
 
 }
