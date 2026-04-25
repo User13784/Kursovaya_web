@@ -39,7 +39,7 @@ body, html {
 
 .side-panel {
     width: 585px;
-    height: 1000px;
+    height: 1060px;
     position: relative; 
 
     background: linear-gradient(to right, 
@@ -89,26 +89,26 @@ body, html {
 }
 
 .item-home {
-    top: 372px; 
+    top: 448px; 
     left: 370px;
 }
 
 .item-services {
-    top: 454px; 
+    top: 530px; 
     right: 99px; 
 }
 
 .item-team {
-    top: 535px; 
+    top: 610px; 
     left: 358px;
 }
 
 .item-reviews {
-    top: 615px; 
+    top: 690px; 
     right: 100px; 
 }
 
 .item-contacts {
-    top: 698px; 
+    top: 772px; 
     left: 351px;
 }
