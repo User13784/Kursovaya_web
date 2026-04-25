@@ -1,0 +1,726 @@
+@media screen and (max-width: 1024px) {
+    .sidebar {
+        width: 45%;
+        min-width: 350px;
+        padding: 40px;
+    }
+    
+    .content-area {
+        width: 55%;
+        padding-bottom: 120px;
+    }
+    
+    .close-btn {
+        top: 100px;
+        left: 20px;
+    }
+    
+    .close-btn img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .back-link {
+        font-size: 20px;
+        transform: translate(-30px, 50px);
+        margin-bottom: 40px;
+    }
+    
+    .back-link::before {
+        width: 22px;
+        height: 20px;
+        margin-right: 10px;
+    }
+    
+    .menu-list a {
+        font-size: 18px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 18px;
+    }
+    
+    .hero-content h1 {
+        font-size: 34px;
+        margin-top: -460px;
+    }
+    
+    .btn-more {
+        padding: 10px 40px;
+        font-size: 13px;
+    }
+    
+    .chevron-wrapper {
+        top: 120px;
+        left: -100px;
+        width: 20px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-40px, 70px); }
+    .menu-list li:nth-child(2) a { transform: translate(-40px, 76px); }
+    .menu-list li:nth-child(3) a { transform: translate(-40px, 82px); }
+    .menu-list li:nth-child(4) a { transform: translate(-40px, 88px); }
+    .menu-list li:nth-child(5) a { transform: translate(-40px, 94px); }
+    .menu-list li:nth-child(6) a { transform: translate(-40px, 100px); }
+    .menu-list li:nth-child(7) a { transform: translate(-40px, 106px); }
+    .menu-list li:nth-child(8) a { transform: translate(-40px, 112px); }
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 50%;
+        min-width: 280px;
+        padding: 30px;
+    }
+    
+    .content-area {
+        width: 50%;
+        padding-bottom: 100px;
+    }
+    
+    .close-btn {
+        top: 80px;
+        left: 15px;
+    }
+    
+    .close-btn img {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .back-link {
+        font-size: 18px;
+        transform: translate(-20px, 40px);
+        margin-bottom: 30px;
+    }
+    
+    .back-link::before {
+        width: 20px;
+        height: 18px;
+    }
+    
+    .menu-list a {
+        font-size: 16px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 16px;
+    }
+    
+    .hero-content h1 {
+        font-size: 28px;
+        margin-top: -470px;
+    }
+    
+    .btn-more {
+        padding: 9px 35px;
+        font-size: 12px;
+    }
+    
+    .chevron-wrapper {
+        top: 100px;
+        left: -80px;
+        width: 18px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-30px, 60px); }
+    .menu-list li:nth-child(2) a { transform: translate(-30px, 65px); }
+    .menu-list li:nth-child(3) a { transform: translate(-30px, 70px); }
+    .menu-list li:nth-child(4) a { transform: translate(-30px, 75px); }
+    .menu-list li:nth-child(5) a { transform: translate(-30px, 80px); }
+    .menu-list li:nth-child(6) a { transform: translate(-30px, 85px); }
+    .menu-list li:nth-child(7) a { transform: translate(-30px, 90px); }
+    .menu-list li:nth-child(8) a { transform: translate(-30px, 95px); }
+}
+
+@media screen and (max-width: 600px) {
+    .sidebar {
+        width: 55%;
+        min-width: 240px;
+        padding: 20px;
+    }
+    
+    .content-area {
+        width: 45%;
+        padding-bottom: 80px;
+    }
+    
+    .close-btn {
+        top: 60px;
+        left: 12px;
+    }
+    
+    .close-btn img {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .back-link {
+        font-size: 16px;
+        transform: translate(-15px, 30px);
+        margin-bottom: 20px;
+    }
+    
+    .back-link::before {
+        width: 18px;
+        height: 16px;
+        margin-right: 8px;
+    }
+    
+    .menu-list a {
+        font-size: 14px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 14px;
+    }
+    
+    .menu-list li {
+        margin-bottom: 18px;
+    }
+    
+    .hero-content h1 {
+        font-size: 22px;
+        margin-top: -480px;
+    }
+    
+    .btn-more {
+        padding: 7px 28px;
+        font-size: 11px;
+    }
+    
+    .chevron-wrapper {
+        top: 80px;
+        left: -60px;
+        width: 15px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-20px, 45px); }
+    .menu-list li:nth-child(2) a { transform: translate(-20px, 50px); }
+    .menu-list li:nth-child(3) a { transform: translate(-20px, 55px); }
+    .menu-list li:nth-child(4) a { transform: translate(-20px, 60px); }
+    .menu-list li:nth-child(5) a { transform: translate(-20px, 65px); }
+    .menu-list li:nth-child(6) a { transform: translate(-20px, 70px); }
+    .menu-list li:nth-child(7) a { transform: translate(-20px, 75px); }
+    .menu-list li:nth-child(8) a { transform: translate(-20px, 80px); }
+}
+
+@media screen and (max-width: 480px) {
+    .sidebar {
+        width: 60%;
+        min-width: 200px;
+        padding: 15px;
+    }
+    
+    .content-area {
+        width: 40%;
+        padding-bottom: 60px;
+    }
+    
+    .close-btn {
+        top: 50px;
+        left: 10px;
+    }
+    
+    .close-btn img {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .back-link {
+        font-size: 14px;
+        transform: translate(-10px, 25px);
+        margin-bottom: 15px;
+    }
+    
+    .back-link::before {
+        width: 16px;
+        height: 14px;
+        margin-right: 6px;
+    }
+    
+    .menu-list a {
+        font-size: 12px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 12px;
+    }
+    
+    .menu-list li {
+        margin-bottom: 14px;
+    }
+    
+    .hero-content h1 {
+        font-size: 18px;
+        margin-bottom: 12px;
+        margin-top: -490px;
+    }
+    
+    .btn-more {
+        padding: 6px 22px;
+        font-size: 10px;
+    }
+    
+    .chevron-wrapper {
+        top: 60px;
+        left: -50px;
+        width: 12px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-15px, 35px); }
+    .menu-list li:nth-child(2) a { transform: translate(-15px, 39px); }
+    .menu-list li:nth-child(3) a { transform: translate(-15px, 43px); }
+    .menu-list li:nth-child(4) a { transform: translate(-15px, 47px); }
+    .menu-list li:nth-child(5) a { transform: translate(-15px, 51px); }
+    .menu-list li:nth-child(6) a { transform: translate(-15px, 55px); }
+    .menu-list li:nth-child(7) a { transform: translate(-15px, 59px); }
+    .menu-list li:nth-child(8) a { transform: translate(-15px, 63px); }
+}
+
+@media screen and (max-width: 410px) {
+    .sidebar {
+        width: 62%;
+        min-width: 190px;
+        padding: 12px;
+    }
+    
+    .content-area {
+        width: 38%;
+        padding-bottom: 55px;
+    }
+    
+    .close-btn {
+        top: 48px;
+        left: 8px;
+    }
+    
+    .close-btn img {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .back-link {
+        font-size: 13px;
+        transform: translate(-8px, 23px);
+        margin-bottom: 12px;
+    }
+    
+    .back-link::before {
+        width: 15px;
+        height: 13px;
+        margin-right: 5px;
+    }
+    
+    .menu-list a {
+        font-size: 11px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 11px;
+    }
+    
+    .menu-list li {
+        margin-bottom: 12px;
+    }
+    
+    .hero-content h1 {
+        font-size: 17px;
+        margin-bottom: 10px;
+        margin-top: -495px;
+    }
+    
+    .btn-more {
+        padding: 5px 18px;
+        font-size: 9.5px;
+        border-radius: 18px;
+    }
+    
+    .chevron-wrapper {
+        top: 55px;
+        left: -45px;
+        width: 11px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-12px, 28px); }
+    .menu-list li:nth-child(2) a { transform: translate(-12px, 31px); }
+    .menu-list li:nth-child(3) a { transform: translate(-12px, 34px); }
+    .menu-list li:nth-child(4) a { transform: translate(-12px, 37px); }
+    .menu-list li:nth-child(5) a { transform: translate(-12px, 40px); }
+    .menu-list li:nth-child(6) a { transform: translate(-12px, 43px); }
+    .menu-list li:nth-child(7) a { transform: translate(-12px, 46px); }
+    .menu-list li:nth-child(8) a { transform: translate(-12px, 49px); }
+}
+
+@media screen and (max-width: 380px) {
+    .sidebar {
+        width: 63%;
+        min-width: 180px;
+        padding: 10px;
+    }
+    
+    .content-area {
+        width: 37%;
+        padding-bottom: 50px;
+    }
+    
+    .close-btn {
+        top: 45px;
+        left: 7px;
+    }
+    
+    .close-btn img {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .back-link {
+        font-size: 12px;
+        transform: translate(-7px, 21px);
+        margin-bottom: 10px;
+    }
+    
+    .back-link::before {
+        width: 14px;
+        height: 12px;
+        margin-right: 4px;
+    }
+    
+    .menu-list a {
+        font-size: 10px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 10px;
+    }
+    
+    .menu-list li {
+        margin-bottom: 11px;
+    }
+    
+    .hero-content h1 {
+        font-size: 16px;
+        margin-bottom: 8px;
+        margin-top: -500px;
+    }
+    
+    .btn-more {
+        padding: 4px 16px;
+        font-size: 9px;
+        border-radius: 16px;
+    }
+    
+    .chevron-wrapper {
+        top: 50px;
+        left: -40px;
+        width: 10px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-10px, 26px); }
+    .menu-list li:nth-child(2) a { transform: translate(-10px, 29px); }
+    .menu-list li:nth-child(3) a { transform: translate(-10px, 32px); }
+    .menu-list li:nth-child(4) a { transform: translate(-10px, 35px); }
+    .menu-list li:nth-child(5) a { transform: translate(-10px, 38px); }
+    .menu-list li:nth-child(6) a { transform: translate(-10px, 41px); }
+    .menu-list li:nth-child(7) a { transform: translate(-10px, 44px); }
+    .menu-list li:nth-child(8) a { transform: translate(-10px, 47px); }
+}
+
+@media screen and (max-width: 368px) {
+    .sidebar {
+        width: 63%;
+        min-width: 175px;
+        padding: 10px;
+    }
+    
+    .content-area {
+        width: 37%;
+        padding-bottom: 50px;
+    }
+    
+    .close-btn {
+        top: 46px;
+        left: 7px;
+    }
+    
+    .close-btn img {
+        width: 19px;
+        height: 19px;
+    }
+    
+    .back-link {
+        font-size: 12px;
+        transform: translate(-7px, 22px);
+        margin-bottom: 10px;
+    }
+    
+    .back-link::before {
+        width: 14px;
+        height: 12px;
+        margin-right: 4px;
+    }
+    
+    .menu-list a {
+        font-size: 10px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 10px;
+    }
+    
+    .menu-list li {
+        margin-bottom: 11px;
+    }
+    
+    .hero-content h1 {
+        font-size: 15px;
+        margin-bottom: 8px;
+        margin-top: -505px;
+    }
+    
+    .btn-more {
+        padding: 4px 17px;
+        font-size: 9px;
+        border-radius: 16px;
+    }
+    
+    .chevron-wrapper {
+        top: 50px;
+        left: -42px;
+        width: 10px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-11px, 27px); }
+    .menu-list li:nth-child(2) a { transform: translate(-11px, 30px); }
+    .menu-list li:nth-child(3) a { transform: translate(-11px, 33px); }
+    .menu-list li:nth-child(4) a { transform: translate(-11px, 36px); }
+    .menu-list li:nth-child(5) a { transform: translate(-11px, 39px); }
+    .menu-list li:nth-child(6) a { transform: translate(-11px, 42px); }
+    .menu-list li:nth-child(7) a { transform: translate(-11px, 45px); }
+    .menu-list li:nth-child(8) a { transform: translate(-11px, 48px); }
+}
+
+@media screen and (max-width: 350px) {
+    .sidebar {
+        width: 64%;
+        min-width: 170px;
+        padding: 9px;
+    }
+    
+    .content-area {
+        width: 36%;
+        padding-bottom: 45px;
+    }
+    
+    .close-btn {
+        top: 43px;
+        left: 6px;
+    }
+    
+    .close-btn img {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .back-link {
+        font-size: 11px;
+        transform: translate(-6px, 20px);
+        margin-bottom: 9px;
+    }
+    
+    .back-link::before {
+        width: 13px;
+        height: 11px;
+        margin-right: 4px;
+    }
+    
+    .menu-list a {
+        font-size: 9.5px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 9.5px;
+    }
+    
+    .menu-list li {
+        margin-bottom: 10px;
+    }
+    
+    .hero-content h1 {
+        font-size: 14px;
+        margin-bottom: 7px;
+        margin-top: -508px;
+    }
+    
+    .btn-more {
+        padding: 4px 15px;
+        font-size: 8.5px;
+        border-radius: 14px;
+    }
+    
+    .chevron-wrapper {
+        top: 47px;
+        left: -40px;
+        width: 9px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-10px, 25px); }
+    .menu-list li:nth-child(2) a { transform: translate(-10px, 28px); }
+    .menu-list li:nth-child(3) a { transform: translate(-10px, 31px); }
+    .menu-list li:nth-child(4) a { transform: translate(-10px, 34px); }
+    .menu-list li:nth-child(5) a { transform: translate(-10px, 37px); }
+    .menu-list li:nth-child(6) a { transform: translate(-10px, 40px); }
+    .menu-list li:nth-child(7) a { transform: translate(-10px, 43px); }
+    .menu-list li:nth-child(8) a { transform: translate(-10px, 46px); }
+}
+
+@media screen and (max-width: 335px) {
+    .sidebar {
+        width: 64%;
+        min-width: 168px;
+        padding: 8px;
+    }
+    
+    .content-area {
+        width: 36%;
+        padding-bottom: 42px;
+    }
+    
+    .close-btn {
+        top: 41px;
+        left: 6px;
+    }
+    
+    .close-btn img {
+        width: 17px;
+        height: 17px;
+    }
+    
+    .back-link {
+        font-size: 10.5px;
+        transform: translate(-5px, 19px);
+        margin-bottom: 8px;
+    }
+    
+    .back-link::before {
+        width: 12px;
+        height: 10px;
+        margin-right: 3px;
+    }
+    
+    .menu-list a {
+        font-size: 9px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 9px;
+    }
+    
+    .menu-list li {
+        margin-bottom: 9px;
+    }
+    
+    .hero-content h1 {
+        font-size: 13.5px;
+        margin-bottom: 6px;
+        margin-top: -510px;
+    }
+    
+    .btn-more {
+        padding: 3.5px 13px;
+        font-size: 8px;
+        border-radius: 13px;
+    }
+    
+    .chevron-wrapper {
+        top: 45px;
+        left: -38px;
+        width: 8.5px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-9px, 24px); }
+    .menu-list li:nth-child(2) a { transform: translate(-9px, 27px); }
+    .menu-list li:nth-child(3) a { transform: translate(-9px, 30px); }
+    .menu-list li:nth-child(4) a { transform: translate(-9px, 33px); }
+    .menu-list li:nth-child(5) a { transform: translate(-9px, 36px); }
+    .menu-list li:nth-child(6) a { transform: translate(-9px, 39px); }
+    .menu-list li:nth-child(7) a { transform: translate(-9px, 42px); }
+    .menu-list li:nth-child(8) a { transform: translate(-9px, 45px); }
+}
+
+@media screen and (max-width: 320px) {
+    .sidebar {
+        width: 65%;
+        min-width: 165px;
+        padding: 8px;
+    }
+    
+    .content-area {
+        width: 35%;
+        padding-bottom: 40px;
+        background-position: center center;
+    }
+    
+    .close-btn {
+        top: 40px;
+        left: 5px;
+    }
+    
+    .close-btn img {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .back-link {
+        font-size: 10px;
+        transform: translate(-5px, 18px);
+        margin-bottom: 8px;
+    }
+    
+    .back-link::before {
+        width: 12px;
+        height: 10px;
+        margin-right: 3px;
+        transform: translate(1px, -2px);
+    }
+    
+    .menu-list a {
+        font-size: 9px;
+    }
+    
+    .menu-list a:hover, .menu-list a.active {
+        font-size: 9px;
+    }
+    
+    .menu-list li {
+        margin-bottom: 9px;
+    }
+    
+    .hero-content h1 {
+        font-size: 13px;
+        margin-bottom: 6px;
+        margin-top: -512px;
+    }
+    
+    .btn-more {
+        padding: 3px 12px;
+        font-size: 8px;
+        border-radius: 12px;
+        transform: translate(0px, 3px);
+    }
+    
+    .chevron-wrapper {
+        top: 40px;
+        left: -35px;
+        width: 8px;
+    }
+    
+    .menu-list li:nth-child(1) a { transform: translate(-8px, 22px); }
+    .menu-list li:nth-child(2) a { transform: translate(-8px, 25px); }
+    .menu-list li:nth-child(3) a { transform: translate(-8px, 28px); }
+    .menu-list li:nth-child(4) a { transform: translate(-8px, 31px); }
+    .menu-list li:nth-child(5) a { transform: translate(-8px, 34px); }
+    .menu-list li:nth-child(6) a { transform: translate(-8px, 37px); }
+    .menu-list li:nth-child(7) a { transform: translate(-8px, 40px); }
+    .menu-list li:nth-child(8) a { transform: translate(-8px, 43px); }
+}
