@@ -117,11 +117,6 @@ body {
 
 }
 
-.btn-submit:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-2px);
-}
-
 .spec-title {
     transform: translate(-101px, 76px);  
 }
