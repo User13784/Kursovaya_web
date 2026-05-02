@@ -341,7 +341,7 @@ body {
 
 .last-step-btn {
     position: relative; 
-    transform: translate(-195px, 0px); 
+    transform: translate(0px, -25px); 
     white-space: nowrap; 
     z-index: 10;
 }
@@ -386,4 +386,164 @@ main {
 
 body, main {
     background-color: #D7D8D8;
+}
+
+/* ========== БУРГЕР-МЕНЮ ========== */
+
+/* Бургер-иконка - скрыта на десктопе */
+.burger-icon {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 30px;
+    height: 21px;
+    margin-left: 15px;
+    z-index: 1000;
+}
+
+.burger-icon span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Анимация при открытом меню */
+.burger-icon.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.burger-icon.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-icon.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Мобильное меню */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 350px;
+    height: 100vh;
+    background: #1A1F23;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    transition: right 0.3s ease;
+    padding: 100px 30px 30px;
+    overflow-y: auto;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mobile-menu-btn,
+.mobile-lang-selector,
+.mobile-login-link,
+.mobile-link {
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #FFFFFF;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    transition: color 0.3s;
+}
+
+.mobile-menu-btn:hover,
+.mobile-lang-selector:hover,
+.mobile-login-link:hover,
+.mobile-link:hover {
+    color: #A5C33C;
+}
+
+/* Оверлей (затемнение фона) */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Запрет скролла при открытом меню */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* ========== КРЕСТИК ДЛЯ ЗАКРЫТИЯ МОБИЛЬНОГО МЕНЮ ========== */
+
+.close-menu-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 1002;
+    background: transparent;
+    border: none;
+}
+
+.close-menu-btn span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 2px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.close-menu-btn span:first-child {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close-menu-btn span:last-child {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.close-menu-btn:hover span {
+    background-color: #A5C33C;
+}
+
+/* Показываем бургер на планшетах и мобильных устройствах */
+@media (max-width: 1200px) {
+    .burger-icon {
+        display: flex !important;
+    }
+    
+    .menu-btn,
+    .lang-selector {
+        display: none !important;
+    }
+    
+    .login-link,
+    .desktop-login {
+        display: none !important;
+    }
 }

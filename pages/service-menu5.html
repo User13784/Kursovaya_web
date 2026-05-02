@@ -2,15 +2,34 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Цифровое протезирование — Dental Club</title>
     
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/service-menu5.css">
+    <link rel="stylesheet" href="../media/service-menu5_media.css">
 </head>
 <body>
 
     <div id="header-placeholder"></div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu-btn" id="closeMenuBtn">
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="mobile-nav">
+            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <a href="#" class="mobile-lang-selector">RUS</a>
+            <a href="#" class="mobile-login-link">ВОЙТИ</a>
+            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link">УСЛУГИ</a>
+            <a href="#" class="mobile-link">КОМАНДА</a>
+            <a href="#" class="mobile-link">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
+        </nav>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
         <section class="hero-diagnostics">
@@ -72,12 +91,11 @@
                         <p class="safety-text">
                             Отличительной особенностью ортопедических конструкций, изготовленных современными цифровыми методами, является прочность и устойчивость к изменению цвета. Высокая стоимость таких реставраций обоснована их надёжностью и долговечностью.
                         </p>
-
                         <p class="steps-title">Этапы</p>
                         <ul class="steps-list">
-                            <li>1. Подготовка зуба или установленного имплантата к &nbsp;&nbsp;&nbsp;&nbsp;протезированию</li>
+                            <li>1. Подготовка зуба или установленного имплантата к протезированию</li>
                             <li>2. Снятие слепка</li>
-                            <li>3. &nbsp;Изготовление временной конструкции</li>
+                            <li>3. Изготовление временной конструкции</li>
                             <li>4. Установка финальной конструкции.</li>
                         </ul>
                         <button class="btn-outline steps-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
@@ -85,16 +103,75 @@
                 </div>
 
                 <div class="info-row reverse steps-row">
-                     <div class="info-image double-img">
+                    <div class="info-image double-img">
                         <img class="microscope-img" src="../assets/images/service-menu5-page/service-menu1.jpg" alt="Детализация процесса">
                     </div>
-                    
                 </div>
             </div>
         </div>
     </main>
 
     <div id="footer-placeholder"></div>
+
     <script src="../js/components.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const burgerIcon = document.getElementById('burgerIcon');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('menuOverlay');
+                const closeMenuBtn = document.getElementById('closeMenuBtn');
+                const body = document.body;
+
+                function openMenu() {
+                    if (burgerIcon) burgerIcon.classList.add('active');
+                    if (mobileMenu) mobileMenu.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                }
+
+                function closeMenu() {
+                    if (burgerIcon) burgerIcon.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                }
+
+                if (burgerIcon) {
+                    burgerIcon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (mobileMenu && mobileMenu.classList.contains('active')) {
+                            closeMenu();
+                        } else {
+                            openMenu();
+                        }
+                    });
+                }
+
+                if (closeMenuBtn) {
+                    closeMenuBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeMenu();
+                    });
+                }
+
+                if (menuOverlay) {
+                    menuOverlay.addEventListener('click', closeMenu);
+                }
+
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }, 100);
+        });
+    </script>
 </body>
 </html>

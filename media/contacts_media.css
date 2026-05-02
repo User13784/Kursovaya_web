@@ -1,0 +1,1523 @@
+@media (max-width: 1436px) {
+    .contacts-details h2,
+    .phones a,
+    .phones a:first-child,
+    .phones a:last-child,
+    .address,
+    .schedule,
+    .email,
+    .social-icons a,
+    .social-icons a:first-child,
+    .social-icons a:nth-child(2),
+    .social-icons a:nth-child(3),
+    .social-icons a:last-child,
+    .btn-outline,
+    .map-image-side img,
+    .map-iframe-wrapper img,
+    .feedback-title h2,
+    .feedback-form input,
+    .feedback-form textarea,
+    .feedback-form input:first-child,
+    .feedback-form input:nth-child(2),
+    .feedback-form input:nth-child(3),
+    .feedback-form textarea,
+    .btn-submit {
+        transform: none !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        position: static !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center !important;
+    }
+
+    .contacts-grid,
+    .contacts-details,
+    .contacts-cta,
+    .feedback-flex {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    .social-icons {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 20px !important;
+        flex-direction: row !important;
+    }
+
+    .social-icons a {
+        display: inline-block !important;
+        transform: none !important;
+    }
+
+    .btn-outline,
+    .btn-submit,
+    .btn-white {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 20px auto !important;
+    }
+
+    .feedback-form {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 25px !important;
+        width: 100% !important;
+        max-width: 500px !important;
+        margin: 0 auto !important;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+        width: 100% !important;
+        max-width: 400px !important;
+        text-align: center !important;
+        margin: 0 !important;
+    }
+
+    .phones a {
+        display: inline-block !important;
+        margin: 0 10px !important;
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1435px) {
+    .burger-icon {
+        display: flex !important;
+    }
+
+    .container {
+        padding: 0 25px;
+    }
+
+    .header-container {
+        padding: 20px 30px;
+    }
+
+    .menu-btn {
+        margin-left: 20px;
+        font-size: 16px;
+    }
+
+    .menu-btn,
+    .lang-selector {
+        display: none !important;
+    }
+
+    .login-link,
+    .desktop-login {
+        display: none !important;
+    }
+
+    .logo {
+        margin-right: 100px;
+    }
+
+    .logo img {
+        width: 110px;
+        height: auto;
+    }
+
+    .hero {
+        height: 750px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .btn {
+        margin-top: 20px;
+        position: relative;
+        top: 0;
+        width: 280px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .grid-2 {
+        gap: 30px;
+        padding: 60px 25px;
+    }
+
+    .text-block h2 {
+        margin-left: 0;
+        font-size: 36px;
+        padding: 0 15px;
+        text-align: center;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        margin-left: 0;
+        max-width: 100%;
+        padding: 0 15px;
+        font-size: 18px;
+    }
+
+    .advantages .content-block .btn-outline,
+    .clinic-info .content-block .btn-outline {
+        margin-left: 0;
+        margin: 20px auto;
+        width: 280px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .advantages .text-block {
+        margin-top: 80px;
+    }
+    
+    .advantages .content-block {
+        margin-top: 40px;
+    }
+
+    .image-gallery {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .img-left {
+        margin-top: 0;
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        aspect-ratio: 405 / 557;
+    }
+
+    .img-right {
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+        margin-left: 0;
+        aspect-ratio: 980 / 653;
+    }
+
+    .image-gallery-alt {
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 25px 80px 25px;
+        gap: 20px;
+    }
+
+    .img-bottom-left,
+    .img-bottom-right {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        margin-top: 0;
+        transform: none;
+    }
+
+    .map-container {
+        flex-direction: column !important;
+        height: auto !important;
+        gap: 30px !important;
+        align-items: center !important;
+        margin-top: 150px !important;
+    }
+
+    .map-image-side {
+        flex: none !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .map-image-side img {
+        width: 100% !important;
+        max-width: 500px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .map-iframe-wrapper {
+        flex: none !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .map-iframe-wrapper img {
+        width: 100% !important;
+        max-width: 700px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .hero-contacts {
+        height: 500px;
+    }
+
+    .hero-content h1 {
+        font-size: 48px;
+        text-align: center;
+    }
+
+    .btn-white {
+        width: 280px;
+        height: 50px;
+        font-size: 16px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    .contacts-info-section::before {
+        height: 100%;
+    }
+
+    .feedback-section {
+        margin-top: 0;
+        padding: 60px 0;
+        min-height: auto;
+    }
+
+    .footer-container {
+        padding: 0 30px;
+    }
+
+    .footer-logo img {
+        width: 180px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 18px;
+    }
+
+    .footer-links-row {
+        gap: 40px;
+        justify-content: center;
+    }
+
+    .footer-socials {
+        justify-content: center;
+        gap: 17px;
+    }
+
+    .footer-socials img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .footer-line {
+        width: 100%;
+    }
+
+    .footer-nav {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .footer-socials {
+        margin-left: 0;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1200px) {
+    .burger-icon {
+        display: flex !important;
+    }
+
+    .container {
+        padding: 0 25px;
+    }
+
+    .header-container {
+        padding: 20px 30px;
+    }
+
+    .menu-btn {
+        margin-left: 20px;
+        font-size: 16px;
+    }
+
+    .menu-btn,
+    .lang-selector {
+        display: none !important;
+    }
+
+    .login-link,
+    .desktop-login {
+        display: none !important;
+    }
+
+    .logo {
+        margin-right: 100px;
+    }
+
+    .logo img {
+        width: 110px;
+        height: auto;
+    }
+
+    .hero {
+        height: 750px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .btn {
+        margin-top: 20px;
+        position: relative;
+        top: 0;
+        width: 280px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .grid-2 {
+        gap: 30px;
+        padding: 60px 25px;
+    }
+
+    .text-block h2 {
+        margin-left: 0;
+        font-size: 36px;
+        padding: 0 15px;
+        text-align: center;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        margin-left: 0;
+        max-width: 100%;
+        padding: 0 15px;
+        font-size: 18px;
+    }
+
+    .advantages .content-block .btn-outline,
+    .clinic-info .content-block .btn-outline {
+        margin-left: 0;
+        margin: 20px auto;
+        width: 280px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .advantages .text-block {
+        margin-top: 80px;
+    }
+    
+    .advantages .content-block {
+        margin-top: 40px;
+    }
+
+    .image-gallery {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .img-left {
+        margin-top: 0;
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        aspect-ratio: 405 / 557;
+    }
+
+    .img-right {
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+        margin-left: 0;
+        aspect-ratio: 980 / 653;
+    }
+
+    .image-gallery-alt {
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 25px 80px 25px;
+        gap: 20px;
+    }
+
+    .img-bottom-left,
+    .img-bottom-right {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        margin-top: 0;
+        transform: none;
+    }
+
+    .map-container {
+        flex-direction: column !important;
+        height: auto !important;
+        gap: 30px !important;
+        align-items: center !important;
+        margin-top: 150px !important;
+    }
+
+    .map-image-side {
+        flex: none !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .map-image-side img {
+        width: 100% !important;
+        max-width: 500px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .map-iframe-wrapper {
+        flex: none !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .map-iframe-wrapper img {
+        width: 100% !important;
+        max-width: 700px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .hero-contacts {
+        height: 500px;
+    }
+
+    .hero-content h1 {
+        font-size: 48px;
+        text-align: center;
+    }
+
+    .btn-white {
+        width: 280px;
+        height: 50px;
+        font-size: 16px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    .contacts-info-section::before {
+        height: 100%;
+    }
+
+    .feedback-section {
+        margin-top: 0;
+        padding: 60px 0;
+        min-height: auto;
+    }
+
+    .footer-container {
+        padding: 0 30px;
+    }
+
+    .footer-logo img {
+        width: 180px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 18px;
+    }
+
+    .footer-links-row {
+        gap: 40px;
+        justify-content: center;
+    }
+
+    .footer-socials {
+        justify-content: center;
+        gap: 17px;
+    }
+
+    .footer-socials img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .footer-line {
+        width: 100%;
+    }
+
+    .footer-nav {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .footer-socials {
+        margin-left: 0;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        position: relative;
+    }
+
+    .burger-icon {
+        display: flex !important;
+        width: 26px;
+        height: 20px;
+    }
+
+    .burger-icon span {
+        background-color: #FFFFFF;
+    }
+
+    .header-left {
+        display: none;
+    }
+
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-right: 0;
+        order: 2;
+    }
+
+    .logo img {
+        width: 100px;
+        height: auto;
+    }
+
+    .header-right {
+        order: 3;
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .login-link {
+        display: none;
+    }
+
+    .hero {
+        height: 600px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+        margin-bottom: 40px;
+        padding: 0 20px;
+    }
+
+    .hero h1 .city-text {
+        padding-left: 10px;
+    }
+
+    .btn {
+        width: 260px;
+        height: 48px;
+        font-size: 15px;
+        position: relative;
+        top: 0;
+        margin-top: 20px;
+    }
+
+    .btn-outline {
+        top: 0;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 40px 25px;
+    }
+
+    .text-block h2 {
+        font-size: 32px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .advantages-title {
+        transform: none;
+    }
+
+    .advantages .text-block {
+        margin-top: 20px;
+    }
+    
+    .advantages .content-block {
+        margin-top: -20px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 18px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .advantages .content-block ul {
+        text-align: left;
+        padding: 0 30px;
+    }
+
+    .advantages .content-block li {
+        font-size: 17px;
+        margin-bottom: 12px;
+    }
+
+    .clinic-info .content-block .btn-outline,
+    .advantages .content-block .btn-outline {
+        display: block;
+        margin: 20px auto;
+        width: 260px;
+        height: 48px;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .image-gallery-alt {
+        padding: 30px 20px 60px 20px;
+    }
+
+    .map-container {
+        flex-direction: column !important;
+        height: auto !important;
+        gap: 30px !important;
+        align-items: center !important;
+        margin-top: 150px !important;
+    }
+
+    .map-image-side {
+        flex: none !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .map-image-side img {
+        width: 100% !important;
+        max-width: 400px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .map-iframe-wrapper img {
+        width: 100% !important;
+        max-width: 600px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .hero-contacts {
+        height: 450px;
+    }
+
+    .hero-content h1 {
+        font-size: 42px;
+        text-align: center;
+    }
+
+    .btn-white {
+        width: 260px;
+        height: 48px;
+        font-size: 15px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    .contacts-details h2 {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .phones a:first-child,
+    .phones a:last-child {
+        font-size: 20px;
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    .address,
+    .schedule,
+    .email {
+        font-size: 17px;
+        text-align: center;
+    }
+
+    .social-icons {
+        gap: 20px !important;
+    }
+
+    .social-icons img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .btn-outline {
+        width: 260px;
+        height: 48px;
+        font-size: 15px;
+    }
+
+    .feedback-title h2 {
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .feedback-form {
+        max-width: 450px;
+        gap: 20px;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+        max-width: 350px;
+        font-size: 15px;
+        padding: 8px 10px;
+    }
+
+    .feedback-form textarea {
+        min-height: 40px;
+    }
+
+    .btn-submit {
+        width: 240px;
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .footer-logo img {
+        width: 160px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 16px;
+    }
+
+    .footer-links-row {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .footer-socials {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .footer-socials img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media (max-width: 769px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .header-container {
+        gap: 10px;
+        padding: 10px 15px;
+    }
+
+    .logo img {
+        width: 75px;
+    }
+
+    .burger-icon {
+        width: 24px;
+        height: 18px;
+    }
+
+    .hero {
+        height: 450px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+        margin-bottom: 25px;
+        padding: 0 15px;
+    }
+
+    .btn {
+        width: 210px;
+        height: 42px;
+        font-size: 13px;
+        margin-top: 15px;
+    }
+
+    .grid-2 {
+        padding: 30px 15px;
+    }
+
+    .text-block h2 {
+        font-size: 24px;
+        padding: 0 10px;
+    }
+
+    .advantages .text-block {
+        margin-top: 20px;
+    }
+    
+    .advantages .content-block {
+        margin-top: -20px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .advantages .content-block ul {
+        padding: 0 15px;
+    }
+
+    .advantages .content-block li {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .btn-outline {
+        width: 210px;
+        height: 42px;
+        font-size: 13px;
+        margin: 20px auto;
+    }
+
+    .image-gallery-alt {
+        padding: 20px 15px 40px 15px;
+    }
+
+    .map-container {
+        flex-direction: column !important;
+        height: auto !important;
+        gap: 20px !important;
+        align-items: center !important;
+        margin-top: 150px !important;
+    }
+
+    .map-image-side {
+        flex: none !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .map-image-side img {
+        width: 100% !important;
+        max-width: 300px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .map-iframe-wrapper {
+        flex: none !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .map-iframe-wrapper img {
+        width: 100% !important;
+        max-width: 400px !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .hero-contacts {
+        height: 350px;
+    }
+
+    .hero-content h1 {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .btn-white {
+        width: 220px;
+        height: 42px;
+        font-size: 13px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    .contacts-details h2 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .phones a:first-child,
+    .phones a:last-child {
+        font-size: 16px;
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    .address,
+    .schedule,
+    .email {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .social-icons {
+        gap: 16px !important;
+    }
+
+    .social-icons img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .btn-outline {
+        width: 220px;
+        height: 42px;
+        font-size: 13px;
+    }
+
+    .feedback-section {
+        padding: 40px 0;
+    }
+
+    .feedback-title h2 {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .feedback-form {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+        gap: 15px;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+        width: 100%;
+        max-width: 260px;
+        font-size: 13px;
+        padding: 7px 10px;
+        text-align: center;
+        margin: 0;
+    }
+
+    .feedback-form textarea {
+        min-height: 38px;
+    }
+
+    .btn-submit {
+        width: 200px;
+        height: 40px;
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+    .footer-logo img {
+        width: 120px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 14px;
+    }
+
+    .footer-links-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .footer-socials {
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .footer-socials img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .mobile-menu {
+        width: 90%;
+        padding: 70px 20px 25px;
+    }
+}
+
+@media (max-width: 375px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    .hero {
+        height: 400px;
+    }
+
+    .hero h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding: 0 12px;
+    }
+
+    .btn {
+        width: 190px;
+        height: 40px;
+        font-size: 12px;
+        margin-top: 15px;
+    }
+
+    .btn-outline {
+        width: 190px;
+    }
+
+    .grid-2 {
+        padding: 30px 12px;
+    }
+
+    .text-block h2 {
+        font-size: 22px;
+        padding: 0 10px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 13px;
+        padding: 0 10px;
+    }
+
+    .advantages .content-block ul {
+        padding: 0 12px;
+    }
+
+    .advantages .content-block li {
+        font-size: 12px;
+    }
+
+    .logo img {
+        width: 65px;
+    }
+
+    .burger-icon {
+        width: 22px;
+        height: 16px;
+    }
+
+    .burger-icon.active span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .burger-icon.active span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    .map-image-side img {
+        max-width: 250px !important;
+    }
+
+    .map-iframe-wrapper img {
+        max-width: 350px !important;
+    }
+
+    .map-container {
+        margin-top: 150px !important;
+    }
+
+    .hero-contacts {
+        height: 320px;
+    }
+
+    .hero-content h1 {
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .btn-white {
+        width: 200px;
+        height: 40px;
+        font-size: 12px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    .contacts-details h2 {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .phones a:first-child,
+    .phones a:last-child {
+        font-size: 15px;
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    .address,
+    .schedule,
+    .email {
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .social-icons {
+        gap: 14px !important;
+    }
+
+    .social-icons img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .btn-outline {
+        width: 200px;
+        height: 40px;
+        font-size: 12px;
+    }
+
+    .feedback-section {
+        padding: 35px 0;
+    }
+
+    .feedback-title h2 {
+        font-size: 22px;
+        text-align: center;
+        margin-bottom: 18px;
+    }
+
+    .feedback-form {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        gap: 12px;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+        width: 100%;
+        max-width: 220px;
+        font-size: 12px;
+        padding: 6px 8px;
+        text-align: center;
+        margin: 0;
+    }
+
+    .feedback-form textarea {
+        min-height: 35px;
+    }
+
+    .btn-submit {
+        width: 180px;
+        height: 38px;
+        font-size: 11px;
+        margin-top: 8px;
+    }
+
+    .footer-logo img {
+        width: 100px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 12px;
+    }
+
+    .footer-socials {
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .footer-socials img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    .hero {
+        height: 380px;
+    }
+
+    .hero h1 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        padding: 0 10px;
+    }
+
+    .btn {
+        width: 170px;
+        height: 38px;
+        font-size: 11px;
+        margin-top: 15px;
+    }
+
+    .btn-outline {
+        width: 170px;
+    }
+
+    .grid-2 {
+        padding: 25px 10px;
+    }
+
+    .text-block h2 {
+        font-size: 20px;
+        padding: 0 8px;
+    }
+
+    .advantages .text-block {
+        margin-top: 20px;
+    }
+    
+    .advantages .content-block {
+        margin-top: -20px;
+    }
+
+    .clinic-info .content-block p,
+    .advantages .content-block ul {
+        font-size: 12px;
+        line-height: 1.4;
+        padding: 0 8px;
+    }
+
+    .advantages .content-block ul {
+        padding: 0 10px;
+    }
+
+    .advantages .content-block li {
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+
+    .header-container {
+        padding: 8px 10px;
+    }
+
+    .logo img {
+        width: 55px;
+    }
+
+    .burger-icon {
+        width: 20px;
+        height: 14px;
+    }
+
+    /* ФОТО В КОНТАКТАХ */
+    .map-image-side img {
+        max-width: 200px !important;
+    }
+
+    .map-iframe-wrapper img {
+        max-width: 280px !important;
+    }
+
+    .map-container {
+        margin-top: 150px !important;
+    }
+
+    .hero-contacts {
+        height: 300px;
+    }
+
+    .hero-content h1 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .btn-white {
+        width: 180px;
+        height: 38px;
+        font-size: 11px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    .contacts-details h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .phones a:first-child,
+    .phones a:last-child {
+        font-size: 14px;
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    .address,
+    .schedule,
+    .email {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .social-icons {
+        gap: 12px !important;
+    }
+
+    .social-icons img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn-outline {
+        width: 180px;
+        height: 38px;
+        font-size: 11px;
+    }
+
+    .feedback-section {
+        padding: 30px 0;
+    }
+
+    .feedback-title h2 {
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .feedback-form {
+        width: 100%;
+        max-width: 240px;
+        margin: 0 auto;
+        gap: 10px;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+        width: 100%;
+        max-width: 180px;
+        font-size: 11px;
+        padding: 5px 8px;
+        text-align: center;
+        margin: 0;
+    }
+
+    .feedback-form textarea {
+        min-height: 32px;
+    }
+
+    .btn-submit {
+        width: 160px;
+        height: 35px;
+        font-size: 10px;
+        margin-top: 5px;
+    }
+
+    .footer-logo img {
+        width: 90px;
+        height: auto;
+    }
+
+    .footer-nav .footer-links-row a {
+        font-size: 11px;
+    }
+
+    .footer-socials {
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .footer-socials img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .footer-line {
+        margin: 10px 0;
+    }
+}
+
+
+@media (max-width: 769px) {
+    .close-menu-btn {
+        top: 15px;
+        right: 15px;
+        width: 28px;
+        height: 28px;
+    }
+    
+    .close-menu-btn span {
+        width: 20px;
+        height: 2px;
+    }
+}
+
+@media (max-width: 576px) {
+    .close-menu-btn {
+        top: 12px;
+        right: 12px;
+        width: 25px;
+        height: 25px;
+    }
+    
+    .close-menu-btn span {
+        width: 18px;
+        height: 2px;
+    }
+}
+
+@media (max-width: 375px) {
+    .close-menu-btn {
+        top: 10px;
+        right: 10px;
+        width: 22px;
+        height: 22px;
+    }
+    
+    .close-menu-btn span {
+        width: 16px;
+        height: 1.5px;
+    }
+}
+
+@media (max-width: 320px) {
+    .close-menu-btn {
+        top: 8px;
+        right: 8px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .close-menu-btn span {
+        width: 14px;
+        height: 1.5px;
+    }
+}

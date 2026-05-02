@@ -12,12 +12,20 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- МОБИЛЬНОЕ МЕНЮ -->
     <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu-btn" id="closeMenuBtn">
+            <span></span>
+            <span></span>
+        </div>
         <nav class="mobile-nav">
             <a href="#" class="mobile-menu-btn">МЕНЮ</a>
             <a href="#" class="mobile-lang-selector">RUS</a>
             <a href="#" class="mobile-login-link">ВОЙТИ</a>
+            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link">УСЛУГИ</a>
+            <a href="#" class="mobile-link">КОМАНДА</a>
+            <a href="#" class="mobile-link">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -74,16 +82,14 @@
     <div id="footer-placeholder"></div>
 
     <script src="js/components.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/index.js"></script>
-
-    <!-- СКРИПТ ДЛЯ БУРГЕР-МЕНЮ -->
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 const burgerIcon = document.getElementById('burgerIcon');
                 const mobileMenu = document.getElementById('mobileMenu');
                 const menuOverlay = document.getElementById('menuOverlay');
+                const closeMenuBtn = document.getElementById('closeMenuBtn');
                 const body = document.body;
 
                 function openMenu() {
@@ -111,11 +117,18 @@
                     });
                 }
 
+                if (closeMenuBtn) {
+                    closeMenuBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeMenu();
+                    });
+                }
+
                 if (menuOverlay) {
                     menuOverlay.addEventListener('click', closeMenu);
                 }
 
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link');
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
                 mobileLinks.forEach(link => {
                     link.addEventListener('click', closeMenu);
                 });

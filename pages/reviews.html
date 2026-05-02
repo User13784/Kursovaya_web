@@ -2,13 +2,104 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Отзывы | Dental Club</title>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/reviews.css">
+    <link rel="stylesheet" href="../media/reviews_media.css">
+    <style>
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            left: auto !important;
+            width: 80%;
+            max-width: 400px;
+            height: 100%;
+            background-color: #2F353B;
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 80px 30px 30px;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+            left: auto !important;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-menu-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .close-menu-btn span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 2px;
+            background-color: #FFFFFF;
+            border-radius: 2px;
+        }
+
+        .close-menu-btn span:first-child {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .close-menu-btn span:last-child {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu-btn" id="closeMenuBtn">
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="mobile-nav">
+            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <a href="#" class="mobile-lang-selector">RUS</a>
+            <a href="#" class="mobile-login-link">ВОЙТИ</a>
+            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link">УСЛУГИ</a>
+            <a href="#" class="mobile-link">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
+        </nav>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
         <section class="hero-reviews">
@@ -132,6 +223,108 @@
     </div>
 
     <script src="../js/components.js"></script>
-    <script src="../js/reviews-modal.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const burgerIcon = document.getElementById('burgerIcon');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('menuOverlay');
+                const closeMenuBtn = document.getElementById('closeMenuBtn');
+                const body = document.body;
+
+                function openMenu() {
+                    if (burgerIcon) burgerIcon.classList.add('active');
+                    if (mobileMenu) mobileMenu.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                    body.style.overflow = 'hidden';
+                }
+
+                function closeMenu() {
+                    if (burgerIcon) burgerIcon.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    body.style.overflow = '';
+                }
+
+                if (burgerIcon) {
+                    burgerIcon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (mobileMenu && mobileMenu.classList.contains('active')) {
+                            closeMenu();
+                        } else {
+                            openMenu();
+                        }
+                    });
+                }
+
+                if (closeMenuBtn) {
+                    closeMenuBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeMenu();
+                    });
+                }
+
+                if (menuOverlay) {
+                    menuOverlay.addEventListener('click', closeMenu);
+                }
+
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }, 100);
+
+            const modal = document.getElementById('reviewModal');
+            const openModalBtn = document.getElementById('openReviewModal');
+            const closeModalBtn = document.querySelector('.modal-close');
+
+            function openModal() {
+                if (modal) {
+                    modal.style.display = 'block';
+                    document.body.classList.add('modal-open');
+                }
+            }
+
+            function closeModal() {
+                if (modal) {
+                    modal.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                }
+            }
+
+            if (openModalBtn) {
+                openModalBtn.addEventListener('click', openModal);
+            }
+
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            const reviewForm = document.getElementById('reviewForm');
+            if (reviewForm) {
+                reviewForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Спасибо за ваш отзыв!');
+                    closeModal();
+                    reviewForm.reset();
+                });
+            }
+        });
+    </script>
 </body>
 </html>

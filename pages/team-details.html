@@ -2,13 +2,32 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Врач | Dental Club</title>
     <link rel="stylesheet" href="../css/index.css" />
     <link rel="stylesheet" href="../css/team-details.css" />
+    <link rel="stylesheet" href="../media/team-details_media.css" />
 </head>
 <body>
     <div id="header-placeholder"></div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu-btn" id="closeMenuBtn">
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="mobile-nav">
+            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <a href="#" class="mobile-lang-selector">RUS</a>
+            <a href="#" class="mobile-login-link">ВОЙТИ</a>
+            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link">КОМАНДА</a>
+            <a href="#" class="mobile-link">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
+        </nav>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <main class="doctor-profile">
         <div class="container">
@@ -53,7 +72,7 @@
     </main>
 
     <div id="footer-placeholder"></div>
-    
+
     <script src="../js/components.js"></script>
     <script src="../js/doctors-data.js"></script>
     <script>
@@ -73,6 +92,107 @@
             const plainName = doctor.name.replace(/<br>/g, ' ');
             document.title = `${plainName} | Dental Club`;
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function initMenu() {
+                const burgerIcon = document.getElementById('burgerIcon');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('menuOverlay');
+                const closeMenuBtn = document.getElementById('closeMenuBtn');
+                const body = document.body;
+
+                if (!burgerIcon) {
+                    const headerPlaceholder = document.getElementById('header-placeholder');
+                    if (headerPlaceholder && headerPlaceholder.innerHTML === '') {
+                        headerPlaceholder.innerHTML = `
+                            <header>
+                                <div class="header-container">
+                                    <div class="logo">
+                                        <a href="index.html">
+                                            <img src="../assets/images/logo.svg" alt="Dental Club">
+                                        </a>
+                                    </div>
+                                    <div class="header-right">
+                                        <button class="menu-btn">МЕНЮ</button>
+                                        <div class="lang-selector">RUS</div>
+                                        <a href="#" class="login-link">ВОЙТИ</a>
+                                        <div class="burger-icon" id="burgerIcon">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+                        `;
+                    }
+                    const newBurgerIcon = document.getElementById('burgerIcon');
+                    if (newBurgerIcon) {
+                        attachEvents(newBurgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body);
+                    }
+                    return;
+                }
+                
+                attachEvents(burgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body);
+            }
+            
+            function attachEvents(burgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body) {
+                function openMenu() {
+                    if (burgerIcon) burgerIcon.classList.add('active');
+                    if (mobileMenu) mobileMenu.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                }
+
+                function closeMenu() {
+                    if (burgerIcon) burgerIcon.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                }
+
+                if (burgerIcon) {
+                    const newBurgerIcon = burgerIcon.cloneNode(true);
+                    burgerIcon.parentNode.replaceChild(newBurgerIcon, burgerIcon);
+                    
+                    newBurgerIcon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (mobileMenu && mobileMenu.classList.contains('active')) {
+                            closeMenu();
+                        } else {
+                            openMenu();
+                        }
+                    });
+                }
+
+                if (closeMenuBtn) {
+                    closeMenuBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeMenu();
+                    });
+                }
+
+                if (menuOverlay) {
+                    menuOverlay.addEventListener('click', closeMenu);
+                }
+
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }
+            
+            setTimeout(initMenu, 100);
+            setTimeout(initMenu, 500);
+        });
     </script>
 </body>
 </html>
