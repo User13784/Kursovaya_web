@@ -515,6 +515,9 @@ function bindAppointmentButtons() {
     });
 }
 
+window.openVisitorAppointmentModal = openVisitorAppointmentModal;
+window.closeVisitorAppointmentModal = closeVisitorAppointmentModal;
+
 document.addEventListener('DOMContentLoaded', function() {
     createAppointmentModal();
     bindAppointmentButtons();

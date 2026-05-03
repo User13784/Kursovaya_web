@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Dental Club — Стоматологическая клиника в Алматы</title>
-    
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="media/index_media.css">
-    <link rel="stylesheet" href="css/modal-appointment.css">
-    <link rel="stylesheet" href="css/modal-profile.css">
-    <link rel="stylesheet" href="css/theme.css">
-<script src="js/translations.js"></script>
-<script src="js/personalization.js"></script>
-
-
+    <title>Прайс-лист | Dental Club</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/prices.css">
+    <link rel="stylesheet" href="../media/prices_media.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/modal-appointment.css">
 </head>
 <body>
 
@@ -30,66 +26,57 @@
             <a href="#" class="mobile-login-link">ВОЙТИ</a>
             <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
             <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="#" class="mobile-link">КОМАНДА</a>
-            <a href="#" class="mobile-link">ОТЗЫВЫ</a>
+            <a href="team.html" class="mobile-link">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
             <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
-        <section class="hero">
+        <section class="hero-prices">
             <div class="hero-content">
-                <h1>СТОМАТОЛОГИЧЕСКАЯ КЛИНИКА <br><span class="city-text">В МОГИЛЕВЕ</span></h1>
-                <button class="btn btn-primary">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                <h1>ПРАЙС-ЛИСТ</h1>
+                <button class="btn-white" id="openAppointmentBtn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
 
-        <section class="clinic-info">
-            <div class="container grid-2">
-                <div class="text-block">
-                    <h2>КЛИНИКА <br> DENTAL CLUB</h2>
+        <section class="prices-section">
+            <div class="container">
+                <div class="prices-filter">
+                    <div class="filter-group">
+                        <label>Категория:</label>
+                        <select id="priceCategoryFilter" class="category-select">
+                            <option value="all">Все услуги</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Поиск:</label>
+                        <input type="text" id="priceSearchInput" placeholder="Поиск по названию услуги..." class="search-input">
+                    </div>
                 </div>
-                <div class="content-block">
-                    <p>Первая клиника в Беларуси, предоставляющая<br> полный спектр стоматологических услуг на европейском уровне. Мы используем передовое оборудование и digital технологии.</p>
-                    <button class="btn btn-outline">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
-                </div>
-            </div>
-            <div class="image-gallery">
-                 <div class="img-left"><img src="assets/images/main-page/main3.jpg" alt="Кабинет"></div>
-                 <div class="img-right"><img src="assets/images/main-page/main2.jpg" alt="Ресепшн"></div>
-            </div>
-        </section>
 
-        <section class="advantages">
-            <div class="container grid-2">
-                <div class="text-block">
-                    <h2 class="advantages-title">НАШИ <br> ПРЕИМУЩЕСТВА</h2>
+                <div id="pricesList" class="prices-list">
+                    <div class="loading">Загрузка цен...</div>
                 </div>
-                <div class="content-block">
-                    <ul>
-                        <li>Оборудование и материалы от ведущих мировых брендов.</li>
-                        <li>Профессионалы, владеющие самыми современными методиками и способные в минимальные сроки решить задачи любой сложности.</li>
-                        <li>Надежность и гарантии.</li>
-                        <li>Абсолютная уверенность в результатах лечения.</li>
-                        <li>Индивидуальный подход и экономия времени пациента.</li>
-                        <li>Безупречный сервис и интерьер, в котором приятно находиться.</li>
-                    </ul>
-                    <button class="btn btn-outline">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+
+                <div class="prices-note">
+                    <p>⚠️ Цены, указанные на сайте, не являются публичной офертой. Точную стоимость уточняйте у администратора клиники.</p>
+                    <p>📞 Для записи на прием и уточнения цены звоните: <a href="tel:+375291234567">+375 (29) 123-45-67</a></p>
                 </div>
-            </div>
-            <div class="image-gallery-alt">
-                 <div class="img-bottom-left"><img src="assets/images/main-page/main4.jpg" alt="Врачи"></div>
-                 <div class="img-bottom-right"><img src="assets/images/main-page/main5.jpg" alt="Пациент"></div>
             </div>
         </section>
     </main>
 
     <div id="footer-placeholder"></div>
 
-    <script src="js/components.js"></script>
-    
+    <script src="../js/translations.js"></script>
+    <script src="../js/personalization.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/modal-appointment.js"></script>
+    <script src="../js/prices.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
@@ -146,10 +133,15 @@
                     }
                 });
             }, 100);
+            
+            const openAppointmentBtn = document.getElementById('openAppointmentBtn');
+            if (openAppointmentBtn && typeof openVisitorAppointmentModal === 'function') {
+                openAppointmentBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openVisitorAppointmentModal();
+                });
+            }
         });
     </script>
-    <script src="js/modal-appointment.js"></script>
-    <script src="js/modal-profile.js"></script>
-
 </body>
 </html>

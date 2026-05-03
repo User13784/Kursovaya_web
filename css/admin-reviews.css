@@ -1,0 +1,202 @@
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-export {
+    background: #10B981;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-export:hover {
+    background: #059669;
+    transform: translateY(-2px);
+}
+
+.filter-search {
+    flex: 2;
+    padding: 8px 12px;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 13px;
+    min-width: 200px;
+}
+
+.filter-search:focus {
+    outline: none;
+    border-color: #2F353B;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 2px;
+    font-size: 14px;
+    color: #F59E0B;
+}
+
+.rating-stars span {
+    color: #F59E0B;
+}
+
+.status-published {
+    background: #D1FAE5;
+    color: #059669;
+}
+
+.status-hidden {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.btn-view {
+    background: #E0E7FF;
+    color: #4338CA;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-view:hover {
+    background: #C7D2FE;
+}
+
+.btn-toggle {
+    background: #FEF3C7;
+    color: #D97706;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-toggle:hover {
+    background: #FDE68A;
+}
+
+.rating-input {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.star-rating {
+    font-size: 32px;
+    color: #ddd;
+    letter-spacing: 5px;
+    transition: color 0.2s;
+}
+
+.star-rating[data-rating="1"],
+.star-rating[data-rating="2"],
+.star-rating[data-rating="3"],
+.star-rating[data-rating="4"],
+.star-rating[data-rating="5"] {
+    color: #F59E0B;
+}
+
+/* Просмотр отзыва */
+.view-review-content {
+    padding: 20px;
+}
+
+.view-review-author {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2F353B;
+    margin-bottom: 10px;
+}
+
+.view-review-author .view-user-info {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6B7280;
+    margin-left: 10px;
+}
+
+.view-review-rating {
+    font-size: 20px;
+    color: #F59E0B;
+    margin-bottom: 15px;
+}
+
+.view-review-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #374151;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #F3F4F6;
+    border-radius: 12px;
+}
+
+.view-review-date {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin-bottom: 10px;
+}
+
+.view-review-photo img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.review-text-preview {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    color: #4B5563;
+}
+
+.review-text-preview:hover {
+    white-space: normal;
+    overflow: visible;
+    cursor: pointer;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .header-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-search {
+        width: 100%;
+    }
+    
+    .review-text-preview {
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .data-table th:nth-child(4),
+    .data-table td:nth-child(4),
+    .data-table th:nth-child(5),
+    .data-table td:nth-child(5) {
+        display: none;
+    }
+}

@@ -1,0 +1,311 @@
+.footer {
+    background-color: #202428;
+    backdrop-filter: blur(12.3px);
+    -webkit-backdrop-filter: blur(12.3px);
+    padding: 82px 0 40px;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.footer-container {
+    width: 100%;
+    max-width: 1440px;
+    padding: 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo img {
+    width: 206px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+    transform: translateY(-12px) scaleY(1.1);
+}
+
+.footer-logo {
+    align-self: center;
+}
+
+.footer-line {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 20px 0;
+}
+
+.footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+    margin-left: 106px;
+    transform: translateY(10px);
+}
+
+.footer-links-row {
+    display: flex;
+    gap: 54px;
+    flex-wrap: wrap;
+}
+
+.footer-links-row a {
+    font-family: 'Mulish', sans-serif;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    transition: opacity 0.3s;
+}
+
+.footer-links-row a:hover {
+    opacity: 0.7;
+}
+
+.footer-personalization {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 20px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.personalization-section-footer {
+    flex: 1;
+    min-width: 180px;
+}
+
+.personalization-title-footer {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.personalization-btns-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.personalization-btn-footer {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Mulish', sans-serif;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.personalization-btn-footer:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.personalization-btn-footer.active {
+    background: #A5C33C;
+    color: #1a1e22;
+    border-color: #A5C33C;
+}
+
+.reset-settings-footer-btn {
+    width: 100%;
+    padding: 10px 20px;
+    background: rgba(239, 68, 68, 0.8);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Mulish', sans-serif;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.reset-settings-footer-btn:hover {
+    background: rgba(239, 68, 68, 1);
+    transform: translateY(-2px);
+}
+
+.footer-socials img {
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(1);
+}
+
+.footer-socials {
+    display: flex;
+    gap: 17px;
+    margin-top: 6px;
+    transform: translateY(21px);
+    margin-left: 105px;
+}
+
+.footer-copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-copyright p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Mulish', sans-serif;
+}
+
+@media (max-width: 992px) {
+    .footer-container {
+        padding: 0 30px;
+    }
+    
+    .footer-nav {
+        margin-left: 0;
+        transform: none;
+    }
+    
+    .footer-socials {
+        margin-left: 0;
+        transform: none;
+    }
+    
+    .footer-personalization {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .personalization-section-footer {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 50px 0 30px;
+    }
+    
+    .footer-container {
+        padding: 0 20px;
+    }
+    
+    .footer-links-row {
+        gap: 30px;
+    }
+    
+    .footer-links-row a {
+        font-size: 16px;
+    }
+    
+    .personalization-btns-footer {
+        flex-wrap: wrap;
+    }
+    
+    .personalization-btn-footer {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .reset-settings-footer-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+    
+    .footer-copyright p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-links-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .footer-links-row a {
+        font-size: 14px;
+    }
+    
+    .personalization-title-footer {
+        font-size: 12px;
+    }
+    
+    .personalization-btn-footer {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+    
+    .footer-socials {
+        justify-content: center;
+    }
+}
+
+[data-theme="dark"] .footer {
+    background-color: #111827;
+}
+
+[data-theme="dark"] .personalization-btn-footer {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .personalization-btn-footer.active {
+    background: #A5C33C;
+    color: #1a1e22;
+}
+
+[data-accessibility="high-contrast"] .footer {
+    background-color: #000000 !important;
+    border-top: 2px solid white;
+}
+
+[data-accessibility="high-contrast"] .personalization-btn-footer {
+    background: black !important;
+    border: 2px solid yellow !important;
+    color: yellow !important;
+}
+
+[data-accessibility="high-contrast"] .personalization-btn-footer.active {
+    background: yellow !important;
+    color: black !important;
+}
+
+[data-accessibility="high-contrast"] .reset-settings-footer-btn {
+    background: red !important;
+    border: 2px solid white !important;
+    color: white !important;
+}
+
+[data-accessibility="large-text"] .footer-links-row a {
+    font-size: 22px !important;
+}
+
+[data-accessibility="large-text"] .personalization-title-footer {
+    font-size: 18px !important;
+}
+
+[data-accessibility="large-text"] .personalization-btn-footer {
+    font-size: 16px !important;
+    padding: 10px 18px !important;
+}
+
+[data-accessibility="no-animation"] .footer * {
+    animation: none !important;
+    transition: none !important;
+}

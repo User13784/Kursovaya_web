@@ -2,7 +2,10 @@ const STORAGE_KEYS = {
     SERVICES: 'dental_services',
     SERVICE_DETAILS: 'dental_service_details',
     DOCTORS: 'dental_doctors',
-    APPOINTMENTS: 'dental_appointments'
+    APPOINTMENTS: 'dental_appointments',
+    REVIEWS: 'dental_reviews',
+    PRICES: 'dental_prices',
+    SCHEDULE: 'dental_schedule'
 };
 
 
@@ -38,10 +41,59 @@ const defaultDoctors = [
 ];
 
 const defaultAppointments = [
-    { id: 1, patientName: 'Иванов Иван Иванович', phone: '+7 777 123-45-67', email: 'ivanov@mail.ru', doctorId: 1, serviceId: 1, date: '2024-12-20', time: '10:00', comment: 'Первичная консультация', status: 'confirmed', createdAt: new Date().toISOString() },
-    { id: 2, patientName: 'Петрова Анна Сергеевна', phone: '+7 701 234-56-78', email: 'petrova@mail.ru', doctorId: 2, serviceId: 2, date: '2024-12-21', time: '14:00', comment: '', status: 'pending', createdAt: new Date().toISOString() },
-    { id: 3, patientName: 'Сидоров Алексей Владимирович', phone: '+7 702 345-67-89', email: 'sidorov@mail.ru', doctorId: 3, serviceId: 3, date: '2024-12-19', time: '11:00', comment: 'Боль в зубе', status: 'completed', createdAt: new Date().toISOString() }
+    { id: 1, patientName: 'Иванов Иван Иванович', phone: '+375 29 123-45-67', email: 'ivanov@mail.ru', doctorId: 1, serviceId: 1, date: '2024-12-20', time: '10:00', comment: 'Первичная консультация', status: 'confirmed', createdAt: new Date().toISOString() },
+    { id: 2, patientName: 'Петрова Анна Сергеевна', phone: '+375 33 456-78-90', email: 'petrova@mail.ru', doctorId: 2, serviceId: 2, date: '2024-12-21', time: '14:00', comment: '', status: 'pending', createdAt: new Date().toISOString() },
+    { id: 3, patientName: 'Сидоров Алексей Владимирович', phone: '+375 44 567-89-01', email: 'sidorov@mail.ru', doctorId: 3, serviceId: 3, date: '2024-12-19', time: '11:00', comment: 'Боль в зубе', status: 'completed', createdAt: new Date().toISOString() }
 ];
+
+const defaultReviews = [
+    { id: 1, author: 'Айгуль Ахметова', userInfo: 'Президент АО «RAIMBEK GROUP»', text: 'С удовольствием хотела бы поделиться своим отношением к стоматологической клинике Dental Club. Я являюсь клиентом этой клиники на протяжении многих лет, поэтому очень рада ее обновлению и росту! Приятно осознавать, что в Dental Club технологичность сочетается с совершенным сервисом.', rating: 5, photo: '../assets/images/reviews/reviews2.jpg', date: '2024-11-15', published: true },
+    { id: 2, author: 'Лариса Мухамеджанова', userInfo: 'MBA, PH.D, Академик КАМ', text: 'Я лечусь у Дмитрия Щеголева уже 20 лет. За это время выросла дочь, подросла внучка. И, разумеется мы все – пациенты данной клиники. Здесь - сверхстандарты безопасности, абсолютная надежность и доверие.', rating: 5, photo: '../assets/images/reviews/reviews3.jpg', date: '2024-11-10', published: true },
+    { id: 3, author: 'Эленора Тен', userInfo: '', text: 'Хотелось бы поблагодарить команду Dental Club за профессионализм, квалифицированный подход в лечении. Благодаря прекрасному, чуткому врачу Дмитрию Щёголева в клинике витает атмосфера добра, уверенности, защищённости и спокойствия.', rating: 5, photo: '../assets/images/logo/logo4.png', date: '2024-11-05', published: true }
+];
+
+const defaultPricesData = {
+    version: '2.0',
+    categories: [
+        { id: 1, name: 'Диагностика', order: 1, active: true },
+        { id: 2, name: 'Профилактика и гигиена', order: 2, active: true },
+        { id: 3, name: 'Терапевтическая стоматология', order: 3, active: true },
+        { id: 4, name: 'Хирургическая стоматология', order: 4, active: true },
+        { id: 5, name: 'Ортопедия (протезирование)', order: 5, active: true },
+        { id: 6, name: 'Имплантация', order: 6, active: true },
+        { id: 7, name: 'Ортодонтия', order: 7, active: true },
+        { id: 8, name: 'Эстетическая стоматология', order: 8, active: true }
+    ],
+    services: [
+        { id: 1, categoryId: 1, name: 'Первичная консультация', price: '0', unit: 'BYN', description: 'бесплатно', order: 1, active: true },
+        { id: 2, categoryId: 1, name: 'Осмотр и составление плана лечения', price: '25', unit: 'BYN', description: '', order: 2, active: true },
+        { id: 3, categoryId: 1, name: 'Компьютерная томография (3D)', price: '80', unit: 'BYN', description: 'Одна челюсть', order: 3, active: true },
+        { id: 4, categoryId: 1, name: 'Панорамный снимок (ОПТГ)', price: '40', unit: 'BYN', description: '', order: 4, active: true },
+        { id: 5, categoryId: 1, name: 'Прицельный снимок', price: '15', unit: 'BYN', description: 'Один зуб', order: 5, active: true },
+        { id: 6, categoryId: 2, name: 'Профессиональная гигиена (AirFlow)', price: '60', unit: 'BYN', description: '', order: 1, active: true },
+        { id: 7, categoryId: 2, name: 'Ультразвуковая чистка', price: '40', unit: 'BYN', description: 'Одна челюсть', order: 2, active: true },
+        { id: 8, categoryId: 3, name: 'Лечение кариеса', price: '70', unit: 'BYN', description: 'Один зуб', order: 1, active: true },
+        { id: 9, categoryId: 3, name: 'Лечение пульпита', price: '120', unit: 'BYN', description: 'Один канал', order: 2, active: true },
+        { id: 10, categoryId: 4, name: 'Удаление зуба (простое)', price: '50', unit: 'BYN', description: '', order: 1, active: true },
+        { id: 11, categoryId: 5, name: 'Коронка металлокерамическая', price: '250', unit: 'BYN', description: 'Один зуб', order: 1, active: true },
+        { id: 12, categoryId: 6, name: 'Имплантат (установка)', price: '800', unit: 'BYN', description: 'Под ключ', order: 1, active: true },
+        { id: 13, categoryId: 7, name: 'Брекет-система (металл)', price: '1000', unit: 'BYN', description: 'На челюсть', order: 1, active: true },
+        { id: 14, categoryId: 8, name: 'Отбеливание ZOOM', price: '300', unit: 'BYN', description: 'Одна процедура', order: 1, active: true }
+    ]
+};
+
+const defaultScheduleData = {
+    version: '2.0',
+    doctors: [
+        { id: 1, name: 'Волкова Екатерина Андреевна', specialization: 'Стоматолог-терапевт, детский стоматолог', photo: '../assets/images/team/team-menu2.jpg' },
+        { id: 2, name: 'Кузнецов Андрей Владимирович', specialization: 'Стоматолог-пародонтолог', photo: '../assets/images/team/team-menu3.jpg' },
+        { id: 3, name: 'Соколова Мария Александровна', specialization: 'Стоматолог-пародонтолог, гигиенист', photo: '../assets/images/team/team-menu4.jpg' },
+        { id: 4, name: 'Новикова Валентина Сергеевна', specialization: 'Стоматолог-терапевт, эндодонтист', photo: '../assets/images/team/team-menu5.jpg' },
+        { id: 5, name: 'Щеголев Дмитрий Владиславович', specialization: 'Стоматолог-имплантолог, ортопед', photo: '../assets/images/team/team-menu6.jpg' },
+        { id: 6, name: 'Ковальчук Анастасия Дмитриевна', specialization: 'Стоматолог-хирург, имплантолог', photo: '../assets/images/team/team-menu7.jpg' }
+    ],
+    schedule: []
+};
 
 
 function loadData(key, defaultData) {
@@ -60,6 +112,7 @@ function saveData(key, data) {
 
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
+    if (!toast) return;
     toast.textContent = message;
     toast.className = `toast ${type} show`;
     setTimeout(() => {
@@ -106,8 +159,10 @@ function renderServices() {
     if (!tbody) return;
     
     const activeCount = services.filter(s => s.active).length;
-    document.getElementById('servicesCount').textContent = services.length;
-    document.getElementById('activeServicesCount').textContent = activeCount;
+    const servicesCount = document.getElementById('servicesCount');
+    const activeServicesCount = document.getElementById('activeServicesCount');
+    if (servicesCount) servicesCount.textContent = services.length;
+    if (activeServicesCount) activeServicesCount.textContent = activeCount;
     
     tbody.innerHTML = '';
     services.forEach(service => {
@@ -120,7 +175,7 @@ function renderServices() {
             <td class="action-buttons">
                 <button class="btn-edit-service" data-id="${service.id}">✏️ Редакт.</button>
                 <button class="btn-delete-service" data-id="${service.id}">🗑️ Удалить</button>
-             </tr>
+            </td>
         `;
         tbody.appendChild(row);
     });
@@ -134,14 +189,23 @@ function renderServices() {
 }
 
 function openServiceModal(editMode = false, service = null) {
-    document.getElementById('serviceModalTitle').textContent = editMode ? 'Редактировать услугу' : 'Добавить услугу';
-    document.getElementById('serviceId').value = service ? service.id : '';
-    document.getElementById('serviceName').value = service ? service.name : '';
-    document.getElementById('servicePage').value = service ? service.page : '';
-    document.getElementById('serviceBgImage').value = service ? (service.bgImage || '') : '';
-    document.getElementById('serviceTitle').value = service ? (service.title || '') : '';
-    document.getElementById('serviceActive').checked = service ? service.active : true;
-    document.getElementById('serviceModal').style.display = 'flex';
+    const titleEl = document.getElementById('serviceModalTitle');
+    const idEl = document.getElementById('serviceId');
+    const nameEl = document.getElementById('serviceName');
+    const pageEl = document.getElementById('servicePage');
+    const bgImageEl = document.getElementById('serviceBgImage');
+    const titleInputEl = document.getElementById('serviceTitle');
+    const activeEl = document.getElementById('serviceActive');
+    const modal = document.getElementById('serviceModal');
+    
+    if (titleEl) titleEl.textContent = editMode ? 'Редактировать услугу' : 'Добавить услугу';
+    if (idEl) idEl.value = service ? service.id : '';
+    if (nameEl) nameEl.value = service ? service.name : '';
+    if (pageEl) pageEl.value = service ? service.page : '';
+    if (bgImageEl) bgImageEl.value = service ? (service.bgImage || '') : '';
+    if (titleInputEl) titleInputEl.value = service ? (service.title || '') : '';
+    if (activeEl) activeEl.checked = service ? service.active : true;
+    if (modal) modal.style.display = 'flex';
 }
 
 function addService() {
@@ -197,7 +261,8 @@ function saveService(event) {
     renderServices();
     updateServiceDetailsFilter();
     updateAppointmentFilters();
-    document.getElementById('serviceModal').style.display = 'none';
+    const modal = document.getElementById('serviceModal');
+    if (modal) modal.style.display = 'none';
     document.getElementById('serviceForm').reset();
 }
 
@@ -206,7 +271,7 @@ let serviceDetails = [];
 
 function renderServiceDetails() {
     const tbody = document.getElementById('serviceDetailsList');
-    const filterValue = document.getElementById('detailServiceFilter').value;
+    const filterValue = document.getElementById('detailServiceFilter')?.value || '';
     if (!tbody) return;
     
     let filtered = [...serviceDetails];
@@ -229,7 +294,7 @@ function renderServiceDetails() {
             <td class="action-buttons">
                 <button class="btn-edit-detail" data-id="${detail.id}">✏️ Редакт.</button>
                 <button class="btn-delete-detail" data-id="${detail.id}">🗑️ Удалить</button>
-             </tr>
+            </td>
         `;
         tbody.appendChild(row);
     });
@@ -268,15 +333,25 @@ function updateDetailServiceSelect() {
 
 function openDetailModal(editMode = false, detail = null) {
     updateDetailServiceSelect();
-    document.getElementById('detailModalTitle').textContent = editMode ? 'Редактировать детальную информацию' : 'Добавить детальную информацию';
-    document.getElementById('detailId').value = detail ? detail.id : '';
-    document.getElementById('detailServiceId').value = detail ? detail.serviceId : '';
-    document.getElementById('detailMainText').value = detail ? (detail.mainText || '') : '';
-    document.getElementById('detailSecondaryText').value = detail ? (detail.secondaryText || '') : '';
-    document.getElementById('detailFeatures').value = detail ? (detail.features || '') : '';
-    document.getElementById('detailSteps').value = detail ? (detail.steps || '') : '';
-    document.getElementById('detailImages').value = detail ? (detail.images || '') : '';
-    document.getElementById('detailModal').style.display = 'flex';
+    const titleEl = document.getElementById('detailModalTitle');
+    const idEl = document.getElementById('detailId');
+    const serviceIdEl = document.getElementById('detailServiceId');
+    const mainTextEl = document.getElementById('detailMainText');
+    const secondaryTextEl = document.getElementById('detailSecondaryText');
+    const featuresEl = document.getElementById('detailFeatures');
+    const stepsEl = document.getElementById('detailSteps');
+    const imagesEl = document.getElementById('detailImages');
+    const modal = document.getElementById('detailModal');
+    
+    if (titleEl) titleEl.textContent = editMode ? 'Редактировать детальную информацию' : 'Добавить детальную информацию';
+    if (idEl) idEl.value = detail ? detail.id : '';
+    if (serviceIdEl) serviceIdEl.value = detail ? detail.serviceId : '';
+    if (mainTextEl) mainTextEl.value = detail ? (detail.mainText || '') : '';
+    if (secondaryTextEl) secondaryTextEl.value = detail ? (detail.secondaryText || '') : '';
+    if (featuresEl) featuresEl.value = detail ? (detail.features || '') : '';
+    if (stepsEl) stepsEl.value = detail ? (detail.steps || '') : '';
+    if (imagesEl) imagesEl.value = detail ? (detail.images || '') : '';
+    if (modal) modal.style.display = 'flex';
 }
 
 function addServiceDetail() {
@@ -330,7 +405,8 @@ function saveServiceDetail(event) {
     }
     
     renderServiceDetails();
-    document.getElementById('detailModal').style.display = 'none';
+    const modal = document.getElementById('detailModal');
+    if (modal) modal.style.display = 'none';
     document.getElementById('detailForm').reset();
 }
 
@@ -341,7 +417,8 @@ function renderDoctors() {
     const tbody = document.getElementById('doctorsList');
     if (!tbody) return;
     
-    document.getElementById('doctorsCount').textContent = doctors.length;
+    const doctorsCount = document.getElementById('doctorsCount');
+    if (doctorsCount) doctorsCount.textContent = doctors.length;
     
     tbody.innerHTML = '';
     doctors.forEach(doctor => {
@@ -358,7 +435,7 @@ function renderDoctors() {
             <td class="action-buttons">
                 <button class="btn-edit-doctor" data-id="${doctor.id}">✏️ Редакт.</button>
                 <button class="btn-delete-doctor" data-id="${doctor.id}">🗑️ Удалить</button>
-             </tr>
+            </td>
         `;
         tbody.appendChild(row);
     });
@@ -372,19 +449,33 @@ function renderDoctors() {
 }
 
 function openDoctorModal(editMode = false, doctor = null) {
-    document.getElementById('doctorModalTitle').textContent = editMode ? 'Редактировать врача' : 'Добавить врача';
-    document.getElementById('doctorId').value = doctor ? doctor.id : '';
-    document.getElementById('doctorLastName').value = doctor ? doctor.lastName : '';
-    document.getElementById('doctorFirstName').value = doctor ? doctor.firstName : '';
-    document.getElementById('doctorMiddleName').value = doctor ? (doctor.middleName || '') : '';
-    document.getElementById('doctorSpecialization').value = doctor ? doctor.specialization : '';
-    document.getElementById('doctorPhoto').value = doctor ? (doctor.photo || '') : '';
-    document.getElementById('doctorEducation').value = doctor ? (doctor.education || '') : '';
-    document.getElementById('doctorExperience').value = doctor ? (doctor.experience || '') : '';
-    document.getElementById('doctorImprovement').value = doctor ? (doctor.improvement || '') : '';
-    document.getElementById('doctorSchedule').value = doctor ? (doctor.schedule || '') : '';
-    document.getElementById('doctorActive').checked = doctor ? doctor.active : true;
-    document.getElementById('doctorModal').style.display = 'flex';
+    const titleEl = document.getElementById('doctorModalTitle');
+    const idEl = document.getElementById('doctorId');
+    const lastNameEl = document.getElementById('doctorLastName');
+    const firstNameEl = document.getElementById('doctorFirstName');
+    const middleNameEl = document.getElementById('doctorMiddleName');
+    const specEl = document.getElementById('doctorSpecialization');
+    const photoEl = document.getElementById('doctorPhoto');
+    const educationEl = document.getElementById('doctorEducation');
+    const experienceEl = document.getElementById('doctorExperience');
+    const improvementEl = document.getElementById('doctorImprovement');
+    const scheduleEl = document.getElementById('doctorSchedule');
+    const activeEl = document.getElementById('doctorActive');
+    const modal = document.getElementById('doctorModal');
+    
+    if (titleEl) titleEl.textContent = editMode ? 'Редактировать врача' : 'Добавить врача';
+    if (idEl) idEl.value = doctor ? doctor.id : '';
+    if (lastNameEl) lastNameEl.value = doctor ? doctor.lastName : '';
+    if (firstNameEl) firstNameEl.value = doctor ? doctor.firstName : '';
+    if (middleNameEl) middleNameEl.value = doctor ? (doctor.middleName || '') : '';
+    if (specEl) specEl.value = doctor ? doctor.specialization : '';
+    if (photoEl) photoEl.value = doctor ? (doctor.photo || '') : '';
+    if (educationEl) educationEl.value = doctor ? (doctor.education || '') : '';
+    if (experienceEl) experienceEl.value = doctor ? (doctor.experience || '') : '';
+    if (improvementEl) improvementEl.value = doctor ? (doctor.improvement || '') : '';
+    if (scheduleEl) scheduleEl.value = doctor ? (doctor.schedule || '') : '';
+    if (activeEl) activeEl.checked = doctor ? doctor.active : true;
+    if (modal) modal.style.display = 'flex';
 }
 
 function addDoctor() {
@@ -443,7 +534,8 @@ function saveDoctor(event) {
     
     renderDoctors();
     updateAppointmentFilters();
-    document.getElementById('doctorModal').style.display = 'none';
+    const modal = document.getElementById('doctorModal');
+    if (modal) modal.style.display = 'none';
     document.getElementById('doctorForm').reset();
 }
 
@@ -454,9 +546,9 @@ function renderAppointments() {
     const tbody = document.getElementById('appointmentsList');
     if (!tbody) return;
     
-    const doctorFilter = document.getElementById('appointmentDoctorFilter').value;
-    const dateFilter = document.getElementById('appointmentDateFilter').value;
-    const statusFilter = document.getElementById('appointmentStatusFilter').value;
+    const doctorFilter = document.getElementById('appointmentDoctorFilter')?.value || '';
+    const dateFilter = document.getElementById('appointmentDateFilter')?.value || '';
+    const statusFilter = document.getElementById('appointmentStatusFilter')?.value || '';
     
     let filtered = [...appointments];
     
@@ -480,9 +572,13 @@ function renderAppointments() {
     weekLater.setDate(weekLater.getDate() + 7);
     const weekLaterStr = weekLater.toISOString().split('T')[0];
     
-    document.getElementById('appointmentsCount').textContent = appointments.length;
-    document.getElementById('appointmentsTodayCount').textContent = appointments.filter(a => a.date === today).length;
-    document.getElementById('appointmentsWeekCount').textContent = appointments.filter(a => a.date >= today && a.date <= weekLaterStr).length;
+    const appointmentsCount = document.getElementById('appointmentsCount');
+    const appointmentsTodayCount = document.getElementById('appointmentsTodayCount');
+    const appointmentsWeekCount = document.getElementById('appointmentsWeekCount');
+    
+    if (appointmentsCount) appointmentsCount.textContent = appointments.length;
+    if (appointmentsTodayCount) appointmentsTodayCount.textContent = appointments.filter(a => a.date === today).length;
+    if (appointmentsWeekCount) appointmentsWeekCount.textContent = appointments.filter(a => a.date >= today && a.date <= weekLaterStr).length;
     
     tbody.innerHTML = '';
     filtered.forEach(app => {
@@ -501,13 +597,13 @@ function renderAppointments() {
             <td>${app.time}</td>
             <td class="action-buttons">
                 <span class="status-badge status-${app.status}">${getStatusWithEmoji(app.status)}</span>
-             </td>
+            </td>
             <td class="action-buttons">
                 <button class="btn-edit-appointment" data-id="${app.id}">✏️</button>
                 <button class="btn-delete-appointment" data-id="${app.id}">🗑️</button>
                 ${app.status === 'pending' ? '<button class="btn-confirm-appointment" data-id="' + app.id + '">✅</button>' : ''}
                 ${app.status === 'confirmed' ? '<button class="btn-complete-appointment" data-id="' + app.id + '">✔️</button>' : ''}
-             </td>
+            </td>
         `;
         tbody.appendChild(row);
     });
@@ -563,18 +659,31 @@ function updateAppointmentFilters() {
 
 function openAppointmentModal(editMode = false, appointment = null) {
     updateAppointmentFilters();
-    document.getElementById('appointmentModalTitle').textContent = editMode ? 'Редактировать запись' : 'Новая запись на прием';
-    document.getElementById('appointmentId').value = appointment ? appointment.id : '';
-    document.getElementById('appointmentPatientName').value = appointment ? appointment.patientName : '';
-    document.getElementById('appointmentPhone').value = appointment ? appointment.phone : '';
-    document.getElementById('appointmentEmail').value = appointment ? (appointment.email || '') : '';
-    document.getElementById('appointmentDoctorId').value = appointment ? appointment.doctorId : '';
-    document.getElementById('appointmentServiceId').value = appointment ? appointment.serviceId : '';
-    document.getElementById('appointmentDate').value = appointment ? appointment.date : '';
-    document.getElementById('appointmentTime').value = appointment ? appointment.time : '';
-    document.getElementById('appointmentComment').value = appointment ? (appointment.comment || '') : '';
-    document.getElementById('appointmentStatus').value = appointment ? appointment.status : 'pending';
-    document.getElementById('appointmentModal').style.display = 'flex';
+    const titleEl = document.getElementById('appointmentModalTitle');
+    const idEl = document.getElementById('appointmentId');
+    const patientNameEl = document.getElementById('appointmentPatientName');
+    const phoneEl = document.getElementById('appointmentPhone');
+    const emailEl = document.getElementById('appointmentEmail');
+    const doctorIdEl = document.getElementById('appointmentDoctorId');
+    const serviceIdEl = document.getElementById('appointmentServiceId');
+    const dateEl = document.getElementById('appointmentDate');
+    const timeEl = document.getElementById('appointmentTime');
+    const commentEl = document.getElementById('appointmentComment');
+    const statusEl = document.getElementById('appointmentStatus');
+    const modal = document.getElementById('appointmentModal');
+    
+    if (titleEl) titleEl.textContent = editMode ? 'Редактировать запись' : 'Новая запись на прием';
+    if (idEl) idEl.value = appointment ? appointment.id : '';
+    if (patientNameEl) patientNameEl.value = appointment ? appointment.patientName : '';
+    if (phoneEl) phoneEl.value = appointment ? appointment.phone : '';
+    if (emailEl) emailEl.value = appointment ? (appointment.email || '') : '';
+    if (doctorIdEl) doctorIdEl.value = appointment ? appointment.doctorId : '';
+    if (serviceIdEl) serviceIdEl.value = appointment ? appointment.serviceId : '';
+    if (dateEl) dateEl.value = appointment ? appointment.date : '';
+    if (timeEl) timeEl.value = appointment ? appointment.time : '';
+    if (commentEl) commentEl.value = appointment ? (appointment.comment || '') : '';
+    if (statusEl) statusEl.value = appointment ? appointment.status : 'pending';
+    if (modal) modal.style.display = 'flex';
 }
 
 function addAppointment() {
@@ -641,14 +750,19 @@ function saveAppointment(event) {
     }
     
     renderAppointments();
-    document.getElementById('appointmentModal').style.display = 'none';
+    const modal = document.getElementById('appointmentModal');
+    if (modal) modal.style.display = 'none';
     document.getElementById('appointmentForm').reset();
 }
 
 function resetAppointmentFilters() {
-    document.getElementById('appointmentDoctorFilter').value = '';
-    document.getElementById('appointmentDateFilter').value = '';
-    document.getElementById('appointmentStatusFilter').value = '';
+    const doctorFilter = document.getElementById('appointmentDoctorFilter');
+    const dateFilter = document.getElementById('appointmentDateFilter');
+    const statusFilter = document.getElementById('appointmentStatusFilter');
+    
+    if (doctorFilter) doctorFilter.value = '';
+    if (dateFilter) dateFilter.value = '';
+    if (statusFilter) statusFilter.value = '';
     renderAppointments();
 }
 
@@ -670,7 +784,8 @@ function initTabs() {
                 content.classList.remove('active');
             });
             const tabId = tab.dataset.tab;
-            document.getElementById(`tab-${tabId}`).classList.add('active');
+            const tabContent = document.getElementById(`tab-${tabId}`);
+            if (tabContent) tabContent.classList.add('active');
         });
     });
 }
@@ -720,7 +835,8 @@ function initMobileMenu() {
                 document.querySelectorAll('.tab-content').forEach(content => {
                     content.classList.remove('active');
                 });
-                document.getElementById(`tab-${tabId}`).classList.add('active');
+                const tabContent = document.getElementById(`tab-${tabId}`);
+                if (tabContent) tabContent.classList.add('active');
                 closeMobileMenu();
             });
             nav.appendChild(clonedTab);
@@ -750,17 +866,17 @@ function initMobileMenu() {
     const body = document.body;
     
     function openMobileMenu() {
-        burgerIcon?.classList.add('active');
-        mobileMenu?.classList.add('active');
-        menuOverlay?.classList.add('active');
-        body.classList.add('menu-open');
+        if (burgerIcon) burgerIcon.classList.add('active');
+        if (mobileMenu) mobileMenu.classList.add('active');
+        if (menuOverlay) menuOverlay.classList.add('active');
+        if (body) body.classList.add('menu-open');
     }
     
     function closeMobileMenu() {
-        burgerIcon?.classList.remove('active');
-        mobileMenu?.classList.remove('active');
-        menuOverlay?.classList.remove('active');
-        body.classList.remove('menu-open');
+        if (burgerIcon) burgerIcon.classList.remove('active');
+        if (mobileMenu) mobileMenu.classList.remove('active');
+        if (menuOverlay) menuOverlay.classList.remove('active');
+        if (body) body.classList.remove('menu-open');
     }
     
     if (burgerIcon) {
@@ -775,7 +891,801 @@ function initMobileMenu() {
     document.querySelectorAll('.mobile-nav .nav-tab').forEach(btn => {
         btn.addEventListener('click', closeMobileMenu);
     });
-    document.querySelector('.mobile-footer a')?.addEventListener('click', closeMobileMenu);
+    const mobileFooterLink = document.querySelector('.mobile-footer a');
+    if (mobileFooterLink) mobileFooterLink.addEventListener('click', closeMobileMenu);
+}
+
+
+let reviews = [];
+
+function loadReviews() {
+    const stored = localStorage.getItem(STORAGE_KEYS.REVIEWS);
+    if (stored) {
+        reviews = JSON.parse(stored);
+    } else {
+        reviews = [...defaultReviews];
+        localStorage.setItem(STORAGE_KEYS.REVIEWS, JSON.stringify(reviews));
+    }
+    return reviews;
+}
+
+function saveReviews() {
+    localStorage.setItem(STORAGE_KEYS.REVIEWS, JSON.stringify(reviews));
+}
+
+function renderReviewsTable() {
+    const tbody = document.getElementById('reviewsList');
+    if (!tbody) return;
+    
+    const statusFilter = document.getElementById('reviewStatusFilter')?.value || 'all';
+    const searchFilter = document.getElementById('reviewSearchFilter')?.value.toLowerCase() || '';
+    
+    let filtered = [...reviews];
+    
+    if (statusFilter !== 'all') {
+        filtered = filtered.filter(r => r.published === (statusFilter === 'published'));
+    }
+    
+    if (searchFilter) {
+        filtered = filtered.filter(r => 
+            r.author.toLowerCase().includes(searchFilter) || 
+            r.text.toLowerCase().includes(searchFilter)
+        );
+    }
+    
+    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    const totalReviews = document.getElementById('totalReviews');
+    const publishedReviews = document.getElementById('publishedReviews');
+    const hiddenReviews = document.getElementById('hiddenReviews');
+    
+    if (totalReviews) totalReviews.textContent = reviews.length;
+    if (publishedReviews) publishedReviews.textContent = reviews.filter(r => r.published).length;
+    if (hiddenReviews) hiddenReviews.textContent = reviews.filter(r => !r.published).length;
+    
+    tbody.innerHTML = '';
+    filtered.forEach(review => {
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            starsHtml += i <= review.rating ? '★' : '☆';
+        }
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${review.id}</td>
+            <td><strong>${escapeHtml(review.author)}</strong></td>
+            <td class="review-text-preview" title="${escapeHtml(review.text)}">${escapeHtml(review.text.substring(0, 80))}${review.text.length > 80 ? '...' : ''}</td>
+            <td class="rating-stars"><span>${starsHtml}</span></td>
+            <td>${review.date}</td>
+            <td><span class="status-badge ${review.published ? 'status-published' : 'status-hidden'}">${review.published ? 'Опубликован' : 'Скрыт'}</span></td>
+            <td class="action-buttons">
+                <button class="btn-view" data-id="${review.id}">👁️ Просмотр</button>
+                <button class="btn-toggle-review" data-id="${review.id}">${review.published ? '🙈 Скрыть' : '👁️ Опубликовать'}</button>
+                <button class="btn-delete-review" data-id="${review.id}">🗑️ Удалить</button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+    
+    document.querySelectorAll('.btn-view').forEach(btn => {
+        btn.addEventListener('click', () => viewReview(parseInt(btn.dataset.id)));
+    });
+    document.querySelectorAll('.btn-toggle-review').forEach(btn => {
+        btn.addEventListener('click', () => toggleReviewStatus(parseInt(btn.dataset.id)));
+    });
+    document.querySelectorAll('.btn-delete-review').forEach(btn => {
+        btn.addEventListener('click', () => deleteReview(parseInt(btn.dataset.id)));
+    });
+}
+
+function viewReview(id) {
+    const review = reviews.find(r => r.id === id);
+    if (!review) return;
+    
+    const viewAuthor = document.getElementById('viewAuthor');
+    const viewUserInfo = document.getElementById('viewUserInfo');
+    const viewRating = document.getElementById('viewRating');
+    const viewText = document.getElementById('viewText');
+    const viewDate = document.getElementById('viewDate');
+    const viewPhoto = document.getElementById('viewPhoto');
+    const modal = document.getElementById('viewReviewModal');
+    
+    if (viewAuthor) viewAuthor.textContent = review.author;
+    if (viewUserInfo) viewUserInfo.textContent = review.userInfo || '';
+    
+    let starsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+        starsHtml += i <= review.rating ? '★' : '☆';
+    }
+    if (viewRating) viewRating.innerHTML = starsHtml;
+    if (viewText) viewText.textContent = review.text;
+    if (viewDate) viewDate.textContent = 'Дата: ' + review.date;
+    
+    if (viewPhoto) {
+        if (review.photo && review.photo !== '../assets/images/logo/logo4.png') {
+            viewPhoto.innerHTML = `<img src="${review.photo}" alt="Фото автора">`;
+        } else {
+            viewPhoto.innerHTML = '';
+        }
+    }
+    
+    if (modal) modal.style.display = 'flex';
+}
+
+function toggleReviewStatus(id) {
+    const review = reviews.find(r => r.id === id);
+    if (review) {
+        review.published = !review.published;
+        saveReviews();
+        renderReviewsTable();
+        showToast(review.published ? 'Отзыв опубликован' : 'Отзыв скрыт', 'success');
+    }
+}
+
+function deleteReview(id) {
+    const review = reviews.find(r => r.id === id);
+    if (!review) return;
+    if (confirm(`Удалить отзыв от "${review.author}"?`)) {
+        reviews = reviews.filter(r => r.id !== id);
+        saveReviews();
+        renderReviewsTable();
+        showToast('Отзыв удален', 'success');
+    }
+}
+
+function resetReviewFilters() {
+    const statusFilter = document.getElementById('reviewStatusFilter');
+    const searchFilter = document.getElementById('reviewSearchFilter');
+    
+    if (statusFilter) statusFilter.value = 'all';
+    if (searchFilter) searchFilter.value = '';
+    renderReviewsTable();
+}
+
+function exportReviews() {
+    const dataStr = JSON.stringify(reviews, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reviews_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Экспорт выполнен', 'success');
+}
+
+function initReviewsTab() {
+    loadReviews();
+    renderReviewsTable();
+    
+    const reviewStatusFilter = document.getElementById('reviewStatusFilter');
+    const reviewSearchFilter = document.getElementById('reviewSearchFilter');
+    const resetReviewFiltersBtn = document.getElementById('resetReviewFilters');
+    const exportReviewsBtn = document.getElementById('exportReviewsBtn');
+    
+    if (reviewStatusFilter) reviewStatusFilter.addEventListener('change', renderReviewsTable);
+    if (reviewSearchFilter) reviewSearchFilter.addEventListener('input', renderReviewsTable);
+    if (resetReviewFiltersBtn) resetReviewFiltersBtn.addEventListener('click', resetReviewFilters);
+    if (exportReviewsBtn) exportReviewsBtn.addEventListener('click', exportReviews);
+    
+    const reviewsTab = document.querySelector('.nav-tab[data-tab="reviews"]');
+    if (reviewsTab) {
+        reviewsTab.addEventListener('click', () => {
+            setTimeout(() => {
+                loadReviews();
+                renderReviewsTable();
+            }, 100);
+        });
+    }
+}
+
+
+let pricesData = null;
+
+function loadPricesData() {
+    const stored = localStorage.getItem(STORAGE_KEYS.PRICES);
+    if (stored) {
+        pricesData = JSON.parse(stored);
+        if (!pricesData.version || pricesData.version !== '2.0') {
+            pricesData = JSON.parse(JSON.stringify(defaultPricesData));
+            localStorage.setItem(STORAGE_KEYS.PRICES, JSON.stringify(pricesData));
+        }
+    } else {
+        pricesData = JSON.parse(JSON.stringify(defaultPricesData));
+        localStorage.setItem(STORAGE_KEYS.PRICES, JSON.stringify(pricesData));
+    }
+    return pricesData;
+}
+
+function savePricesData() {
+    localStorage.setItem(STORAGE_KEYS.PRICES, JSON.stringify(pricesData));
+}
+
+function renderPricesAdmin() {
+    const container = document.getElementById('pricesAdminContainer');
+    if (!container) return;
+    
+    const categoryFilter = document.getElementById('priceCategoryFilter')?.value || 'all';
+    const searchFilter = document.getElementById('priceSearchFilter')?.value.toLowerCase() || '';
+    
+    let categories = pricesData.categories.filter(c => c.active);
+    let services = pricesData.services.filter(s => s.active);
+    
+    if (categoryFilter !== 'all') {
+        services = services.filter(s => s.categoryId == categoryFilter);
+        categories = categories.filter(c => c.id == categoryFilter);
+    }
+    
+    if (searchFilter) {
+        services = services.filter(s => s.name.toLowerCase().includes(searchFilter));
+        const filteredCategoryIds = [...new Set(services.map(s => s.categoryId))];
+        categories = categories.filter(c => filteredCategoryIds.includes(c.id));
+    }
+    
+    const totalCategories = document.getElementById('totalCategories');
+    const totalPriceServices = document.getElementById('totalPriceServices');
+    if (totalCategories) totalCategories.textContent = pricesData.categories.length;
+    if (totalPriceServices) totalPriceServices.textContent = pricesData.services.length;
+    
+    categories.sort((a, b) => a.order - b.order);
+    
+    if (categories.length === 0) {
+        container.innerHTML = '<div class="empty-prices">Нет категорий. Добавьте первую категорию</div>';
+        return;
+    }
+    
+    let html = '';
+    categories.forEach(category => {
+        const categoryServices = services.filter(s => s.categoryId === category.id).sort((a, b) => a.order - b.order);
+        
+        html += `
+            <div class="price-category-card" data-category-id="${category.id}">
+                <div class="price-category-header" onclick="window.togglePriceCategory && togglePriceCategory(this)">
+                    <h3>${escapeHtml(category.name)} <span class="price-category-badge">${categoryServices.length} услуг</span></h3>
+                    <span class="price-category-toggle">▼</span>
+                </div>
+                <div class="price-category-content">
+                    <table class="price-services-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Название</th>
+                                <th>Цена</th>
+                                <th>Примечание</th>
+                                <th>Порядок</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+        
+        categoryServices.forEach(service => {
+            let priceDisplay = service.price === '0' ? 'Бесплатно' : `${service.price} ${service.unit}`;
+            html += `
+                <tr>
+                    <td>${service.id}</td>
+                    <td><strong>${escapeHtml(service.name)}</strong></td>
+                    <td>${priceDisplay}</td>
+                    <td>${escapeHtml(service.description || '—')}</td>
+                    <td>${service.order}</td>
+                    <td class="price-service-actions">
+                        <button class="btn-edit-price-service" data-id="${service.id}">✏️</button>
+                        <button class="btn-delete-price-service" data-id="${service.id}">🗑️</button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        html += `
+                        </tbody>
+                    </table>
+                    <div class="category-actions" style="padding: 15px; border-top: 1px solid #E5E7EB;">
+                        <button class="btn-edit-category" data-id="${category.id}">✏️ Редактировать категорию</button>
+                        <button class="btn-delete-category" data-id="${category.id}">🗑️ Удалить категорию</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+    
+    document.querySelectorAll('.btn-edit-price-service').forEach(btn => {
+        btn.addEventListener('click', () => editPriceService(parseInt(btn.dataset.id)));
+    });
+    document.querySelectorAll('.btn-delete-price-service').forEach(btn => {
+        btn.addEventListener('click', () => deletePriceService(parseInt(btn.dataset.id)));
+    });
+    document.querySelectorAll('.btn-edit-category').forEach(btn => {
+        btn.addEventListener('click', () => editPriceCategory(parseInt(btn.dataset.id)));
+    });
+    document.querySelectorAll('.btn-delete-category').forEach(btn => {
+        btn.addEventListener('click', () => deletePriceCategory(parseInt(btn.dataset.id)));
+    });
+}
+
+window.togglePriceCategory = function(header) {
+    const content = header.nextElementSibling;
+    const toggle = header.querySelector('.price-category-toggle');
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        toggle.classList.remove('open');
+    } else {
+        content.style.display = 'none';
+        toggle.classList.add('open');
+    }
+};
+
+function openPriceCategoryModal(editMode = false, category = null) {
+    const titleEl = document.getElementById('priceCategoryModalTitle');
+    const idEl = document.getElementById('priceCategoryId');
+    const nameEl = document.getElementById('priceCategoryName');
+    const orderEl = document.getElementById('priceCategoryOrder');
+    const activeEl = document.getElementById('priceCategoryActive');
+    const modal = document.getElementById('priceCategoryModal');
+    
+    if (titleEl) titleEl.textContent = editMode ? 'Редактировать категорию' : 'Добавить категорию';
+    if (idEl) idEl.value = category ? category.id : '';
+    if (nameEl) nameEl.value = category ? category.name : '';
+    if (orderEl) orderEl.value = category ? category.order : pricesData.categories.length + 1;
+    if (activeEl) activeEl.checked = category ? category.active : true;
+    if (modal) modal.style.display = 'flex';
+}
+
+function addPriceCategory() {
+    openPriceCategoryModal(false);
+}
+
+function editPriceCategory(id) {
+    const category = pricesData.categories.find(c => c.id === id);
+    if (category) openPriceCategoryModal(true, category);
+}
+
+function deletePriceCategory(id) {
+    const category = pricesData.categories.find(c => c.id === id);
+    if (!category) return;
+    const hasServices = pricesData.services.some(s => s.categoryId === id);
+    if (hasServices) {
+        if (confirm(`В категории "${category.name}" есть услуги. Удалить категорию и все услуги в ней?`)) {
+            pricesData.services = pricesData.services.filter(s => s.categoryId !== id);
+        } else {
+            return;
+        }
+    }
+    if (confirm(`Удалить категорию "${category.name}"?`)) {
+        pricesData.categories = pricesData.categories.filter(c => c.id !== id);
+        savePricesData();
+        renderPricesAdmin();
+        updatePriceCategoryFilters();
+        showToast('Категория удалена');
+    }
+}
+
+function savePriceCategory(event) {
+    event.preventDefault();
+    const id = parseInt(document.getElementById('priceCategoryId').value);
+    const name = document.getElementById('priceCategoryName').value.trim();
+    const order = parseInt(document.getElementById('priceCategoryOrder').value) || 0;
+    const active = document.getElementById('priceCategoryActive').checked;
+    
+    if (!name) {
+        showToast('Введите название категории', 'error');
+        return;
+    }
+    
+    if (id) {
+        const index = pricesData.categories.findIndex(c => c.id === id);
+        if (index !== -1) {
+            pricesData.categories[index] = { ...pricesData.categories[index], name, order, active };
+            savePricesData();
+            showToast('Категория обновлена');
+        }
+    } else {
+        const newId = Math.max(...pricesData.categories.map(c => c.id), 0) + 1;
+        pricesData.categories.push({ id: newId, name, order, active });
+        savePricesData();
+        showToast('Категория добавлена');
+    }
+    
+    renderPricesAdmin();
+    updatePriceCategoryFilters();
+    const modal = document.getElementById('priceCategoryModal');
+    if (modal) modal.style.display = 'none';
+    document.getElementById('priceCategoryForm').reset();
+}
+
+function updatePriceCategoryFilters() {
+    const filter = document.getElementById('priceCategoryFilter');
+    if (filter) {
+        filter.innerHTML = '<option value="all">Все категории</option>';
+        pricesData.categories.filter(c => c.active).forEach(category => {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.textContent = category.name;
+            filter.appendChild(option);
+        });
+    }
+    
+    const serviceFilter = document.getElementById('priceServiceCategoryId');
+    if (serviceFilter) {
+        serviceFilter.innerHTML = '<option value="">-- Выберите категорию --</option>';
+        pricesData.categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.textContent = category.name;
+            serviceFilter.appendChild(option);
+        });
+    }
+}
+
+function openPriceServiceModal(editMode = false, service = null) {
+    updatePriceCategoryFilters();
+    const titleEl = document.getElementById('priceServiceModalTitle');
+    const idEl = document.getElementById('priceServiceId');
+    const categoryIdEl = document.getElementById('priceServiceCategoryId');
+    const nameEl = document.getElementById('priceServiceName');
+    const priceEl = document.getElementById('priceServicePrice');
+    const unitEl = document.getElementById('priceServiceUnit');
+    const descEl = document.getElementById('priceServiceDescription');
+    const orderEl = document.getElementById('priceServiceOrder');
+    const activeEl = document.getElementById('priceServiceActive');
+    const modal = document.getElementById('priceServiceModal');
+    
+    if (titleEl) titleEl.textContent = editMode ? 'Редактировать услугу' : 'Добавить услугу';
+    if (idEl) idEl.value = service ? service.id : '';
+    if (categoryIdEl) categoryIdEl.value = service ? service.categoryId : '';
+    if (nameEl) nameEl.value = service ? service.name : '';
+    if (priceEl) priceEl.value = service ? service.price : '';
+    if (unitEl) unitEl.value = service ? service.unit : 'BYN';
+    if (descEl) descEl.value = service ? (service.description || '') : '';
+    if (orderEl) orderEl.value = service ? service.order : 1;
+    if (activeEl) activeEl.checked = service ? service.active : true;
+    if (modal) modal.style.display = 'flex';
+}
+
+function addPriceService() {
+    openPriceServiceModal(false);
+}
+
+function editPriceService(id) {
+    const service = pricesData.services.find(s => s.id === id);
+    if (service) openPriceServiceModal(true, service);
+}
+
+function deletePriceService(id) {
+    if (confirm('Удалить услугу из прайс-листа?')) {
+        pricesData.services = pricesData.services.filter(s => s.id !== id);
+        savePricesData();
+        renderPricesAdmin();
+        showToast('Услуга удалена');
+    }
+}
+
+function savePriceService(event) {
+    event.preventDefault();
+    const id = parseInt(document.getElementById('priceServiceId').value);
+    const categoryId = parseInt(document.getElementById('priceServiceCategoryId').value);
+    const name = document.getElementById('priceServiceName').value.trim();
+    const price = document.getElementById('priceServicePrice').value.trim();
+    const unit = document.getElementById('priceServiceUnit').value;
+    const description = document.getElementById('priceServiceDescription').value.trim();
+    const order = parseInt(document.getElementById('priceServiceOrder').value) || 1;
+    const active = document.getElementById('priceServiceActive').checked;
+    
+    if (!categoryId || !name) {
+        showToast('Заполните обязательные поля', 'error');
+        return;
+    }
+    
+    if (id) {
+        const index = pricesData.services.findIndex(s => s.id === id);
+        if (index !== -1) {
+            pricesData.services[index] = { ...pricesData.services[index], categoryId, name, price, unit, description, order, active };
+            savePricesData();
+            showToast('Услуга обновлена');
+        }
+    } else {
+        const newId = Math.max(...pricesData.services.map(s => s.id), 0) + 1;
+        pricesData.services.push({ id: newId, categoryId, name, price, unit, description, order, active });
+        savePricesData();
+        showToast('Услуга добавлена');
+    }
+    
+    renderPricesAdmin();
+    const modal = document.getElementById('priceServiceModal');
+    if (modal) modal.style.display = 'none';
+    document.getElementById('priceServiceForm').reset();
+}
+
+function exportPrices() {
+    const dataStr = JSON.stringify(pricesData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `prices_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Экспорт выполнен');
+}
+
+
+let scheduleData = null;
+
+function loadScheduleData() {
+    const stored = localStorage.getItem(STORAGE_KEYS.SCHEDULE);
+    if (stored) {
+        scheduleData = JSON.parse(stored);
+        if (!scheduleData.version || scheduleData.version !== '2.0') {
+            scheduleData = JSON.parse(JSON.stringify(defaultScheduleData));
+            localStorage.setItem(STORAGE_KEYS.SCHEDULE, JSON.stringify(scheduleData));
+        }
+    } else {
+        scheduleData = JSON.parse(JSON.stringify(defaultScheduleData));
+        localStorage.setItem(STORAGE_KEYS.SCHEDULE, JSON.stringify(scheduleData));
+        initDefaultSchedule();
+    }
+    return scheduleData;
+}
+
+function initDefaultSchedule() {
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+    
+    scheduleData.schedule = [];
+    scheduleData.doctors.forEach((doctor, doctorIndex) => {
+        days.forEach((day, index) => {
+            let isWorking = index < 5;
+            scheduleData.schedule.push({
+                id: scheduleData.schedule.length + 1,
+                doctorId: doctor.id,
+                day: day,
+                dayName: dayNames[index],
+                timeStart: isWorking ? '10:00' : '',
+                timeEnd: isWorking ? '19:00' : '',
+                breakStart: isWorking ? '13:00' : '',
+                breakEnd: isWorking ? '14:00' : '',
+                isWorking: isWorking
+            });
+        });
+    });
+    localStorage.setItem(STORAGE_KEYS.SCHEDULE, JSON.stringify(scheduleData));
+}
+
+function saveScheduleData() {
+    localStorage.setItem(STORAGE_KEYS.SCHEDULE, JSON.stringify(scheduleData));
+}
+
+function renderScheduleAdmin() {
+    const container = document.getElementById('scheduleAdminContainer');
+    if (!container) return;
+    
+    const totalDoctorsSchedule = document.getElementById('totalDoctorsSchedule');
+    if (totalDoctorsSchedule) totalDoctorsSchedule.textContent = scheduleData.doctors.length;
+    
+    let html = '';
+    scheduleData.doctors.forEach(doctor => {
+        const doctorSchedule = scheduleData.schedule.filter(s => s.doctorId === doctor.id);
+        const dayOrder = { 'monday': 1, 'tuesday': 2, 'wednesday': 3, 'thursday': 4, 'friday': 5, 'saturday': 6, 'sunday': 7 };
+        doctorSchedule.sort((a, b) => dayOrder[a.day] - dayOrder[b.day]);
+        
+        html += `
+            <div class="doctor-schedule-card-admin" data-doctor-id="${doctor.id}">
+                <div class="doctor-schedule-header-admin" onclick="window.toggleDoctorScheduleAdmin && toggleDoctorScheduleAdmin(this)">
+                    <h3>${escapeHtml(doctor.name)}</h3>
+                    <span class="doctor-schedule-toggle">▼</span>
+                </div>
+                <div class="doctor-schedule-content-admin">
+                    <table class="schedule-table-admin">
+                        <thead>
+                            <tr>
+                                <th>День недели</th>
+                                <th>Время работы</th>
+                                <th>Перерыв</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+        
+        doctorSchedule.forEach(item => {
+            let workHours = item.isWorking ? `${item.timeStart} - ${item.timeEnd}` : 'Выходной';
+            let breakTime = item.isWorking && item.breakStart ? `${item.breakStart} - ${item.breakEnd}` : '—';
+            let statusClass = item.isWorking ? 'working-yes' : 'working-no';
+            let statusText = item.isWorking ? 'Рабочий' : 'Выходной';
+            
+            html += `
+                <tr>
+                    <td>${item.dayName}</td>
+                    <td>${workHours}</td>
+                    <td>${breakTime}</td>
+                    <td><span class="working-badge ${statusClass}">${statusText}</span></td>
+                </tr>
+            `;
+        });
+        
+        html += `
+                        </tbody>
+                    </table>
+                    <div style="padding: 15px; border-top: 1px solid #E5E7EB;">
+                        <button class="btn-edit-schedule" data-id="${doctor.id}">✏️ Редактировать расписание</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+    
+    document.querySelectorAll('.btn-edit-schedule').forEach(btn => {
+        btn.addEventListener('click', () => editDoctorSchedule(parseInt(btn.dataset.id)));
+    });
+}
+
+window.toggleDoctorScheduleAdmin = function(header) {
+    const content = header.nextElementSibling;
+    const toggle = header.querySelector('.doctor-schedule-toggle');
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        toggle.classList.remove('open');
+    } else {
+        content.style.display = 'none';
+        toggle.classList.add('open');
+    }
+};
+
+function updateDoctorSelect() {
+    const select = document.getElementById('scheduleDoctorSelect');
+    if (select) {
+        select.innerHTML = '<option value="">-- Выберите врача --</option>';
+        scheduleData.doctors.forEach(doctor => {
+            const option = document.createElement('option');
+            option.value = doctor.id;
+            option.textContent = doctor.name;
+            select.appendChild(option);
+        });
+    }
+}
+
+function editDoctorSchedule(doctorId) {
+    const doctorSchedule = scheduleData.schedule.filter(s => s.doctorId === doctorId);
+    updateDoctorSelect();
+    
+    const doctorIdEl = document.getElementById('scheduleDoctorId');
+    const doctorSelectEl = document.getElementById('scheduleDoctorSelect');
+    const modal = document.getElementById('scheduleModal');
+    const titleEl = document.getElementById('scheduleModalTitle');
+    
+    if (titleEl) titleEl.textContent = 'Редактировать расписание';
+    if (doctorIdEl) doctorIdEl.value = doctorId;
+    if (doctorSelectEl) doctorSelectEl.value = doctorId;
+    
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    days.forEach(day => {
+        const daySchedule = doctorSchedule.find(s => s.day === day);
+        if (daySchedule) {
+            const workingCheckbox = document.querySelector(`.schedule-working[data-day="${day}"]`);
+            const startInput = document.querySelector(`.schedule-start[data-day="${day}"]`);
+            const endInput = document.querySelector(`.schedule-end[data-day="${day}"]`);
+            const breakStartInput = document.querySelector(`.schedule-break-start[data-day="${day}"]`);
+            const breakEndInput = document.querySelector(`.schedule-break-end[data-day="${day}"]`);
+            const hoursRow = document.querySelector(`.work-hours-row[data-day="${day}"]`);
+            
+            if (workingCheckbox) {
+                workingCheckbox.checked = daySchedule.isWorking;
+                if (hoursRow) {
+                    hoursRow.style.display = daySchedule.isWorking ? 'flex' : 'none';
+                }
+            }
+            if (startInput) startInput.value = daySchedule.timeStart || '';
+            if (endInput) endInput.value = daySchedule.timeEnd || '';
+            if (breakStartInput) breakStartInput.value = daySchedule.breakStart || '';
+            if (breakEndInput) breakEndInput.value = daySchedule.breakEnd || '';
+        }
+    });
+    
+    if (modal) modal.style.display = 'flex';
+}
+
+function saveSchedule(event) {
+    event.preventDefault();
+    const doctorId = parseInt(document.getElementById('scheduleDoctorId').value);
+    
+    if (!doctorId) {
+        showToast('Выберите врача', 'error');
+        return;
+    }
+    
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+    
+    days.forEach((day, index) => {
+        const workingCheckbox = document.querySelector(`.schedule-working[data-day="${day}"]`);
+        const startInput = document.querySelector(`.schedule-start[data-day="${day}"]`);
+        const endInput = document.querySelector(`.schedule-end[data-day="${day}"]`);
+        const breakStartInput = document.querySelector(`.schedule-break-start[data-day="${day}"]`);
+        const breakEndInput = document.querySelector(`.schedule-break-end[data-day="${day}"]`);
+        
+        const isWorking = workingCheckbox ? workingCheckbox.checked : false;
+        const timeStart = startInput ? startInput.value : '';
+        const timeEnd = endInput ? endInput.value : '';
+        const breakStart = breakStartInput ? breakStartInput.value : '';
+        const breakEnd = breakEndInput ? breakEndInput.value : '';
+        
+        const existingIndex = scheduleData.schedule.findIndex(s => s.doctorId === doctorId && s.day === day);
+        
+        if (existingIndex !== -1) {
+            scheduleData.schedule[existingIndex] = {
+                ...scheduleData.schedule[existingIndex],
+                isWorking,
+                timeStart,
+                timeEnd,
+                breakStart,
+                breakEnd
+            };
+        } else {
+            scheduleData.schedule.push({
+                id: scheduleData.schedule.length + 1,
+                doctorId,
+                day,
+                dayName: dayNames[index],
+                timeStart,
+                timeEnd,
+                breakStart,
+                breakEnd,
+                isWorking
+            });
+        }
+    });
+    
+    saveScheduleData();
+    renderScheduleAdmin();
+    const modal = document.getElementById('scheduleModal');
+    if (modal) modal.style.display = 'none';
+    showToast('Расписание сохранено');
+}
+
+function exportSchedule() {
+    const dataStr = JSON.stringify(scheduleData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `schedule_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Экспорт выполнен');
+}
+
+function initScheduleTab() {
+    loadScheduleData();
+    renderScheduleAdmin();
+    
+    const addScheduleBtn = document.getElementById('addScheduleBtn');
+    const scheduleForm = document.getElementById('scheduleForm');
+    const exportScheduleBtn = document.getElementById('exportScheduleBtn');
+    
+    if (addScheduleBtn) {
+        addScheduleBtn.addEventListener('click', () => {
+            updateDoctorSelect();
+            const modal = document.getElementById('scheduleModal');
+            const titleEl = document.getElementById('scheduleModalTitle');
+            if (titleEl) titleEl.textContent = 'Настроить расписание';
+            if (modal) modal.style.display = 'flex';
+        });
+    }
+    if (scheduleForm) scheduleForm.addEventListener('submit', saveSchedule);
+    if (exportScheduleBtn) exportScheduleBtn.addEventListener('click', exportSchedule);
+    
+    document.querySelectorAll('.schedule-working').forEach(checkbox => {
+        const day = checkbox.dataset.day;
+        const hoursRow = document.querySelector(`.work-hours-row[data-day="${day}"]`);
+        checkbox.addEventListener('change', function() {
+            if (hoursRow) {
+                hoursRow.style.display = this.checked ? 'flex' : 'none';
+            }
+        });
+    });
 }
 
 
@@ -784,38 +1694,90 @@ function init() {
     serviceDetails = loadData(STORAGE_KEYS.SERVICE_DETAILS, defaultServiceDetails);
     doctors = loadData(STORAGE_KEYS.DOCTORS, defaultDoctors);
     appointments = loadData(STORAGE_KEYS.APPOINTMENTS, defaultAppointments);
+    reviews = loadData(STORAGE_KEYS.REVIEWS, defaultReviews);
+    pricesData = loadPricesData();
+    scheduleData = loadScheduleData();
     
     renderServices();
     updateServiceDetailsFilter();
     renderServiceDetails();
     renderDoctors();
     renderAppointments();
+    renderReviewsTable();
+    renderPricesAdmin();
+    renderScheduleAdmin();
     
     initTabs();
     initMobileMenu();
+    initReviewsTab();
+    updatePriceCategoryFilters();
     
-    document.getElementById('addServiceBtn').addEventListener('click', addService);
-    document.getElementById('serviceForm').addEventListener('submit', saveService);
+    const addServiceBtn = document.getElementById('addServiceBtn');
+    const serviceForm = document.getElementById('serviceForm');
+    const addDetailBtn = document.getElementById('addDetailBtn');
+    const detailForm = document.getElementById('detailForm');
+    const detailServiceFilter = document.getElementById('detailServiceFilter');
+    const addDoctorBtn = document.getElementById('addDoctorBtn');
+    const doctorForm = document.getElementById('doctorForm');
+    const addAppointmentBtn = document.getElementById('addAppointmentBtn');
+    const appointmentForm = document.getElementById('appointmentForm');
+    const appointmentDoctorFilter = document.getElementById('appointmentDoctorFilter');
+    const appointmentDateFilter = document.getElementById('appointmentDateFilter');
+    const appointmentStatusFilter = document.getElementById('appointmentStatusFilter');
+    const resetAppointmentFiltersBtn = document.getElementById('resetAppointmentFilters');
+    const reviewStatusFilter = document.getElementById('reviewStatusFilter');
+    const reviewSearchFilter = document.getElementById('reviewSearchFilter');
+    const resetReviewFiltersBtn = document.getElementById('resetReviewFilters');
+    const exportReviewsBtn = document.getElementById('exportReviewsBtn');
+    const addPriceCategoryBtn = document.getElementById('addPriceCategoryBtn');
+    const priceCategoryForm = document.getElementById('priceCategoryForm');
+    const addPriceServiceBtn = document.getElementById('addPriceServiceBtn');
+    const priceServiceForm = document.getElementById('priceServiceForm');
+    const exportPricesBtn = document.getElementById('exportPricesBtn');
+    const priceCategoryFilter = document.getElementById('priceCategoryFilter');
+    const priceSearchFilter = document.getElementById('priceSearchFilter');
+    const addScheduleBtn = document.getElementById('addScheduleBtn');
+    const scheduleForm = document.getElementById('scheduleForm');
+    const exportScheduleBtn = document.getElementById('exportScheduleBtn');
     
-    document.getElementById('addDetailBtn').addEventListener('click', addServiceDetail);
-    document.getElementById('detailForm').addEventListener('submit', saveServiceDetail);
-    document.getElementById('detailServiceFilter').addEventListener('change', renderServiceDetails);
-    
-    document.getElementById('addDoctorBtn').addEventListener('click', addDoctor);
-    document.getElementById('doctorForm').addEventListener('submit', saveDoctor);
-    
-    document.getElementById('addAppointmentBtn').addEventListener('click', addAppointment);
-    document.getElementById('appointmentForm').addEventListener('submit', saveAppointment);
-    document.getElementById('appointmentDoctorFilter').addEventListener('change', renderAppointments);
-    document.getElementById('appointmentDateFilter').addEventListener('change', renderAppointments);
-    document.getElementById('appointmentStatusFilter').addEventListener('change', renderAppointments);
-    document.getElementById('resetAppointmentFilters').addEventListener('click', resetAppointmentFilters);
+    if (addServiceBtn) addServiceBtn.addEventListener('click', addService);
+    if (serviceForm) serviceForm.addEventListener('submit', saveService);
+    if (addDetailBtn) addDetailBtn.addEventListener('click', addServiceDetail);
+    if (detailForm) detailForm.addEventListener('submit', saveServiceDetail);
+    if (detailServiceFilter) detailServiceFilter.addEventListener('change', renderServiceDetails);
+    if (addDoctorBtn) addDoctorBtn.addEventListener('click', addDoctor);
+    if (doctorForm) doctorForm.addEventListener('submit', saveDoctor);
+    if (addAppointmentBtn) addAppointmentBtn.addEventListener('click', addAppointment);
+    if (appointmentForm) appointmentForm.addEventListener('submit', saveAppointment);
+    if (appointmentDoctorFilter) appointmentDoctorFilter.addEventListener('change', renderAppointments);
+    if (appointmentDateFilter) appointmentDateFilter.addEventListener('change', renderAppointments);
+    if (appointmentStatusFilter) appointmentStatusFilter.addEventListener('change', renderAppointments);
+    if (resetAppointmentFiltersBtn) resetAppointmentFiltersBtn.addEventListener('click', resetAppointmentFilters);
+    if (reviewStatusFilter) reviewStatusFilter.addEventListener('change', renderReviewsTable);
+    if (reviewSearchFilter) reviewSearchFilter.addEventListener('input', renderReviewsTable);
+    if (resetReviewFiltersBtn) resetReviewFiltersBtn.addEventListener('click', resetReviewFilters);
+    if (exportReviewsBtn) exportReviewsBtn.addEventListener('click', exportReviews);
+    if (addPriceCategoryBtn) addPriceCategoryBtn.addEventListener('click', addPriceCategory);
+    if (priceCategoryForm) priceCategoryForm.addEventListener('submit', savePriceCategory);
+    if (addPriceServiceBtn) addPriceServiceBtn.addEventListener('click', addPriceService);
+    if (priceServiceForm) priceServiceForm.addEventListener('submit', savePriceService);
+    if (exportPricesBtn) exportPricesBtn.addEventListener('click', exportPrices);
+    if (priceCategoryFilter) priceCategoryFilter.addEventListener('change', renderPricesAdmin);
+    if (priceSearchFilter) priceSearchFilter.addEventListener('input', renderPricesAdmin);
+    if (addScheduleBtn) addScheduleBtn.addEventListener('click', () => {
+        updateDoctorSelect();
+        const modal = document.getElementById('scheduleModal');
+        if (modal) modal.style.display = 'flex';
+    });
+    if (scheduleForm) scheduleForm.addEventListener('submit', saveSchedule);
+    if (exportScheduleBtn) exportScheduleBtn.addEventListener('click', exportSchedule);
     
     document.querySelectorAll('.modal-close, .btn-cancel').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const modalId = btn.dataset.modal;
             if (modalId) {
-                document.getElementById(modalId).style.display = 'none';
+                const modal = document.getElementById(modalId);
+                if (modal) modal.style.display = 'none';
             } else {
                 closeModals();
             }
@@ -826,6 +1788,16 @@ function init() {
         if (e.target.classList.contains('modal')) {
             e.target.style.display = 'none';
         }
+    });
+    
+    document.querySelectorAll('.schedule-working').forEach(checkbox => {
+        const day = checkbox.dataset.day;
+        const hoursRow = document.querySelector(`.work-hours-row[data-day="${day}"]`);
+        checkbox.addEventListener('change', function() {
+            if (hoursRow) {
+                hoursRow.style.display = this.checked ? 'flex' : 'none';
+            }
+        });
     });
 }
 

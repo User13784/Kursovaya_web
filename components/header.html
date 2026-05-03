@@ -1,20 +1,20 @@
 <header class="header">
     <div class="header-container">
         <div class="header-left">
-            <div class="menu-btn">
+            <div class="menu-btn" id="menuBtn">
                 <img src="assets/images/logo/logo2.png" alt="Menu Logo" class="menu-logo">
-                МЕНЮ
+                <span id="menuText">МЕНЮ</span>
             </div>
-            <div class="lang-selector">
+            <div class="lang-selector" id="headerLangSelector">
                 <img src="assets/images/logo/logo3.png" alt="Lang" class="lang-logo">
-                RUS
+                <span id="langSelectorText">RUS</span>
             </div>
         </div>
         <div class="logo">
             <img src="assets/images/logo/logo1.png" alt="Dental Club Logo">
         </div>
         <div class="header-right">
-            <a href="#" class="login-link desktop-login">ВОЙТИ</a>
+            <a href="#" class="login-link desktop-login" id="desktopLoginLink">ВОЙТИ</a>
             <div class="burger-icon" id="burgerIcon">
                 <span></span>
                 <span></span>
@@ -24,3 +24,194 @@
     </div>
     <div class="header-stripe"></div>
 </header>
+
+<script>
+    (function() {
+        const translations = {
+            ru: {
+                // Header
+                'menu': 'МЕНЮ',
+                'login': 'ВОЙТИ',
+                'lang': 'RUS',
+                // Footer
+                'home': 'ГЛАВНАЯ',
+                'services': 'УСЛУГИ',
+                'team': 'КОМАНДА',
+                'reviews': 'ОТЗЫВЫ',
+                'contacts': 'КОНТАКТЫ',
+                'prices': 'ПРАЙС-ЛИСТ'
+            },
+            en: {
+                'menu': 'MENU',
+                'login': 'LOGIN',
+                'lang': 'ENG',
+                'home': 'HOME',
+                'services': 'SERVICES',
+                'team': 'TEAM',
+                'reviews': 'REVIEWS',
+                'contacts': 'CONTACTS',
+                'prices': 'PRICE LIST'
+            }
+        };
+
+        let currentLang = localStorage.getItem('dental_language') || 'ru';
+
+        function applyTranslations() {
+            const t = translations[currentLang];
+            
+            const menuText = document.getElementById('menuText');
+            if (menuText) menuText.textContent = t.menu;
+            
+            const loginText = document.getElementById('desktopLoginLink');
+            if (loginText) loginText.textContent = t.login;
+            
+            const langText = document.getElementById('langSelectorText');
+            if (langText) langText.textContent = t.lang;
+            
+            const footerLinks = document.querySelectorAll('.footer-links-row a');
+            if (footerLinks.length >= 6) {
+                const footerTexts = [t.home, t.services, t.team, t.reviews, t.contacts, t.prices];
+                footerLinks.forEach((link, index) => {
+                    if (footerTexts[index]) link.textContent = footerTexts[index];
+                });
+            }
+            
+            const mobileMenuText = document.querySelector('.mobile-menu-btn');
+            if (mobileMenuText) mobileMenuText.textContent = t.menu;
+            
+            const mobileLoginText = document.querySelector('.mobile-login-link');
+            if (mobileLoginText) mobileLoginText.textContent = t.login;
+            
+            const mobileLangText = document.querySelector('.mobile-lang-selector');
+            if (mobileLangText) mobileLangText.textContent = t.lang;
+            
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            if (mobileLinks.length >= 6) {
+                const mobileTexts = [t.home, t.services, t.team, t.reviews, t.contacts, t.prices];
+                mobileLinks.forEach((link, index) => {
+                    if (mobileTexts[index]) link.textContent = mobileTexts[index];
+                });
+            }
+            
+            console.log('Перевод применён:', currentLang);
+        }
+
+        function switchLanguage() {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            localStorage.setItem('dental_language', currentLang);
+            applyTranslations();
+            console.log('Язык переключён на:', currentLang);
+        }
+
+        function getMenuPageUrl() {
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('/pages/')) {
+                return 'menu.html';
+            }
+            return 'pages/menu.html';
+        }
+
+        const menuBtn = document.getElementById('menuBtn');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const menuUrl = getMenuPageUrl();
+                console.log('Открытие меню:', menuUrl);
+                window.location.href = menuUrl;
+            });
+        }
+
+        const langSelector = document.getElementById('headerLangSelector');
+        if (langSelector) {
+            langSelector.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                switchLanguage();
+            });
+        }
+
+        const loginLink = document.getElementById('desktopLoginLink');
+        if (loginLink) {
+            loginLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Вход');
+                const currentPath = window.location.pathname;
+                if (currentPath.includes('/pages/')) {
+                    window.location.href = 'login.html';
+                } else {
+                    window.location.href = 'pages/login.html';
+                }
+            });
+        }
+
+        const burgerIcon = document.getElementById('burgerIcon');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const body = document.body;
+
+        if (burgerIcon && mobileMenu) {
+            function openMenu() {
+                burgerIcon.classList.add('active');
+                mobileMenu.classList.add('active');
+                if (menuOverlay) menuOverlay.classList.add('active');
+                body.classList.add('menu-open');
+            }
+
+            function closeMenu() {
+                burgerIcon.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                if (menuOverlay) menuOverlay.classList.remove('active');
+                body.classList.remove('menu-open');
+            }
+
+            burgerIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (mobileMenu.classList.contains('active')) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            if (closeMenuBtn) {
+                closeMenuBtn.addEventListener('click', closeMenu);
+            }
+
+            if (menuOverlay) {
+                menuOverlay.addEventListener('click', closeMenu);
+            }
+
+            const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
+                if (burgerIcon) burgerIcon.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                if (menuOverlay) menuOverlay.classList.remove('active');
+                body.classList.remove('menu-open');
+            }
+        });
+
+        const observer = new MutationObserver(function() {
+            const footer = document.querySelector('.footer-nav');
+            if (footer) {
+                applyTranslations();
+                observer.disconnect();
+            }
+        });
+        
+        observer.observe(document.body, { childList: true, subtree: true });
+        
+        applyTranslations();
+        
+        console.log('Header инициализирован, язык:', currentLang);
+    })();
+</script>

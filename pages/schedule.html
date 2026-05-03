@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Контакты | Dental Club</title>
+    <title>Расписание врачей | Dental Club</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/contacts.css">
-    <link rel="stylesheet" href="../media/contacts_media.css">
-    <link rel="stylesheet" href="../css/modal-appointment.css">
-    <link rel="stylesheet" href="../css/modal-profile.css">
+    <link rel="stylesheet" href="../css/schedule.css">
+    <link rel="stylesheet" href="../media/schedule_media.css">
     <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/modal-appointment.css">
 </head>
 <body>
+
     <div id="header-placeholder"></div>
 
     <div class="mobile-menu" id="mobileMenu">
@@ -29,84 +30,68 @@
             <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
             <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
             <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
+            <a href="schedule.html" class="mobile-link">РАСПИСАНИЕ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
-        <section class="hero-contacts">
+        <section class="hero-schedule">
             <div class="hero-content">
-                <h1>КОНТАКТЫ</h1>
+                <h1>РАСПИСАНИЕ ВРАЧЕЙ</h1>
                 <button class="btn-white" id="openAppointmentBtn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
 
-        <section class="contacts-info-section">
+        <section class="schedule-section">
             <div class="container">
-                <div class="contacts-grid">
-                    <div class="contacts-details">
-                        <h2>СВЯЗАТЬСЯ С НАМИ</h2>
-                        <div class="phones">
-                            <a href="tel:+375291234567">+375 (29) 123-45-67</a>
-                            <a href="tel:+375333456789">+375 (33) 345-67-89</a>
-                        </div>
-                        <p class="address">Беларусь, г. Могилев, ул. Ленинская, 25<br>(вход со стороны улицы Первомайской)</p>
-                        <p class="schedule">• &nbsp;Пн - Пт: 10:00 - 20:00</p>
-                        <p class="schedule">• &nbsp;Сб: 10:00 - 16:00</p>
-                        <p class="schedule">• &nbsp;Вс: выходной</p>
-                        <a href="mailto:dentalclubreception@gmail.com" class="email">dentalclubreception@gmail.com</a>
-                        
-                        <div class="social-icons">
-                            <a href="#"><img src="../assets/images/icons/instagram.png" alt="Instagram"></a>
-                            <a href="#"><img src="../assets/images/icons/youtube.png" alt="YouTube"></a>
-                            <a href="#"><img src="../assets/images/icons/vk.png" alt="VK"></a>
-                            <a href="#"><img src="../assets/images/icons/whatsapp.png" alt="WhatsApp"></a>
-                        </div>
+                <div class="schedule-info">
+                    <p>📅 Режим работы клиники: <strong>Пн-Пт: 10:00 - 20:00</strong> | <strong>Сб: 10:00 - 16:00</strong> | <strong>Вс: выходной</strong></p>
+                    <p>📞 Для записи на прием звоните: <a href="tel:+375291234567">+375 (29) 123-45-67</a></p>
+                </div>
+
+                <div class="schedule-filters">
+                    <div class="filter-group">
+                        <label>Выберите врача:</label>
+                        <select id="scheduleDoctorFilter" class="doctor-select">
+                            <option value="all">Все врачи</option>
+                        </select>
                     </div>
-                    <div class="contacts-cta">
-                         <button class="btn-outline" id="openAppointmentBtn2">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    <div class="filter-group">
+                        <label>День недели:</label>
+                        <select id="scheduleDayFilter" class="day-select">
+                            <option value="all">Все дни</option>
+                            <option value="monday">Понедельник</option>
+                            <option value="tuesday">Вторник</option>
+                            <option value="wednesday">Среда</option>
+                            <option value="thursday">Четверг</option>
+                            <option value="friday">Пятница</option>
+                            <option value="saturday">Суббота</option>
+                            <option value="sunday">Воскресенье</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="map-container">
-                    <div class="map-image-side">
-                        <img src="../assets/images/contacts/contacs2.jpg" alt="Reception">
-                    </div>
-                    <div class="map-iframe-wrapper">
-                        <div id="map">
-                            <img src="../assets/images/contacts/contacs3.png" alt="Карта">
-                        </div>
-                    </div>
+                <div id="scheduleList" class="schedule-list">
+                    <div class="loading">Загрузка расписания...</div>
                 </div>
-            </div>
-        </section>
 
-        <section class="feedback-section">
-            <div class="container feedback-flex">
-                <div class="feedback-title">
-                    <h2>ОБРАТНАЯ <br>СВЯЗЬ</h2>
+                <div class="schedule-note">
+                    <p>⚠️ Расписание может меняться. Актуальное время приема уточняйте по телефону.</p>
+                    <p>💡 Вы можете записаться на прием онлайн через форму записи.</p>
                 </div>
-                <form class="feedback-form">
-                    <input type="text" placeholder="Ваше имя" required>
-                    <input type="email" placeholder="Email" required>
-                    <input type="tel" placeholder="+375 (29) 123-45-67" required>
-                    <textarea placeholder="Введите ваш вопрос"></textarea>
-                    <button type="submit" class="btn-submit">ОТПРАВИТЬ ЗАЯВКУ</button>
-                </form>
             </div>
         </section>
     </main>
 
     <div id="footer-placeholder"></div>
-    
+
     <script src="../js/translations.js"></script>
     <script src="../js/personalization.js"></script>
     <script src="../js/components.js"></script>
     <script src="../js/modal-appointment.js"></script>
-    <script src="../js/modal-profile.js"></script>
-    <script src="../js/prices.js"></script>
-    
+    <script src="../js/schedule.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
@@ -164,15 +149,13 @@
                 });
             }, 100);
             
-            const openAppointmentBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2');
-            openAppointmentBtns.forEach(btn => {
-                if (btn && typeof openVisitorAppointmentModal === 'function') {
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        openVisitorAppointmentModal();
-                    });
-                }
-            });
+            const openAppointmentBtn = document.getElementById('openAppointmentBtn');
+            if (openAppointmentBtn && typeof openVisitorAppointmentModal === 'function') {
+                openAppointmentBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openVisitorAppointmentModal();
+                });
+            }
         });
     </script>
 </body>
