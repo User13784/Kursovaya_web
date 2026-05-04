@@ -2454,3 +2454,21 @@ body::after,
         width: 100%;
     }
 }
+
+#tab-doctors td:last-child {
+    vertical-align: top;  
+    padding-bottom: 35px;  
+}
+
+#tab-doctors .action-buttons {
+    margin-top: 25px;
+}
+
+#tab-appointments .action-buttons {
+    margin-top: 25px;
+}
+
+#tab-appointments td:last-child {
+    vertical-align: top;  
+    padding-bottom: 35px;  
+}

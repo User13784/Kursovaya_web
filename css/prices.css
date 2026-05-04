@@ -1,3 +1,30 @@
+@font-face {
+    font-family: "nbrb";
+    src: url("../fonts/nbrb.woff2") format("woff2"),
+         url("../fonts/nbrb.ttf") format("truetype"),
+         url("../fonts/nbrb.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.currency-icon {
+    font-family: "nbrb" !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: normal;
+    font-feature-settings: "liga";
+    -webkit-font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: discretionary-ligatures;
+    display: inline-block;
+    vertical-align: baseline;
+}
+
 .hero-prices {
     height: 50vh;
     min-height: 350px;
@@ -73,8 +100,9 @@
 }
 
 .prices-section {
-    padding: 60px 0;
+    padding: 60px 0 120px 0;
     background: #F9FAFB;
+    min-height: calc(100vh - 50vh);
 }
 
 .container {
@@ -168,12 +196,33 @@
 .services-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.services-table th,
+.services-table td {
+    padding: 15px 20px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.services-table th:first-child,
+.services-table td:first-child {
+    width: 45%;
+}
+
+.services-table th:nth-child(2),
+.services-table td:nth-child(2) {
+    width: 25%;
+}
+
+.services-table th:last-child,
+.services-table td:last-child {
+    width: 30%;
 }
 
 .services-table th {
     background: #F3F4F6;
-    padding: 15px 20px;
-    text-align: left;
     font-weight: 600;
     color: #374151;
     font-size: 14px;
@@ -181,7 +230,6 @@
 }
 
 .services-table td {
-    padding: 15px 20px;
     border-bottom: 1px solid #E5E7EB;
     color: #4B5563;
     font-size: 15px;
@@ -194,17 +242,29 @@
 .service-name {
     font-weight: 500;
     color: #1F2937;
+    word-wrap: break-word;
 }
 
 .service-price {
     font-weight: 600;
     color: #2F353B;
     white-space: nowrap;
+    display: inline-block;
+}
+
+.service-price .currency-icon {
+    font-family: "nbrb" !important;
+    margin-left: 3px;
+    font-size: 1.3em;
+    display: inline;
+    vertical-align: baseline;
+    line-height: 1;
 }
 
 .service-unit {
     color: #9CA3AF;
     font-size: 13px;
+    word-wrap: break-word;
 }
 
 .empty-prices {
@@ -248,80 +308,6 @@
     padding: 60px;
     font-size: 18px;
     color: #6B7280;
-}
-
-@media (max-width: 768px) {
-    .hero-prices h1 {
-        font-size: 40px;
-    }
-    
-    .btn-white {
-        width: 260px;
-        height: 50px;
-        font-size: 16px;
-    }
-    
-    .prices-filter {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .filter-group {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .category-select, .search-input {
-        width: 100%;
-    }
-    
-    .category-title {
-        font-size: 18px;
-    }
-    
-    .services-table th,
-    .services-table td {
-        padding: 12px 15px;
-        font-size: 13px;
-    }
-    
-    .service-price {
-        white-space: nowrap;
-    }
-}
-
-@media (max-width: 576px) {
-    .hero-prices {
-        min-height: 300px;
-    }
-    
-    .hero-prices h1 {
-        font-size: 32px;
-    }
-    
-    .btn-white {
-        width: 220px;
-        height: 45px;
-        font-size: 14px;
-    }
-    
-    .services-table th:nth-child(3),
-    .services-table td:nth-child(3) {
-        display: none;
-    }
-    
-    .category-header {
-        padding: 15px;
-    }
-    
-    .category-title {
-        font-size: 16px;
-    }
-    
-    .services-table td {
-        padding: 10px 12px;
-        font-size: 12px;
-    }
 }
 
 [data-theme="dark"] .prices-section {
@@ -386,42 +372,295 @@
     font-size: 18px;
 }
 
+[data-accessibility="large-text"] .service-price .currency-icon {
+    font-size: 1em;
+}
+
+html, body {
+    background: #F9FAFB;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+#footer-placeholder {
+    margin-top: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.prices-section,
+.prices-list,
+.price-category,
+.category-content {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.prices-section {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.prices-list {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.price-category {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.services-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 25px;
+    }
+    
+    .services-table th,
+    .services-table td {
+        padding: 12px 15px;
+    }
+}
 
 @media (max-width: 992px) {
     .container {
-        padding: 0 15px;
+        padding: 0 20px;
     }
     
-    .prices-section {
-        padding: 40px 0;
+    .hero-prices h1 {
+        font-size: 48px;
+    }
+    
+    .btn-white {
+        width: 280px;
+        height: 52px;
+        font-size: 17px;
+    }
+    
+    .category-title {
+        font-size: 20px;
+    }
+    
+    .services-table th,
+    .services-table td {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .service-price .currency-icon {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 850px) {
+    .container {
+        padding: 0 15px;
     }
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .hero-prices {
+        min-height: 300px;
+    }
+    
+    .hero-prices h1 {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+    
+    .btn-white {
+        width: 250px;
+        height: 48px;
+        font-size: 16px;
+    }
+    
+    .prices-section {
+        padding: 40px 0 80px 0;
+        width: 100%;
+        overflow-x: hidden;
+    }
+    
     .prices-filter {
+        flex-direction: column;
+        align-items: stretch;
         gap: 15px;
+        width: 100%;
     }
     
     .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
         width: 100%;
+    }
+    
+    .filter-group label {
+        font-size: 13px;
     }
     
     .category-select, .search-input {
         width: 100%;
         min-width: auto;
+        padding: 10px 14px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+    
+    .price-category {
+        margin-bottom: 20px;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    .category-header {
+        padding: 15px 20px;
+    }
+    
+    .category-title {
+        font-size: 18px;
+    }
+    
+    .category-toggle {
+        font-size: 20px;
     }
     
     .services-table {
         display: block;
         overflow-x: auto;
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
     }
     
-    .price-category {
-        margin-bottom: 20px;
+    .services-table thead,
+    .services-table tbody,
+    .services-table tr {
+        display: table;
+        width: 100%;
+        min-width: 550px;
+    }
+    
+    .services-table th,
+    .services-table td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    .services-table th:nth-child(2) {
+        text-align: left;
+    }
+    
+    .service-price {
+        display: inline-block;
+        text-align: left;
+    }
+    
+    .service-price .currency-icon {
+        font-size: 1.15em;
+    }
+    
+    .prices-note {
+        margin-top: 30px;
+        padding: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .prices-note p {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    .hero-prices h1 {
+        font-size: 36px;
+    }
+    
+    .services-table thead,
+    .services-table tbody,
+    .services-table tr {
+        min-width: 500px;
+    }
+    
+    .services-table th:nth-child(2),
+    .services-table td:nth-child(2) {
+        text-align: left;
     }
 }
 
 @media (max-width: 576px) {
+    .container {
+        padding: 0 12px;
+        width: 100%;
+    }
+    
+    .hero-prices {
+        min-height: 280px;
+    }
+    
+    .hero-prices h1 {
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+    
+    .btn-white {
+        width: 220px;
+        height: 45px;
+        font-size: 14px;
+    }
+    
+    .prices-section {
+        padding: 30px 0 60px 0;
+    }
+    
     .category-header {
         padding: 12px 15px;
     }
@@ -431,18 +670,48 @@
     }
     
     .category-toggle {
-        font-size: 20px;
+        font-size: 18px;
+    }
+    
+    .services-table thead,
+    .services-table tbody,
+    .services-table tr {
+        min-width: 480px;
     }
     
     .services-table th,
     .services-table td {
-        padding: 10px 12px;
+        padding: 8px 10px;
         font-size: 12px;
     }
     
-    .services-table th:nth-child(3),
-    .services-table td:nth-child(3) {
+    .services-table th:last-child,
+    .services-table td:last-child {
         display: none;
+    }
+    
+    .services-table th:first-child,
+    .services-table td:first-child {
+        width: 65%;
+    }
+    
+    .services-table th:nth-child(2),
+    .services-table td:nth-child(2) {
+        width: 35%;
+    }
+    
+    .service-price .currency-icon {
+        font-size: 1.1em;
+        margin-left: 2px;
+    }
+    
+    .service-unit {
+        font-size: 11px;
+    }
+    
+    .prices-note {
+        margin-top: 25px;
+        padding: 12px;
     }
     
     .prices-note p {
@@ -452,55 +721,403 @@
     .empty-text {
         font-size: 16px;
     }
+    
+    .empty-icon {
+        font-size: 40px;
+    }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
     .hero-prices h1 {
         font-size: 28px;
     }
     
     .btn-white {
         width: 200px;
-        height: 40px;
+        height: 42px;
         font-size: 13px;
+    }
+    
+    .category-title {
+        font-size: 15px;
+    }
+    
+    .services-table thead,
+    .services-table tbody,
+    .services-table tr {
+        min-width: 420px;
     }
     
     .services-table th,
     .services-table td {
-        padding: 8px 10px;
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+    
+    .service-name {
+        font-size: 12px;
+    }
+    
+    .service-price {
+        font-size: 12px;
+    }
+    
+    .service-price .currency-icon {
+        font-size: 1em;
+    }
+    
+    .prices-note p {
         font-size: 11px;
     }
 }
 
-@media (max-width: 768px) and (orientation: landscape) {
+@media (max-width: 400px) {
+    .container {
+        padding: 0 8px;
+    }
+    
+    .hero-prices h1 {
+        font-size: 26px;
+    }
+    
+    .btn-white {
+        width: 190px;
+        height: 40px;
+        font-size: 12px;
+    }
+    
+    .category-header {
+        padding: 10px 12px;
+    }
+    
+    .category-title {
+        font-size: 14px;
+    }
+    
+    .services-table th,
+    .services-table td {
+        padding: 5px 6px;
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding: 0 8px;
+    }
+    
+    .hero-prices {
+        min-height: 240px;
+    }
+    
+    .hero-prices h1 {
+        font-size: 24px;
+    }
+    
+    .btn-white {
+        width: 180px;
+        height: 38px;
+        font-size: 12px;
+    }
+    
+    .services-table thead,
+    .services-table tbody,
+    .services-table tr {
+        min-width: 380px;
+    }
+    
+    .services-table th,
+    .services-table td {
+        padding: 5px 6px;
+        font-size: 10px;
+    }
+    
+    .service-name {
+        font-size: 11px;
+    }
+    
+    .service-price {
+        font-size: 11px;
+    }
+    
+    .service-price .currency-icon {
+        font-size: 0.95em;
+    }
+    
+    .prices-note {
+        margin-top: 20px;
+        padding: 10px;
+    }
+    
+    .prices-note p {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 0 5px;
+    }
+    
+    .hero-prices h1 {
+        font-size: 22px;
+    }
+    
+    .btn-white {
+        width: 170px;
+        height: 35px;
+        font-size: 11px;
+    }
+    
+    .category-title {
+        font-size: 13px;
+    }
+    
+    .services-table thead,
+    .services-table tbody,
+    .services-table tr {
+        min-width: 350px;
+    }
+    
+    .services-table th,
+    .services-table td {
+        padding: 4px 5px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
     .hero-prices {
         min-height: 250px;
     }
     
     .hero-prices h1 {
-        font-size: 36px;
-        margin-bottom: 20px;
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+    
+    .btn-white {
+        width: 210px;
+        height: 42px;
+        font-size: 14px;
     }
     
     .prices-section {
-        padding: 30px 0;
+        padding: 30px 0 50px 0;
+    }
+    
+    .prices-filter {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .filter-group {
+        flex: 1;
+        min-width: 180px;
+    }
+    
+    .category-select, .search-input {
+        width: 100%;
     }
 }
 
-body {
-    background: #F9FAFB; 
+@media (max-width: 700px) and (orientation: landscape) {
+    .hero-prices {
+        min-height: 200px;
+    }
+    
+    .hero-prices h1 {
+        font-size: 28px;
+    }
+    
+    .btn-white {
+        width: 190px;
+        height: 38px;
+        font-size: 13px;
+    }
+    
+    .services-table thead,
+    .services-table tbody,
+    .services-table tr {
+        min-width: 450px;
+    }
 }
 
-.prices-section {
-    background: #F9FAFB;
-    padding: 60px 0 0 0; 
-    margin-bottom: 0;
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero-prices {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                          url('../assets/images/prices/prices-hero@2x.jpg');
+    }
 }
 
-#footer-placeholder {
-    margin-top: 0; 
+.mobile-filter-btn {
+    display: none;
+    width: 100%;
+    padding: 12px 20px;
+    background: #2F353B;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-family: 'Mulish', sans-serif;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-align: center;
+    transition: all 0.3s;
 }
 
-.prices-section .container {
-    padding-bottom: 60px;
+.mobile-filter-btn:hover {
+    background: #1a1e22;
+    transform: translateY(-2px);
+}
+
+.mobile-filter-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 350px;
+    height: 100vh;
+    background: white;
+    z-index: 10000;
+    transition: right 0.3s ease;
+    box-shadow: -2px 0 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-filter-menu.active {
+    right: 0;
+}
+
+.mobile-filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid #E5E7EB;
+    background: #2F353B;
+    color: white;
+}
+
+.mobile-filter-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.close-filter-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.3s;
+}
+
+.close-filter-btn:hover {
+    transform: rotate(90deg);
+}
+
+.mobile-filter-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.mobile-filter-content .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 20px;
+    display: flex;
+    width: 100%;
+}
+
+.mobile-filter-content .filter-group label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.mobile-filter-content .category-select,
+.mobile-filter-content .search-input {
+    width: 100%;
+    min-width: auto;
+    padding: 12px 16px;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 30px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.mobile-filter-actions {
+    padding: 15px 20px;
+    border-top: 1px solid #E5E7EB;
+    display: flex;
+    gap: 10px;
+}
+
+.mobile-filter-actions button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mobile-filter-actions .apply-filter-btn {
+    background: #2F353B;
+    color: white;
+    border: none;
+}
+
+.mobile-filter-actions .apply-filter-btn:hover {
+    background: #1a1e22;
+}
+
+.mobile-filter-actions .reset-filter-btn {
+    background: #F3F4F6;
+    color: #4B5563;
+    border: 1px solid #E5E7EB;
+}
+
+.mobile-filter-actions .reset-filter-btn:hover {
+    background: #E5E7EB;
+}
+
+.filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.filter-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (max-width: 768px) {
+    .mobile-filter-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 500px) {
+    .prices-filter {
+        display: none;
+    }
 }

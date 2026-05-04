@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Прайс-лист | Dental Club</title>
+    <title>Вопрос-ответ | Dental Club</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/prices.css">
-    <link rel="stylesheet" href="../media/prices_media.css">
-    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/faq.css">
+    <link rel="stylesheet" href="../media/faq_media.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
 </head>
 <body>
@@ -30,42 +29,44 @@
             <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
             <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
             <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
-            <a href="schedule.html" class="mobile-link">РАСПИСАНИЕ</a>
+            <a href="faq.html" class="mobile-link">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
-        <section class="hero-prices">
+        <section class="hero-faq">
             <div class="hero-content">
-                <h1>ПРАЙС-ЛИСТ</h1>
+                <h1>ВОПРОС-ОТВЕТ</h1>
+                <p>Часто задаваемые вопросы о нашей клинике</p>
                 <button class="btn-white" id="openAppointmentBtn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
 
-        <section class="prices-section">
+        <section class="faq-section">
             <div class="container">
-                <div class="prices-filter">
-                    <div class="filter-group">
-                        <label>Категория:</label>
-                        <select id="priceCategoryFilter" class="category-select">
-                            <option value="all">Все услуги</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>Поиск:</label>
-                        <input type="text" id="priceSearchInput" placeholder="Поиск по названию услуги..." class="search-input">
-                    </div>
+                <div class="faq-categories">
+                    <button class="category-btn active" data-category="all">Все вопросы</button>
+                    <button class="category-btn" data-category="Запись и визиты">📅 Запись и визиты</button>
+                    <button class="category-btn" data-category="Услуги">🦷 Услуги</button>
+                    <button class="category-btn" data-category="Цены и оплата">💰 Цены и оплата</button>
+                    <button class="category-btn" data-category="Врачи">👨‍⚕️ Врачи</button>
+                    <button class="category-btn" data-category="Общие">ℹ️ Общие</button>
                 </div>
 
-                <div id="pricesList" class="prices-list">
-                    <div class="loading">Загрузка цен...</div>
+                <div class="faq-search">
+                    <input type="text" id="faqSearchInput" placeholder="🔍 Поиск по вопросам..." class="search-input">
                 </div>
 
-                <div class="prices-note">
-                    <p>⚠️ Цены, указанные на сайте, не являются публичной офертой. Точную стоимость уточняйте у администратора клиники.</p>
-                    <p>📞 Для записи на прием и уточнения цены звоните: <a href="tel:+375291234567">+375 (29) 123-45-67</a></p>
+                <div id="faqList" class="faq-list">
+                    <div class="loading">Загрузка...</div>
+                </div>
+
+                <div id="noResults" class="no-results" style="display: none;">
+                    <div class="no-results-icon">🔍</div>
+                    <p>По вашему запросу ничего не найдено</p>
+                    <button class="btn-reset-faq">Сбросить фильтры</button>
                 </div>
             </div>
         </section>
@@ -73,11 +74,10 @@
 
     <div id="footer-placeholder"></div>
 
-    <script src="../js/translations.js"></script>
-    <script src="../js/personalization.js"></script>
     <script src="../js/components.js"></script>
     <script src="../js/modal-appointment.js"></script>
-    <script src="../js/prices.js"></script>
+    <script src="../js/faq.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {

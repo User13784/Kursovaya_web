@@ -3,20 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Dental Club — Стоматологическая клиника в Алматы</title>
+    <title>Dental Club — Стоматологическая клиника в Могилеве</title>
     
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="media/index_media.css">
     <link rel="stylesheet" href="css/modal-appointment.css">
     <link rel="stylesheet" href="css/modal-profile.css">
     <link rel="stylesheet" href="css/theme.css">
-<script src="js/translations.js"></script>
-<script src="js/personalization.js"></script>
+    <link rel="stylesheet" href="css/search.css">
+        <link rel="stylesheet" href="css/preloader.css">
 
-
+    
+    <script src="js/translations.js"></script>
+    <script src="js/personalization.js"></script>
 </head>
 <body>
 
+<div id="pagePreloader" class="page-preloader">
+    <div class="preloader-inner">
+        <div class="preloader-symbol">
+            <svg class="symbol-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle class="circle-outer" cx="60" cy="60" r="55" stroke="#A5C33C" stroke-width="1.5" stroke-dasharray="4 6" fill="none"/>
+                <circle class="circle-inner" cx="60" cy="60" r="48" stroke="rgba(165,195,60,0.3)" stroke-width="1" fill="none"/>
+                <path class="letter-d" d="M38 30 L38 90 M38 30 L55 30 Q72 30 78 45 Q84 60 78 75 Q72 90 55 90 L38 90" stroke="#A5C33C" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle class="dot-top" cx="60" cy="22" r="3" fill="#A5C33C" opacity="0"/>
+                <line class="line-bottom" x1="45" y1="98" x2="75" y2="98" stroke="#A5C33C" stroke-width="1.5" stroke-linecap="round" opacity="0"/>
+            </svg>
+        </div>
+        <div class="preloader-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="preloader-brand">DENTAL CLUB</div>
+    </div>
+</div>
     <div id="header-placeholder"></div>
 
     <div class="mobile-menu" id="mobileMenu">
@@ -30,21 +51,30 @@
             <a href="#" class="mobile-login-link">ВОЙТИ</a>
             <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
             <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="#" class="mobile-link">КОМАНДА</a>
-            <a href="#" class="mobile-link">ОТЗЫВЫ</a>
+            <a href="team.html" class="mobile-link">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
             <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
+            <a href="faq.html" class="mobile-link">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>СТОМАТОЛОГИЧЕСКАЯ КЛИНИКА <br><span class="city-text">В МОГИЛЕВЕ</span></h1>
-                <button class="btn btn-primary">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+       <section class="hero">
+    <div class="hero-content">
+        <div class="hero-search-container">
+            <div class="hero-search-wrapper">
+                <input type="text" id="heroSearchInput" class="hero-search-input" placeholder="🔍 Поиск по сайту..." autocomplete="off">
             </div>
-            <div class="scroll-down"></div>
-        </section>
+            <div id="heroSearchResults" class="hero-search-results"></div>
+        </div>
+        
+        <h1>СТОМАТОЛОГИЧЕСКАЯ КЛИНИКА <br><span class="city-text">В МОГИЛЕВЕ</span></h1>
+        <button class="btn btn-primary" id="openAppointmentBtn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+    </div>
+    <div class="scroll-down"></div>
+</section>
 
         <section class="clinic-info">
             <div class="container grid-2">
@@ -53,7 +83,7 @@
                 </div>
                 <div class="content-block">
                     <p>Первая клиника в Беларуси, предоставляющая<br> полный спектр стоматологических услуг на европейском уровне. Мы используем передовое оборудование и digital технологии.</p>
-                    <button class="btn btn-outline">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    <button class="btn btn-outline" id="openAppointmentBtn2">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                 </div>
             </div>
             <div class="image-gallery">
@@ -76,7 +106,7 @@
                         <li>Индивидуальный подход и экономия времени пациента.</li>
                         <li>Безупречный сервис и интерьер, в котором приятно находиться.</li>
                     </ul>
-                    <button class="btn btn-outline">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    <button class="btn btn-outline" id="openAppointmentBtn3">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                 </div>
             </div>
             <div class="image-gallery-alt">
@@ -89,6 +119,9 @@
     <div id="footer-placeholder"></div>
 
     <script src="js/components.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/modal-appointment.js"></script>
+    <script src="js/modal-profile.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -146,10 +179,23 @@
                     }
                 });
             }, 100);
+            
+            const openBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2, #openAppointmentBtn3');
+            openBtns.forEach(btn => {
+                if (btn && typeof openVisitorAppointmentModal === 'function') {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        openVisitorAppointmentModal();
+                    });
+                }
+            });
+            
+            if (typeof initHeroSearch === 'function') {
+                initHeroSearch();
+            }
         });
     </script>
-    <script src="js/modal-appointment.js"></script>
-    <script src="js/modal-profile.js"></script>
+<script src="js/preloader.js"></script>
 
 </body>
 </html>

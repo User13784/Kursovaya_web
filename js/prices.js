@@ -1,6 +1,8 @@
 const PRICES_STORAGE_KEY = 'dental_prices';
+const PRICES_VERSION = '2.0';
 
 const defaultPrices = {
+    version: PRICES_VERSION,
     categories: [
         { id: 1, name: 'Диагностика', order: 1, active: true },
         { id: 2, name: 'Профилактика и гигиена', order: 2, active: true },
@@ -74,10 +76,16 @@ const defaultPrices = {
 function loadPriceData() {
     const stored = localStorage.getItem(PRICES_STORAGE_KEY);
     if (stored) {
-        return JSON.parse(stored);
+        const parsed = JSON.parse(stored);
+        if (!parsed.version || parsed.version !== PRICES_VERSION) {
+            console.log('Обновление данных прайс-листа...');
+            localStorage.setItem(PRICES_STORAGE_KEY, JSON.stringify(defaultPrices));
+            return JSON.parse(JSON.stringify(defaultPrices));
+        }
+        return parsed;
     } else {
         localStorage.setItem(PRICES_STORAGE_KEY, JSON.stringify(defaultPrices));
-        return { ...defaultPrices };
+        return JSON.parse(JSON.stringify(defaultPrices));
     }
 }
 
@@ -111,7 +119,7 @@ function displayPrices() {
     
     categories.sort((a, b) => a.order - b.order);
     
-    if (categories.length === 0 || services.length === 0) {
+    if (categories.length === 0) {
         pricesContainer.innerHTML = `
             <div class="empty-prices">
                 <div class="empty-icon">💊</div>
@@ -147,7 +155,15 @@ function displayPrices() {
         `;
         
         categoryServices.forEach(service => {
-            let priceDisplay = service.price === '0' ? 'Бесплатно' : `${service.price} ${service.unit}`;
+            let priceDisplay = '';
+            if (service.price === '0') {
+                priceDisplay = 'Бесплатно';
+            } else if (service.unit === 'BYN') {
+                priceDisplay = `${service.price} <span class="currency-icon">BYN</span>`;
+            } else {
+                priceDisplay = `${service.price} ${service.unit}`;
+            }
+            
             html += `
                 <tr>
                     <td class="service-name">${escapeHtml(service.name)}</td>
@@ -209,6 +225,32 @@ function escapeHtml(str) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    if (!document.querySelector('#currency-styles')) {
+        const style = document.createElement('style');
+        style.id = 'currency-styles';
+        style.textContent = `
+            .currency-icon {
+                font-family: "nbrb" !important;
+                speak: none;
+                font-style: normal;
+                font-weight: normal;
+                font-variant: normal;
+                text-transform: none;
+                line-height: 1;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                letter-spacing: normal;
+                font-feature-settings: "liga";
+                -webkit-font-variant-ligatures: discretionary-ligatures;
+                font-variant-ligatures: discretionary-ligatures;
+            }
+            .service-price .currency-icon {
+                margin-left: 3px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
     populateCategoryFilter();
     displayPrices();
     
@@ -216,10 +258,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('priceSearchInput');
     
     if (categoryFilter) {
-        categoryFilter.addEventListener('change', displayPrices);
+        categoryFilter.addEventListener('change', function() {
+            displayPrices();
+        });
     }
     
     if (searchInput) {
-        searchInput.addEventListener('input', displayPrices);
+        searchInput.addEventListener('input', function() {
+            displayPrices();
+        });
     }
 });

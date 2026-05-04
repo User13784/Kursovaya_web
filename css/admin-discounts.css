@@ -1,0 +1,97 @@
+.status-active {
+    background: #D1FAE5;
+    color: #059669;
+}
+
+.status-expired {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.status-upcoming {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+.btn-edit-discount,
+.btn-delete-discount,
+.btn-toggle-discount {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-edit-discount {
+    background: #E0E7FF;
+    color: #4338CA;
+}
+
+.btn-edit-discount:hover {
+    background: #C7D2FE;
+}
+
+.btn-delete-discount {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.btn-delete-discount:hover {
+    background: #FECACA;
+}
+
+.btn-toggle-discount {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+.btn-toggle-discount:hover {
+    background: #FDE68A;
+}
+
+.discount-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.discount-percentage {
+    background: #10B981;
+    color: white;
+}
+
+.discount-fixed {
+    background: #3B82F6;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .filter-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-select,
+    .filter-search {
+        width: 100%;
+    }
+    
+    .data-table th:nth-child(4),
+    .data-table td:nth-child(4) {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .data-table th:nth-child(5),
+    .data-table td:nth-child(5),
+    .data-table th:nth-child(6),
+    .data-table td:nth-child(6) {
+        display: none;
+    }
+}

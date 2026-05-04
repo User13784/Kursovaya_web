@@ -1,3 +1,4 @@
+// ========== КЛЮЧИ ДЛЯ LOCALSTORAGE ==========
 const STORAGE_KEYS = {
     SERVICES: 'dental_services',
     SERVICE_DETAILS: 'dental_service_details',
@@ -5,10 +6,13 @@ const STORAGE_KEYS = {
     APPOINTMENTS: 'dental_appointments',
     REVIEWS: 'dental_reviews',
     PRICES: 'dental_prices',
-    SCHEDULE: 'dental_schedule'
+    SCHEDULE: 'dental_schedule',
+    DISCOUNTS: 'dental_discounts'
 };
 
+// ========== ДАННЫЕ ПО УМОЛЧАНИЮ ==========
 
+// Услуги (главные)
 const defaultServices = [
     { id: 1, name: 'ДИАГНОСТИКА', page: 'service-menu2.html', bgImage: '../assets/images/service-menu2-page/service-menu2.jpg', title: 'ДИАГНОСТИКА', active: true, order: 1 },
     { id: 2, name: 'ПРОФИЛАКТИКА КАРИЕСА', page: 'service-menu3.html', bgImage: '../assets/images/service-menu3-page/service-menu2.jpg', title: 'ПРОФИЛАКТИКА КАРИЕСА', active: true, order: 2 },
@@ -20,6 +24,7 @@ const defaultServices = [
     { id: 8, name: 'ВИНИРЫ, ЛЮМИНИРЫ', page: 'service-menu9.html', bgImage: '../assets/images/service-menu9-page/service-menu1.jpg', title: 'ВИНИРЫ. ЛЮМИНИРЫ', active: true, order: 8 }
 ];
 
+// Детальная информация услуг
 const defaultServiceDetails = [
     { id: 1, serviceId: 1, mainText: 'Диагностика необходима для составления качественного плана лечения...', secondaryText: 'В Dental Club производится 3D-диагностика на оборудовании последнего поколения.', features: 'Точность\nБезопасность\nСкорость', steps: '1. Консультация\n2. 3D-снимок\n3. План лечения', images: '' },
     { id: 2, serviceId: 2, mainText: 'Профилактика - это комплекс мер, направленных на предупреждение возникновения и развития стоматологических заболеваний.', secondaryText: 'Регулярная профилактика по системе Dental Club снижает риск кариеса в несколько раз.', features: 'Профессиональная чистка\nОбучение гигиене\nФторирование', steps: '1. Оценка состояния\n2. Удаление зубного камня\n3. Полировка\n4. Покрытие фторлаком', images: '' },
@@ -31,6 +36,7 @@ const defaultServiceDetails = [
     { id: 8, serviceId: 8, mainText: 'Керамические виниры и люминиры для идеальной улыбки.', secondaryText: 'Минимальная обработка зубов, толщина до 5 микрон.', features: 'Эстетично\nДолговечно\nБез боли', steps: '1. Диагностика\n2. Wax-up\n3. Mock-up\n4. Фиксация', images: '' }
 ];
 
+// Врачи
 const defaultDoctors = [
     { id: 1, lastName: 'Волкова', firstName: 'Екатерина', middleName: 'Андреевна', specialization: 'Стоматолог-терапевт, детский стоматолог', photo: '../assets/images/team/team-menu2.jpg', education: 'Белорусский государственный медицинский университет (2010 г)', experience: 'более 12 лет', improvement: 'Регулярно повышает квалификацию в области детской стоматологии и эндодонтии.', schedule: 'Пн-Сб, 09:00 - 18:00', active: true },
     { id: 2, lastName: 'Кузнецов', firstName: 'Андрей', middleName: 'Владимирович', specialization: 'Стоматолог-пародонтолог', photo: '../assets/images/team/team-menu3.jpg', education: 'Витебский государственный медицинский университет (2008 г)', experience: 'более 14 лет', improvement: 'Прошел курсы по лазерной пародонтологии в Германии.', schedule: 'Пн-Пт, 10:00 - 19:00', active: true },
@@ -40,18 +46,21 @@ const defaultDoctors = [
     { id: 6, lastName: 'Ковальчук', firstName: 'Анастасия', middleName: 'Дмитриевна', specialization: 'Стоматолог-хирург, имплантолог', photo: '../assets/images/team/team-menu7.jpg', education: 'Белорусский государственный медицинский университет (2009 г)', experience: 'более 13 лет', improvement: 'Прошла обучение у ведущих имплантологов Европы.', schedule: 'Пн-Ср-Пт, 10:00 - 19:00', active: true }
 ];
 
+// Записи на прием
 const defaultAppointments = [
-    { id: 1, patientName: 'Иванов Иван Иванович', phone: '+375 29 123-45-67', email: 'ivanov@mail.ru', doctorId: 1, serviceId: 1, date: '2024-12-20', time: '10:00', comment: 'Первичная консультация', status: 'confirmed', createdAt: new Date().toISOString() },
-    { id: 2, patientName: 'Петрова Анна Сергеевна', phone: '+375 33 456-78-90', email: 'petrova@mail.ru', doctorId: 2, serviceId: 2, date: '2024-12-21', time: '14:00', comment: '', status: 'pending', createdAt: new Date().toISOString() },
-    { id: 3, patientName: 'Сидоров Алексей Владимирович', phone: '+375 44 567-89-01', email: 'sidorov@mail.ru', doctorId: 3, serviceId: 3, date: '2024-12-19', time: '11:00', comment: 'Боль в зубе', status: 'completed', createdAt: new Date().toISOString() }
+    { id: 1, patientName: 'Иванов Иван Иванович', phone: '+375 29 123-45-67', email: 'ivanov@mail.ru', doctorId: 1, serviceId: 1, date: new Date().toISOString().split('T')[0], time: '10:00', comment: 'Первичная консультация', status: 'confirmed', createdAt: new Date().toISOString() },
+    { id: 2, patientName: 'Петрова Анна Сергеевна', phone: '+375 33 456-78-90', email: 'petrova@mail.ru', doctorId: 2, serviceId: 2, date: new Date().toISOString().split('T')[0], time: '14:00', comment: '', status: 'pending', createdAt: new Date().toISOString() },
+    { id: 3, patientName: 'Сидоров Алексей Владимирович', phone: '+375 44 567-89-01', email: 'sidorov@mail.ru', doctorId: 3, serviceId: 3, date: new Date().toISOString().split('T')[0], time: '11:00', comment: 'Боль в зубе', status: 'completed', createdAt: new Date().toISOString() }
 ];
 
+// Отзывы по умолчанию
 const defaultReviews = [
     { id: 1, author: 'Айгуль Ахметова', userInfo: 'Президент АО «RAIMBEK GROUP»', text: 'С удовольствием хотела бы поделиться своим отношением к стоматологической клинике Dental Club. Я являюсь клиентом этой клиники на протяжении многих лет, поэтому очень рада ее обновлению и росту! Приятно осознавать, что в Dental Club технологичность сочетается с совершенным сервисом.', rating: 5, photo: '../assets/images/reviews/reviews2.jpg', date: '2024-11-15', published: true },
     { id: 2, author: 'Лариса Мухамеджанова', userInfo: 'MBA, PH.D, Академик КАМ', text: 'Я лечусь у Дмитрия Щеголева уже 20 лет. За это время выросла дочь, подросла внучка. И, разумеется мы все – пациенты данной клиники. Здесь - сверхстандарты безопасности, абсолютная надежность и доверие.', rating: 5, photo: '../assets/images/reviews/reviews3.jpg', date: '2024-11-10', published: true },
     { id: 3, author: 'Эленора Тен', userInfo: '', text: 'Хотелось бы поблагодарить команду Dental Club за профессионализм, квалифицированный подход в лечении. Благодаря прекрасному, чуткому врачу Дмитрию Щёголева в клинике витает атмосфера добра, уверенности, защищённости и спокойствия.', rating: 5, photo: '../assets/images/logo/logo4.png', date: '2024-11-05', published: true }
 ];
 
+// Данные для прайс-листа
 const defaultPricesData = {
     version: '2.0',
     categories: [
@@ -82,6 +91,7 @@ const defaultPricesData = {
     ]
 };
 
+// Данные для расписания
 const defaultScheduleData = {
     version: '2.0',
     doctors: [
@@ -95,6 +105,35 @@ const defaultScheduleData = {
     schedule: []
 };
 
+// Данные для скидок
+const defaultDiscounts = [
+    { 
+        id: 1, 
+        serviceId: 1, 
+        name: 'Осенняя распродажа', 
+        type: 'percentage', 
+        value: 20, 
+        startDate: new Date().toISOString().split('T')[0], 
+        endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0], 
+        description: 'Скидка 20% на диагностику',
+        active: true,
+        createdAt: new Date().toISOString()
+    },
+    { 
+        id: 2, 
+        serviceId: 6, 
+        name: 'Акция на гигиену', 
+        type: 'percentage', 
+        value: 15, 
+        startDate: new Date().toISOString().split('T')[0], 
+        endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('T')[0], 
+        description: 'Скидка 15% на профессиональную гигиену',
+        active: true,
+        createdAt: new Date().toISOString()
+    }
+];
+
+// ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
 
 function loadData(key, defaultData) {
     const stored = localStorage.getItem(key);
@@ -151,6 +190,7 @@ function getStatusWithEmoji(status) {
     return statuses[status] || status;
 }
 
+// ========== Ф-1: УПРАВЛЕНИЕ УСЛУГАМИ ==========
 
 let services = [];
 
@@ -168,10 +208,10 @@ function renderServices() {
     services.forEach(service => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${service.id}</td>
-            <td><strong>${escapeHtml(service.name)}</strong></td>
-            <td><code>${escapeHtml(service.page)}</code></td>
-            <td><span class="status-badge ${service.active ? 'status-active' : 'status-inactive'}">${service.active ? 'Активна' : 'Скрыта'}</span></td>
+            <td class="service-id">${service.id}</td>
+            <td class="service-name"><strong>${escapeHtml(service.name)}</strong></td>
+            <td class="service-page"><code>${escapeHtml(service.page)}</code></td>
+            <td class="service-status"><span class="status-badge ${service.active ? 'status-active' : 'status-inactive'}">${service.active ? 'Активна' : 'Скрыта'}</span></td>
             <td class="action-buttons">
                 <button class="btn-edit-service" data-id="${service.id}">✏️ Редакт.</button>
                 <button class="btn-delete-service" data-id="${service.id}">🗑️ Удалить</button>
@@ -266,6 +306,7 @@ function saveService(event) {
     document.getElementById('serviceForm').reset();
 }
 
+// ========== Ф-2: УПРАВЛЕНИЕ ДЕТАЛЬНОЙ ИНФОРМАЦИЕЙ УСЛУГ ==========
 
 let serviceDetails = [];
 
@@ -425,13 +466,11 @@ function renderDoctors() {
         const fullName = getDoctorFullName(doctor);
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${doctor.id}</td>
-            <td>${doctor.photo ? `<img src="${doctor.photo}" class="doctor-photo-cell" onerror="this.src='../assets/images/placeholder.jpg'">` : '—'}</td>
-            <td><strong>${escapeHtml(fullName)}</strong></td>
-            <td>${escapeHtml(doctor.specialization)}</td>
-            <td class="action-buttons">
-                <span class="status-badge ${doctor.active ? 'status-active' : 'status-inactive'}">${doctor.active ? 'Активен' : 'Скрыт'}</span>
-            </td>
+            <td class="doctor-id">${doctor.id}</td>
+            <td class="doctor-photo">${doctor.photo ? `<img src="${doctor.photo}" class="doctor-photo-cell" onerror="this.src='../assets/images/placeholder.jpg'">` : '—'}</td>
+            <td class="doctor-name"><strong>${escapeHtml(fullName)}</strong></td>
+            <td class="doctor-specialization">${escapeHtml(doctor.specialization)}</td>
+            <td class="doctor-status"><span class="status-badge ${doctor.active ? 'status-active' : 'status-inactive'}">${doctor.active ? 'Активен' : 'Скрыт'}</span></td>
             <td class="action-buttons">
                 <button class="btn-edit-doctor" data-id="${doctor.id}">✏️ Редакт.</button>
                 <button class="btn-delete-doctor" data-id="${doctor.id}">🗑️ Удалить</button>
@@ -588,23 +627,21 @@ function renderAppointments() {
         
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${app.id}</td>
-            <td><strong>${escapeHtml(app.patientName)}</strong></td>
-            <td>${escapeHtml(app.phone)}</td>
-            <td>${escapeHtml(doctorName)}</td>
-            <td>${escapeHtml(serviceName)}</td>
-            <td>${app.date}</td>
-            <td>${app.time}</td>
-            <td class="action-buttons">
-                <span class="status-badge status-${app.status}">${getStatusWithEmoji(app.status)}</span>
-            </td>
-            <td class="action-buttons">
-                <button class="btn-edit-appointment" data-id="${app.id}">✏️</button>
-                <button class="btn-delete-appointment" data-id="${app.id}">🗑️</button>
-                ${app.status === 'pending' ? '<button class="btn-confirm-appointment" data-id="' + app.id + '">✅</button>' : ''}
-                ${app.status === 'confirmed' ? '<button class="btn-complete-appointment" data-id="' + app.id + '">✔️</button>' : ''}
-            </td>
-        `;
+    <td>${app.id}</td>
+    <td><strong>${escapeHtml(app.patientName)}</strong></td>
+    <td>${escapeHtml(app.phone)}</td>
+    <td>${escapeHtml(doctorName)}</td>
+    <td>${escapeHtml(serviceName)}</td>
+    <td>${app.date}</td>
+    <td>${app.time}</td>
+    <td><span class="status-badge status-${app.status}">${getStatusWithEmoji(app.status)}</span></td>
+    <td class="action-buttons">
+        <button class="btn-edit-appointment" data-id="${app.id}">✏️</button>
+        <button class="btn-delete-appointment" data-id="${app.id}">🗑️</button>
+        ${app.status === 'pending' ? '<button class="btn-confirm-appointment" data-id="' + app.id + '">✅</button>' : ''}
+        ${app.status === 'confirmed' ? '<button class="btn-complete-appointment" data-id="' + app.id + '">✔️</button>' : ''}
+    </td>
+`;
         tbody.appendChild(row);
     });
     
@@ -1433,7 +1470,7 @@ function initDefaultSchedule() {
     const dayNames = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
     
     scheduleData.schedule = [];
-    scheduleData.doctors.forEach((doctor, doctorIndex) => {
+    scheduleData.doctors.forEach((doctor) => {
         days.forEach((day, index) => {
             let isWorking = index < 5;
             scheduleData.schedule.push({
@@ -1475,7 +1512,7 @@ function renderScheduleAdmin() {
                     <h3>${escapeHtml(doctor.name)}</h3>
                     <span class="doctor-schedule-toggle">▼</span>
                 </div>
-                <div class="doctor-schedule-content-admin">
+                <div class="doctor-schedule-content-admin" style="display: block;">
                     <table class="schedule-table-admin">
                         <thead>
                             <tr>
@@ -1489,10 +1526,26 @@ function renderScheduleAdmin() {
         `;
         
         doctorSchedule.forEach(item => {
-            let workHours = item.isWorking ? `${item.timeStart} - ${item.timeEnd}` : 'Выходной';
-            let breakTime = item.isWorking && item.breakStart ? `${item.breakStart} - ${item.breakEnd}` : '—';
-            let statusClass = item.isWorking ? 'working-yes' : 'working-no';
-            let statusText = item.isWorking ? 'Рабочий' : 'Выходной';
+            let workHours = '';
+            let breakTime = '';
+            let statusClass = '';
+            let statusText = '';
+            
+            if (item.isWorking) {
+                workHours = `<span class="work-hours">${item.timeStart || '—'} - ${item.timeEnd || '—'}</span>`;
+                if (item.breakStart && item.breakEnd) {
+                    breakTime = `<span class="break-time">${item.breakStart} - ${item.breakEnd}</span>`;
+                } else {
+                    breakTime = '<span class="break-time">—</span>';
+                }
+                statusClass = 'working-yes';
+                statusText = 'Рабочий';
+            } else {
+                workHours = '<span class="work-hours off">Выходной</span>';
+                breakTime = '<span class="break-time">—</span>';
+                statusClass = 'working-no';
+                statusText = 'Выходной';
+            }
             
             html += `
                 <tr>
@@ -1689,6 +1742,845 @@ function initScheduleTab() {
 }
 
 
+let appointmentsChart = null;
+let doctorsChart = null;
+let servicesChart = null;
+let hoursChart = null;
+let weekdaysChart = null;
+let statusChart = null;
+
+function getAnalyticsData() {
+    let appointmentsData = [];
+    let doctorsData = [];
+    let servicesData = [];
+    
+    try {
+        const storedAppointments = localStorage.getItem(STORAGE_KEYS.APPOINTMENTS);
+        if (storedAppointments) {
+            appointmentsData = JSON.parse(storedAppointments);
+        }
+        
+        const storedDoctors = localStorage.getItem(STORAGE_KEYS.DOCTORS);
+        if (storedDoctors) {
+            doctorsData = JSON.parse(storedDoctors);
+        }
+        
+        const storedServices = localStorage.getItem(STORAGE_KEYS.SERVICES);
+        if (storedServices) {
+            servicesData = JSON.parse(storedServices);
+        }
+    } catch(e) {
+        console.error('Ошибка загрузки данных для аналитики:', e);
+    }
+    
+    return { appointmentsData, doctorsData, servicesData };
+}
+
+function updateAnalyticsStats() {
+    const { appointmentsData } = getAnalyticsData();
+    
+    const total = appointmentsData.length;
+    const confirmed = appointmentsData.filter(a => a.status === 'confirmed').length;
+    const completed = appointmentsData.filter(a => a.status === 'completed').length;
+    const pending = appointmentsData.filter(a => a.status === 'pending').length;
+    const cancelled = appointmentsData.filter(a => a.status === 'cancelled').length;
+    
+    const totalEl = document.getElementById('totalAppointments');
+    const confirmedEl = document.getElementById('confirmedAppointments');
+    const completedEl = document.getElementById('completedAppointments');
+    const pendingEl = document.getElementById('pendingAppointments');
+    const cancelledEl = document.getElementById('cancelledAppointments');
+    
+    if (totalEl) totalEl.textContent = total;
+    if (confirmedEl) confirmedEl.textContent = confirmed;
+    if (completedEl) completedEl.textContent = completed;
+    if (pendingEl) pendingEl.textContent = pending;
+    if (cancelledEl) cancelledEl.textContent = cancelled;
+    
+    const confirmationRate = total > 0 ? ((confirmed + completed) / total * 100).toFixed(1) : 0;
+    const completionRate = total > 0 ? (completed / total * 100).toFixed(1) : 0;
+    const cancellationRate = total > 0 ? (cancelled / total * 100).toFixed(1) : 0;
+    
+    const confirmationRateEl = document.getElementById('confirmationRate');
+    const completionRateEl = document.getElementById('completionRate');
+    const cancellationRateEl = document.getElementById('cancellationRate');
+    
+    if (confirmationRateEl) confirmationRateEl.textContent = `${confirmationRate}%`;
+    if (completionRateEl) completionRateEl.textContent = `${completionRate}%`;
+    if (cancellationRateEl) cancellationRateEl.textContent = `${cancellationRate}%`;
+}
+
+function filterAppointmentsByPeriod(period, startDate = null, endDate = null) {
+    const { appointmentsData } = getAnalyticsData();
+    
+    if (!appointmentsData || appointmentsData.length === 0) return [];
+    
+    let filtered = [...appointmentsData];
+    const today = new Date();
+    
+    if (period === 'week') {
+        const weekAgo = new Date();
+        weekAgo.setDate(today.getDate() - 7);
+        filtered = filtered.filter(a => new Date(a.date) >= weekAgo);
+    } else if (period === 'month') {
+        const monthAgo = new Date();
+        monthAgo.setDate(today.getDate() - 30);
+        filtered = filtered.filter(a => new Date(a.date) >= monthAgo);
+    } else if (period === 'quarter') {
+        const quarterAgo = new Date();
+        quarterAgo.setDate(today.getDate() - 90);
+        filtered = filtered.filter(a => new Date(a.date) >= quarterAgo);
+    } else if (period === 'year') {
+        const yearAgo = new Date();
+        yearAgo.setFullYear(today.getFullYear() - 1);
+        filtered = filtered.filter(a => new Date(a.date) >= yearAgo);
+    } else if (period === 'custom' && startDate && endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        end.setHours(23, 59, 59);
+        filtered = filtered.filter(a => {
+            const appDate = new Date(a.date);
+            return appDate >= start && appDate <= end;
+        });
+    }
+    
+    return filtered;
+}
+
+function prepareAppointmentsChartData(filteredAppointments) {
+    if (!filteredAppointments || filteredAppointments.length === 0) {
+        return { labels: ['Нет данных'], data: [0] };
+    }
+    
+    const dateMap = new Map();
+    const today = new Date();
+    const last7Days = [];
+    
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        const label = `${date.getDate()}.${date.getMonth() + 1}`;
+        last7Days.push({ date: dateStr, label });
+        dateMap.set(dateStr, 0);
+    }
+    
+    filteredAppointments.forEach(app => {
+        if (dateMap.has(app.date)) {
+            dateMap.set(app.date, dateMap.get(app.date) + 1);
+        }
+    });
+    
+    const labels = last7Days.map(d => d.label);
+    const data = last7Days.map(d => dateMap.get(d.date));
+    
+    return { labels, data };
+}
+
+function prepareDoctorsChartData(filteredAppointments, doctorsData) {
+    if (!filteredAppointments || filteredAppointments.length === 0 || !doctorsData || doctorsData.length === 0) {
+        return { labels: ['Нет данных'], data: [0] };
+    }
+    
+    const doctorMap = new Map();
+    
+    filteredAppointments.forEach(app => {
+        const doctor = doctorsData.find(d => d.id === app.doctorId);
+        const doctorName = doctor ? `${doctor.lastName} ${doctor.firstName}`.trim() : 'Неизвестно';
+        
+        if (doctorMap.has(doctorName)) {
+            doctorMap.set(doctorName, doctorMap.get(doctorName) + 1);
+        } else {
+            doctorMap.set(doctorName, 1);
+        }
+    });
+    
+    const sorted = Array.from(doctorMap.entries()).sort((a, b) => b[1] - a[1]);
+    const labels = sorted.map(item => item[0].length > 15 ? item[0].substring(0, 15) + '...' : item[0]);
+    const data = sorted.map(item => item[1]);
+    const total = data.reduce((a, b) => a + b, 0);
+    
+    const tbody = document.querySelector('#doctorsStatsTable tbody');
+    if (tbody) {
+        tbody.innerHTML = '';
+        if (sorted.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3">Нет данных</td></tr>';
+        } else {
+            sorted.forEach(([name, count]) => {
+                const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${escapeHtml(name)}</td>
+                    <td>${count}</td>
+                    <td>${percent}% <span class="percent-bar" style="width: ${percent}%;"></span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    }
+    
+    return { labels, data };
+}
+
+function prepareServicesChartData(filteredAppointments, servicesData) {
+    if (!filteredAppointments || filteredAppointments.length === 0 || !servicesData || servicesData.length === 0) {
+        return { labels: ['Нет данных'], data: [0] };
+    }
+    
+    const serviceMap = new Map();
+    
+    filteredAppointments.forEach(app => {
+        const service = servicesData.find(s => s.id === app.serviceId);
+        const serviceName = service ? service.name : 'Неизвестно';
+        
+        if (serviceMap.has(serviceName)) {
+            serviceMap.set(serviceName, serviceMap.get(serviceName) + 1);
+        } else {
+            serviceMap.set(serviceName, 1);
+        }
+    });
+    
+    const sorted = Array.from(serviceMap.entries()).sort((a, b) => b[1] - a[1]);
+    const labels = sorted.map(item => item[0].length > 15 ? item[0].substring(0, 15) + '...' : item[0]);
+    const data = sorted.map(item => item[1]);
+    const total = data.reduce((a, b) => a + b, 0);
+    
+    const tbody = document.querySelector('#servicesStatsTable tbody');
+    if (tbody) {
+        tbody.innerHTML = '';
+        if (sorted.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3">Нет данных</td></tr>';
+        } else {
+            sorted.forEach(([name, count]) => {
+                const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${escapeHtml(name)}</td>
+                    <td>${count}</td>
+                    <td>${percent}% <span class="percent-bar" style="width: ${percent}%;"></span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    }
+    
+    return { labels, data };
+}
+
+function prepareHoursChartData(filteredAppointments) {
+    const hours = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+    const hourMap = new Map();
+    hours.forEach(h => hourMap.set(h, 0));
+    
+    if (filteredAppointments && filteredAppointments.length > 0) {
+        filteredAppointments.forEach(app => {
+            if (hourMap.has(app.time)) {
+                hourMap.set(app.time, hourMap.get(app.time) + 1);
+            }
+        });
+    }
+    
+    const data = hours.map(h => hourMap.get(h));
+    
+    let maxCount = 0;
+    let peakHour = '—';
+    hours.forEach(hour => {
+        const count = hourMap.get(hour);
+        if (count > maxCount) {
+            maxCount = count;
+            peakHour = hour;
+        }
+    });
+    
+    const peakHourElement = document.getElementById('peakHour');
+    if (peakHourElement) {
+        peakHourElement.textContent = maxCount > 0 ? peakHour : '—';
+    }
+    
+    return { labels: hours, data };
+}
+
+function prepareWeekdaysChartData(filteredAppointments) {
+    const labels = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
+    const weekdayMap = new Map();
+    labels.forEach(d => weekdayMap.set(d, 0));
+    
+    if (filteredAppointments && filteredAppointments.length > 0) {
+        filteredAppointments.forEach(app => {
+            const date = new Date(app.date);
+            const dayIndex = date.getDay();
+            const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+            const dayName = days[dayIndex];
+            if (weekdayMap.has(dayName)) {
+                weekdayMap.set(dayName, weekdayMap.get(dayName) + 1);
+            }
+        });
+    }
+    
+    const data = labels.map(l => weekdayMap.get(l));
+    
+    let maxCount = 0;
+    let busiestDay = '';
+    labels.forEach((day, index) => {
+        const count = data[index];
+        if (count > maxCount) {
+            maxCount = count;
+            busiestDay = day;
+        }
+    });
+    
+    const dayNames = { 'ПН': 'Понедельник', 'ВТ': 'Вторник', 'СР': 'Среда', 'ЧТ': 'Четверг', 'ПТ': 'Пятница', 'СБ': 'Суббота', 'ВС': 'Воскресенье' };
+    
+    const busiestDayElement = document.getElementById('busiestDay');
+    if (busiestDayElement) {
+        busiestDayElement.textContent = maxCount > 0 ? dayNames[busiestDay] || busiestDay : '—';
+    }
+    
+    return { labels, data };
+}
+
+function prepareStatusChartData(filteredAppointments) {
+    if (!filteredAppointments || filteredAppointments.length === 0) {
+        return { labels: ['Нет данных'], data: [1] };
+    }
+    
+    const statusMap = new Map([
+        ['pending', 0], ['confirmed', 0], ['completed', 0], ['cancelled', 0]
+    ]);
+    
+    filteredAppointments.forEach(app => {
+        statusMap.set(app.status, statusMap.get(app.status) + 1);
+    });
+    
+    const labels = ['Ожидает', 'Подтверждена', 'Завершена', 'Отменена'];
+    const data = [statusMap.get('pending'), statusMap.get('confirmed'), statusMap.get('completed'), statusMap.get('cancelled')];
+    
+    return { labels, data };
+}
+
+function createCharts(filteredAppointments, doctorsData, servicesData) {
+    const hasData = filteredAppointments && filteredAppointments.length > 0;
+    
+    const appointmentsChartData = prepareAppointmentsChartData(filteredAppointments);
+    if (appointmentsChart) appointmentsChart.destroy();
+    const appointmentsCtx = document.getElementById('appointmentsChart')?.getContext('2d');
+    if (appointmentsCtx) {
+        appointmentsChart = new Chart(appointmentsCtx, {
+            type: 'line',
+            data: {
+                labels: appointmentsChartData.labels,
+                datasets: [{
+                    label: 'Количество записей',
+                    data: appointmentsChartData.data,
+                    borderColor: '#A5C33C',
+                    backgroundColor: 'rgba(165, 195, 60, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+    }
+    
+    // Врачи
+    const doctorsChartData = prepareDoctorsChartData(filteredAppointments, doctorsData);
+    if (doctorsChart) doctorsChart.destroy();
+    const doctorsCtx = document.getElementById('doctorsChart')?.getContext('2d');
+    if (doctorsCtx) {
+        doctorsChart = new Chart(doctorsCtx, {
+            type: 'bar',
+            data: {
+                labels: doctorsChartData.labels,
+                datasets: [{
+                    label: 'Количество записей',
+                    data: doctorsChartData.data,
+                    backgroundColor: '#3B82F6',
+                    borderRadius: 8
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+    }
+    
+    // Услуги
+    const servicesChartData = prepareServicesChartData(filteredAppointments, servicesData);
+    if (servicesChart) servicesChart.destroy();
+    const servicesCtx = document.getElementById('servicesChart')?.getContext('2d');
+    if (servicesCtx) {
+        servicesChart = new Chart(servicesCtx, {
+            type: 'bar',
+            data: {
+                labels: servicesChartData.labels,
+                datasets: [{
+                    label: 'Количество записей',
+                    data: servicesChartData.data,
+                    backgroundColor: '#10B981',
+                    borderRadius: 8
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+    }
+    
+    // Часы пик
+    const hoursChartData = prepareHoursChartData(filteredAppointments);
+    if (hoursChart) hoursChart.destroy();
+    const hoursCtx = document.getElementById('hoursChart')?.getContext('2d');
+    if (hoursCtx) {
+        hoursChart = new Chart(hoursCtx, {
+            type: 'line',
+            data: {
+                labels: hoursChartData.labels,
+                datasets: [{
+                    label: 'Количество записей',
+                    data: hoursChartData.data,
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+    }
+    
+    // Дни недели
+    const weekdaysChartData = prepareWeekdaysChartData(filteredAppointments);
+    if (weekdaysChart) weekdaysChart.destroy();
+    const weekdaysCtx = document.getElementById('weekdaysChart')?.getContext('2d');
+    if (weekdaysCtx) {
+        weekdaysChart = new Chart(weekdaysCtx, {
+            type: 'bar',
+            data: {
+                labels: weekdaysChartData.labels,
+                datasets: [{
+                    label: 'Количество записей',
+                    data: weekdaysChartData.data,
+                    backgroundColor: '#8B5CF6',
+                    borderRadius: 8
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+    }
+    
+    // Статусы
+    const statusChartData = prepareStatusChartData(filteredAppointments);
+    if (statusChart) statusChart.destroy();
+    const statusCtx = document.getElementById('statusChart')?.getContext('2d');
+    if (statusCtx) {
+        const total = statusChartData.data.reduce((a, b) => a + b, 0);
+        statusChart = new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: statusChartData.labels,
+                datasets: [{
+                    data: statusChartData.data,
+                    backgroundColor: ['#F59E0B', '#10B981', '#3B82F6', '#EF4444'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    }
+}
+
+// Обновление всей аналитики
+function updateAnalytics() {
+    const period = document.getElementById('periodSelect')?.value || 'month';
+    const startDate = document.getElementById('startDate')?.value;
+    const endDate = document.getElementById('endDate')?.value;
+    
+    let filteredAppointments;
+    if (period === 'custom') {
+        filteredAppointments = filterAppointmentsByPeriod('custom', startDate, endDate);
+    } else {
+        filteredAppointments = filterAppointmentsByPeriod(period);
+    }
+    
+    const { doctorsData, servicesData } = getAnalyticsData();
+    
+    updateAnalyticsStats();
+    createCharts(filteredAppointments, doctorsData, servicesData);
+    
+    const message = filteredAppointments.length > 0 ? `Данные обновлены (${filteredAppointments.length} записей)` : 'Нет данных для отображения';
+    showToast(message, filteredAppointments.length > 0 ? 'success' : 'info');
+}
+
+// Экспорт отчета
+function exportAnalytics() {
+    const period = document.getElementById('periodSelect')?.value || 'month';
+    const startDate = document.getElementById('startDate')?.value;
+    const endDate = document.getElementById('endDate')?.value;
+    
+    let periodText = '';
+    if (period === 'custom') {
+        periodText = `${startDate} - ${endDate}`;
+    } else {
+        const selectElement = document.querySelector(`#periodSelect option[value="${period}"]`);
+        periodText = selectElement ? selectElement.textContent : period;
+    }
+    
+    let filteredAppointments;
+    if (period === 'custom') {
+        filteredAppointments = filterAppointmentsByPeriod('custom', startDate, endDate);
+    } else {
+        filteredAppointments = filterAppointmentsByPeriod(period);
+    }
+    
+    const total = filteredAppointments.length;
+    const confirmed = filteredAppointments.filter(a => a.status === 'confirmed').length;
+    const completed = filteredAppointments.filter(a => a.status === 'completed').length;
+    const pending = filteredAppointments.filter(a => a.status === 'pending').length;
+    const cancelled = filteredAppointments.filter(a => a.status === 'cancelled').length;
+    
+    const report = {
+        generatedAt: new Date().toISOString(),
+        period: periodText,
+        summary: {
+            total,
+            confirmed,
+            completed,
+            pending,
+            cancelled,
+            confirmationRate: total > 0 ? ((confirmed + completed) / total * 100).toFixed(1) : 0,
+            completionRate: total > 0 ? (completed / total * 100).toFixed(1) : 0,
+            cancellationRate: total > 0 ? (cancelled / total * 100).toFixed(1) : 0
+        }
+    };
+    
+    const dataStr = JSON.stringify(report, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `analytics_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    showToast('Отчет экспортирован', 'success');
+}
+
+function initDefaultDates() {
+    const today = new Date();
+    const monthAgo = new Date();
+    monthAgo.setDate(today.getDate() - 30);
+    
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    
+    if (startDateInput) startDateInput.value = monthAgo.toISOString().split('T')[0];
+    if (endDateInput) endDateInput.value = today.toISOString().split('T')[0];
+}
+
+function initAnalyticsTab() {
+    console.log('Инициализация аналитики...');
+    
+    if (!document.getElementById('totalAppointments')) {
+        console.log('Элементы аналитики не найдены, возможно вкладка не активна');
+        return;
+    }
+    
+    initDefaultDates();
+    updateAnalytics();
+    
+    const periodSelect = document.getElementById('periodSelect');
+    const applyCustomBtn = document.getElementById('applyCustomPeriod');
+    const exportBtn = document.getElementById('exportAnalyticsBtn');
+    const refreshBtn = document.getElementById('refreshAnalyticsBtn');
+    
+    if (periodSelect) {
+        periodSelect.addEventListener('change', function() {
+            if (this.value !== 'custom') {
+                updateAnalytics();
+            }
+        });
+    }
+    
+    if (applyCustomBtn) {
+        applyCustomBtn.addEventListener('click', () => {
+            if (periodSelect) periodSelect.value = 'custom';
+            updateAnalytics();
+        });
+    }
+    
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportAnalytics);
+    }
+    
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', updateAnalytics);
+    }
+    
+    console.log('Аналитика инициализирована');
+}
+
+
+let discounts = [];
+
+function loadDiscountsData() {
+    const stored = localStorage.getItem(STORAGE_KEYS.DISCOUNTS);
+    if (stored) {
+        discounts = JSON.parse(stored);
+    } else {
+        discounts = [...defaultDiscounts];
+        localStorage.setItem(STORAGE_KEYS.DISCOUNTS, JSON.stringify(discounts));
+    }
+    return discounts;
+}
+
+function saveDiscountsData() {
+    localStorage.setItem(STORAGE_KEYS.DISCOUNTS, JSON.stringify(discounts));
+}
+
+function getDiscountStatus(discount) {
+    const today = new Date().toISOString().split('T')[0];
+    
+    if (!discount.active) return 'inactive';
+    
+    if (discount.startDate && discount.endDate) {
+        if (today < discount.startDate) return 'upcoming';
+        if (today > discount.endDate) return 'expired';
+        return 'active';
+    }
+    
+    return discount.active ? 'active' : 'inactive';
+}
+
+function renderDiscountsTable() {
+    const tbody = document.getElementById('discountsList');
+    if (!tbody) return;
+    
+    const statusFilter = document.getElementById('discountStatusFilter')?.value || 'all';
+    const serviceFilter = document.getElementById('discountServiceFilter')?.value || 'all';
+    const searchFilter = document.getElementById('discountSearchFilter')?.value.toLowerCase() || '';
+    
+    let filtered = [...discounts];
+    
+    if (statusFilter !== 'all') {
+        filtered = filtered.filter(d => getDiscountStatus(d) === statusFilter);
+    }
+    
+    if (serviceFilter !== 'all') {
+        filtered = filtered.filter(d => d.serviceId == serviceFilter);
+    }
+    
+    if (searchFilter) {
+        filtered = filtered.filter(d => d.name.toLowerCase().includes(searchFilter));
+    }
+    
+    const activeCount = discounts.filter(d => getDiscountStatus(d) === 'active').length;
+    const expiredCount = discounts.filter(d => getDiscountStatus(d) === 'expired').length;
+    const upcomingCount = discounts.filter(d => getDiscountStatus(d) === 'upcoming').length;
+    
+    const activeDiscountsEl = document.getElementById('activeDiscounts');
+    const expiredDiscountsEl = document.getElementById('expiredDiscounts');
+    const upcomingDiscountsEl = document.getElementById('upcomingDiscounts');
+    
+    if (activeDiscountsEl) activeDiscountsEl.textContent = activeCount;
+    if (expiredDiscountsEl) expiredDiscountsEl.textContent = expiredCount;
+    if (upcomingDiscountsEl) upcomingDiscountsEl.textContent = upcomingCount;
+    
+    tbody.innerHTML = '';
+    
+    filtered.forEach(discount => {
+        const serviceName = getServiceNameById(discount.serviceId);
+        const status = getDiscountStatus(discount);
+        
+        const statusText = {
+            active: 'Активна',
+            expired: 'Просрочена',
+            upcoming: 'Предстоит',
+            inactive: 'Отключена'
+        }[status] || 'Неизвестно';
+        
+        const statusClass = {
+            active: 'status-active',
+            expired: 'status-expired',
+            upcoming: 'status-upcoming',
+            inactive: 'status-inactive'
+        }[status] || 'status-inactive';
+        
+        const discountTypeText = discount.type === 'percentage' ? 'Процентная' : 'Фиксированная';
+        
+        const discountSizeText = discount.type === 'percentage' ? `${discount.value}%` : `${discount.value} BYN`;
+        
+        const periodText = discount.startDate && discount.endDate 
+            ? `${discount.startDate} — ${discount.endDate}` 
+            : 'Без ограничений';
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${escapeHtml(String(discount.id))}</td>
+            <td><strong>${escapeHtml(serviceName)}</strong></td>
+            <td>${escapeHtml(discount.name)}</td>
+            <td>${escapeHtml(discountTypeText)}</td>
+            <td><span class="discount-badge ${discount.type === 'percentage' ? 'discount-percentage' : 'discount-fixed'}">${escapeHtml(discountSizeText)}</span></td>
+            <td>${escapeHtml(periodText)}</td>
+            <td><span class="status-badge ${statusClass}">${escapeHtml(statusText)}</span></td>
+            <td class="action-buttons">
+                <button class="btn-edit-discount" data-id="${discount.id}">✏️ Ред.</button>
+                <button class="btn-toggle-discount" data-id="${discount.id}">${discount.active ? '🔇 Откл.' : '🔊 Вкл.'}</button>
+                <button class="btn-delete-discount" data-id="${discount.id}">🗑️ Удалить</button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+    
+    document.querySelectorAll('.btn-edit-discount').forEach(btn => {
+        btn.removeEventListener('click', () => {});
+        btn.addEventListener('click', () => editDiscount(parseInt(btn.dataset.id)));
+    });
+    
+    document.querySelectorAll('.btn-toggle-discount').forEach(btn => {
+        btn.removeEventListener('click', () => {});
+        btn.addEventListener('click', () => toggleDiscountStatus(parseInt(btn.dataset.id)));
+    });
+    
+    document.querySelectorAll('.btn-delete-discount').forEach(btn => {
+        btn.removeEventListener('click', () => {});
+        btn.addEventListener('click', () => deleteDiscount(parseInt(btn.dataset.id)));
+    });
+}
+
+function populateDiscountServiceFilter() {
+    const filter = document.getElementById('discountServiceFilter');
+    const select = document.getElementById('discountServiceId');
+    
+    if (!filter || !select) return;
+    
+    filter.innerHTML = '<option value="all">Все услуги</option>';
+    select.innerHTML = '<option value="">-- Выберите услугу --</option>';
+    
+    services.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.id;
+        option.textContent = service.name;
+        filter.appendChild(option.cloneNode(true));
+        select.appendChild(option);
+    });
+}
+
+function openDiscountModal(editMode = false, discount = null) {
+    populateDiscountServiceFilter();
+    
+    document.getElementById('discountModalTitle').textContent = editMode ? 'Редактировать скидку' : 'Добавить скидку';
+    document.getElementById('discountId').value = discount ? discount.id : '';
+    document.getElementById('discountServiceId').value = discount ? discount.serviceId : '';
+    document.getElementById('discountName').value = discount ? discount.name : '';
+    document.getElementById('discountType').value = discount ? discount.type : 'percentage';
+    document.getElementById('discountValue').value = discount ? discount.value : '';
+    document.getElementById('discountStartDate').value = discount ? (discount.startDate || '') : '';
+    document.getElementById('discountEndDate').value = discount ? (discount.endDate || '') : '';
+    document.getElementById('discountDescription').value = discount ? (discount.description || '') : '';
+    document.getElementById('discountActive').checked = discount ? discount.active : true;
+    
+    document.getElementById('discountModal').style.display = 'flex';
+}
+
+function addDiscount() {
+    openDiscountModal(false);
+}
+
+function editDiscount(id) {
+    const discount = discounts.find(d => d.id === id);
+    if (discount) openDiscountModal(true, discount);
+}
+
+function toggleDiscountStatus(id) {
+    const discount = discounts.find(d => d.id === id);
+    if (discount) {
+        discount.active = !discount.active;
+        saveDiscountsData();
+        renderDiscountsTable();
+        showToast(discount.active ? 'Скидка активирована' : 'Скидка деактивирована', 'success');
+    }
+}
+
+function deleteDiscount(id) {
+    const discount = discounts.find(d => d.id === id);
+    if (!discount) return;
+    if (confirm(`Удалить скидку "${discount.name}"?`)) {
+        discounts = discounts.filter(d => d.id !== id);
+        saveDiscountsData();
+        renderDiscountsTable();
+        showToast('Скидка удалена', 'success');
+    }
+}
+
+function saveDiscount(event) {
+    event.preventDefault();
+    
+    const id = parseInt(document.getElementById('discountId').value);
+    const serviceId = parseInt(document.getElementById('discountServiceId').value);
+    const name = document.getElementById('discountName').value.trim();
+    const type = document.getElementById('discountType').value;
+    const value = parseFloat(document.getElementById('discountValue').value);
+    const startDate = document.getElementById('discountStartDate').value;
+    const endDate = document.getElementById('discountEndDate').value;
+    const description = document.getElementById('discountDescription').value.trim();
+    const active = document.getElementById('discountActive').checked;
+    
+    if (!serviceId || !name || !value) {
+        showToast('Заполните обязательные поля', 'error');
+        return;
+    }
+    
+    if (type === 'percentage' && (value < 0 || value > 100)) {
+        showToast('Процент скидки должен быть от 0 до 100', 'error');
+        return;
+    }
+    
+    if (startDate && endDate && startDate > endDate) {
+        showToast('Дата начала не может быть позже даты окончания', 'error');
+        return;
+    }
+    
+    if (id) {
+        const index = discounts.findIndex(d => d.id === id);
+        if (index !== -1) {
+            discounts[index] = { ...discounts[index], serviceId, name, type, value, startDate, endDate, description, active };
+            saveDiscountsData();
+            showToast('Скидка обновлена', 'success');
+        }
+    } else {
+        const newId = Math.max(...discounts.map(d => d.id), 0) + 1;
+        discounts.push({ id: newId, serviceId, name, type, value, startDate, endDate, description, active, createdAt: new Date().toISOString() });
+        saveDiscountsData();
+        showToast('Скидка добавлена', 'success');
+    }
+    
+    renderDiscountsTable();
+    document.getElementById('discountModal').style.display = 'none';
+    document.getElementById('discountForm').reset();
+}
+
+function resetDiscountFilters() {
+    document.getElementById('discountStatusFilter').value = 'all';
+    document.getElementById('discountServiceFilter').value = 'all';
+    document.getElementById('discountSearchFilter').value = '';
+    renderDiscountsTable();
+}
+
+function initDiscountsTab() {
+    loadDiscountsData();
+    renderDiscountsTable();
+    populateDiscountServiceFilter();
+    
+    document.getElementById('addDiscountBtn')?.addEventListener('click', addDiscount);
+    document.getElementById('discountForm')?.addEventListener('submit', saveDiscount);
+    document.getElementById('discountStatusFilter')?.addEventListener('change', renderDiscountsTable);
+    document.getElementById('discountServiceFilter')?.addEventListener('change', renderDiscountsTable);
+    document.getElementById('discountSearchFilter')?.addEventListener('input', renderDiscountsTable);
+}
+
+
 function init() {
     services = loadData(STORAGE_KEYS.SERVICES, defaultServices);
     serviceDetails = loadData(STORAGE_KEYS.SERVICE_DETAILS, defaultServiceDetails);
@@ -1697,6 +2589,7 @@ function init() {
     reviews = loadData(STORAGE_KEYS.REVIEWS, defaultReviews);
     pricesData = loadPricesData();
     scheduleData = loadScheduleData();
+    discounts = loadDiscountsData();
     
     renderServices();
     updateServiceDetailsFilter();
@@ -1706,11 +2599,25 @@ function init() {
     renderReviewsTable();
     renderPricesAdmin();
     renderScheduleAdmin();
+    renderDiscountsTable();
     
     initTabs();
     initMobileMenu();
     initReviewsTab();
+    initScheduleTab();
+    initDiscountsTab();
     updatePriceCategoryFilters();
+    
+    const analyticsTab = document.querySelector('.nav-tab[data-tab="analytics"]');
+    if (analyticsTab) {
+        analyticsTab.addEventListener('click', () => {
+            setTimeout(initAnalyticsTab, 100);
+        });
+    }
+    
+    if (document.getElementById('tab-analytics') && document.getElementById('tab-analytics').classList.contains('active')) {
+        setTimeout(initAnalyticsTab, 200);
+    }
     
     const addServiceBtn = document.getElementById('addServiceBtn');
     const serviceForm = document.getElementById('serviceForm');
@@ -1739,6 +2646,11 @@ function init() {
     const addScheduleBtn = document.getElementById('addScheduleBtn');
     const scheduleForm = document.getElementById('scheduleForm');
     const exportScheduleBtn = document.getElementById('exportScheduleBtn');
+    const addDiscountBtn = document.getElementById('addDiscountBtn');
+    const discountForm = document.getElementById('discountForm');
+    const discountStatusFilter = document.getElementById('discountStatusFilter');
+    const discountServiceFilter = document.getElementById('discountServiceFilter');
+    const discountSearchFilter = document.getElementById('discountSearchFilter');
     
     if (addServiceBtn) addServiceBtn.addEventListener('click', addService);
     if (serviceForm) serviceForm.addEventListener('submit', saveService);
@@ -1771,6 +2683,11 @@ function init() {
     });
     if (scheduleForm) scheduleForm.addEventListener('submit', saveSchedule);
     if (exportScheduleBtn) exportScheduleBtn.addEventListener('click', exportSchedule);
+    if (addDiscountBtn) addDiscountBtn.addEventListener('click', addDiscount);
+    if (discountForm) discountForm.addEventListener('submit', saveDiscount);
+    if (discountStatusFilter) discountStatusFilter.addEventListener('change', renderDiscountsTable);
+    if (discountServiceFilter) discountServiceFilter.addEventListener('change', renderDiscountsTable);
+    if (discountSearchFilter) discountSearchFilter.addEventListener('input', renderDiscountsTable);
     
     document.querySelectorAll('.modal-close, .btn-cancel').forEach(btn => {
         btn.addEventListener('click', (e) => {
