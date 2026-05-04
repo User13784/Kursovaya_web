@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../css/modal-appointment.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
     <link rel="stylesheet" href="../css/theme.css">
+    
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_ключ&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -74,9 +76,7 @@
                         <img src="../assets/images/contacts/contacs2.jpg" alt="Reception">
                     </div>
                     <div class="map-iframe-wrapper">
-                        <div id="map">
-                            <img src="../assets/images/contacts/contacs3.png" alt="Карта">
-                        </div>
+                        <div id="yandexMap" class="yandex-map"></div>
                     </div>
                 </div>
             </div>
@@ -108,6 +108,52 @@
     <script src="../js/prices.js"></script>
     
     <script>
+        function initYandexMap() {
+            if (typeof ymaps === 'undefined') {
+                setTimeout(initYandexMap, 500);
+                return;
+            }
+            
+            ymaps.ready(function() {
+                var coords = [53.9025, 30.3319];
+                
+                var map = new ymaps.Map('yandexMap', {
+                    center: coords,
+                    zoom: 17,
+                    controls: ['zoomControl', 'fullscreenControl']
+                });
+                
+                map.controls.remove('geolocationControl');
+                map.controls.remove('searchControl');
+                map.controls.remove('trafficControl');
+                map.controls.remove('typeSelector');
+                map.controls.remove('rulerControl');
+                
+                var placemark = new ymaps.Placemark(coords, {
+                    hintContent: 'Dental Club - Стоматологическая клиника',
+                    balloonContentHeader: '<div style="font-weight: bold; color: #A5C33C;">🦷 DENTAL CLUB</div>',
+                    balloonContentBody: [
+                        '<div style="padding: 5px 0;">',
+                        '<span style="font-size: 13px;">📍 ул. Ленинская, 25, Могилев</span><br>',
+                        '<span style="font-size: 13px;">📞 +375 (29) 123-45-67</span><br>',
+                        '<span style="font-size: 13px;">🕐 Пн-Сб: 10:00 - 20:00</span>',
+                        '</div>'
+                    ].join(''),
+                    balloonContentFooter: '<div style="margin-top: 8px;"><button onclick="openVisitorAppointmentModal()" style="background: #A5C33C; color: #1a1e22; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 11px;">📅 Записаться</button></div>'
+                }, {
+                    preset: 'islands#redIcon',
+                    iconShadow: true,
+                    iconShadowLayout: 'default#image',
+                    iconShadowImageHref: 'https://api-maps.yandex.ru/2.1/images/placemarks/red_shadow.png',
+                    iconShadowSize: [44, 36],
+                    iconShadowOffset: [-12, -34],
+                    iconAnimation: true
+                });
+                
+                map.geoObjects.add(placemark);
+            });
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 const burgerIcon = document.getElementById('burgerIcon');
@@ -173,6 +219,8 @@
                     });
                 }
             });
+            
+            initYandexMap();
         });
     </script>
 </body>
