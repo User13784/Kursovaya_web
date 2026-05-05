@@ -1,4 +1,43 @@
 (function() {
+    async function loginViaAPI(email, password) {
+        try {
+            const response = await fetch('http://localhost:3000/users');
+            const users = await response.json();
+            
+            const cleanLogin = email.replace(/\D/g, '');
+            
+            const user = users.find(u => 
+                (u.email === email || u.phone === cleanLogin) && u.password === password
+            );
+            
+            if (user) {
+                const { password: _, ...safeUser } = user;
+                return safeUser;
+            }
+            return null;
+        } catch (error) {
+            console.error('Ошибка подключения к серверу:', error);
+            return null;
+        }
+    }
+    
+    function saveSession(user, rememberMe) {
+        const session = {
+            userId: user.id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: user.role || 'user',
+            loginTime: new Date().toISOString()
+        };
+        
+        if (rememberMe) {
+            localStorage.setItem('dental_club_session', JSON.stringify(session));
+        } else {
+            sessionStorage.setItem('dental_club_session', JSON.stringify(session));
+        }
+    }
+    
     function setupPasswordToggles() {
         document.querySelectorAll('.login-toggle-password').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -10,7 +49,7 @@
             });
         });
     }
-
+    
     function showError(elementId, message) {
         const errorEl = document.getElementById(elementId);
         if (errorEl) {
@@ -18,7 +57,7 @@
             errorEl.classList.add('visible');
         }
     }
-
+    
     function clearErrors() {
         document.querySelectorAll('.login-error-message').forEach(el => {
             el.classList.remove('visible');
@@ -28,9 +67,13 @@
             el.classList.remove('error');
         });
     }
-
+    
     function showNotification(message, isError = false) {
+        const oldNotification = document.querySelector('.login-notification');
+        if (oldNotification) oldNotification.remove();
+        
         const notification = document.createElement('div');
+        notification.className = 'login-notification';
         notification.textContent = message;
         notification.style.cssText = `
             position: fixed;
@@ -54,32 +97,7 @@
             setTimeout(() => notification.remove(), 300);
         }, 2500);
     }
-
-    function findUser(login, password) {
-        const users = JSON.parse(localStorage.getItem('dental_club_users') || '[]');
-        const cleanLogin = login.replace(/\D/g, '');
-        
-        return users.find(u => 
-            (u.email === login || u.phone === cleanLogin) && u.password === password
-        );
-    }
-
-    function saveSession(user, rememberMe) {
-        const session = {
-            userId: user.id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            loginTime: new Date().toISOString()
-        };
-        
-        if (rememberMe) {
-            localStorage.setItem('dental_club_session', JSON.stringify(session));
-        } else {
-            sessionStorage.setItem('dental_club_session', JSON.stringify(session));
-        }
-    }
-
+    
     function initLogin() {
         const form = document.getElementById('loginForm');
         if (!form) return;
@@ -96,7 +114,7 @@
         
         setupPasswordToggles();
         
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             clearErrors();
             
@@ -110,20 +128,32 @@
                 showError('loginEmailError', 'Введите email или номер телефона');
                 document.getElementById('loginEmail').classList.add('error');
                 isValid = false;
+            } else if (login.length < 3) {
+                showError('loginEmailError', 'Введите корректный email или телефон');
+                document.getElementById('loginEmail').classList.add('error');
+                isValid = false;
             }
             
             if (!password) {
                 showError('loginPasswordError', 'Введите пароль');
                 document.getElementById('loginPassword').classList.add('error');
                 isValid = false;
-            } else if (password.length < 6) {
+            } else if (password.length < 3) {
                 showError('loginPasswordError', 'Неверный пароль');
                 document.getElementById('loginPassword').classList.add('error');
                 isValid = false;
             }
             
             if (isValid) {
-                const user = findUser(login, password);
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Вход...';
+                submitBtn.disabled = true;
+                
+                const user = await loginViaAPI(login, password);
+                
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
                 
                 if (user) {
                     saveSession(user, rememberMe);
@@ -148,18 +178,21 @@
         });
     }
     
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(style);
+    if (!document.querySelector('#login-animation-styles')) {
+        const style = document.createElement('style');
+        style.id = 'login-animation-styles';
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
     
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initLogin);

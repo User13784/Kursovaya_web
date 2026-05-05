@@ -1,4 +1,3 @@
-
 let appointmentsChart = null;
 let doctorsChart = null;
 let servicesChart = null;
@@ -12,23 +11,33 @@ let analyticsData = {
     services: []
 };
 
-function loadAnalyticsData() {
+async function loadAnalyticsData() {
     try {
-        const appointmentsStored = localStorage.getItem('dental_appointments');
-        const doctorsStored = localStorage.getItem('dental_doctors');
-        const servicesStored = localStorage.getItem('dental_services');
+        const [appointmentsRes, doctorsRes, servicesRes] = await Promise.all([
+            fetch('http://localhost:3000/appointments'),
+            fetch('http://localhost:3000/doctors'),
+            fetch('http://localhost:3000/services')
+        ]);
         
-        analyticsData.appointments = appointmentsStored ? JSON.parse(appointmentsStored) : [];
-        analyticsData.doctors = doctorsStored ? JSON.parse(doctorsStored) : [];
-        analyticsData.services = servicesStored ? JSON.parse(servicesStored) : [];
-        
-        if (analyticsData.appointments.length > 0) {
-            console.log(`Загружено ${analyticsData.appointments.length} записей`);
-        } else {
-            console.log('Нет данных о записях. Добавьте тестовые записи.');
+        if (!appointmentsRes.ok || !doctorsRes.ok || !servicesRes.ok) {
+            throw new Error('Ошибка загрузки данных из API');
         }
-    } catch(e) {
-        console.error('Ошибка загрузки данных:', e);
+        
+        analyticsData.appointments = await appointmentsRes.json();
+        analyticsData.doctors = await doctorsRes.json();
+        analyticsData.services = await servicesRes.json();
+        
+        console.log(`Загружено из API: ${analyticsData.appointments.length} записей, ${analyticsData.doctors.length} врачей, ${analyticsData.services.length} услуг`);
+        
+        if (analyticsData.appointments.length === 0) {
+            console.warn('Нет данных о записях. Добавьте записи через админ-панель или в db.json');
+            showToastForAnalytics('Нет данных для отображения. Добавьте записи через админ-панель.', 'info');
+        }
+        
+    } catch (error) {
+        console.error('Ошибка загрузки из API:', error);
+        showToastForAnalytics('Ошибка подключения к серверу. Запустите json-server --watch db.json --port 3000', 'error');
+        
         analyticsData.appointments = [];
         analyticsData.doctors = [];
         analyticsData.services = [];
@@ -41,22 +50,27 @@ function filterByPeriod(period, startDate = null, endDate = null) {
     
     if (filtered.length === 0) return [];
     
+    const today = new Date();
+    
     if (period === 'week') {
         const weekAgo = new Date();
-        weekAgo.setDate(weekAgo.getDate() - 7);
+        weekAgo.setDate(today.getDate() - 7);
         filtered = filtered.filter(a => new Date(a.date) >= weekAgo);
     } else if (period === 'month') {
         const monthAgo = new Date();
-        monthAgo.setDate(monthAgo.getDate() - 30);
+        monthAgo.setDate(today.getDate() - 30);
         filtered = filtered.filter(a => new Date(a.date) >= monthAgo);
     } else if (period === 'quarter') {
         const quarterAgo = new Date();
-        quarterAgo.setDate(quarterAgo.getDate() - 90);
+        quarterAgo.setDate(today.getDate() - 90);
         filtered = filtered.filter(a => new Date(a.date) >= quarterAgo);
     } else if (period === 'year') {
         const yearAgo = new Date();
-        yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+        yearAgo.setFullYear(today.getFullYear() - 1);
         filtered = filtered.filter(a => new Date(a.date) >= yearAgo);
+    } else if (period === 'all') {
+        // возвращаем все записи
+        return filtered;
     } else if (period === 'custom' && startDate && endDate) {
         const start = new Date(startDate);
         const end = new Date(endDate);
@@ -77,50 +91,64 @@ function updateStatistics(filteredAppointments) {
     const pending = filteredAppointments.filter(a => a.status === 'pending').length;
     const cancelled = filteredAppointments.filter(a => a.status === 'cancelled').length;
     
-    document.getElementById('totalAppointments').textContent = total;
-    document.getElementById('confirmedAppointments').textContent = confirmed;
-    document.getElementById('completedAppointments').textContent = completed;
-    document.getElementById('pendingAppointments').textContent = pending;
-    document.getElementById('cancelledAppointments').textContent = cancelled;
+    const totalEl = document.getElementById('totalAppointments');
+    const confirmedEl = document.getElementById('confirmedAppointments');
+    const completedEl = document.getElementById('completedAppointments');
+    const pendingEl = document.getElementById('pendingAppointments');
+    const cancelledEl = document.getElementById('cancelledAppointments');
+    
+    if (totalEl) totalEl.textContent = total;
+    if (confirmedEl) confirmedEl.textContent = confirmed;
+    if (completedEl) completedEl.textContent = completed;
+    if (pendingEl) pendingEl.textContent = pending;
+    if (cancelledEl) cancelledEl.textContent = cancelled;
     
     // Конверсия
     const confirmationRate = total > 0 ? ((confirmed + completed) / total * 100).toFixed(1) : 0;
     const completionRate = total > 0 ? (completed / total * 100).toFixed(1) : 0;
     const cancellationRate = total > 0 ? (cancelled / total * 100).toFixed(1) : 0;
     
-    document.getElementById('confirmationRate').textContent = `${confirmationRate}%`;
-    document.getElementById('completionRate').textContent = `${completionRate}%`;
-    document.getElementById('cancellationRate').textContent = `${cancellationRate}%`;
+    const confirmationRateEl = document.getElementById('confirmationRate');
+    const completionRateEl = document.getElementById('completionRate');
+    const cancellationRateEl = document.getElementById('cancellationRate');
+    
+    if (confirmationRateEl) confirmationRateEl.textContent = `${confirmationRate}%`;
+    if (completionRateEl) completionRateEl.textContent = `${completionRate}%`;
+    if (cancellationRateEl) cancellationRateEl.textContent = `${cancellationRate}%`;
 }
 
 function prepareAppointmentsChartData(filteredAppointments) {
-    if (filteredAppointments.length === 0) {
+    if (!filteredAppointments || filteredAppointments.length === 0) {
         return { labels: ['Нет данных'], data: [0] };
     }
     
     const dateMap = new Map();
+    const today = new Date();
+    const last7Days = [];
+    
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        const label = `${date.getDate()}.${date.getMonth() + 1}`;
+        last7Days.push({ date: dateStr, label });
+        dateMap.set(dateStr, 0);
+    }
     
     filteredAppointments.forEach(app => {
-        const date = app.date;
-        if (dateMap.has(date)) {
-            dateMap.set(date, dateMap.get(date) + 1);
-        } else {
-            dateMap.set(date, 1);
+        if (dateMap.has(app.date)) {
+            dateMap.set(app.date, dateMap.get(app.date) + 1);
         }
     });
     
-    const sortedDates = Array.from(dateMap.keys()).sort();
-    const labels = sortedDates.map(d => {
-        const date = new Date(d);
-        return `${date.getDate()}.${date.getMonth() + 1}`;
-    });
-    const data = sortedDates.map(d => dateMap.get(d));
+    const labels = last7Days.map(d => d.label);
+    const data = last7Days.map(d => dateMap.get(d.date));
     
     return { labels, data };
 }
 
 function prepareDoctorsChartData(filteredAppointments) {
-    if (filteredAppointments.length === 0) {
+    if (!filteredAppointments || filteredAppointments.length === 0) {
         return { labels: ['Нет данных'], data: [0] };
     }
     
@@ -138,11 +166,10 @@ function prepareDoctorsChartData(filteredAppointments) {
     });
     
     const sorted = Array.from(doctorMap.entries()).sort((a, b) => b[1] - a[1]);
-    const labels = sorted.map(item => item[0]);
+    const labels = sorted.map(item => item[0].length > 15 ? item[0].substring(0, 15) + '...' : item[0]);
     const data = sorted.map(item => item[1]);
     const total = data.reduce((a, b) => a + b, 0);
     
-    // Заполнение таблицы
     const tbody = document.querySelector('#doctorsStatsTable tbody');
     if (tbody) {
         tbody.innerHTML = '';
@@ -153,9 +180,9 @@ function prepareDoctorsChartData(filteredAppointments) {
                 const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${escapeHtmlForAnalytics(name)}</td>
-                    <td>${count}</td>
-                    <td>${percent}% <span class="percent-bar" style="width: ${percent}%;"></span></td>
+                    <td class="doctor-name">${escapeHtmlForAnalytics(name)}</td>
+                    <td class="doctor-count">${count}</td>
+                    <td class="doctor-percent">${percent}% <span class="percent-bar" style="width: ${percent}%;"></span></td>
                 `;
                 tbody.appendChild(row);
             });
@@ -166,7 +193,7 @@ function prepareDoctorsChartData(filteredAppointments) {
 }
 
 function prepareServicesChartData(filteredAppointments) {
-    if (filteredAppointments.length === 0) {
+    if (!filteredAppointments || filteredAppointments.length === 0) {
         return { labels: ['Нет данных'], data: [0] };
     }
     
@@ -183,25 +210,24 @@ function prepareServicesChartData(filteredAppointments) {
         }
     });
     
-    const sorted = Array.from(serviceMap.entries()).sort((a, b) => b[1] - a[1]).slice(0, 8);
-    const labels = sorted.map(item => item[0]);
+    const sorted = Array.from(serviceMap.entries()).sort((a, b) => b[1] - a[1]);
+    const labels = sorted.map(item => item[0].length > 15 ? item[0].substring(0, 15) + '...' : item[0]);
     const data = sorted.map(item => item[1]);
     const total = data.reduce((a, b) => a + b, 0);
     
-    // Заполнение таблицы
     const tbody = document.querySelector('#servicesStatsTable tbody');
     if (tbody) {
         tbody.innerHTML = '';
         if (sorted.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3">Нет данных</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="3">Нет данных</td></table>';
         } else {
             sorted.forEach(([name, count]) => {
                 const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${escapeHtmlForAnalytics(name)}</td>
-                    <td>${count}</td>
-                    <td>${percent}% <span class="percent-bar" style="width: ${percent}%;"></span></td>
+                    <td class="service-name">${escapeHtmlForAnalytics(name)}</td>
+                    <td class="service-count">${count}</td>
+                    <td class="service-percent">${percent}% <span class="percent-bar" style="width: ${percent}%;"></span></td>
                 `;
                 tbody.appendChild(row);
             });
@@ -212,29 +238,20 @@ function prepareServicesChartData(filteredAppointments) {
 }
 
 function prepareHoursChartData(filteredAppointments) {
-    if (filteredAppointments.length === 0) {
-        const hours = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
-        const peakHourElement = document.getElementById('peakHour');
-        if (peakHourElement) peakHourElement.textContent = '—';
-        return { labels: hours, data: hours.map(() => 0) };
-    }
-    
-    const hourMap = new Map();
     const hours = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
-    
+    const hourMap = new Map();
     hours.forEach(h => hourMap.set(h, 0));
     
-    filteredAppointments.forEach(app => {
-        const hour = app.time;
-        if (hourMap.has(hour)) {
-            hourMap.set(hour, hourMap.get(hour) + 1);
-        }
-    });
+    if (filteredAppointments && filteredAppointments.length > 0) {
+        filteredAppointments.forEach(app => {
+            if (hourMap.has(app.time)) {
+                hourMap.set(app.time, hourMap.get(app.time) + 1);
+            }
+        });
+    }
     
-    const labels = hours;
     const data = hours.map(h => hourMap.get(h));
     
-    // Находим час пик
     let maxCount = 0;
     let peakHour = '—';
     hours.forEach(hour => {
@@ -246,39 +263,30 @@ function prepareHoursChartData(filteredAppointments) {
     });
     
     const peakHourElement = document.getElementById('peakHour');
-    if (peakHourElement && maxCount > 0) {
-        peakHourElement.textContent = peakHour;
-    } else if (peakHourElement) {
-        peakHourElement.textContent = '—';
+    if (peakHourElement) {
+        peakHourElement.textContent = maxCount > 0 ? peakHour : '—';
     }
     
-    return { labels, data };
+    return { labels: hours, data };
 }
 
-// Подготовка данных для графика дней недели
 function prepareWeekdaysChartData(filteredAppointments) {
-    if (filteredAppointments.length === 0) {
-        const labels = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
-        const busiestDayElement = document.getElementById('busiestDay');
-        if (busiestDayElement) busiestDayElement.textContent = '—';
-        return { labels, data: [0, 0, 0, 0, 0, 0, 0] };
+    const labels = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
+    const weekdayMap = new Map();
+    labels.forEach(d => weekdayMap.set(d, 0));
+    
+    if (filteredAppointments && filteredAppointments.length > 0) {
+        filteredAppointments.forEach(app => {
+            const date = new Date(app.date);
+            const dayIndex = date.getDay();
+            const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+            const dayName = days[dayIndex];
+            if (weekdayMap.has(dayName)) {
+                weekdayMap.set(dayName, weekdayMap.get(dayName) + 1);
+            }
+        });
     }
     
-    const weekdayMap = new Map([
-        ['ПН', 0], ['ВТ', 0], ['СР', 0], ['ЧТ', 0], ['ПТ', 0], ['СБ', 0], ['ВС', 0]
-    ]);
-    
-    filteredAppointments.forEach(app => {
-        const date = new Date(app.date);
-        const dayIndex = date.getDay();
-        const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
-        const dayName = days[dayIndex];
-        if (weekdayMap.has(dayName)) {
-            weekdayMap.set(dayName, weekdayMap.get(dayName) + 1);
-        }
-    });
-    
-    const labels = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
     const data = labels.map(l => weekdayMap.get(l));
     
     let maxCount = 0;
@@ -294,17 +302,15 @@ function prepareWeekdaysChartData(filteredAppointments) {
     const dayNames = { 'ПН': 'Понедельник', 'ВТ': 'Вторник', 'СР': 'Среда', 'ЧТ': 'Четверг', 'ПТ': 'Пятница', 'СБ': 'Суббота', 'ВС': 'Воскресенье' };
     
     const busiestDayElement = document.getElementById('busiestDay');
-    if (busiestDayElement && maxCount > 0) {
-        busiestDayElement.textContent = dayNames[busiestDay] || busiestDay;
-    } else if (busiestDayElement) {
-        busiestDayElement.textContent = '—';
+    if (busiestDayElement) {
+        busiestDayElement.textContent = maxCount > 0 ? dayNames[busiestDay] || busiestDay : '—';
     }
     
     return { labels, data };
 }
 
 function prepareStatusChartData(filteredAppointments) {
-    if (filteredAppointments.length === 0) {
+    if (!filteredAppointments || filteredAppointments.length === 0) {
         return { labels: ['Нет данных'], data: [1] };
     }
     
@@ -322,107 +328,180 @@ function prepareStatusChartData(filteredAppointments) {
     return { labels, data };
 }
 
-// Создание графиков
 function createCharts(filteredAppointments) {
-    const hasData = filteredAppointments.length > 0;
+    const hasData = filteredAppointments && filteredAppointments.length > 0;
     
     // Динамика записей
     const appointmentsData = prepareAppointmentsChartData(filteredAppointments);
     if (appointmentsChart) appointmentsChart.destroy();
-    
-    if (hasData && appointmentsData.labels[0] !== 'Нет данных') {
-        appointmentsChart = new Chart(document.getElementById('appointmentsChart'), {
-            type: 'line',
-            data: {
-                labels: appointmentsData.labels,
-                datasets: [{
-                    label: 'Количество записей',
-                    data: appointmentsData.data,
-                    borderColor: '#A5C33C',
-                    backgroundColor: 'rgba(165, 195, 60, 0.1)',
-                    tension: 0.3,
-                    fill: true,
-                    pointBackgroundColor: '#A5C33C',
-                    pointBorderColor: '#fff',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: { position: 'top' },
-                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+    const appointmentsCtx = document.getElementById('appointmentsChart')?.getContext('2d');
+    if (appointmentsCtx) {
+        if (hasData && appointmentsData.labels[0] !== 'Нет данных') {
+            appointmentsChart = new Chart(appointmentsCtx, {
+                type: 'line',
+                data: {
+                    labels: appointmentsData.labels,
+                    datasets: [{
+                        label: 'Количество записей',
+                        data: appointmentsData.data,
+                        borderColor: '#A5C33C',
+                        backgroundColor: 'rgba(165, 195, 60, 0.1)',
+                        tension: 0.3,
+                        fill: true,
+                        pointBackgroundColor: '#A5C33C',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                    }
                 }
-            }
-        });
-    } else {
-        appointmentsChart = new Chart(document.getElementById('appointmentsChart'), {
-            type: 'line',
-            data: {
-                labels: ['Нет данных'],
-                datasets: [{
-                    label: 'Количество записей',
-                    data: [0],
-                    borderColor: '#9CA3AF',
-                    backgroundColor: 'rgba(156, 163, 175, 0.1)'
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: true }
-        });
+            });
+        } else {
+            appointmentsChart = new Chart(appointmentsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Нет данных'],
+                    datasets: [{
+                        label: 'Количество записей',
+                        data: [0],
+                        borderColor: '#9CA3AF',
+                        backgroundColor: 'rgba(156, 163, 175, 0.1)'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true }
+            });
+        }
     }
     
     // Врачи
     const doctorsData = prepareDoctorsChartData(filteredAppointments);
     if (doctorsChart) doctorsChart.destroy();
-    
-    if (hasData && doctorsData.labels[0] !== 'Нет данных') {
-        doctorsChart = new Chart(document.getElementById('doctorsChart'), {
-            type: 'bar',
-            data: {
-                labels: doctorsData.labels,
-                datasets: [{
-                    label: 'Количество записей',
-                    data: doctorsData.data,
-                    backgroundColor: '#3B82F6',
-                    borderRadius: 8,
-                    barPercentage: 0.7
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: { position: 'top' },
-                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+    const doctorsCtx = document.getElementById('doctorsChart')?.getContext('2d');
+    if (doctorsCtx) {
+        if (hasData && doctorsData.labels[0] !== 'Нет данных') {
+            doctorsChart = new Chart(doctorsCtx, {
+                type: 'bar',
+                data: {
+                    labels: doctorsData.labels,
+                    datasets: [{
+                        label: 'Количество записей',
+                        data: doctorsData.data,
+                        backgroundColor: '#3B82F6',
+                        borderRadius: 8,
+                        barPercentage: 0.7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                    }
                 }
-            }
-        });
-    } else {
-        doctorsChart = new Chart(document.getElementById('doctorsChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Нет данных'],
-                datasets: [{ label: 'Количество записей', data: [0], backgroundColor: '#9CA3AF' }]
-            },
-            options: { responsive: true, maintainAspectRatio: true }
-        });
+            });
+        } else {
+            doctorsChart = new Chart(doctorsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Нет данных'],
+                    datasets: [{ label: 'Количество записей', data: [0], backgroundColor: '#9CA3AF' }]
+                },
+                options: { responsive: true, maintainAspectRatio: true }
+            });
+        }
     }
     
     // Услуги
     const servicesData = prepareServicesChartData(filteredAppointments);
     if (servicesChart) servicesChart.destroy();
+    const servicesCtx = document.getElementById('servicesChart')?.getContext('2d');
+    if (servicesCtx) {
+        if (hasData && servicesData.labels[0] !== 'Нет данных') {
+            servicesChart = new Chart(servicesCtx, {
+                type: 'bar',
+                data: {
+                    labels: servicesData.labels,
+                    datasets: [{
+                        label: 'Количество записей',
+                        data: servicesData.data,
+                        backgroundColor: '#10B981',
+                        borderRadius: 8,
+                        barPercentage: 0.7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                    }
+                }
+            });
+        } else {
+            servicesChart = new Chart(servicesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Нет данных'],
+                    datasets: [{ label: 'Количество записей', data: [0], backgroundColor: '#9CA3AF' }]
+                },
+                options: { responsive: true, maintainAspectRatio: true }
+            });
+        }
+    }
     
-    if (hasData && servicesData.labels[0] !== 'Нет данных') {
-        servicesChart = new Chart(document.getElementById('servicesChart'), {
-            type: 'bar',
+    // Часы пик
+    const hoursData = prepareHoursChartData(filteredAppointments);
+    if (hoursChart) hoursChart.destroy();
+    const hoursCtx = document.getElementById('hoursChart')?.getContext('2d');
+    if (hoursCtx) {
+        hoursChart = new Chart(hoursCtx, {
+            type: 'line',
             data: {
-                labels: servicesData.labels,
+                labels: hoursData.labels,
                 datasets: [{
                     label: 'Количество записей',
-                    data: servicesData.data,
-                    backgroundColor: '#10B981',
+                    data: hoursData.data,
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.3,
+                    fill: true,
+                    pointBackgroundColor: '#F59E0B',
+                    pointBorderColor: '#fff',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                }
+            }
+        });
+    }
+    
+    // Дни недели
+    const weekdaysData = prepareWeekdaysChartData(filteredAppointments);
+    if (weekdaysChart) weekdaysChart.destroy();
+    const weekdaysCtx = document.getElementById('weekdaysChart')?.getContext('2d');
+    if (weekdaysCtx) {
+        weekdaysChart = new Chart(weekdaysCtx, {
+            type: 'bar',
+            data: {
+                labels: weekdaysData.labels,
+                datasets: [{
+                    label: 'Количество записей',
+                    data: weekdaysData.data,
+                    backgroundColor: '#8B5CF6',
                     borderRadius: 8,
                     barPercentage: 0.7
                 }]
@@ -431,115 +510,58 @@ function createCharts(filteredAppointments) {
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    legend: { position: 'top' },
                     tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
                 }
             }
         });
-    } else {
-        servicesChart = new Chart(document.getElementById('servicesChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Нет данных'],
-                datasets: [{ label: 'Количество записей', data: [0], backgroundColor: '#9CA3AF' }]
-            },
-            options: { responsive: true, maintainAspectRatio: true }
-        });
     }
     
-    const hoursData = prepareHoursChartData(filteredAppointments);
-    if (hoursChart) hoursChart.destroy();
-    hoursChart = new Chart(document.getElementById('hoursChart'), {
-        type: 'line',
-        data: {
-            labels: hoursData.labels,
-            datasets: [{
-                label: 'Количество записей',
-                data: hoursData.data,
-                borderColor: '#F59E0B',
-                backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                tension: 0.3,
-                fill: true,
-                pointBackgroundColor: '#F59E0B',
-                pointBorderColor: '#fff',
-                pointRadius: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
-            }
-        }
-    });
-    
-    const weekdaysData = prepareWeekdaysChartData(filteredAppointments);
-    if (weekdaysChart) weekdaysChart.destroy();
-    weekdaysChart = new Chart(document.getElementById('weekdaysChart'), {
-        type: 'bar',
-        data: {
-            labels: weekdaysData.labels,
-            datasets: [{
-                label: 'Количество записей',
-                data: weekdaysData.data,
-                backgroundColor: '#8B5CF6',
-                borderRadius: 8,
-                barPercentage: 0.7
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
-            }
-        }
-    });
-    
+    // Статусы
     const statusData = prepareStatusChartData(filteredAppointments);
     if (statusChart) statusChart.destroy();
-    
-    if (hasData && statusData.labels[0] !== 'Нет данных') {
-        const total = statusData.data.reduce((a, b) => a + b, 0);
-        statusChart = new Chart(document.getElementById('statusChart'), {
-            type: 'doughnut',
-            data: {
-                labels: statusData.labels,
-                datasets: [{
-                    data: statusData.data,
-                    backgroundColor: ['#F59E0B', '#10B981', '#3B82F6', '#EF4444'],
-                    borderWidth: 0,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: { position: 'bottom' },
-                    tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} записей (${total > 0 ? ((ctx.raw / total) * 100).toFixed(1) : 0}%)` } }
+    const statusCtx = document.getElementById('statusChart')?.getContext('2d');
+    if (statusCtx) {
+        if (hasData && statusData.labels[0] !== 'Нет данных') {
+            const total = statusData.data.reduce((a, b) => a + b, 0);
+            statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: statusData.labels,
+                    datasets: [{
+                        data: statusData.data,
+                        backgroundColor: ['#F59E0B', '#10B981', '#3B82F6', '#EF4444'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} записей (${total > 0 ? ((ctx.raw / total) * 100).toFixed(1) : 0}%)` } }
+                    }
                 }
-            }
-        });
-    } else {
-        statusChart = new Chart(document.getElementById('statusChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Нет данных'],
-                datasets: [{ data: [1], backgroundColor: ['#9CA3AF'], borderWidth: 0 }]
-            },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
-        });
+            });
+        } else {
+            statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Нет данных'],
+                    datasets: [{ data: [1], backgroundColor: ['#9CA3AF'], borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
     }
 }
 
-function updateAnalytics() {
-    loadAnalyticsData();
+async function updateAnalytics() {
+    await loadAnalyticsData();
     
-    const period = document.getElementById('periodSelect').value;
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
+    const period = document.getElementById('periodSelect')?.value || 'month';
+    const startDate = document.getElementById('startDate')?.value;
+    const endDate = document.getElementById('endDate')?.value;
     
     let filteredAppointments;
     if (period === 'custom') {
@@ -556,9 +578,9 @@ function updateAnalytics() {
 }
 
 function exportAnalytics() {
-    const period = document.getElementById('periodSelect').value;
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
+    const period = document.getElementById('periodSelect')?.value || 'month';
+    const startDate = document.getElementById('startDate')?.value;
+    const endDate = document.getElementById('endDate')?.value;
     
     let periodText = '';
     if (period === 'custom') {
@@ -666,10 +688,18 @@ function initDefaultDates() {
     if (endDateInput) endDateInput.value = today.toISOString().split('T')[0];
 }
 
-function initAnalytics() {
-    loadAnalyticsData();
+async function initAnalytics() {
+    console.log('Инициализация аналитики...');
+    
+    if (!document.getElementById('totalAppointments')) {
+        console.log('Элементы аналитики не найдены, возможно вкладка не активна');
+        return;
+    }
+    
     initDefaultDates();
-    updateAnalytics();
+    await loadAnalyticsData();
+    updateStatistics(analyticsData.appointments);
+    createCharts(analyticsData.appointments);
     
     const periodSelect = document.getElementById('periodSelect');
     const applyCustomBtn = document.getElementById('applyCustomPeriod');
@@ -686,13 +716,18 @@ function initAnalytics() {
     
     if (applyCustomBtn) {
         applyCustomBtn.addEventListener('click', () => {
-            document.getElementById('periodSelect').value = 'custom';
+            if (periodSelect) periodSelect.value = 'custom';
             updateAnalytics();
         });
     }
     
-    if (exportBtn) exportBtn.addEventListener('click', exportAnalytics);
-    if (refreshBtn) refreshBtn.addEventListener('click', updateAnalytics);
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportAnalytics);
+    }
+    
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', updateAnalytics);
+    }
     
     const tabs = document.querySelectorAll('.nav-tab');
     if (tabs.length) {
@@ -711,6 +746,8 @@ function initAnalytics() {
             });
         });
     }
+    
+    console.log('Аналитика инициализирована');
 }
 
 document.addEventListener('DOMContentLoaded', initAnalytics);

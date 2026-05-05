@@ -1,0 +1,1307 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "name": "ДИАГНОСТИКА",
+      "page": "service-detail.html?service=diagnostics",
+      "bgImage": "../assets/images/menu2-page/menu2.jpg",
+      "title": "ДИАГНОСТИКА",
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": 2,
+      "name": "ПРОФИЛАКТИКА КАРИЕСА",
+      "page": "service-detail.html?service=prevention",
+      "bgImage": "../assets/images/menu3-page/menu3.jpg",
+      "title": "ПРОФИЛАКТИКА КАРИЕСА",
+      "active": true,
+      "order": 2
+    },
+    {
+      "id": 3,
+      "name": "ТЕРАПИЯ",
+      "page": "service-detail.html?service=therapy",
+      "bgImage": "../assets/images/menu4-page/menu4.jpg",
+      "title": "ТЕРАПИЯ",
+      "active": true,
+      "order": 3
+    },
+    {
+      "id": 4,
+      "name": "ЦИФРОВОЕ ПРОТЕЗИРОВАНИЕ",
+      "page": "service-detail.html?service=digital-prosthetics",
+      "bgImage": "../assets/images/menu5-page/menu5.jpg",
+      "title": "ЦИФРОВОЕ ПРОТЕЗИРОВАНИЕ",
+      "active": true,
+      "order": 4
+    },
+    {
+      "id": 5,
+      "name": "ЦИФРОВАЯ ИМПЛАНТАЦИЯ",
+      "page": "service-detail.html?service=digital-implantation",
+      "bgImage": "../assets/images/menu6-page/menu6.jpg",
+      "title": "ЦИФРОВАЯ ИМПЛАНТАЦИЯ",
+      "active": true,
+      "order": 5
+    },
+    {
+      "id": 6,
+      "name": "СЛОЖНАЯ ИМПЛАНТАЦИЯ",
+      "page": "service-detail.html?service=complex-implantation",
+      "bgImage": "../assets/images/menu7-page/menu7.jpg",
+      "title": "СЛОЖНАЯ ИМПЛАНТАЦИЯ",
+      "active": true,
+      "order": 6
+    },
+    {
+      "id": 7,
+      "name": "ОРТОДОНТИЯ",
+      "page": "service-detail.html?service=orthodontics",
+      "bgImage": "../assets/images/menu8-page/menu8.jpg",
+      "title": "ЭСТЕТИЧЕСКАЯ ОРТОДОНТИЯ",
+      "active": true,
+      "order": 7
+    },
+    {
+      "id": 8,
+      "name": "ВИНИРЫ, ЛЮМИНИРЫ",
+      "page": "service-detail.html?service=veneers",
+      "bgImage": "../assets/images/menu9-page/menu9.jpg",
+      "title": "ВИНИРЫ. ЛЮМИНИРЫ",
+      "active": true,
+      "order": 8
+    }
+  ],
+  "serviceDetails": [
+    {
+      "id": 1,
+      "serviceId": 1,
+      "mainText": "Диагностика необходима для составления качественного плана лечения, гарантирующего результат. Только профессионально организованный комплекс мероприятий может помочь грамотному специалисту поставить правильный диагноз и провести адекватное лечение.",
+      "secondaryText": "В Dental Club производится 3D-диагностика на оборудовании последнего поколения.",
+      "features": "3D-диагностика на оборудовании последнего поколения\nКомпьютерный томограф Planmeca ProMax 3DMid\nDiagnoCam для выявления скрытых кариозных полостей\nДентальный микроскоп Leica и бинокуляры Carl Zeiss",
+      "steps": "1. Консультация\n2. 3D-снимок\n3. План лечения",
+      "images": ""
+    },
+    {
+      "id": 2,
+      "serviceId": 2,
+      "mainText": "Профилактика - это комплекс мер, направленных на предупреждение возникновения и развития стоматологических заболеваний. Системный подход позволяет контролировать состояние ваших зубов и десен в течение всего периода наблюдения в Dental Club.",
+      "secondaryText": "Регулярная профилактика по системе Dental Club в несколько раз снижает риск возникновения кариеса и заболеваний десен.",
+      "features": "Оценка состояния полости рта по степени окрашивания биоплёнки\nProphylflex (KaVo) — устранение биоплёнки и пигментации\nУдаление зубного камня скалером Sonyflex (KaVo)\nПолировка фторированной пастой Proxyt (Ivoclar)\nПокрытие зубной эмали препаратом Fluor Protector",
+      "steps": "1. Оценка состояния\n2. Удаление зубного камня\n3. Полировка\n4. Покрытие фторлаком",
+      "images": ""
+    },
+    {
+      "id": 3,
+      "serviceId": 3,
+      "mainText": "Терапевтическая стоматология - раздел медицины, занимающийся диагностикой и лечением болезней зубов, околозубных тканей и слизистой оболочки полости рта.",
+      "secondaryText": "В Dental Club всегда проводят лечение с применением специальных оптических увеличителей: Дентальный микроскоп Leica и бинокуляры Carl Zeiss.",
+      "features": "Лечение кариеса, пульпита, периодонтита\nПрименение дентального микроскопа Leica\nИспользование бинокуляров Carl Zeiss\nПломбировочные материалы Ivoclar\nИнструменты LM (Финляндия)",
+      "steps": "1. Диагностика\n2. Лечение\n3. Реставрация",
+      "images": ""
+    },
+    {
+      "id": 4,
+      "serviceId": 4,
+      "mainText": "Цифровое протезирование - это направление эстетической стоматологии, с использованием цифровых технологий в моделировании и изготовлении ортопедических конструкций.",
+      "secondaryText": "Согласно вашим требованиям и возможностям подбирается оптимальный вариант ортопедической конструкции.",
+      "features": "Коронки на имплантантах\nОдиночные коронки, виниры, вкладки\nВременные и постоянные несъёмные протезы\nСистема Всё на 4-х и Всё на 6-ти\nМатериалы: цирконий, IPS.E-max, керамика",
+      "steps": "1. Сканирование\n2. 3D-моделирование\n3. Фрезеровка\n4. Фиксация",
+      "images": ""
+    },
+    {
+      "id": 5,
+      "serviceId": 5,
+      "mainText": "Имплантация зубов – это операция по установке имплантатов, в качестве опоры для ортопедических конструкций. Имплантация подразделяется на: одномоментную (установка имплантата сразу после удаления зуба), одноэтапную и двухэтапную.",
+      "secondaryText": "В Dental Club мы используем навигационную стоматологию. Операции планируются в цифровом формате, для исключения неточности.",
+      "features": "Навигационная стоматология\n3D планирование в программе Romexis\nИмплантаты Nobel Biocare (США-Швейцария)\nИмплантаты BioHorizons (США)\nИмплантаты MIS (Израиль)",
+      "steps": "1. Диагностика\n2. Планирование\n3. Установка\n4. Протезирование",
+      "images": ""
+    },
+    {
+      "id": 6,
+      "serviceId": 6,
+      "mainText": "В Dental Club мы можем произвести установку имплантатов даже в самых сложных ситуациях. Мы используем навигационную стоматологию.",
+      "secondaryText": "Для особо сложных случаев, в нашем арсенале имеется методика от лидера в имплантологии, фирмы Nobel Biocare – All-on-4 и All-on-6. Первая в Казахстане операция по установке скуловых имплантатов Zygoma была проведена в Dental Club!",
+      "features": "Методика All-on-4\nМетодика All-on-6\nСкуловые имплантаты Zygoma (Nobel Biocare)\nЦифровое планирование операции\nУстановка имплантатов без разреза",
+      "steps": "1. Консультация\n2. 3D-планирование\n3. Операция\n4. Протезирование в день",
+      "images": ""
+    },
+    {
+      "id": 7,
+      "serviceId": 7,
+      "mainText": "Эстетическая ортодонтия – область стоматологии, специализирующаяся на коррекции прикуса - выравнивании зубов и создании улыбки вашей мечты.",
+      "secondaryText": "Ортодонтическое лечение не имеет строгих возрастных рамок и может проводиться как у взрослых пациентов, так и у детей!",
+      "features": "Цифровые методы диагностики и планирования лечения\nСамолигирующие брекет-системы American Orthodontics (США)\nЭлайнеры Invisalign\nДетская ортодонтия\nКоррекция прикуса без боли",
+      "steps": "1. Диагностика\n2. Установка системы\n3. Контроль\n4. Результат",
+      "images": ""
+    },
+    {
+      "id": 8,
+      "serviceId": 8,
+      "mainText": "Виниры – это тонкие керамические пластинки, которые фиксируются на заранее обработанную поверхность, с целью изменить форму и цвет зубов.",
+      "secondaryText": "Люминиры - это тончайшие керамические пластинки, которые одеваются прямо на поверхность зуба. Толщина таких пластинок до 5 микрон.",
+      "features": "Керамические виниры и люминиры\nЦирконий, IPS.E-max\nМинимальная обработка зубов\nТолщина пластинок до 5 микрон\nЦифровое моделирование улыбки",
+      "steps": "1. Диагностика\n2. Wax-up\n3. Mock-up\n4. Фиксация",
+      "images": ""
+    }
+  ],
+  "doctors": [
+    {
+      "id": 1,
+      "lastName": "Волкова",
+      "firstName": "Екатерина",
+      "middleName": "Андреевна",
+      "specialization": "Стоматолог-терапевт, детский стоматолог",
+      "photo": "../assets/images/team/team-menu2.jpg",
+      "education": "Белорусский государственный медицинский университет (2010 г)",
+      "experience": "более 12 лет",
+      "improvement": "Регулярно повышает квалификацию в области детской стоматологии и эндодонтии.",
+      "schedule": "Пн-Сб, 09:00 - 18:00",
+      "active": true
+    },
+    {
+      "id": 2,
+      "lastName": "Кузнецов",
+      "firstName": "Андрей",
+      "middleName": "Владимирович",
+      "specialization": "Стоматолог-пародонтолог",
+      "photo": "../assets/images/team/team-menu3.jpg",
+      "education": "Витебский государственный медицинский университет (2008 г)",
+      "experience": "более 14 лет",
+      "improvement": "Прошел курсы по лазерной пародонтологии в Германии.",
+      "schedule": "Пн-Пт, 10:00 - 19:00",
+      "active": true
+    },
+    {
+      "id": 3,
+      "lastName": "Соколова",
+      "firstName": "Мария",
+      "middleName": "Александровна",
+      "specialization": "Стоматолог-пародонтолог, гигиенист",
+      "photo": "../assets/images/team/team-menu4.jpg",
+      "education": "Гродненский государственный медицинский университет (2012 г)",
+      "experience": "более 10 лет",
+      "improvement": "Сертифицированный специалист по AirFlow и Vector-терапии.",
+      "schedule": "Вт-Сб, 10:00 - 20:00",
+      "active": true
+    },
+    {
+      "id": 4,
+      "lastName": "Новикова",
+      "firstName": "Валентина",
+      "middleName": "Сергеевна",
+      "specialization": "Стоматолог-терапевт, эндодонтист",
+      "photo": "../assets/images/team/team-menu5.jpg",
+      "education": "Белорусский государственный медицинский университет (2011 г)",
+      "experience": "более 11 лет",
+      "improvement": "Прошла обучение по работе с дентальным микроскопом в Швейцарии.",
+      "schedule": "Пн-Пт, 09:00 - 18:00",
+      "active": true
+    },
+    {
+      "id": 5,
+      "lastName": "Щеголев",
+      "firstName": "Дмитрий",
+      "middleName": "Владиславович",
+      "specialization": "Стоматолог-имплантолог, ортопед",
+      "photo": "../assets/images/team/team-menu6.jpg",
+      "education": "Белорусский государственный медицинский университет (1986 г) (диплом с отличием)",
+      "experience": "более 30 лет",
+      "improvement": "Неоднократно проходил курсы повышения квалификации, мастер-классы от профессоров мирового уровня.",
+      "schedule": "Пн-Пт, 10:00 - 19:00",
+      "active": true
+    },
+    {
+      "id": 6,
+      "lastName": "Ковальчук",
+      "firstName": "Анастасия",
+      "middleName": "Дмитриевна",
+      "specialization": "Стоматолог-хирург, имплантолог",
+      "photo": "../assets/images/team/team-menu7.jpg",
+      "education": "Белорусский государственный медицинский университет (2009 г)",
+      "experience": "более 13 лет",
+      "improvement": "Прошла обучение у ведущих имплантологов Европы.",
+      "schedule": "Пн-Ср-Пт, 10:00 - 19:00",
+      "active": true
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "author": "Айгуль Ахметова",
+      "userInfo": "Президент АО «RAIMBEK GROUP»",
+      "text": "С удовольствием хотела бы поделиться своим отношением к стоматологической клинике Dental Club. Я являюсь клиентом этой клиники на протяжении многих лет, поэтому очень рада ее обновлению и росту! Приятно осознавать, что в Dental Club технологичность сочетается с совершенным сервисом, красивыми и уютными кабинетами, максимальным комфортом для пациентов, а самое главное постоянным ростом профессионализма моего доктора, Дмитрия Щеголева, основавшего и практикующего в этой клинике. Я знаю Дмитрия как лечащего врача вот уже 30 лет и не поменяю его на другого врача-дантиста!",
+      "rating": 5,
+      "photo": "../assets/images/reviews/reviews2.jpg",
+      "date": "2025-05-01",
+      "published": true
+    },
+    {
+      "id": 2,
+      "author": "Лариса Мухамеджанова",
+      "userInfo": "MBA, PH.D, Академик КАМ",
+      "text": "Я лечусь у Дмитрия Щеголева уже 20 лет. За это время выросла дочь, подросла внучка. И, разумеется мы все – пациенты данной клиники. Очень коротко объясняю, почему: здесь - сверхстандарты безопасности, при которых исключены всякие воспаления, флюсы, заражения и прочее; абсолютная надежность и доверие, что лечение пройдет без боли и без всяких ошибок, без лишних трат с понятным ценообразованием; уверенность в том, что тебя лечит профи, умный, талантливый и любящий свое дело врач на новейшем оборудовании с использованием не допотопных, а нормальных технологий 21 века.",
+      "rating": 5,
+      "photo": "../assets/images/reviews/reviews3.jpg",
+      "date": "2025-05-02",
+      "published": true
+    },
+    {
+      "id": 3,
+      "author": "Эленора Тен",
+      "userInfo": "",
+      "text": "Хотелось бы поблагодарить команду Dental Club за профессионализм, квалифицированный подход в лечении. Благодаря прекрасному, чуткому врачу Дмитрию Щёголева в клинике витает атмосфера добра, уверенности, защищённости и спокойствия. К такому специалисту всегда приятно идти на приём. Я всем и всегда рекомендую Dental Club!",
+      "rating": 5,
+      "photo": "../assets/images/logo/logo4.png",
+      "date": "2025-05-03",
+      "published": true
+    }
+  ],
+  "prices": {
+    "version": "2.0",
+    "categories": [
+      {
+        "id": 1,
+        "name": "Диагностика",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 2,
+        "name": "Профилактика и гигиена",
+        "order": 2,
+        "active": true
+      },
+      {
+        "id": 3,
+        "name": "Терапевтическая стоматология",
+        "order": 3,
+        "active": true
+      },
+      {
+        "id": 4,
+        "name": "Хирургическая стоматология",
+        "order": 4,
+        "active": true
+      },
+      {
+        "id": 5,
+        "name": "Ортопедия (протезирование)",
+        "order": 5,
+        "active": true
+      },
+      {
+        "id": 6,
+        "name": "Имплантация",
+        "order": 6,
+        "active": true
+      },
+      {
+        "id": 7,
+        "name": "Ортодонтия",
+        "order": 7,
+        "active": true
+      },
+      {
+        "id": 8,
+        "name": "Эстетическая стоматология",
+        "order": 8,
+        "active": true
+      }
+    ],
+    "services": [
+      {
+        "id": 1,
+        "categoryId": 1,
+        "name": "Первичная консультация",
+        "price": "0",
+        "unit": "BYN",
+        "description": "бесплатно",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 2,
+        "categoryId": 1,
+        "name": "Осмотр и составление плана лечения",
+        "price": "25",
+        "unit": "BYN",
+        "description": "",
+        "order": 2,
+        "active": true
+      },
+      {
+        "id": 3,
+        "categoryId": 1,
+        "name": "Компьютерная томография (3D)",
+        "price": "80",
+        "unit": "BYN",
+        "description": "Одна челюсть",
+        "order": 3,
+        "active": true
+      },
+      {
+        "id": 4,
+        "categoryId": 1,
+        "name": "Панорамный снимок (ОПТГ)",
+        "price": "40",
+        "unit": "BYN",
+        "description": "",
+        "order": 4,
+        "active": true
+      },
+      {
+        "id": 5,
+        "categoryId": 1,
+        "name": "Прицельный снимок",
+        "price": "15",
+        "unit": "BYN",
+        "description": "Один зуб",
+        "order": 5,
+        "active": true
+      },
+      {
+        "id": 6,
+        "categoryId": 2,
+        "name": "Профессиональная гигиена (AirFlow)",
+        "price": "60",
+        "unit": "BYN",
+        "description": "",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 7,
+        "categoryId": 2,
+        "name": "Ультразвуковая чистка",
+        "price": "40",
+        "unit": "BYN",
+        "description": "Одна челюсть",
+        "order": 2,
+        "active": true
+      },
+      {
+        "id": 8,
+        "categoryId": 3,
+        "name": "Лечение кариеса",
+        "price": "70",
+        "unit": "BYN",
+        "description": "Один зуб",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 9,
+        "categoryId": 3,
+        "name": "Лечение пульпита",
+        "price": "120",
+        "unit": "BYN",
+        "description": "Один канал",
+        "order": 2,
+        "active": true
+      },
+      {
+        "id": 10,
+        "categoryId": 4,
+        "name": "Удаление зуба (простое)",
+        "price": "50",
+        "unit": "BYN",
+        "description": "",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 11,
+        "categoryId": 4,
+        "name": "Удаление зуба (сложное)",
+        "price": "100",
+        "unit": "BYN",
+        "description": "",
+        "order": 2,
+        "active": true
+      },
+      {
+        "id": 12,
+        "categoryId": 5,
+        "name": "Коронка металлокерамическая",
+        "price": "250",
+        "unit": "BYN",
+        "description": "Один зуб",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 13,
+        "categoryId": 5,
+        "name": "Коронка циркониевая",
+        "price": "450",
+        "unit": "BYN",
+        "description": "Один зуб",
+        "order": 2,
+        "active": true
+      },
+      {
+        "id": 14,
+        "categoryId": 6,
+        "name": "Имплантат (установка)",
+        "price": "800",
+        "unit": "BYN",
+        "description": "Под ключ",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 15,
+        "categoryId": 6,
+        "name": "Имплантация All-on-4",
+        "price": "4000",
+        "unit": "BYN",
+        "description": "Полный комплекс",
+        "order": 2,
+        "active": true
+      },
+      {
+        "id": 16,
+        "categoryId": 7,
+        "name": "Брекет-система (металл)",
+        "price": "1000",
+        "unit": "BYN",
+        "description": "На челюсть",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 17,
+        "categoryId": 7,
+        "name": "Брекет-система (керамика)",
+        "price": "1500",
+        "unit": "BYN",
+        "description": "На челюсть",
+        "order": 2,
+        "active": true
+      },
+      {
+        "id": 18,
+        "categoryId": 7,
+        "name": "Элайнеры Invisalign",
+        "price": "3000",
+        "unit": "BYN",
+        "description": "Полный курс",
+        "order": 3,
+        "active": true
+      },
+      {
+        "id": 19,
+        "categoryId": 8,
+        "name": "Отбеливание ZOOM",
+        "price": "300",
+        "unit": "BYN",
+        "description": "Одна процедура",
+        "order": 1,
+        "active": true
+      },
+      {
+        "id": 20,
+        "categoryId": 8,
+        "name": "Виниры керамические",
+        "price": "350",
+        "unit": "BYN",
+        "description": "Один зуб",
+        "order": 2,
+        "active": true
+      }
+    ]
+  },
+  "schedule": {
+    "version": "2.0",
+    "doctors": [
+      {
+        "id": 1,
+        "name": "Волкова Екатерина Андреевна",
+        "specialization": "Стоматолог-терапевт, детский стоматолог",
+        "photo": "../assets/images/team/team-menu2.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Кузнецов Андрей Владимирович",
+        "specialization": "Стоматолог-пародонтолог",
+        "photo": "../assets/images/team/team-menu3.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Соколова Мария Александровна",
+        "specialization": "Стоматолог-пародонтолог, гигиенист",
+        "photo": "../assets/images/team/team-menu4.jpg"
+      },
+      {
+        "id": 4,
+        "name": "Новикова Валентина Сергеевна",
+        "specialization": "Стоматолог-терапевт, эндодонтист",
+        "photo": "../assets/images/team/team-menu5.jpg"
+      },
+      {
+        "id": 5,
+        "name": "Щеголев Дмитрий Владиславович",
+        "specialization": "Стоматолог-имплантолог, ортопед",
+        "photo": "../assets/images/team/team-menu6.jpg"
+      },
+      {
+        "id": 6,
+        "name": "Ковальчук Анастасия Дмитриевна",
+        "specialization": "Стоматолог-хирург, имплантолог",
+        "photo": "../assets/images/team/team-menu7.jpg"
+      }
+    ],
+    "schedule": [
+      {
+        "id": 1,
+        "doctorId": 1,
+        "day": "monday",
+        "dayName": "Понедельник",
+        "timeStart": "10:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 2,
+        "doctorId": 1,
+        "day": "tuesday",
+        "dayName": "Вторник",
+        "timeStart": "10:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 3,
+        "doctorId": 1,
+        "day": "wednesday",
+        "dayName": "Среда",
+        "timeStart": "10:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 4,
+        "doctorId": 1,
+        "day": "thursday",
+        "dayName": "Четверг",
+        "timeStart": "10:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 5,
+        "doctorId": 1,
+        "day": "friday",
+        "dayName": "Пятница",
+        "timeStart": "10:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 6,
+        "doctorId": 1,
+        "day": "saturday",
+        "dayName": "Суббота",
+        "timeStart": "10:00",
+        "timeEnd": "15:00",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": true
+      },
+      {
+        "id": 7,
+        "doctorId": 1,
+        "day": "sunday",
+        "dayName": "Воскресенье",
+        "timeStart": "",
+        "timeEnd": "",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": false
+      },
+      {
+        "id": 8,
+        "doctorId": 2,
+        "day": "monday",
+        "dayName": "Понедельник",
+        "timeStart": "09:00",
+        "timeEnd": "17:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 9,
+        "doctorId": 2,
+        "day": "tuesday",
+        "dayName": "Вторник",
+        "timeStart": "09:00",
+        "timeEnd": "17:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 10,
+        "doctorId": 2,
+        "day": "wednesday",
+        "dayName": "Среда",
+        "timeStart": "09:00",
+        "timeEnd": "17:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 11,
+        "doctorId": 2,
+        "day": "thursday",
+        "dayName": "Четверг",
+        "timeStart": "09:00",
+        "timeEnd": "17:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 12,
+        "doctorId": 2,
+        "day": "friday",
+        "dayName": "Пятница",
+        "timeStart": "09:00",
+        "timeEnd": "17:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 13,
+        "doctorId": 2,
+        "day": "saturday",
+        "dayName": "Суббота",
+        "timeStart": "09:00",
+        "timeEnd": "14:00",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": true
+      },
+      {
+        "id": 14,
+        "doctorId": 2,
+        "day": "sunday",
+        "dayName": "Воскресенье",
+        "timeStart": "",
+        "timeEnd": "",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": false
+      },
+      {
+        "id": 15,
+        "doctorId": 3,
+        "day": "monday",
+        "dayName": "Понедельник",
+        "timeStart": "11:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 16,
+        "doctorId": 3,
+        "day": "tuesday",
+        "dayName": "Вторник",
+        "timeStart": "11:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 17,
+        "doctorId": 3,
+        "day": "wednesday",
+        "dayName": "Среда",
+        "timeStart": "11:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 18,
+        "doctorId": 3,
+        "day": "thursday",
+        "dayName": "Четверг",
+        "timeStart": "11:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 19,
+        "doctorId": 3,
+        "day": "friday",
+        "dayName": "Пятница",
+        "timeStart": "11:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 20,
+        "doctorId": 3,
+        "day": "saturday",
+        "dayName": "Суббота",
+        "timeStart": "10:00",
+        "timeEnd": "15:00",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": true
+      },
+      {
+        "id": 21,
+        "doctorId": 3,
+        "day": "sunday",
+        "dayName": "Воскресенье",
+        "timeStart": "",
+        "timeEnd": "",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": false
+      },
+      {
+        "id": 22,
+        "doctorId": 4,
+        "day": "monday",
+        "dayName": "Понедельник",
+        "timeStart": "08:00",
+        "timeEnd": "16:00",
+        "breakStart": "12:00",
+        "breakEnd": "13:00",
+        "isWorking": true
+      },
+      {
+        "id": 23,
+        "doctorId": 4,
+        "day": "tuesday",
+        "dayName": "Вторник",
+        "timeStart": "08:00",
+        "timeEnd": "16:00",
+        "breakStart": "12:00",
+        "breakEnd": "13:00",
+        "isWorking": true
+      },
+      {
+        "id": 24,
+        "doctorId": 4,
+        "day": "wednesday",
+        "dayName": "Среда",
+        "timeStart": "08:00",
+        "timeEnd": "16:00",
+        "breakStart": "12:00",
+        "breakEnd": "13:00",
+        "isWorking": true
+      },
+      {
+        "id": 25,
+        "doctorId": 4,
+        "day": "thursday",
+        "dayName": "Четверг",
+        "timeStart": "08:00",
+        "timeEnd": "16:00",
+        "breakStart": "12:00",
+        "breakEnd": "13:00",
+        "isWorking": true
+      },
+      {
+        "id": 26,
+        "doctorId": 4,
+        "day": "friday",
+        "dayName": "Пятница",
+        "timeStart": "08:00",
+        "timeEnd": "16:00",
+        "breakStart": "12:00",
+        "breakEnd": "13:00",
+        "isWorking": true
+      },
+      {
+        "id": 27,
+        "doctorId": 4,
+        "day": "saturday",
+        "dayName": "Суббота",
+        "timeStart": "",
+        "timeEnd": "",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": false
+      },
+      {
+        "id": 28,
+        "doctorId": 4,
+        "day": "sunday",
+        "dayName": "Воскресенье",
+        "timeStart": "",
+        "timeEnd": "",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": false
+      },
+      {
+        "id": 29,
+        "doctorId": 5,
+        "day": "monday",
+        "dayName": "Понедельник",
+        "timeStart": "10:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 30,
+        "doctorId": 5,
+        "day": "tuesday",
+        "dayName": "Вторник",
+        "timeStart": "10:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 31,
+        "doctorId": 5,
+        "day": "wednesday",
+        "dayName": "Среда",
+        "timeStart": "10:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 32,
+        "doctorId": 5,
+        "day": "thursday",
+        "dayName": "Четверг",
+        "timeStart": "10:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 33,
+        "doctorId": 5,
+        "day": "friday",
+        "dayName": "Пятница",
+        "timeStart": "10:00",
+        "timeEnd": "19:00",
+        "breakStart": "14:00",
+        "breakEnd": "15:00",
+        "isWorking": true
+      },
+      {
+        "id": 34,
+        "doctorId": 5,
+        "day": "saturday",
+        "dayName": "Суббота",
+        "timeStart": "10:00",
+        "timeEnd": "15:00",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": true
+      },
+      {
+        "id": 35,
+        "doctorId": 5,
+        "day": "sunday",
+        "dayName": "Воскресенье",
+        "timeStart": "",
+        "timeEnd": "",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": false
+      },
+      {
+        "id": 36,
+        "doctorId": 6,
+        "day": "monday",
+        "dayName": "Понедельник",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 37,
+        "doctorId": 6,
+        "day": "tuesday",
+        "dayName": "Вторник",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 38,
+        "doctorId": 6,
+        "day": "wednesday",
+        "dayName": "Среда",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 39,
+        "doctorId": 6,
+        "day": "thursday",
+        "dayName": "Четверг",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 40,
+        "doctorId": 6,
+        "day": "friday",
+        "dayName": "Пятница",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 41,
+        "doctorId": 6,
+        "day": "saturday",
+        "dayName": "Суббота",
+        "timeStart": "09:00",
+        "timeEnd": "14:00",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": true
+      },
+      {
+        "id": 42,
+        "doctorId": 6,
+        "day": "sunday",
+        "dayName": "Воскресенье",
+        "timeStart": "",
+        "timeEnd": "",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": false
+      }
+    ]
+  },
+  "faq": [
+    {
+      "id": 1,
+      "question": "Как записаться на прием в Dental Club?",
+      "answer": "Вы можете записаться на прием несколькими способами: по телефону +375 (29) 123-45-67, через форму обратной связи на сайте, через администратора клиники при личном визите, или через онлайн-форму на странице &quot;Запись на прием&quot;. Также доступна запись через мессенджеры WhatsApp и Telegram.",
+      "category": "Запись и визиты",
+      "order": 1,
+      "active": true
+    },
+    {
+      "id": 2,
+      "question": "Нужно ли брать с собой какие-то документы на первый прием?",
+      "answer": "При первом визите желательно иметь при себе паспорт. Если у вас есть предыдущие снимки (рентген, КТ) или выписки от других стоматологов, захватите их - это поможет врачу составить полную картину вашего здоровья и избежать повторных исследований.",
+      "category": "Запись и визиты",
+      "order": 2,
+      "active": true
+    },
+    {
+      "id": 3,
+      "question": "Как отменить или перенести запись?",
+      "answer": "Вы можете отменить или перенести запись по телефону +375 (29) 123-45-67 не позднее чем за 24 часа до назначенного времени. Это позволит нам предложить освободившееся время другим пациентам.",
+      "category": "Запись и визиты",
+      "order": 3,
+      "active": true
+    },
+    {
+      "id": 4,
+      "question": "Как часто нужно проходить профилактический осмотр?",
+      "answer": "Мы рекомендуем проходить профилактический осмотр не реже 2 раз в год. Это позволяет своевременно выявить проблемы на ранних стадиях и избежать сложного и дорогостоящего лечения.",
+      "category": "Услуги",
+      "order": 4,
+      "active": true
+    },
+    {
+      "id": 5,
+      "question": "Сколько времени занимает установка имплантата?",
+      "answer": "Установка одного имплантата занимает от 20 до 40 минут. Процедура проводится под местной анестезией и абсолютно безболезненна. Полный процесс имплантации с протезированием может занять от 3 до 6 месяцев.",
+      "category": "Услуги",
+      "order": 5,
+      "active": true
+    },
+    {
+      "id": 6,
+      "question": "Больно ли лечить зубы?",
+      "answer": "Современная стоматология в Dental Club практически безболезненна. Мы используем эффективные местные анестетики, которые полностью блокируют болевые ощущения. Перед инъекцией наносится анестезирующий гель.",
+      "category": "Услуги",
+      "order": 6,
+      "active": true
+    },
+    {
+      "id": 7,
+      "question": "Какие методы оплаты вы принимаете?",
+      "answer": "Мы принимаем оплату наличными, банковскими картами (Visa, MasterCard, Белкарт), а также возможна оплата через банковский перевод. Для юридических лиц предоставляем все необходимые документы для безналичного расчета.",
+      "category": "Цены и оплата",
+      "order": 7,
+      "active": true
+    },
+    {
+      "id": 8,
+      "question": "Есть ли у вас рассрочка или кредит на лечение?",
+      "answer": "Да, мы сотрудничаем с несколькими банками и можем предложить рассрочку или кредит на стоматологическое лечение. Подробности уточняйте у администратора.",
+      "category": "Цены и оплата",
+      "order": 8,
+      "active": true
+    },
+    {
+      "id": 9,
+      "question": "Принимаете ли вы по страховке (ДМС)?",
+      "answer": "Да, мы работаем с большинством страховых компаний. Рекомендуем уточнить наличие договора перед визитом.",
+      "category": "Цены и оплата",
+      "order": 9,
+      "active": true
+    },
+    {
+      "id": 10,
+      "question": "Какой врач лечит детей?",
+      "answer": "Детским стоматологом в Dental Club работает Волкова Екатерина Андреевна.",
+      "category": "Врачи",
+      "order": 10,
+      "active": true
+    },
+    {
+      "id": 11,
+      "question": "Какой врач занимается имплантацией?",
+      "answer": "Имплантацию проводит Щеголев Дмитрий Владиславович — стоматолог-имплантолог с более чем 30-летним опытом.",
+      "category": "Врачи",
+      "order": 11,
+      "active": true
+    },
+    {
+      "id": 12,
+      "question": "Можно ли выбрать врача при записи?",
+      "answer": "Да, при записи вы можете выбрать любого врача из нашего штата.",
+      "category": "Врачи",
+      "order": 12,
+      "active": true
+    },
+    {
+      "id": 13,
+      "question": "Есть ли у вас парковка для пациентов?",
+      "answer": "Да, у клиники есть собственная охраняемая парковка для пациентов.",
+      "category": "Общие",
+      "order": 13,
+      "active": true
+    },
+    {
+      "id": 14,
+      "question": "Как обеспечивается стерильность инструментов?",
+      "answer": "В Dental Club действует многоступенчатая система стерилизации: ультразвуковая очистка, упаковка в индивидуальные пакеты, стерилизация в автоклаве при 134°C.",
+      "category": "Общие",
+      "order": 14,
+      "active": true
+    },
+    {
+      "id": 15,
+      "question": "Предоставляете ли вы гарантию на лечение?",
+      "answer": "Да, на все виды лечения предоставляется гарантия: на пломбирование — 1 год, на эндодонтическое лечение — 2 года, на протезирование — до 5 лет.",
+      "category": "Общие",
+      "order": 15,
+      "active": true
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "user@example.com",
+      "phone": "7771234567",
+      "password": "123456",
+      "firstName": "Иван",
+      "lastName": "Иванов",
+      "middleName": "",
+      "birthDate": "",
+      "address": "",
+      "role": "user",
+      "createdAt": "2025-01-01T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "email": "admin@dentalclub.by",
+      "phone": "7771234567",
+      "password": "admin123",
+      "firstName": "Админ",
+      "lastName": "Админов",
+      "middleName": "",
+      "birthDate": "",
+      "address": "",
+      "role": "admin",
+      "createdAt": "2025-01-01T10:00:00.000Z"
+    }
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "patientName": "Иванов Иван Иванович",
+      "phone": "375291234567",
+      "email": "ivanov@mail.ru",
+      "doctorId": 1,
+      "serviceId": 1,
+      "date": "2025-05-15",
+      "time": "10:00",
+      "comment": "Первичная консультация",
+      "status": "confirmed",
+      "userId": 1,
+      "createdAt": "2025-05-01T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "patientName": "Петрова Анна Сергеевна",
+      "phone": "375334567890",
+      "email": "petrova@mail.ru",
+      "doctorId": 2,
+      "serviceId": 2,
+      "date": "2025-05-16",
+      "time": "14:00",
+      "comment": "",
+      "status": "pending",
+      "userId": null,
+      "createdAt": "2025-05-02T10:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "patientName": "Сидоров Алексей Владимирович",
+      "phone": "375445678901",
+      "email": "sidorov@mail.ru",
+      "doctorId": 3,
+      "serviceId": 3,
+      "date": "2025-05-10",
+      "time": "11:00",
+      "comment": "Боль в зубе",
+      "status": "completed",
+      "userId": null,
+      "createdAt": "2025-05-01T10:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "patientName": "Козлова Елена Дмитриевна",
+      "phone": "375447890123",
+      "email": "kozlova@mail.ru",
+      "doctorId": 4,
+      "serviceId": 8,
+      "date": "2025-05-17",
+      "time": "12:00",
+      "comment": "Лечение кариеса",
+      "status": "pending",
+      "userId": null,
+      "createdAt": "2025-05-03T10:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "patientName": "Морозов Денис Андреевич",
+      "phone": "375291112233",
+      "email": "morozov@mail.ru",
+      "doctorId": 5,
+      "serviceId": 14,
+      "date": "2025-05-18",
+      "time": "15:00",
+      "comment": "Консультация по имплантации",
+      "status": "confirmed",
+      "userId": null,
+      "createdAt": "2025-05-04T10:00:00.000Z"
+    }
+  ],
+  "discounts": [
+    {
+      "id": 1,
+      "serviceId": 1,
+      "name": "Весенняя распродажа",
+      "type": "percentage",
+      "value": 20,
+      "startDate": "2025-05-01",
+      "endDate": "2025-05-31",
+      "description": "Скидка 20% на диагностику",
+      "active": true,
+      "createdAt": "2025-05-01T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "serviceId": 6,
+      "name": "Акция на гигиену",
+      "type": "percentage",
+      "value": 15,
+      "startDate": "2025-05-01",
+      "endDate": "2025-05-31",
+      "description": "Скидка 15% на профессиональную гигиену",
+      "active": true,
+      "createdAt": "2025-05-01T10:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "serviceId": 12,
+      "name": "Акция на имплантацию",
+      "type": "percentage",
+      "value": 10,
+      "startDate": "2025-05-15",
+      "endDate": "2025-06-15",
+      "description": "Скидка 10% на установку имплантата",
+      "active": true,
+      "createdAt": "2025-05-10T10:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "serviceId": 19,
+      "name": "Отбеливание со скидкой",
+      "type": "fixed",
+      "value": 50,
+      "startDate": "2025-05-01",
+      "endDate": "2025-05-31",
+      "description": "Скидка 50 BYN на отбеливание ZOOM",
+      "active": true,
+      "createdAt": "2025-05-01T10:00:00.000Z"
+    }
+  ],
+  "menuConfig": {
+    "left": [
+      { "name": "ГЛАВНАЯ", "url": "../index.html", "key": "home", "class": "item-home", "order": 1 },
+      { "name": "КОМАНДА", "url": "team.html", "key": "team", "class": "item-team", "order": 2 },
+      { "name": "КОНТАКТЫ", "url": "contacts.html", "key": "contacts", "class": "item-contacts", "order": 3 },
+      { "name": "РАСПИСАНИЕ", "url": "schedule.html", "key": "schedule", "class": "item-schedule", "order": 4 }
+    ],
+    "right": [
+      { "name": "ОТЗЫВЫ", "url": "reviews.html", "key": "reviews", "class": "item-reviews", "order": 1 },
+      { "name": "ПРАЙС-ЛИСТ", "url": "prices.html", "key": "prices", "class": "item-prices", "order": 2 },
+      { "name": "ВОПРОС-ОТВЕТ", "url": "faq.html", "key": "faq", "class": "item-faq", "order": 3 }
+    ]
+  }
+}

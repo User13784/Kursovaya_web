@@ -32,6 +32,21 @@
         left: 15%;
     }
     
+    .item-prices {
+        top: 670px;
+        left: 15%;
+    }
+    
+    .item-schedule {
+        top: 740px;
+        left: 15%;
+    }
+    
+    .item-faq {
+        top: 810px;
+        left: 15%;
+    }
+    
     .close-btn {
         top: 100px;
         left: 25px;
@@ -70,6 +85,21 @@
     
     .item-contacts {
         top: 540px;
+        left: 12%;
+    }
+    
+    .item-prices {
+        top: 605px;
+        left: 12%;
+    }
+    
+    .item-schedule {
+        top: 670px;
+        left: 12%;
+    }
+    
+    .item-faq {
+        top: 735px;
         left: 12%;
     }
     
@@ -114,6 +144,21 @@
         left: 10%;
     }
     
+    .item-prices {
+        top: 550px;
+        left: 10%;
+    }
+    
+    .item-schedule {
+        top: 610px;
+        left: 10%;
+    }
+    
+    .item-faq {
+        top: 670px;
+        left: 10%;
+    }
+    
     .close-btn {
         top: 75px;
         left: 15px;
@@ -152,6 +197,21 @@
     
     .item-contacts {
         top: 440px;
+        left: 8%;
+    }
+    
+    .item-prices {
+        top: 495px;
+        left: 8%;
+    }
+    
+    .item-schedule {
+        top: 550px;
+        left: 8%;
+    }
+    
+    .item-faq {
+        top: 605px;
         left: 8%;
     }
     
@@ -196,9 +256,209 @@
         left: 5%;
     }
     
+    .item-prices {
+        top: 440px;
+        left: 5%;
+    }
+    
+    .item-schedule {
+        top: 488px;
+        left: 5%;
+    }
+    
+    .item-faq {
+        top: 536px;
+        left: 5%;
+    }
+    
     .close-btn {
         top: 55px;
         left: 10px;
         font-size: 22px;
+    }
+}
+
+@media (min-width: 1442px) {
+    .side-panel {
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .item-home {
+        top: 200px;
+        left: 370px;
+    }
+    
+    .item-services {
+        top: 280px;
+        right: 99px;
+    }
+    
+    .item-team {
+        top: 360px;
+        left: 358px;
+    }
+    
+    .item-reviews {
+        top: 440px;
+        right: 100px;
+    }
+    
+    .item-contacts {
+        top: 520px;
+        left: 351px;
+    }
+    
+    .item-prices {
+        top: 600px;
+        right: 95px;
+    }
+    
+    .item-schedule {
+        top: 680px;
+        left: 345px;
+    }
+    
+    .item-faq {
+        top: 760px;
+        right: 90px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .item-home {
+        top: 150px;
+        left: 370px;
+    }
+    
+    .item-services {
+        top: 230px;
+        right: 99px;
+    }
+    
+    .item-team {
+        top: 310px;
+        left: 358px;
+    }
+    
+    .item-reviews {
+        top: 390px;
+        right: 100px;
+    }
+    
+    .item-contacts {
+        top: 470px;
+        left: 351px;
+    }
+    
+    .item-prices {
+        top: 550px;
+        right: 95px;
+    }
+    
+    .item-schedule {
+        top: 630px;
+        left: 345px;
+    }
+    
+    .item-faq {
+        top: 710px;
+        right: 90px;
+    }
+    
+    .menu-list a {
+        font-size: 26px;
+    }
+}
+
+@media (min-width: 1921px) {
+    .item-home {
+        top: 100px;
+        left: 400px;
+    }
+    
+    .item-services {
+        top: 180px;
+        right: 129px;
+    }
+    
+    .item-team {
+        top: 260px;
+        left: 388px;
+    }
+    
+    .item-reviews {
+        top: 340px;
+        right: 130px;
+    }
+    
+    .item-contacts {
+        top: 420px;
+        left: 381px;
+    }
+    
+    .item-prices {
+        top: 500px;
+        right: 125px;
+    }
+    
+    .item-schedule {
+        top: 580px;
+        left: 375px;
+    }
+    
+    .item-faq {
+        top: 660px;
+        right: 120px;
+    }
+    
+    .menu-list a {
+        font-size: 28px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .item-home {
+        top: 150px;
+        left: 500px;
+    }
+    
+    .item-services {
+        top: 240px;
+        right: 200px;
+    }
+    
+    .item-team {
+        top: 330px;
+        left: 488px;
+    }
+    
+    .item-reviews {
+        top: 420px;
+        right: 200px;
+    }
+    
+    .item-contacts {
+        top: 510px;
+        left: 478px;
+    }
+    
+    .item-prices {
+        top: 600px;
+        right: 195px;
+    }
+    
+    .item-schedule {
+        top: 690px;
+        left: 472px;
+    }
+    
+    .item-faq {
+        top: 780px;
+        right: 190px;
+    }
+    
+    .menu-list a {
+        font-size: 32px;
     }
 }

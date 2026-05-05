@@ -1,10 +1,4 @@
-const PROFILE_STORAGE_KEYS = {
-    USERS: 'dental_club_users',
-    SESSION: 'dental_club_session',
-    APPOINTMENTS: 'dental_appointments',
-    DOCTORS: 'dental_doctors',
-    SERVICES: 'dental_services'
-};
+const API_BASE_URL = 'http://localhost:3000';
 
 let currentUser = null;
 
@@ -74,7 +68,7 @@ function createProfileModal() {
                         </form>
                     </div>
                     
-                    <!-- Вкладка: Мои визиты (ИСТОРИЯ ПОСЕЩЕНИЙ) -->
+                    <!-- Вкладка: Мои визиты -->
                     <div class="profile-tab-content" id="profileVisitsTab">
                         <div class="visits-filters">
                             <button class="visits-filter-btn active" data-filter="all">Все</button>
@@ -169,19 +163,15 @@ function initVisitsFilters() {
 
 function getCurrentUser() {
     try {
-        let session = sessionStorage.getItem(PROFILE_STORAGE_KEYS.SESSION);
+        let session = sessionStorage.getItem('dental_club_session');
         if (!session) {
-            session = localStorage.getItem(PROFILE_STORAGE_KEYS.SESSION);
+            session = localStorage.getItem('dental_club_session');
         }
         
         if (session) {
             const sessionData = JSON.parse(session);
-            const users = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEYS.USERS) || '[]');
-            const user = users.find(u => u.id === sessionData.userId);
-            if (user) {
-                currentUser = user;
-                return user;
-            }
+            currentUser = sessionData;
+            return currentUser;
         }
     } catch(e) {
         console.error('Ошибка получения пользователя:', e);
@@ -189,8 +179,25 @@ function getCurrentUser() {
     return null;
 }
 
-function loadUserToForm() {
-    const user = getCurrentUser();
+async function loadFullUserData() {
+    const sessionUser = getCurrentUser();
+    if (!sessionUser) return null;
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/users/${sessionUser.userId}`);
+        if (response.ok) {
+            const userData = await response.json();
+            return userData;
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки данных пользователя:', error);
+    }
+    
+    return sessionUser;
+}
+
+async function loadUserToForm() {
+    const user = await loadFullUserData();
     if (!user) return;
     
     document.getElementById('profileLastName').value = user.lastName || '';
@@ -264,9 +271,9 @@ function cancelProfileEdit() {
     if (editBtn) editBtn.style.display = 'block';
 }
 
-function saveProfileChanges() {
-    const user = getCurrentUser();
-    if (!user) return;
+async function saveProfileChanges() {
+    const sessionUser = getCurrentUser();
+    if (!sessionUser) return;
     
     const lastName = document.getElementById('profileLastName').value.trim();
     const firstName = document.getElementById('profileFirstName').value.trim();
@@ -281,12 +288,12 @@ function saveProfileChanges() {
         return;
     }
     
-    let users = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEYS.USERS) || '[]');
-    const userIndex = users.findIndex(u => u.id === user.id);
-    
-    if (userIndex !== -1) {
-        users[userIndex] = {
-            ...users[userIndex],
+    try {
+        const response = await fetch(`${API_BASE_URL}/users/${sessionUser.userId}`);
+        const userData = await response.json();
+        
+        const updatedUser = {
+            ...userData,
             lastName,
             firstName,
             middleName,
@@ -297,37 +304,45 @@ function saveProfileChanges() {
             updatedAt: new Date().toISOString()
         };
         
-        localStorage.setItem(PROFILE_STORAGE_KEYS.USERS, JSON.stringify(users));
-        currentUser = users[userIndex];
+        const updateResponse = await fetch(`${API_BASE_URL}/users/${sessionUser.userId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedUser)
+        });
         
-        const session = {
-            userId: user.id,
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            loginTime: new Date().toISOString()
-        };
-        
-        if (sessionStorage.getItem(PROFILE_STORAGE_KEYS.SESSION)) {
-            sessionStorage.setItem(PROFILE_STORAGE_KEYS.SESSION, JSON.stringify(session));
+        if (updateResponse.ok) {
+            const updatedSession = {
+                userId: sessionUser.userId,
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                loginTime: new Date().toISOString()
+            };
+            
+            if (sessionStorage.getItem('dental_club_session')) {
+                sessionStorage.setItem('dental_club_session', JSON.stringify(updatedSession));
+            }
+            if (localStorage.getItem('dental_club_session')) {
+                localStorage.setItem('dental_club_session', JSON.stringify(updatedSession));
+            }
+            
+            showProfileToast('✅ Профиль успешно обновлен!', 'success');
+            cancelProfileEdit();
+            updateHeaderUserDisplay();
+        } else {
+            throw new Error('Ошибка при обновлении');
         }
-        if (localStorage.getItem(PROFILE_STORAGE_KEYS.SESSION)) {
-            localStorage.setItem(PROFILE_STORAGE_KEYS.SESSION, JSON.stringify(session));
-        }
-        
-        showProfileToast('✅ Профиль успешно обновлен!', 'success');
-        cancelProfileEdit();
-        
-        updateHeaderUserDisplay();
+    } catch (error) {
+        console.error('Ошибка сохранения профиля:', error);
+        showProfileToast('❌ Ошибка при сохранении. Проверьте подключение к серверу.', 'error');
     }
 }
 
-
-function loadUserVisits(filter = 'all') {
+async function loadUserVisits(filter = 'all') {
     const visitsContainer = document.getElementById('visitsList');
-    const user = getCurrentUser();
+    const sessionUser = getCurrentUser();
     
-    if (!user) {
+    if (!sessionUser) {
         visitsContainer.innerHTML = `
             <div class="empty-visits">
                 <div class="empty-visits-icon">🔒</div>
@@ -337,15 +352,23 @@ function loadUserVisits(filter = 'all') {
         return;
     }
     
+    visitsContainer.innerHTML = '<div class="empty-visits"><div class="empty-visits-icon">⏳</div><div class="empty-visits-text">Загрузка...</div></div>';
+    
     try {
-        let appointments = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEYS.APPOINTMENTS) || '[]');
-        let doctors = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEYS.DOCTORS) || '[]');
-        let services = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEYS.SERVICES) || '[]');
+        const [appointmentsRes, doctorsRes, servicesRes] = await Promise.all([
+            fetch(`${API_BASE_URL}/appointments`),
+            fetch(`${API_BASE_URL}/doctors`),
+            fetch(`${API_BASE_URL}/services`)
+        ]);
+        
+        let appointments = await appointmentsRes.json();
+        let doctors = await doctorsRes.json();
+        let services = await servicesRes.json();
         
         let userVisits = appointments.filter(apt => 
-            apt.phone === user.phone || 
-            apt.email === user.email ||
-            (apt.patientName && apt.patientName.toLowerCase().includes(user.lastName.toLowerCase()))
+            apt.phone === sessionUser.phone || 
+            apt.email === sessionUser.email ||
+            (apt.patientName && apt.patientName.toLowerCase().includes(sessionUser.lastName?.toLowerCase() || ''))
         );
         
         if (filter !== 'all') {
@@ -405,7 +428,7 @@ function loadUserVisits(filter = 'all') {
         visitsContainer.innerHTML = `
             <div class="empty-visits">
                 <div class="empty-visits-icon">⚠️</div>
-                <div class="empty-visits-text">Ошибка загрузки истории</div>
+                <div class="empty-visits-text">Ошибка загрузки истории. Проверьте подключение к серверу.</div>
             </div>
         `;
     }
@@ -443,7 +466,7 @@ function createVisitElement(visit, doctors, services) {
             <span class="visit-time">🕐 ${visit.time}</span>
         </div>
         <div class="visit-doctor">
-            ${doctor ? `${doctor.lastName} ${doctor.firstName} ${doctor.middleName || ''}` : 'Врач не указан'}
+            ${doctor ? `${doctor.lastName} ${doctor.firstName} ${doctor.middleName || ''}`.trim() : 'Врач не указан'}
             ${doctor ? `<span style="font-size: 12px; color: #9CA3AF;">(${doctor.specialization})</span>` : ''}
         </div>
         <div class="visit-service">
@@ -468,7 +491,7 @@ function escapeHtmlForProfile(str) {
     });
 }
 
-function openProfileModal() {
+async function openProfileModal() {
     const modal = document.getElementById('profileModal');
     
     if (!modal) {
@@ -477,16 +500,16 @@ function openProfileModal() {
         return;
     }
     
-    const user = getCurrentUser();
+    const sessionUser = getCurrentUser();
     
-    if (!user) {
+    if (!sessionUser) {
         if (confirm('Для просмотра профиля необходимо войти в аккаунт. Перейти на страницу входа?')) {
             window.location.href = 'login.html';
         }
         return;
     }
     
-    loadUserToForm();
+    await loadUserToForm();
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
@@ -501,8 +524,8 @@ function closeProfileModal() {
 
 function logoutUser() {
     if (confirm('Вы уверены, что хотите выйти из аккаунта?')) {
-        sessionStorage.removeItem(PROFILE_STORAGE_KEYS.SESSION);
-        localStorage.removeItem(PROFILE_STORAGE_KEYS.SESSION);
+        sessionStorage.removeItem('dental_club_session');
+        localStorage.removeItem('dental_club_session');
         currentUser = null;
         
         showProfileToast('👋 Вы вышли из аккаунта', 'success');
@@ -534,12 +557,12 @@ function showProfileToast(message, type = 'success') {
 }
 
 function updateHeaderUserDisplay() {
-    const user = getCurrentUser();
+    const sessionUser = getCurrentUser();
     const loginLink = document.querySelector('.login-link');
     const mobileLoginLink = document.querySelector('.mobile-login-link');
     
-    if (user && (loginLink || mobileLoginLink)) {
-        const userName = `${user.firstName} ${user.lastName}`.trim();
+    if (sessionUser && sessionUser.firstName && sessionUser.lastName && (loginLink || mobileLoginLink)) {
+        const userName = `${sessionUser.firstName} ${sessionUser.lastName}`.trim();
         if (loginLink && !loginLink.closest('.mobile-menu')) {
             loginLink.textContent = `👤 ${userName}`;
             loginLink.href = '#';

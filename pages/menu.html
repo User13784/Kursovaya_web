@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dental Club Menu</title>
     <link rel="stylesheet" href="../css/menu.css">
-        <link rel="stylesheet" href="../media/menu_media.css">
-
+    <link rel="stylesheet" href="../media/menu_media.css">
 </head>
 <body>
     <div class="menu-overlay">
         <div class="side-panel">
-            <button class="close-btn">&times;</button>
+            <button class="close-btn" id="closeMenuBtn">&times;</button>
 
             <nav class="menu-nav">
-                <ul class="menu-list">
-                    <li class="item-home"><a href="#">ГЛАВНАЯ</a></li>
-                    <li class="item-services"><a href="#">УСЛУГИ</a></li>
-                    <li class="item-team"><a href="#">КОМАНДА</a></li>
-                    <li class="item-reviews"><a href="#">ОТЗЫВЫ</a></li>
-                    <li class="item-contacts"><a href="#">КОНТАКТЫ</a></li>
+                <ul class="menu-list" id="menuList">
+                    <li class="loading-item">Загрузка меню...</li>
                 </ul>
             </nav>
         </div>
     </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/translations.js"></script>
+    <script src="../js/menu-loader.js"></script>
+    <script src="../js/menu-close.js"></script>
 </body>
 </html>

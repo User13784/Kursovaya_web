@@ -39,14 +39,12 @@ body, html {
 
 .side-panel {
     width: 585px;
-    height: 1060px;
+    height: 100vh;
     position: relative; 
-
     background: linear-gradient(to right, 
                 rgba(47, 53, 59, 0.98) 0%, 
                 rgba(47, 53, 59, 0.98) 5%, 
                 rgba(169, 169, 169, 1) 100%);
-    
     z-index: 2;
 }
 
@@ -60,6 +58,11 @@ body, html {
     font-size: 40px;
     cursor: pointer;
     z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
 }
 
 .menu-list {
@@ -81,34 +84,59 @@ body, html {
     text-transform: uppercase;
     letter-spacing: 0px;
     transition: 0.3s;
+    white-space: nowrap;
 }
 
 .menu-list a:hover {
-    color: #d1d1d1;
-    letter-spacing: 4px;
+    color: #A5C33C;
+    letter-spacing: 2px;
 }
 
 .item-home {
-    top: 448px; 
+    top: 300px;
     left: 370px;
 }
 
-.item-services {
-    top: 530px; 
-    right: 99px; 
-}
-
 .item-team {
-    top: 610px; 
+    top: 460px;
     left: 358px;
 }
 
-.item-reviews {
-    top: 690px; 
-    right: 100px; 
+.item-contacts {
+    top: 620px;
+    left: 351px;
 }
 
-.item-contacts {
-    top: 772px; 
-    left: 351px;
+.item-schedule {
+    top: 780px;
+    left: 310px !important;
+}
+
+.item-services {
+    top: 380px;
+    right: 99px;
+}
+
+.item-reviews {
+    top: 540px;
+    right: 100px;
+}
+
+.item-prices {
+    top: 700px;
+    right: 100px;
+}
+
+.item-faq {
+    top: 860px;
+    right: 97px;
+}
+
+.loading-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 18px;
 }
