@@ -5,25 +5,123 @@
         </div>
         <hr class="footer-line">
         <nav class="footer-nav">
-        <div class="footer-links-row">
-    <a href="index.html">ГЛАВНАЯ</a>
-    <a href="#">УСЛУГИ</a>
-    <a href="team.html">КОМАНДА</a>
-    <a href="prices.html">ПРАЙС-ЛИСТ</a>
-                    <a href="schedule.html">РАСПИСАНИЕ</a>
-
-</div>
             <div class="footer-links-row">
-                <a href="#">ОТЗЫВЫ</a>
-                <a href="#">КОНТАКТЫ</a>
+                <a href="../index.html" data-translate="home">ГЛАВНАЯ</a>
+                <a href="#" data-translate="services">УСЛУГИ</a>
+                <a href="../pages/team.html" data-translate="team">КОМАНДА</a>
+                <a href="../pages/prices.html" data-translate="prices">ПРАЙС-ЛИСТ</a>
+                <a href="../pages/schedule.html" data-translate="schedule">РАСПИСАНИЕ</a>
+            </div>
+            <div class="footer-links-row">
+                <a href="../pages/reviews.html" data-translate="reviews">ОТЗЫВЫ</a>
+                <a href="../pages/contacts.html" data-translate="contacts">КОНТАКТЫ</a>
             </div>
         </nav>
         <hr class="footer-line">
         <div class="footer-socials">
-            <a href="#"><img src="assets/images/icons/instagram.png" alt="Instagram"></a>
-            <a href="#"><img src="assets/images/icons/youtube.png" alt="YouTube"></a>
-            <a href="#"><img src="assets/images/icons/vk.png" alt="VK"></a>
-            <a href="#"><img src="assets/images/icons/whatsapp.png" alt="WhatsApp"></a>
+            <a href="javascript:void(0);" class="social-link" data-social="instagram"><img src="assets/images/icons/instagram.png" alt="Instagram"></a>
+            <a href="javascript:void(0);" class="social-link" data-social="youtube"><img src="assets/images/icons/youtube.png" alt="YouTube"></a>
+            <a href="javascript:void(0);" class="social-link" data-social="vk"><img src="assets/images/icons/vk.png" alt="VK"></a>
+            <a href="javascript:void(0);" class="social-link" data-social="whatsapp"><img src="assets/images/icons/whatsapp.png" alt="WhatsApp"></a>
         </div>
     </div>
 </footer>
+
+<script>
+    (function() {
+        function showSocialNotification(message) {
+            const oldNotification = document.querySelector('.social-notification');
+            if (oldNotification) oldNotification.remove();
+            
+            const notification = document.createElement('div');
+            notification.className = 'social-notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #2F353B;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 12px;
+                font-family: 'Mulish', sans-serif;
+                font-size: 14px;
+                z-index: 10000;
+                animation: fadeInUp 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                white-space: nowrap;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification) {
+                    notification.style.animation = 'fadeOutDown 0.3s ease';
+                    setTimeout(() => {
+                        if (notification && notification.remove) notification.remove();
+                    }, 300);
+                }
+            }, 3000);
+        }
+        
+        if (!document.querySelector('#social-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'social-notification-styles';
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateX(-50%) translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(-50%) translateY(0);
+                    }
+                }
+                @keyframes fadeOutDown {
+                    from {
+                        opacity: 1;
+                        transform: translateX(-50%) translateY(0);
+                    }
+                    to {
+                        opacity: 0;
+                        transform: translateX(-50%) translateY(20px);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        function initSocialLinks() {
+            const socialLinks = document.querySelectorAll('.social-link');
+            console.log('Найдено соцсетей:', socialLinks.length);
+            
+            socialLinks.forEach(link => {
+                const newLink = link.cloneNode(true);
+                link.parentNode.replaceChild(newLink, link);
+                
+                newLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const currentLang = localStorage.getItem('dental_language') || 'ru';
+                    const message = currentLang === 'ru' 
+                        ? '📱 Мы скоро будем в соцсетях! :)' 
+                        : '📱 We will be on social media soon!';
+                    
+                    console.log('Клик по соцсети:', message);
+                    showSocialNotification(message);
+                    
+                    return false;
+                });
+            });
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSocialLinks);
+        } else {
+            initSocialLinks();
+        }
+    })();
+</script>

@@ -1,26 +1,20 @@
 async function loadReviews() {
     try {
-        const response = await fetch('http://localhost:3000/reviews');
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const reviews = await response.json();
+        const reviews = await getReviews({ published: true });
         
         if (reviews && reviews.length > 0) {
-            console.log(`✅ Загружено ${reviews.length} отзывов из JSON Server`);
-            return reviews.filter(r => r.published === true);
+            console.log(`✅ Загружено ${reviews.length} отзывов через getReviews()`);
+            return reviews;
         } else {
             console.log('ℹ️ В JSON Server нет отзывов');
             return [];
         }
     } catch (error) {
-        console.error('❌ Ошибка загрузки отзывов из JSON Server:', error);
-        console.log('⚠️ Убедитесь, что JSON Server запущен: json-server --watch db.json --port 3000 --cors');
+        console.error('❌ Ошибка загрузки отзывов:', error);
         return [];
     }
 }
+
 
 function escapeHtml(str) {
     if (!str) return '';
@@ -35,8 +29,10 @@ function escapeHtml(str) {
 function formatReviewText(text, author) {
     if (!text) return '';
     
-    if (author === 'Айгуль Ахметова') {
-        const parts = text.split(/(?<=[.!?])\s+(?=[А-Я])/);
+    const currentLang = localStorage.getItem('dental_language') || 'ru';
+    
+    if (author === 'Айгуль Ахметова' || author === 'Aigul Akhmetova') {
+        const parts = text.split(/(?<=[.!?])\s+(?=[А-ЯA-Z])/);
         let html = '';
         for (let i = 0; i < Math.min(parts.length, 4); i++) {
             if (parts[i] && parts[i].trim()) {
@@ -46,7 +42,18 @@ function formatReviewText(text, author) {
         return html;
     }
     
-    if (author === 'Лариса Мухамеджанова') {
+    if (author === 'Лариса Мухамеджанова' || author === 'Larisa Mukhamedzhanova') {
+        if (currentLang === 'en') {
+            return `
+                <p>I have been treated by Dmitry Shchegolev for 20 years. During this time, my daughter has grown up, my granddaughter has grown up. And of course, we are all patients of this clinic.</p>
+                <p>I explain very briefly why:</p>
+                <ul class="review-points">
+                    <li>here - super safety standards, which exclude any inflammation, flux, infection, etc.;</li>
+                    <li>absolute reliability and confidence that the treatment will be painless and without any mistakes, without unnecessary expenses with understandable pricing;</li>
+                    <li>confidence that you are being treated by a pro, a smart, talented doctor who loves his job, using the latest equipment and not outdated, but normal 21st century technologies.</li>
+                </ul>
+            `;
+        }
         return `
             <p>Я лечусь у Дмитрия Щеголева уже 20 лет. За это время выросла дочь, подросла внучка. И, разумеется мы все – пациенты данной клиники.</p>
             <p>Очень коротко объясняю, почему:</p>
@@ -58,7 +65,14 @@ function formatReviewText(text, author) {
         `;
     }
     
-    if (author === 'Эленора Тен') {
+    if (author === 'Эленора Тен' || author === 'Eleonora Ten') {
+        if (currentLang === 'en') {
+            return `
+                <p>I would like to thank the Dental Club team for their professionalism and qualified approach to treatment.</p>
+                <p>Thanks to the wonderful, caring doctor Dmitry Shchegolev, the atmosphere of kindness, confidence, security and tranquility is in the air.</p>
+                <p>I always recommend Dental Club to everyone!</p>
+            `;
+        }
         return `
             <p>Хотелось бы поблагодарить команду Dental Club за профессионализм, квалифицированный подход в лечении.</p>
             <p>Благодаря прекрасному, чуткому врачу Дмитрию Щёголева в клинике витает атмосфера добра, уверенности, защищённости и спокойствия. К такому специалисту всегда приятно идти на приём.</p>
@@ -103,7 +117,7 @@ async function displayReviews() {
     reviews.forEach((review, index) => {
         let photo = review.photo || '';
         
-        const isLogoReview = review.author === 'Эленора Тен' || photo.includes('logo');
+        const isLogoReview = review.author === 'Эленора Тен' || review.author === 'Eleonora Ten' || photo.includes('logo');
         
         if (!photo || photo === '') {
             photo = '../assets/images/logo/logo4.png';
@@ -160,10 +174,10 @@ async function submitReview(event) {
     
     const reviewData = {
         id: Date.now(),
-        author: name,
+        author: { ru: name, en: name },
         email: email,
         phone: cleanPhone,
-        text: reviewText,
+        text: { ru: reviewText, en: reviewText },
         rating: 5,
         photo: '',
         userInfo: '',
@@ -382,3 +396,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 window.displayReviews = displayReviews;
 window.submitReview = submitReview;
+
+document.addEventListener('languageChanged', function() {
+    displayReviews();
+});

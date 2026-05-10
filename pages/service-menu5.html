@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Цифровое протезирование — Dental Club</title>
+    <title data-translate="prosthetics_title">Цифровое протезирование — Dental Club</title>
     
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/service-menu5.css">
     <link rel="stylesheet" href="../media/service-menu5_media.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
-    <script src="../js/api.js"></script>
+    <link rel="stylesheet" href="../css/modal-profile.css">
+        <link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/special-version.css">
 
 
 </head>
@@ -23,14 +25,18 @@
             <span></span>
         </div>
         <nav class="mobile-nav">
-            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <div class="mobile-login-container" id="mobileLoginContainer">
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+            </div>
+            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
             <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="#" class="mobile-login-link">ВОЙТИ</a>
-            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="#" class="mobile-link">КОМАНДА</a>
-            <a href="#" class="mobile-link">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -38,8 +44,8 @@
     <main>
         <section class="hero-diagnostics">
             <div class="hero-content">
-                <h1>ЦИФРОВОЕ ПРОТЕЗИРОВАНИЕ</h1>
-                <button class="btn-white">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                <h1 data-translate="prosthetics_title">ЦИФРОВОЕ ПРОТЕЗИРОВАНИЕ</h1>
+                <button class="btn-white" id="openAppointmentBtn1" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
@@ -49,10 +55,10 @@
                 <div class="info-row">
                     <div class="info-text first-text-block"> 
                         <div class="accent-line first-accent"></div>
-                        <p class="diagnosis-text">
+                        <p class="diagnosis-text" data-translate="prosthetics_text">
                             Цифровое протезирование зубов – это направление эстетической стоматологии, с использованием цифровых технологий в моделировании и изготовлении ортопедических конструкций.
                         </p>
-                        <button class="btn-outline first-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <button class="btn-outline first-btn" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                     <div class="info-image side-img">
                         <img src="../assets/images/service-menu5-page/service-menu2.jpg" alt="Оборудование Dental Club">
@@ -70,10 +76,10 @@
                 <div class="info-row reverse tomograph-row">
                     <div class="info-text tomograph-text-block">
                         <div class="accent-line tomograph-accent"></div>
-                        <p class="tomograph-text">
+                        <p class="tomograph-text" data-translate="prosthetics_tomograph_text">
                             Согласно вашим требованиям и возможностям подбирается оптимальный вариант ортопедической конструкции. Совместно с нашей лабораторией в <strong>Dental Club</strong> изготавливаются: коронки на имплантантах, одиночные коронки, виниры, вкладки, накладки, временные и постоянные несъёмные протезы по системе Всё на 4-х и Всё на 6-ти и многое другое.
                         </p>
-                        <button class="btn-outline diagnost-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <button class="btn-outline diagnost-btn" id="openAppointmentBtn3" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                     <div class="info-image tomograph-image">
                         <img class="tomograph-img" src="../assets/images/service-menu5-page/service-menu4.jpg" alt="Работа врача стоматолога-ортопеда">
@@ -86,23 +92,23 @@
                     </div>
                     <div class="info-text specialists-text-block">
                         <div class="accent-line specialists-line"></div>
-                        <p class="tomograph-text">
+                        <p class="tomograph-text" data-translate="prosthetics_materials_text">
                             В практике <strong>Dental Club</strong> мы используем современные материалы - цирконий, <strong>IPS.E-max</strong>, керамические виниры (люминиры), в том числе на рефракторе. За счёт использования передовых технологий толщина конструкций не превышает 5 микрон, что позволяет минимально обтачивать зубы, тем самым значительно продлевая срок их службы. Такие непрямые реставрации с точки зрения эстетики никак не отличаются от естественных зубов и прослужат многие годы.
                         </p>
-                        <p class="safety-text">
+                        <p class="safety-text" data-translate="prosthetics_accuracy_text">
                             Точность при цифровом изготовлении ортопедических конструкций позволяет уже во второе посещение зафиксировать коронку, минуя этап примерки.
                         </p>
-                        <p class="safety-text">
+                        <p class="safety-text" data-translate="prosthetics_durability_text">
                             Отличительной особенностью ортопедических конструкций, изготовленных современными цифровыми методами, является прочность и устойчивость к изменению цвета. Высокая стоимость таких реставраций обоснована их надёжностью и долговечностью.
                         </p>
-                        <p class="steps-title">Этапы</p>
+                        <p class="steps-title" data-translate="prosthetics_steps_title">Этапы</p>
                         <ul class="steps-list">
-                            <li>1. Подготовка зуба или установленного имплантата к протезированию</li>
-                            <li>2. Снятие слепка</li>
-                            <li>3. Изготовление временной конструкции</li>
-                            <li>4. Установка финальной конструкции.</li>
+                            <li data-translate="prosthetics_step_1">1. Подготовка зуба или установленного имплантата к протезированию</li>
+                            <li data-translate="prosthetics_step_2">2. Снятие слепка</li>
+                            <li data-translate="prosthetics_step_3">3. Изготовление временной конструкции</li>
+                            <li data-translate="prosthetics_step_4">4. Установка финальной конструкции.</li>
                         </ul>
-                        <button class="btn-outline steps-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <button class="btn-outline steps-btn" id="openAppointmentBtn4" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                 </div>
 
@@ -117,67 +123,46 @@
 
     <div id="footer-placeholder"></div>
 
+    <script src="../js/localstorage.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/components.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const burgerIcon = document.getElementById('burgerIcon');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                const closeMenuBtn = document.getElementById('closeMenuBtn');
-                const body = document.body;
-
-                function openMenu() {
-                    if (burgerIcon) burgerIcon.classList.add('active');
-                    if (mobileMenu) mobileMenu.classList.add('active');
-                    if (menuOverlay) menuOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                }
-
-                function closeMenu() {
-                    if (burgerIcon) burgerIcon.classList.remove('active');
-                    if (mobileMenu) mobileMenu.classList.remove('active');
-                    if (menuOverlay) menuOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-
-                if (burgerIcon) {
-                    burgerIcon.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (mobileMenu && mobileMenu.classList.contains('active')) {
-                            closeMenu();
-                        } else {
-                            openMenu();
-                        }
-                    });
-                }
-
-                if (closeMenuBtn) {
-                    closeMenuBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMenu();
-                    });
-                }
-
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                        closeMenu();
-                    }
-                });
-            }, 100);
-        });
-    </script>
     <script src="../js/modal-appointment.js"></script>
+    <script src="../js/modal-profile.js"></script>
+    <script src="../js/preloader.js"></script>
+
+    <script>
+        function openAppointment() {
+            if (typeof openVisitorAppointmentModal === 'function') {
+                openVisitorAppointmentModal();
+            } else {
+                console.warn('openVisitorAppointmentModal не определена');
+            }
+        }
+
+        const appointmentBtns = document.querySelectorAll('#openAppointmentBtn1, #openAppointmentBtn2, #openAppointmentBtn3, #openAppointmentBtn4, .btn-white, .btn-outline');
+        
+        appointmentBtns.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openAppointment();
+                });
+            }
+        });
+
+        setTimeout(function() {
+            if (typeof window.updateAuthUI === 'function') {
+                console.log('🔄 Вызов updateAuthUI из service-menu5.html');
+                window.updateAuthUI();
+            }
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+        }, 200);
+    </script>
+    <script src="../js/special-version.js"></script>
 
 </body>
 </html>

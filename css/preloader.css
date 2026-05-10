@@ -1,5 +1,3 @@
-/* ========== ПРЕЛОАДЕР С КРАСИВОЙ БУКВОЙ D ========== */
-
 .page-preloader {
     position: fixed;
     top: 0;
@@ -36,7 +34,6 @@
     }
 }
 
-/* ========== СИМВОЛ С БУКВОЙ D ========== */
 .preloader-symbol {
     display: inline-block;
     margin-bottom: 35px;
@@ -59,7 +56,6 @@
     }
 }
 
-/* Анимация внешнего круга */
 .circle-outer {
     stroke-dasharray: 400;
     stroke-dashoffset: 400;
@@ -72,7 +68,6 @@
     }
 }
 
-/* Анимация внутреннего круга */
 .circle-inner {
     stroke-dasharray: 350;
     stroke-dashoffset: 350;
@@ -85,7 +80,6 @@
     }
 }
 
-/* Анимация буквы D */
 .letter-d {
     stroke-dasharray: 200;
     stroke-dashoffset: 200;
@@ -98,12 +92,10 @@
     }
 }
 
-/* Декоративная точка вверху */
 .dot-top {
     animation: showDot 0.4s ease-out 1s forwards;
 }
 
-/* Декоративная линия снизу */
 .line-bottom {
     animation: showLine 0.4s ease-out 1.1s forwards;
 }
@@ -120,7 +112,6 @@
     }
 }
 
-/* Плавное появление всего символа */
 .preloader-symbol {
     animation: symbolFloat 3s ease-in-out infinite;
 }
@@ -134,7 +125,6 @@
     }
 }
 
-/* ========== АНИМИРОВАННЫЕ ТОЧКИ ========== */
 .preloader-dots {
     display: flex;
     gap: 12px;
@@ -173,7 +163,6 @@
     }
 }
 
-/* ========== ТЕКСТ DENTAL CLUB ========== */
 .preloader-brand {
     font-family: 'Mulish', sans-serif;
     font-size: 13px;
@@ -212,7 +201,6 @@
     }
 }
 
-/* ========== АДАПТИВ ========== */
 @media (max-width: 768px) {
     .symbol-svg {
         width: 80px;

@@ -2,6 +2,7 @@ let servicesData = [];
 let serviceDetailsData = [];
 let currentService = null;
 
+
 const serviceUrlMap = {
     'diagnostics': 1,
     'prevention': 2,
@@ -25,53 +26,15 @@ const serviceIdToParam = {
 };
 
 const serviceDetailPageMap = {
-    1: 'service-menu2.html',   // ДИАГНОСТИКА
-    2: 'service-menu3.html',   // ПРОФИЛАКТИКА КАРИЕСА
-    3: 'service-menu4.html',   // ТЕРАПИЯ
-    4: 'service-menu5.html',   // ЦИФРОВОЕ ПРОТЕЗИРОВАНИЕ
-    5: 'service-menu6.html',   // ЦИФРОВАЯ ИМПЛАНТАЦИЯ
-    6: 'service-menu7.html',   // СЛОЖНАЯ ИМПЛАНТАЦИЯ
-    7: 'service-menu8.html',   // ЭСТЕТИЧЕСКАЯ ОРТОДОНТИЯ
-    8: 'service-menu9.html'    // ВИНИРЫ, ЛЮМИНИРЫ
+    1: 'service-menu2.html',
+    2: 'service-menu3.html',
+    3: 'service-menu4.html',
+    4: 'service-menu5.html',
+    5: 'service-menu6.html',
+    6: 'service-menu7.html',
+    7: 'service-menu8.html',
+    8: 'service-menu9.html'
 };
-
-async function loadServicesFromAPI() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/services`);
-        if (!response.ok) throw new Error('Ошибка загрузки услуг');
-        servicesData = await response.json();
-        servicesData = servicesData.filter(s => s.active === true);
-        console.log('✅ Услуги загружены из API:', servicesData.length);
-        return servicesData;
-    } catch (error) {
-        console.error('❌ Ошибка загрузки услуг:', error);
-        showErrorToast('Не удалось загрузить услуги. Проверьте подключение к серверу.');
-        return [];
-    }
-}
-
-async function loadServiceDetailsFromAPI() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/serviceDetails`);
-        if (!response.ok) throw new Error('Ошибка загрузки деталей услуг');
-        serviceDetailsData = await response.json();
-        console.log('✅ Детали услуг загружены из API:', serviceDetailsData.length);
-        return serviceDetailsData;
-    } catch (error) {
-        console.error('❌ Ошибка загрузки деталей услуг:', error);
-        return [];
-    }
-}
-
-function escapeHtml(str) {
-    if (!str) return '';
-    return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
 
 function showErrorToast(message) {
     let toast = document.querySelector('.error-toast');
@@ -104,6 +67,29 @@ function showErrorToast(message) {
     }, 3000);
 }
 
+async function loadServicesFromAPI() {
+    try {
+        servicesData = await getServices({ active: true });
+        console.log('✅ Услуги загружены из API через getServices():', servicesData.length);
+        return servicesData;
+    } catch (error) {
+        console.error('❌ Ошибка загрузки услуг:', error);
+        showErrorToast('Не удалось загрузить услуги. Проверьте подключение к серверу.');
+        return [];
+    }
+}
+
+async function loadServiceDetailsFromAPI() {
+    try {
+        serviceDetailsData = await getServiceDetails();
+        console.log('✅ Детали услуг загружены из API через getServiceDetails():', serviceDetailsData.length);
+        return serviceDetailsData;
+    } catch (error) {
+        console.error('❌ Ошибка загрузки деталей услуг:', error);
+        return [];
+    }
+}
+
 function getCurrentServiceParam() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('service') || 'diagnostics';
@@ -133,11 +119,14 @@ async function updatePageContent() {
         return;
     }
     
-    document.title = `${currentService.name} | Dental Club`;
+    const serviceName = currentService.name;
+    const serviceTitle = currentService.title;
+    
+    document.title = `${serviceName} | Dental Club`;
     
     const titleElement = document.getElementById('serviceTitle');
     if (titleElement) {
-        titleElement.textContent = currentService.title || currentService.name;
+        titleElement.textContent = serviceTitle || serviceName;
     }
     
     const contentArea = document.getElementById('contentArea');
@@ -149,7 +138,7 @@ async function updatePageContent() {
     
     sessionStorage.setItem('selectedService', JSON.stringify(currentService));
     
-    console.log('✅ Текущая услуга:', currentService.name);
+    console.log('✅ Текущая услуга:', serviceName);
 }
 
 async function loadSideMenu() {
@@ -175,9 +164,16 @@ async function loadSideMenu() {
         if (!param) return;
         const isActive = currentParam === param;
         const activeClass = isActive ? 'active' : '';
+        const serviceName = service.name || 'Услуга';
+        const safeName = serviceName.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
         html += `
             <li>
-                <a href="?service=${param}" class="${activeClass}" data-service-id="${service.id}">${escapeHtml(service.name)}</a>
+                <a href="?service=${param}" class="${activeClass}" data-service-id="${service.id}">${safeName}</a>
             </li>
         `;
     });
@@ -185,7 +181,10 @@ async function loadSideMenu() {
     menuContainer.innerHTML = html;
     
     document.querySelectorAll('.menu-list a').forEach(link => {
-        link.addEventListener('click', function(e) {
+        const newLink = link.cloneNode(true);
+        link.parentNode.replaceChild(newLink, link);
+        
+        newLink.addEventListener('click', function(e) {
             e.preventDefault();
             const url = new URL(window.location.href);
             url.search = this.getAttribute('href');
@@ -215,7 +214,10 @@ function updateActiveMenu() {
 function initMoreButton() {
     const moreBtn = document.getElementById('moreBtn');
     if (moreBtn) {
-        moreBtn.addEventListener('click', function(e) {
+        const newMoreBtn = moreBtn.cloneNode(true);
+        moreBtn.parentNode.replaceChild(newMoreBtn, moreBtn);
+        
+        newMoreBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
             const serviceParam = getCurrentServiceParam();
@@ -241,7 +243,11 @@ function initMoreButton() {
 function initCloseButton() {
     const closeBtn = document.getElementById('closeBtn');
     if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
+        const newCloseBtn = closeBtn.cloneNode(true);
+        closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
+        
+        newCloseBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             window.history.back();
         });
     }
@@ -249,9 +255,23 @@ function initCloseButton() {
 
 async function init() {
     console.log('🚀 Инициализация страницы услуг...');
+    console.log('📍 Текущий путь:', window.location.pathname);
     
     const titleElement = document.getElementById('serviceTitle');
     if (titleElement) titleElement.textContent = 'Загрузка...';
+    
+    try {
+        const testResponse = await fetch(`${API_BASE_URL}/services`);
+        console.log('📡 Проверка подключения к серверу:', testResponse.ok ? '✅ OK' : '❌ Ошибка');
+        if (!testResponse.ok) {
+            showErrorToast('Сервер не отвечает. Запустите json-server --watch db.json --port 3000');
+            return;
+        }
+    } catch (error) {
+        console.error('❌ Сервер недоступен:', error);
+        showErrorToast('Сервер недоступен. Запустите json-server --watch db.json --port 3000');
+        return;
+    }
     
     await loadServicesFromAPI();
     await loadServiceDetailsFromAPI();
@@ -259,6 +279,7 @@ async function init() {
     if (servicesData.length === 0) {
         if (titleElement) titleElement.textContent = 'Ошибка загрузки данных';
         console.error('❌ Нет данных об услугах');
+        showErrorToast('Не удалось загрузить услуги. Проверьте подключение к серверу.');
         return;
     }
     
@@ -281,4 +302,8 @@ async function init() {
     console.log('✅ Страница услуг инициализирована');
 }
 
-document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}

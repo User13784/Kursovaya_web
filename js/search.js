@@ -1,4 +1,3 @@
-
 let searchCache = {
     services: [],
     doctors: [],
@@ -6,8 +5,21 @@ let searchCache = {
     prices: null
 };
 
+function getCurrentLangForSearch() {
+    return localStorage.getItem('dental_language') || 'ru';
+}
+
+function getLocalizedText(obj) {
+    if (!obj) return '';
+    if (typeof obj === 'string') return obj;
+    const lang = getCurrentLangForSearch();
+    return obj[lang] || obj.ru || '';
+}
+
 async function loadSearchData() {
     try {
+        console.log('🔄 Загрузка данных для поиска...');
+        
         const [services, doctors, faq, prices] = await Promise.all([
             fetch('http://localhost:3000/services').then(res => res.json()),
             fetch('http://localhost:3000/doctors').then(res => res.json()),
@@ -41,22 +53,23 @@ async function performSearch(query) {
     }
     
     const searchTerm = query.toLowerCase();
+    const currentLang = getCurrentLangForSearch();
     const { services, doctors, faq, prices } = searchCache;
     const results = [];
     
     services.forEach(service => {
-        const serviceName = service.name.toLowerCase();
-        const serviceTitle = (service.title || service.name).toLowerCase();
+        const serviceName = getLocalizedText(service.name).toLowerCase();
+        const serviceTitle = getLocalizedText(service.title || service.name).toLowerCase();
         
         if (serviceName.includes(searchTerm) || serviceTitle.includes(searchTerm)) {
             results.push({
                 id: service.id,
                 type: 'service',
-                title: service.name,
-                description: service.title || service.name,
+                title: getLocalizedText(service.name),
+                description: getLocalizedText(service.title || service.name),
                 url: service.page || `service-detail.html?service=${getServiceParam(service.id)}`,
                 icon: '🦷',
-                category: 'Услуга'
+                category: currentLang === 'ru' ? 'Услуга' : 'Service'
             });
         }
     });
@@ -65,27 +78,27 @@ async function performSearch(query) {
     priceServices.forEach(service => {
         if (!service.active) return;
         
-        const serviceName = service.name.toLowerCase();
-        const serviceDesc = (service.description || '').toLowerCase();
+        const serviceName = getLocalizedText(service.name).toLowerCase();
+        const serviceDesc = getLocalizedText(service.description || '').toLowerCase();
         
         if (serviceName.includes(searchTerm) || serviceDesc.includes(searchTerm)) {
             results.push({
                 id: service.id,
                 type: 'price_service',
-                title: service.name,
-                description: service.description || `${service.price} ${service.unit}`,
+                title: getLocalizedText(service.name),
+                description: getLocalizedText(service.description) || `${service.price} ${service.unit}`,
                 url: 'prices.html',
                 icon: '💰',
-                category: 'Услуга (прайс)'
+                category: currentLang === 'ru' ? 'Услуга (прайс)' : 'Service (price)'
             });
         }
     });
     
     doctors.forEach(doctor => {
-        const lastName = doctor.lastName.toLowerCase();
-        const firstName = doctor.firstName.toLowerCase();
-        const middleName = (doctor.middleName || '').toLowerCase();
-        const specialization = doctor.specialization.toLowerCase();
+        const lastName = getLocalizedText(doctor.lastName).toLowerCase();
+        const firstName = getLocalizedText(doctor.firstName).toLowerCase();
+        const middleName = getLocalizedText(doctor.middleName || '').toLowerCase();
+        const specialization = getLocalizedText(doctor.specialization).toLowerCase();
         const fullName = `${lastName} ${firstName} ${middleName}`.toLowerCase();
         
         if (fullName.includes(searchTerm) || specialization.includes(searchTerm) || 
@@ -93,34 +106,36 @@ async function performSearch(query) {
             results.push({
                 id: doctor.id,
                 type: 'doctor',
-                title: `${doctor.lastName} ${doctor.firstName} ${doctor.middleName || ''}`.trim(),
-                description: doctor.specialization,
+                title: `${getLocalizedText(doctor.lastName)} ${getLocalizedText(doctor.firstName)} ${getLocalizedText(doctor.middleName || '')}`.trim(),
+                description: getLocalizedText(doctor.specialization),
                 url: 'team-details.html',
                 icon: '👨‍⚕️',
-                category: 'Врач',
+                category: currentLang === 'ru' ? 'Врач' : 'Doctor',
                 doctorId: doctor.id
             });
         }
     });
     
     faq.forEach(item => {
-        const question = item.question.toLowerCase();
-        const answer = item.answer.toLowerCase();
+        const question = getLocalizedText(item.question).toLowerCase();
+        const answer = getLocalizedText(item.answer).toLowerCase();
         
         if (question.includes(searchTerm) || answer.includes(searchTerm)) {
             results.push({
                 id: item.id,
                 type: 'faq',
-                title: item.question.length > 60 ? item.question.substring(0, 60) + '...' : item.question,
-                description: item.answer.substring(0, 80) + (item.answer.length > 80 ? '...' : ''),
+                title: getLocalizedText(item.question).length > 60 ? getLocalizedText(item.question).substring(0, 60) + '...' : getLocalizedText(item.question),
+                description: getLocalizedText(item.answer).substring(0, 80) + (getLocalizedText(item.answer).length > 80 ? '...' : ''),
                 url: 'faq.html',
                 icon: '❓',
-                category: item.category
+                category: currentLang === 'ru' ? 'FAQ' : 'FAQ'
             });
         }
     });
     
     results.sort((a, b) => a.title.localeCompare(b.title));
+    
+    console.log(`🔍 Найдено результатов: ${results.length} для запроса "${query}"`);
     
     return results;
 }
@@ -143,10 +158,13 @@ async function displayHeroSearchResults(results, searchQuery) {
     const container = document.getElementById('heroSearchResults');
     if (!container) return;
     
+    const currentLang = getCurrentLangForSearch();
+    
     if (results.length === 0) {
         container.innerHTML = `
             <div class="hero-search-empty">
-                <span>🔍</span> По запросу "${escapeHtml(searchQuery)}" ничего не найдено
+                <span>🔍</span> 
+                ${currentLang === 'ru' ? `По запросу "${escapeHtml(searchQuery)}" ничего не найдено` : `Nothing found for "${escapeHtml(searchQuery)}"`}
             </div>
         `;
         container.classList.add('active');
@@ -171,7 +189,11 @@ async function displayHeroSearchResults(results, searchQuery) {
     container.classList.add('active');
     
     document.querySelectorAll('.hero-search-result-item').forEach(item => {
-        item.addEventListener('click', function() {
+        const newItem = item.cloneNode(true);
+        item.parentNode.replaceChild(newItem, item);
+        
+        newItem.addEventListener('click', function(e) {
+            e.preventDefault();
             const url = this.dataset.url;
             const type = this.dataset.type;
             const doctorId = this.dataset.doctorId;
@@ -188,8 +210,15 @@ async function displayHeroSearchResults(results, searchQuery) {
 
 async function executeHeroSearch() {
     const input = document.getElementById('heroSearchInput');
-    const query = input ? input.value.trim() : '';
+    if (!input) {
+        console.log('❌ heroSearchInput не найден');
+        return;
+    }
+    
+    const query = input.value.trim();
     const resultsContainer = document.getElementById('heroSearchResults');
+    
+    console.log('🔍 Поиск:', query);
     
     if (query.length < 2) {
         if (resultsContainer) {
@@ -200,7 +229,8 @@ async function executeHeroSearch() {
     }
     
     if (resultsContainer) {
-        resultsContainer.innerHTML = '<div class="hero-search-loading"></div>';
+        const currentLang = getCurrentLangForSearch();
+        resultsContainer.innerHTML = `<div class="hero-search-loading">${currentLang === 'ru' ? 'Поиск...' : 'Searching...'}</div>`;
         resultsContainer.classList.add('active');
     }
     
@@ -240,7 +270,10 @@ function initHeroSearch() {
     
     let debounceTimer;
     
-    searchInput.addEventListener('input', function() {
+    const newSearchInput = searchInput.cloneNode(true);
+    searchInput.parentNode.replaceChild(newSearchInput, searchInput);
+    
+    newSearchInput.addEventListener('input', function() {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
             executeHeroSearch();
@@ -248,7 +281,7 @@ function initHeroSearch() {
     });
     
     document.addEventListener('click', function(event) {
-        if (!searchInput.contains(event.target) && resultsContainer && !resultsContainer.contains(event.target)) {
+        if (!newSearchInput.contains(event.target) && resultsContainer && !resultsContainer.contains(event.target)) {
             resultsContainer.classList.remove('active');
         }
     });
@@ -256,11 +289,11 @@ function initHeroSearch() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && resultsContainer) {
             resultsContainer.classList.remove('active');
-            searchInput.blur();
+            newSearchInput.blur();
         }
     });
     
-    searchInput.addEventListener('focus', function() {
+    newSearchInput.addEventListener('focus', function() {
         if (this.value.trim().length >= 2) {
             executeHeroSearch();
         }
@@ -269,12 +302,19 @@ function initHeroSearch() {
     console.log('✅ Поиск инициализирован');
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+loadSearchData();
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('heroSearchInput')) {
+            initHeroSearch();
+        }
+    });
+} else {
     if (document.getElementById('heroSearchInput')) {
         initHeroSearch();
-        loadSearchData(); 
     }
-});
+}
 
 window.initHeroSearch = initHeroSearch;
 window.performSearch = performSearch;

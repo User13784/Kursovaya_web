@@ -1,5 +1,35 @@
-
 let scheduleCache = null;
+
+function getCurrentLangForSchedule() {
+    return localStorage.getItem('dental_language') || 'ru';
+}
+
+function getLocalizedDoctorName(doctor) {
+    const currentLang = getCurrentLangForSchedule();
+    if (currentLang === 'ru') {
+        return doctor.name?.ru || doctor.name || '';
+    } else {
+        return doctor.name?.en || doctor.name?.ru || doctor.name || '';
+    }
+}
+
+function getLocalizedSpecialization(doctor) {
+    const currentLang = getCurrentLangForSchedule();
+    if (currentLang === 'ru') {
+        return doctor.specialization?.ru || doctor.specialization || '';
+    } else {
+        return doctor.specialization?.en || doctor.specialization?.ru || doctor.specialization || '';
+    }
+}
+
+function getLocalizedDayName(scheduleItem) {
+    const currentLang = getCurrentLangForSchedule();
+    if (currentLang === 'ru') {
+        return scheduleItem.dayName?.ru || scheduleItem.dayName || '';
+    } else {
+        return scheduleItem.dayName?.en || scheduleItem.dayName?.ru || scheduleItem.dayName || '';
+    }
+}
 
 async function loadScheduleData() {
     try {
@@ -19,11 +49,16 @@ async function populateDoctorFilter() {
     const data = await loadScheduleData();
     const doctors = data.doctors || [];
     
-    filter.innerHTML = '<option value="all">Все врачи</option>';
+    const currentLang = getCurrentLangForSchedule();
+    const allDoctorsText = currentLang === 'ru' ? 'Все врачи' : 'All doctors';
+    
+    filter.innerHTML = `<option value="all">${allDoctorsText}</option>`;
     doctors.forEach(doctor => {
         const option = document.createElement('option');
         option.value = doctor.id;
-        option.textContent = doctor.name + ' (' + doctor.specialization + ')';
+        const doctorName = getLocalizedDoctorName(doctor);
+        const specialization = getLocalizedSpecialization(doctor);
+        option.textContent = `${doctorName} (${specialization})`;
         filter.appendChild(option);
     });
 }
@@ -32,7 +67,10 @@ async function displaySchedule() {
     const scheduleContainer = document.getElementById('scheduleList');
     if (!scheduleContainer) return;
     
-    scheduleContainer.innerHTML = '<div class="loading">Загрузка расписания...</div>';
+    const currentLang = getCurrentLangForSchedule();
+    const loadingText = currentLang === 'ru' ? 'Загрузка расписания...' : 'Loading schedule...';
+    
+    scheduleContainer.innerHTML = `<div class="loading">${loadingText}</div>`;
     
     const data = await loadScheduleData();
     const doctorFilter = document.getElementById('scheduleDoctorFilter')?.value || 'all';
@@ -51,10 +89,11 @@ async function displaySchedule() {
     }
     
     if (doctors.length === 0) {
+        const emptyText = currentLang === 'ru' ? 'По вашему запросу ничего не найдено' : 'Nothing found for your request';
         scheduleContainer.innerHTML = `
             <div class="empty-schedule">
                 <div class="empty-icon">📅</div>
-                <div class="empty-text">По вашему запросу ничего не найдено</div>
+                <div class="empty-text">${emptyText}</div>
             </div>
         `;
         return;
@@ -70,13 +109,16 @@ async function displaySchedule() {
         const dayOrder = { 'monday': 1, 'tuesday': 2, 'wednesday': 3, 'thursday': 4, 'friday': 5, 'saturday': 6, 'sunday': 7 };
         doctorSchedule.sort((a, b) => dayOrder[a.day] - dayOrder[b.day]);
         
+        const doctorName = getLocalizedDoctorName(doctor);
+        const doctorSpecialization = getLocalizedSpecialization(doctor);
+        
         html += `
             <div class="doctor-schedule-card" data-doctor-id="${doctor.id}">
                 <div class="doctor-schedule-header" onclick="toggleDoctorSchedule(this)">
                     <img src="${doctor.photo}" alt="Фото врача" class="doctor-avatar" onerror="this.src='../assets/images/placeholder.jpg'">
                     <div class="doctor-info">
-                        <h3>${escapeHtml(doctor.name)}</h3>
-                        <p class="doctor-specialization">${escapeHtml(doctor.specialization)}</p>
+                        <h3>${escapeHtmlForSchedule(doctorName)}</h3>
+                        <p class="doctor-specialization">${escapeHtmlForSchedule(doctorSpecialization)}</p>
                     </div>
                     <span class="doctor-toggle">▼</span>
                 </div>
@@ -84,15 +126,16 @@ async function displaySchedule() {
                     <table class="schedule-table">
                         <thead>
                             <tr>
-                                <th>День недели</th>
-                                <th>Время работы</th>
-                                <th>Перерыв</th>
+                                <th>${currentLang === 'ru' ? 'День недели' : 'Day of week'}</th>
+                                <th>${currentLang === 'ru' ? 'Время работы' : 'Working hours'}</th>
+                                <th>${currentLang === 'ru' ? 'Перерыв' : 'Break'}</th>
                             </tr>
                         </thead>
                         <tbody>
         `;
         
         doctorSchedule.forEach(scheduleItem => {
+            const dayName = getLocalizedDayName(scheduleItem);
             let workHours = '';
             let breakTime = '';
             
@@ -104,13 +147,14 @@ async function displaySchedule() {
                     breakTime = '<span class="break-time">—</span>';
                 }
             } else {
-                workHours = `<span class="work-hours off">Выходной</span>`;
+                const dayOffText = currentLang === 'ru' ? 'Выходной' : 'Day off';
+                workHours = `<span class="work-hours off">${dayOffText}</span>`;
                 breakTime = '<span class="break-time">—</span>';
             }
             
             html += `
                 <tr>
-                    <td class="day-name">${scheduleItem.dayName}</td>
+                    <td class="day-name">${escapeHtmlForSchedule(dayName)}</td>
                     <td>${workHours}</td>
                     <td>${breakTime}</td>
                 </tr>
@@ -141,7 +185,7 @@ function toggleDoctorSchedule(header) {
     }
 }
 
-function escapeHtml(str) {
+function escapeHtmlForSchedule(str) {
     if (!str) return '';
     return str.replace(/[&<>]/g, function(m) {
         if (m === '&') return '&amp;';
@@ -166,3 +210,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         dayFilter.addEventListener('change', () => displaySchedule());
     }
 });
+
+document.addEventListener('languageChanged', function() {
+    populateDoctorFilter();
+    displaySchedule();
+});
+
+window.toggleDoctorSchedule = toggleDoctorSchedule;
+window.displaySchedule = displaySchedule;
+

@@ -1,46 +1,40 @@
+
 (function() {
+    const API_BASE_URL = 'http://localhost:3000';
+    
     async function loginViaAPI(email, password) {
         try {
-            const response = await fetch('http://localhost:3000/users');
+            console.log('🔍 Попытка входа:', email);
+            const response = await fetch(`${API_BASE_URL}/users`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const users = await response.json();
+            console.log('✅ Загружено пользователей:', users.length);
             
             const cleanLogin = email.replace(/\D/g, '');
-            
             const user = users.find(u => 
-                (u.email === email || u.phone === cleanLogin) && u.password === password
+                (u.email === email || u.phone === cleanLogin || u.phone === email) && 
+                u.password === password
             );
             
             if (user) {
+                console.log('✅ Пользователь найден:', user.email);
                 const { password: _, ...safeUser } = user;
                 return safeUser;
             }
+            console.log('❌ Пользователь не найден');
             return null;
         } catch (error) {
-            console.error('Ошибка подключения к серверу:', error);
+            console.error('❌ Ошибка подключения к серверу:', error);
+            showNotification('❌ Ошибка подключения к серверу. Запустите json-server', true);
             return null;
-        }
-    }
-    
-    function saveSession(user, rememberMe) {
-        const session = {
-            userId: user.id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: user.role || 'user',
-            loginTime: new Date().toISOString()
-        };
-        
-        if (rememberMe) {
-            localStorage.setItem('dental_club_session', JSON.stringify(session));
-        } else {
-            sessionStorage.setItem('dental_club_session', JSON.stringify(session));
         }
     }
     
     function setupPasswordToggles() {
         document.querySelectorAll('.login-toggle-password').forEach(btn => {
-            btn.addEventListener('click', function() {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
                 const input = document.getElementById(targetId);
                 if (input) {
@@ -89,18 +83,20 @@
             animation: slideIn 0.3s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         `;
-        
         document.body.appendChild(notification);
-        
         setTimeout(() => {
             notification.style.animation = 'slideOut 0.3s ease';
             setTimeout(() => notification.remove(), 300);
-        }, 2500);
+        }, 3000);
     }
     
     function initLogin() {
         const form = document.getElementById('loginForm');
-        if (!form) return;
+        if (!form) {
+            console.error('❌ Форма входа не найдена');
+            return;
+        }
+        console.log('✅ Форма входа найдена');
         
         const savedEmail = localStorage.getItem('dental_club_saved_email');
         if (savedEmail) {
@@ -114,8 +110,12 @@
         
         setupPasswordToggles();
         
+        const oldSubmit = form.onsubmit;
+        form.onsubmit = null;
+        
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
+            console.log('📤 Отправка формы');
             clearErrors();
             
             const login = document.getElementById('loginEmail').value.trim();
@@ -128,18 +128,10 @@
                 showError('loginEmailError', 'Введите email или номер телефона');
                 document.getElementById('loginEmail').classList.add('error');
                 isValid = false;
-            } else if (login.length < 3) {
-                showError('loginEmailError', 'Введите корректный email или телефон');
-                document.getElementById('loginEmail').classList.add('error');
-                isValid = false;
             }
             
             if (!password) {
                 showError('loginPasswordError', 'Введите пароль');
-                document.getElementById('loginPassword').classList.add('error');
-                isValid = false;
-            } else if (password.length < 3) {
-                showError('loginPasswordError', 'Неверный пароль');
                 document.getElementById('loginPassword').classList.add('error');
                 isValid = false;
             }
@@ -156,7 +148,23 @@
                 submitBtn.disabled = false;
                 
                 if (user) {
-                    saveSession(user, rememberMe);
+                    if (typeof window.saveSession === 'function') {
+                        window.saveSession(user, rememberMe);
+                        console.log('✅ Сессия сохранена через window.saveSession');
+                    } else {
+                        console.error('❌ window.saveSession не найден!');
+                        const session = {
+                            userId: user.id,
+                            email: user.email,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            phone: user.phone,
+                            role: user.role || 'user',
+                            loginTime: new Date().toISOString()
+                        };
+                        localStorage.setItem('dental_club_session', JSON.stringify(session));
+                        console.log('✅ Сессия сохранена в localStorage (fallback)');
+                    }
                     
                     if (rememberMe) {
                         localStorage.setItem('dental_club_saved_email', login);
@@ -167,7 +175,7 @@
                     showNotification('✅ Вход выполнен успешно! Перенаправление...');
                     
                     setTimeout(() => {
-                        window.location.href = 'index.html';
+                        window.location.href = '../index.html';
                     }, 1500);
                 } else {
                     showError('loginPasswordError', 'Неверный email/телефон или пароль');
@@ -182,14 +190,8 @@
         const style = document.createElement('style');
         style.id = 'login-animation-styles';
         style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
+            @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+            @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
         `;
         document.head.appendChild(style);
     }

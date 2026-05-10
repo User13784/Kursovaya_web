@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Прайс-лист | Dental Club</title>
+    <title data-translate="prices_title">Прайс-лист | Dental Club</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/prices.css">
     <link rel="stylesheet" href="../media/prices_media.css">
     <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
-    <script src="../js/api.js"></script>
+    <link rel="stylesheet" href="../css/modal-profile.css">
+<link rel="stylesheet" href="../css/special-version.css">
 
 </head>
 <body>
@@ -23,16 +24,19 @@
             <span></span>
         </div>
         <nav class="mobile-nav">
-            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <div class="mobile-login-container" id="mobileLoginContainer">
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+            </div>
+            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
             <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="#" class="mobile-login-link">ВОЙТИ</a>
-            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="team.html" class="mobile-link">КОМАНДА</a>
-            <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
-            <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
-            <a href="schedule.html" class="mobile-link">РАСПИСАНИЕ</a>
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -40,8 +44,8 @@
     <main>
         <section class="hero-prices">
             <div class="hero-content">
-                <h1>ПРАЙС-ЛИСТ</h1>
-                <button class="btn-white" id="openAppointmentBtn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                <h1 data-translate="prices_title">ПРАЙС-ЛИСТ</h1>
+                <button class="btn-white" id="openAppointmentBtn" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
@@ -50,24 +54,24 @@
             <div class="container">
                 <div class="prices-filter">
                     <div class="filter-group">
-                        <label>Категория:</label>
+                        <label data-translate="all_categories">Категория:</label>
                         <select id="priceCategoryFilter" class="category-select">
-                            <option value="all">Все услуги</option>
+                            <option value="all" data-translate="all_services">Все услуги</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label>Поиск:</label>
-                        <input type="text" id="priceSearchInput" placeholder="Поиск по названию услуги..." class="search-input">
+                        <label data-translate="search">Поиск:</label>
+                        <input type="text" id="priceSearchInput" data-translate="search_placeholder" placeholder="Поиск по названию услуги..." class="search-input">
                     </div>
                 </div>
 
                 <div id="pricesList" class="prices-list">
-                    <div class="loading">Загрузка цен...</div>
+                    <div class="loading" data-translate="loading">Загрузка цен...</div>
                 </div>
 
                 <div class="prices-note">
-                    <p>⚠️ Цены, указанные на сайте, не являются публичной офертой. Точную стоимость уточняйте у администратора клиники.</p>
-                    <p>📞 Для записи на прием и уточнения цены звоните: <a href="tel:+375291234567">+375 (29) 123-45-67</a></p>
+                    <p data-translate="prices_note_1">⚠️ Цены, указанные на сайте, не являются публичной офертой. Точную стоимость уточняйте у администратора клиники.</p>
+                    <p data-translate="prices_note_2">📞 Для записи на прием и уточнения цены звоните: <a href="tel:+375291234567">+375 (29) 123-45-67</a></p>
                 </div>
             </div>
         </section>
@@ -75,76 +79,35 @@
 
     <div id="footer-placeholder"></div>
 
+    <script src="../js/localstorage.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/translations.js"></script>
-    <script src="../js/personalization.js"></script>
     <script src="../js/components.js"></script>
     <script src="../js/modal-appointment.js"></script>
+    <script src="../js/modal-profile.js"></script>
+    <script src="../js/preloader.js"></script>
     <script src="../js/prices.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const burgerIcon = document.getElementById('burgerIcon');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                const closeMenuBtn = document.getElementById('closeMenuBtn');
-                const body = document.body;
+        const openAppointmentBtn = document.getElementById('openAppointmentBtn');
+        if (openAppointmentBtn && typeof openVisitorAppointmentModal === 'function') {
+            openAppointmentBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openVisitorAppointmentModal();
+            });
+        }
 
-                function openMenu() {
-                    if (burgerIcon) burgerIcon.classList.add('active');
-                    if (mobileMenu) mobileMenu.classList.add('active');
-                    if (menuOverlay) menuOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                }
-
-                function closeMenu() {
-                    if (burgerIcon) burgerIcon.classList.remove('active');
-                    if (mobileMenu) mobileMenu.classList.remove('active');
-                    if (menuOverlay) menuOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-
-                if (burgerIcon) {
-                    burgerIcon.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (mobileMenu && mobileMenu.classList.contains('active')) {
-                            closeMenu();
-                        } else {
-                            openMenu();
-                        }
-                    });
-                }
-
-                if (closeMenuBtn) {
-                    closeMenuBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMenu();
-                    });
-                }
-
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                        closeMenu();
-                    }
-                });
-            }, 100);
-            
-            const openAppointmentBtn = document.getElementById('openAppointmentBtn');
-            if (openAppointmentBtn && typeof openVisitorAppointmentModal === 'function') {
-                openAppointmentBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openVisitorAppointmentModal();
-                });
+        setTimeout(function() {
+            if (typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI();
             }
-        });
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+        }, 200);
     </script>
+    <script src="../js/special-version.js"></script>
+
 </body>
 </html>

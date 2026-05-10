@@ -11,6 +11,122 @@ let analyticsData = {
     services: []
 };
 
+function getAnalyticsLang() {
+    return localStorage.getItem('dental_language') || 'ru';
+}
+
+function getAnalyticsText(key, defaultValue = '') {
+    const lang = getAnalyticsLang();
+    const translations = {
+        ru: {
+            'no_data': 'Нет данных',
+            'appointments_count': 'записей',
+            'chart_label_appointments': 'Количество записей',
+            'pending': 'Ожидает',
+            'confirmed': 'Подтверждена',
+            'completed': 'Завершена',
+            'cancelled': 'Отменена'
+        },
+        en: {
+            'no_data': 'No data',
+            'appointments_count': 'appointments',
+            'chart_label_appointments': 'Number of appointments',
+            'pending': 'Pending',
+            'confirmed': 'Confirmed',
+            'completed': 'Completed',
+            'cancelled': 'Cancelled'
+        }
+    };
+    return translations[lang]?.[key] || defaultValue;
+}
+
+function updateAnalyticsTranslations() {
+    const lang = getAnalyticsLang();
+    
+    if (appointmentsChart) {
+        if (appointmentsChart.options?.plugins?.tooltip?.callbacks) {
+            appointmentsChart.options.plugins.tooltip.callbacks = {
+                label: (ctx) => {
+                    const label = getAnalyticsText('appointments_count');
+                    return `${ctx.raw} ${label}`;
+                }
+            };
+        }
+        if (appointmentsChart.data?.datasets?.[0]) {
+            appointmentsChart.data.datasets[0].label = getAnalyticsText('chart_label_appointments');
+        }
+        appointmentsChart.update();
+    }
+    
+    if (doctorsChart) {
+        if (doctorsChart.data?.datasets?.[0]) {
+            doctorsChart.data.datasets[0].label = getAnalyticsText('chart_label_appointments');
+        }
+        doctorsChart.update();
+    }
+    
+    if (servicesChart) {
+        if (servicesChart.data?.datasets?.[0]) {
+            servicesChart.data.datasets[0].label = getAnalyticsText('chart_label_appointments');
+        }
+        if (servicesChart.data?.labels && analyticsData.services.length) {
+            const newLabels = servicesChart.data.labels.map(label => {
+                for (const service of analyticsData.services) {
+                    const serviceNameRu = typeof service.name === 'object' ? service.name.ru : service.name;
+                    const serviceNameEn = typeof service.name === 'object' ? service.name.en : service.name;
+                    if (label === serviceNameRu || label === serviceNameEn) {
+                        return lang === 'ru' ? (serviceNameRu || label) : (serviceNameEn || label);
+                    }
+                }
+                return label;
+            });
+            servicesChart.data.labels = newLabels;
+        }
+        servicesChart.update();
+    }
+    
+    if (hoursChart) {
+        if (hoursChart.data?.datasets?.[0]) {
+            hoursChart.data.datasets[0].label = getAnalyticsText('chart_label_appointments');
+        }
+        hoursChart.update();
+    }
+    
+    if (weekdaysChart) {
+        if (weekdaysChart.data?.datasets?.[0]) {
+            weekdaysChart.data.datasets[0].label = getAnalyticsText('chart_label_appointments');
+        }
+        weekdaysChart.update();
+    }
+    
+    if (statusChart) {
+        const statusLabels = ['pending', 'confirmed', 'completed', 'cancelled'];
+        const newLabels = statusLabels.map(s => getAnalyticsText(s));
+        statusChart.data.labels = newLabels;
+        statusChart.update();
+    }
+    
+    updateAnalyticsTablesTranslations();
+}
+
+function updateAnalyticsTablesTranslations() {
+    const lang = getAnalyticsLang();
+    
+    const doctorHeaders = document.querySelectorAll('#doctorsStatsTable th');
+    if (doctorHeaders.length >= 3) {
+        doctorHeaders[0].textContent = lang === 'ru' ? 'Врач' : 'Doctor';
+        doctorHeaders[1].textContent = lang === 'ru' ? 'Кол-во записей' : 'Appointments';
+        doctorHeaders[2].textContent = '%';
+    }
+    
+    const serviceHeaders = document.querySelectorAll('#servicesStatsTable th');
+    if (serviceHeaders.length >= 3) {
+        serviceHeaders[0].textContent = lang === 'ru' ? 'Услуга' : 'Service';
+        serviceHeaders[1].textContent = lang === 'ru' ? 'Кол-во записей' : 'Appointments';
+        serviceHeaders[2].textContent = '%';
+    }
+}
+
 async function loadAnalyticsData() {
     try {
         const [appointmentsRes, doctorsRes, servicesRes] = await Promise.all([
@@ -69,7 +185,6 @@ function filterByPeriod(period, startDate = null, endDate = null) {
         yearAgo.setFullYear(today.getFullYear() - 1);
         filtered = filtered.filter(a => new Date(a.date) >= yearAgo);
     } else if (period === 'all') {
-        // возвращаем все записи
         return filtered;
     } else if (period === 'custom' && startDate && endDate) {
         const start = new Date(startDate);
@@ -119,7 +234,7 @@ function updateStatistics(filteredAppointments) {
 
 function prepareAppointmentsChartData(filteredAppointments) {
     if (!filteredAppointments || filteredAppointments.length === 0) {
-        return { labels: ['Нет данных'], data: [0] };
+        return { labels: [getAnalyticsText('no_data')], data: [0] };
     }
     
     const dateMap = new Map();
@@ -149,14 +264,23 @@ function prepareAppointmentsChartData(filteredAppointments) {
 
 function prepareDoctorsChartData(filteredAppointments) {
     if (!filteredAppointments || filteredAppointments.length === 0) {
-        return { labels: ['Нет данных'], data: [0] };
+        return { labels: [getAnalyticsText('no_data')], data: [0] };
     }
     
     const doctorMap = new Map();
+    const lang = getAnalyticsLang();
     
     filteredAppointments.forEach(app => {
         const doctor = analyticsData.doctors.find(d => d.id === app.doctorId);
-        const doctorName = doctor ? `${doctor.lastName} ${doctor.firstName}`.trim() : 'Неизвестно';
+        let doctorName = 'Неизвестно';
+        if (doctor) {
+            if (lang === 'ru') {
+                doctorName = `${doctor.lastName?.ru || doctor.lastName || ''} ${doctor.firstName?.ru || doctor.firstName || ''}`.trim();
+            } else {
+                doctorName = `${doctor.lastName?.en || doctor.lastName?.ru || doctor.lastName || ''} ${doctor.firstName?.en || doctor.firstName?.ru || doctor.firstName || ''}`.trim();
+            }
+            if (!doctorName) doctorName = 'Unknown';
+        }
         
         if (doctorMap.has(doctorName)) {
             doctorMap.set(doctorName, doctorMap.get(doctorName) + 1);
@@ -174,7 +298,7 @@ function prepareDoctorsChartData(filteredAppointments) {
     if (tbody) {
         tbody.innerHTML = '';
         if (sorted.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3">Нет данных</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="3">' + getAnalyticsText('no_data') + '</td></tr>';
         } else {
             sorted.forEach(([name, count]) => {
                 const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
@@ -194,14 +318,22 @@ function prepareDoctorsChartData(filteredAppointments) {
 
 function prepareServicesChartData(filteredAppointments) {
     if (!filteredAppointments || filteredAppointments.length === 0) {
-        return { labels: ['Нет данных'], data: [0] };
+        return { labels: [getAnalyticsText('no_data')], data: [0] };
     }
     
     const serviceMap = new Map();
+    const lang = getAnalyticsLang();
     
     filteredAppointments.forEach(app => {
         const service = analyticsData.services.find(s => s.id === app.serviceId);
-        const serviceName = service ? service.name : 'Неизвестно';
+        let serviceName = 'Неизвестно';
+        if (service) {
+            if (typeof service.name === 'object') {
+                serviceName = service.name[lang] || service.name.ru || 'Неизвестно';
+            } else {
+                serviceName = service.name;
+            }
+        }
         
         if (serviceMap.has(serviceName)) {
             serviceMap.set(serviceName, serviceMap.get(serviceName) + 1);
@@ -219,7 +351,7 @@ function prepareServicesChartData(filteredAppointments) {
     if (tbody) {
         tbody.innerHTML = '';
         if (sorted.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3">Нет данных</td></table>';
+            tbody.innerHTML = '<tr><td colspan="3">' + getAnalyticsText('no_data') + '</td></tr>';
         } else {
             sorted.forEach(([name, count]) => {
                 const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
@@ -271,7 +403,8 @@ function prepareHoursChartData(filteredAppointments) {
 }
 
 function prepareWeekdaysChartData(filteredAppointments) {
-    const labels = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
+    const lang = getAnalyticsLang();
+    const labels = lang === 'ru' ? ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'] : ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
     const weekdayMap = new Map();
     labels.forEach(d => weekdayMap.set(d, 0));
     
@@ -279,7 +412,9 @@ function prepareWeekdaysChartData(filteredAppointments) {
         filteredAppointments.forEach(app => {
             const date = new Date(app.date);
             const dayIndex = date.getDay();
-            const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+            const daysRu = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+            const daysEn = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            const days = lang === 'ru' ? daysRu : daysEn;
             const dayName = days[dayIndex];
             if (weekdayMap.has(dayName)) {
                 weekdayMap.set(dayName, weekdayMap.get(dayName) + 1);
@@ -299,11 +434,13 @@ function prepareWeekdaysChartData(filteredAppointments) {
         }
     });
     
-    const dayNames = { 'ПН': 'Понедельник', 'ВТ': 'Вторник', 'СР': 'Среда', 'ЧТ': 'Четверг', 'ПТ': 'Пятница', 'СБ': 'Суббота', 'ВС': 'Воскресенье' };
+    const dayNamesRu = { 'ПН': 'Понедельник', 'ВТ': 'Вторник', 'СР': 'Среда', 'ЧТ': 'Четверг', 'ПТ': 'Пятница', 'СБ': 'Суббота', 'ВС': 'Воскресенье' };
+    const dayNamesEn = { 'MON': 'Monday', 'TUE': 'Tuesday', 'WED': 'Wednesday', 'THU': 'Thursday', 'FRI': 'Friday', 'SAT': 'Saturday', 'SUN': 'Sunday' };
+    const dayNames = lang === 'ru' ? dayNamesRu : dayNamesEn;
     
     const busiestDayElement = document.getElementById('busiestDay');
     if (busiestDayElement) {
-        busiestDayElement.textContent = maxCount > 0 ? dayNames[busiestDay] || busiestDay : '—';
+        busiestDayElement.textContent = maxCount > 0 ? (dayNames[busiestDay] || busiestDay) : '—';
     }
     
     return { labels, data };
@@ -311,7 +448,7 @@ function prepareWeekdaysChartData(filteredAppointments) {
 
 function prepareStatusChartData(filteredAppointments) {
     if (!filteredAppointments || filteredAppointments.length === 0) {
-        return { labels: ['Нет данных'], data: [1] };
+        return { labels: [getAnalyticsText('no_data')], data: [1] };
     }
     
     const statusMap = new Map([
@@ -322,7 +459,7 @@ function prepareStatusChartData(filteredAppointments) {
         statusMap.set(app.status, statusMap.get(app.status) + 1);
     });
     
-    const labels = ['Ожидает', 'Подтверждена', 'Завершена', 'Отменена'];
+    const labels = ['pending', 'confirmed', 'completed', 'cancelled'].map(s => getAnalyticsText(s));
     const data = [statusMap.get('pending'), statusMap.get('confirmed'), statusMap.get('completed'), statusMap.get('cancelled')];
     
     return { labels, data };
@@ -330,19 +467,21 @@ function prepareStatusChartData(filteredAppointments) {
 
 function createCharts(filteredAppointments) {
     const hasData = filteredAppointments && filteredAppointments.length > 0;
+    const lang = getAnalyticsLang();
+    const chartLabel = getAnalyticsText('chart_label_appointments');
     
     // Динамика записей
     const appointmentsData = prepareAppointmentsChartData(filteredAppointments);
     if (appointmentsChart) appointmentsChart.destroy();
     const appointmentsCtx = document.getElementById('appointmentsChart')?.getContext('2d');
     if (appointmentsCtx) {
-        if (hasData && appointmentsData.labels[0] !== 'Нет данных') {
+        if (hasData && appointmentsData.labels[0] !== getAnalyticsText('no_data')) {
             appointmentsChart = new Chart(appointmentsCtx, {
                 type: 'line',
                 data: {
                     labels: appointmentsData.labels,
                     datasets: [{
-                        label: 'Количество записей',
+                        label: chartLabel,
                         data: appointmentsData.data,
                         borderColor: '#A5C33C',
                         backgroundColor: 'rgba(165, 195, 60, 0.1)',
@@ -359,7 +498,7 @@ function createCharts(filteredAppointments) {
                     maintainAspectRatio: true,
                     plugins: {
                         legend: { position: 'top' },
-                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} ${getAnalyticsText('appointments_count')}` } }
                     }
                 }
             });
@@ -367,9 +506,9 @@ function createCharts(filteredAppointments) {
             appointmentsChart = new Chart(appointmentsCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Нет данных'],
+                    labels: [getAnalyticsText('no_data')],
                     datasets: [{
-                        label: 'Количество записей',
+                        label: chartLabel,
                         data: [0],
                         borderColor: '#9CA3AF',
                         backgroundColor: 'rgba(156, 163, 175, 0.1)'
@@ -385,15 +524,15 @@ function createCharts(filteredAppointments) {
     if (doctorsChart) doctorsChart.destroy();
     const doctorsCtx = document.getElementById('doctorsChart')?.getContext('2d');
     if (doctorsCtx) {
-        if (hasData && doctorsData.labels[0] !== 'Нет данных') {
+        if (hasData && doctorsData.labels[0] !== getAnalyticsText('no_data')) {
             doctorsChart = new Chart(doctorsCtx, {
                 type: 'bar',
                 data: {
                     labels: doctorsData.labels,
                     datasets: [{
-                        label: 'Количество записей',
+                        label: chartLabel,
                         data: doctorsData.data,
-                        backgroundColor: '#3B82F6',
+                        backgroundColor: '#A5C33C',
                         borderRadius: 8,
                         barPercentage: 0.7
                     }]
@@ -403,7 +542,7 @@ function createCharts(filteredAppointments) {
                     maintainAspectRatio: true,
                     plugins: {
                         legend: { position: 'top' },
-                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} ${getAnalyticsText('appointments_count')}` } }
                     }
                 }
             });
@@ -411,8 +550,8 @@ function createCharts(filteredAppointments) {
             doctorsChart = new Chart(doctorsCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Нет данных'],
-                    datasets: [{ label: 'Количество записей', data: [0], backgroundColor: '#9CA3AF' }]
+                    labels: [getAnalyticsText('no_data')],
+                    datasets: [{ label: chartLabel, data: [0], backgroundColor: '#9CA3AF' }]
                 },
                 options: { responsive: true, maintainAspectRatio: true }
             });
@@ -424,13 +563,13 @@ function createCharts(filteredAppointments) {
     if (servicesChart) servicesChart.destroy();
     const servicesCtx = document.getElementById('servicesChart')?.getContext('2d');
     if (servicesCtx) {
-        if (hasData && servicesData.labels[0] !== 'Нет данных') {
+        if (hasData && servicesData.labels[0] !== getAnalyticsText('no_data')) {
             servicesChart = new Chart(servicesCtx, {
                 type: 'bar',
                 data: {
                     labels: servicesData.labels,
                     datasets: [{
-                        label: 'Количество записей',
+                        label: chartLabel,
                         data: servicesData.data,
                         backgroundColor: '#10B981',
                         borderRadius: 8,
@@ -442,7 +581,7 @@ function createCharts(filteredAppointments) {
                     maintainAspectRatio: true,
                     plugins: {
                         legend: { position: 'top' },
-                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} ${getAnalyticsText('appointments_count')}` } }
                     }
                 }
             });
@@ -450,8 +589,8 @@ function createCharts(filteredAppointments) {
             servicesChart = new Chart(servicesCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Нет данных'],
-                    datasets: [{ label: 'Количество записей', data: [0], backgroundColor: '#9CA3AF' }]
+                    labels: [getAnalyticsText('no_data')],
+                    datasets: [{ label: chartLabel, data: [0], backgroundColor: '#9CA3AF' }]
                 },
                 options: { responsive: true, maintainAspectRatio: true }
             });
@@ -468,7 +607,7 @@ function createCharts(filteredAppointments) {
             data: {
                 labels: hoursData.labels,
                 datasets: [{
-                    label: 'Количество записей',
+                    label: chartLabel,
                     data: hoursData.data,
                     borderColor: '#F59E0B',
                     backgroundColor: 'rgba(245, 158, 11, 0.1)',
@@ -483,13 +622,12 @@ function createCharts(filteredAppointments) {
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} ${getAnalyticsText('appointments_count')}` } }
                 }
             }
         });
     }
     
-    // Дни недели
     const weekdaysData = prepareWeekdaysChartData(filteredAppointments);
     if (weekdaysChart) weekdaysChart.destroy();
     const weekdaysCtx = document.getElementById('weekdaysChart')?.getContext('2d');
@@ -499,7 +637,7 @@ function createCharts(filteredAppointments) {
             data: {
                 labels: weekdaysData.labels,
                 datasets: [{
-                    label: 'Количество записей',
+                    label: chartLabel,
                     data: weekdaysData.data,
                     backgroundColor: '#8B5CF6',
                     borderRadius: 8,
@@ -510,18 +648,17 @@ function createCharts(filteredAppointments) {
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} записей` } }
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} ${getAnalyticsText('appointments_count')}` } }
                 }
             }
         });
     }
     
-    // Статусы
     const statusData = prepareStatusChartData(filteredAppointments);
     if (statusChart) statusChart.destroy();
     const statusCtx = document.getElementById('statusChart')?.getContext('2d');
     if (statusCtx) {
-        if (hasData && statusData.labels[0] !== 'Нет данных') {
+        if (hasData && statusData.labels[0] !== getAnalyticsText('no_data')) {
             const total = statusData.data.reduce((a, b) => a + b, 0);
             statusChart = new Chart(statusCtx, {
                 type: 'doughnut',
@@ -539,7 +676,7 @@ function createCharts(filteredAppointments) {
                     maintainAspectRatio: true,
                     plugins: {
                         legend: { position: 'bottom' },
-                        tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} записей (${total > 0 ? ((ctx.raw / total) * 100).toFixed(1) : 0}%)` } }
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} ${getAnalyticsText('appointments_count')} (${total > 0 ? ((ctx.raw / total) * 100).toFixed(1) : 0}%)` } }
                     }
                 }
             });
@@ -547,7 +684,7 @@ function createCharts(filteredAppointments) {
             statusChart = new Chart(statusCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Нет данных'],
+                    labels: [getAnalyticsText('no_data')],
                     datasets: [{ data: [1], backgroundColor: ['#9CA3AF'], borderWidth: 0 }]
                 },
                 options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
@@ -572,6 +709,7 @@ async function updateAnalytics() {
     
     updateStatistics(filteredAppointments);
     createCharts(filteredAppointments);
+    updateAnalyticsTablesTranslations();
     
     const message = filteredAppointments.length > 0 ? `Данные обновлены (${filteredAppointments.length} записей)` : 'Нет данных для отображения';
     showToastForAnalytics(message, filteredAppointments.length > 0 ? 'success' : 'info');
@@ -605,9 +743,19 @@ function exportAnalytics() {
     
     const doctorStats = [];
     const doctorMap = new Map();
+    const lang = getAnalyticsLang();
+    
     filteredAppointments.forEach(app => {
         const doctor = analyticsData.doctors.find(d => d.id === app.doctorId);
-        const doctorName = doctor ? `${doctor.lastName} ${doctor.firstName}`.trim() : 'Неизвестно';
+        let doctorName = 'Неизвестно';
+        if (doctor) {
+            if (lang === 'ru') {
+                doctorName = `${doctor.lastName?.ru || doctor.lastName || ''} ${doctor.firstName?.ru || doctor.firstName || ''}`.trim();
+            } else {
+                doctorName = `${doctor.lastName?.en || doctor.lastName?.ru || doctor.lastName || ''} ${doctor.firstName?.en || doctor.firstName?.ru || doctor.firstName || ''}`.trim();
+            }
+            if (!doctorName) doctorName = 'Unknown';
+        }
         doctorMap.set(doctorName, (doctorMap.get(doctorName) || 0) + 1);
     });
     doctorMap.forEach((count, name) => {
@@ -619,7 +767,14 @@ function exportAnalytics() {
     const serviceMap = new Map();
     filteredAppointments.forEach(app => {
         const service = analyticsData.services.find(s => s.id === app.serviceId);
-        const serviceName = service ? service.name : 'Неизвестно';
+        let serviceName = 'Неизвестно';
+        if (service) {
+            if (typeof service.name === 'object') {
+                serviceName = service.name[lang] || service.name.ru || 'Неизвестно';
+            } else {
+                serviceName = service.name;
+            }
+        }
         serviceMap.set(serviceName, (serviceMap.get(serviceName) || 0) + 1);
     });
     serviceMap.forEach((count, name) => {
@@ -658,6 +813,12 @@ function exportAnalytics() {
 
 function escapeHtmlForAnalytics(str) {
     if (!str) return '';
+    if (typeof str === 'object') {
+        str = str.ru || str.en || JSON.stringify(str);
+    }
+    if (typeof str !== 'string') {
+        str = String(str);
+    }
     return str.replace(/[&<>]/g, function(m) {
         if (m === '&') return '&amp;';
         if (m === '<') return '&lt;';
@@ -741,6 +902,7 @@ async function initAnalytics() {
                         if (hoursChart) hoursChart.resize();
                         if (weekdaysChart) weekdaysChart.resize();
                         if (statusChart) statusChart.resize();
+                        updateAnalyticsTablesTranslations();
                     }, 100);
                 }
             });
@@ -750,4 +912,20 @@ async function initAnalytics() {
     console.log('Аналитика инициализирована');
 }
 
+document.addEventListener('languageChanged', function() {
+    setTimeout(() => {
+        updateAnalyticsTranslations();
+        if (typeof updateAnalytics === 'function') {
+            updateAnalytics();
+        }
+    }, 200);
+});
+
 document.addEventListener('DOMContentLoaded', initAnalytics);
+
+window.updateAnalyticsTranslations = updateAnalyticsTranslations;
+window.filterByPeriod = filterByPeriod;
+window.prepareDoctorsChartData = prepareDoctorsChartData;
+window.prepareServicesChartData = prepareServicesChartData;
+window.loadAnalyticsData = loadAnalyticsData;
+window.analyticsData = analyticsData;

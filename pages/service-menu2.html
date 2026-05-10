@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Диагностика — Dental Club</title>
+    <title data-translate="diagnostics_title">Диагностика — Dental Club</title>
     
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/service-menu2.css">
     <link rel="stylesheet" href="../media/service-menu2_media.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
-    <script src="../js/api.js"></script>
+    <link rel="stylesheet" href="../css/modal-profile.css">
+        <link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/special-version.css">
+
 
 
 </head>
@@ -23,14 +26,18 @@
             <span></span>
         </div>
         <nav class="mobile-nav">
-            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <div class="mobile-login-container" id="mobileLoginContainer">
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+            </div>
+            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
             <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="#" class="mobile-login-link">ВОЙТИ</a>
-            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="#" class="mobile-link">КОМАНДА</a>
-            <a href="#" class="mobile-link">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -38,8 +45,8 @@
     <main>
         <section class="hero-diagnostics">
             <div class="hero-content">
-                <h1>ДИАГНОСТИКА</h1>
-                <button class="btn-white">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                <h1 data-translate="diagnostics_title">ДИАГНОСТИКА</h1>
+                <button class="btn-white" id="openAppointmentBtn1" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
@@ -52,8 +59,8 @@
                     </div>
                     <div class="info-text first-text-block"> 
                         <div class="accent-line first-accent"></div>
-                        <p class="diagnosis-text">Диагностика необходима для составления качественного плана лечения, гарантирующего результат. Только профессионально организованный комплекс мероприятий может помочь грамотному специалисту поставить правильный диагноз и провести адекватное лечение.</p>
-                        <button class="btn-outline first-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <p class="diagnosis-text" data-translate="diagnostics_text">Диагностика необходима для составления качественного плана лечения, гарантирующего результат. Только профессионально организованный комплекс мероприятий может помочь грамотному специалисту поставить правильный диагноз и провести адекватное лечение.</p>
+                        <button class="btn-outline first-btn" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                 </div>
 
@@ -68,11 +75,11 @@
                 <div class="info-row reverse tomograph-row">
                     <div class="info-text tomograph-text-block">
                         <div class="accent-line tomograph-accent"></div>
-                        <p class="diagnostic-intro">Dental Club производит 3D-диагностику на оборудовании последнего поколения.</p>
-                        <p class="tomograph-text">Компьютерный томограф <strong>Planmeca ProMax 3DMid</strong> – является одним из лучших в мире диагностических аппаратов.</p>
-                        <p class="safety-text">ProMax 3DMid– это гарант безопасности. Уровень облучения при обследовании не превышает уровня облучения после короткого воздушного перелёта. Благодаря возможностям данного аппарата можно создавать виртуальную модель ваших зубов и костной ткани.</p>
-                        <p class="diagnocam-text"><strong>DiagnoCam</strong> (KaVo, Германия)– второй инструмент в Dental Club, применяемый для выявления мельчайших дефектов и скрытых кариозных полостей. DiagnoCam использует лазерную систему диагностики, без облучения. Весь процесс диагностики пациент может наблюдать на мониторе.</p>
-                        <button class="btn-outline diagnost-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <p class="diagnostic-intro" data-translate="diagnostic_intro">Dental Club производит 3D-диагностику на оборудовании последнего поколения.</p>
+                        <p class="tomograph-text" data-translate="tomograph_text">Компьютерный томограф <strong>Planmeca ProMax 3DMid</strong> – является одним из лучших в мире диагностических аппаратов.</p>
+                        <p class="safety-text" data-translate="safety_text">ProMax 3DMid– это гарант безопасности. Уровень облучения при обследовании не превышает уровня облучения после короткого воздушного перелёта. Благодаря возможностям данного аппарата можно создавать виртуальную модель ваших зубов и костной ткани.</p>
+                        <p class="diagnocam-text" data-translate="diagnocam_text"><strong>DiagnoCam</strong> (KaVo, Германия)– второй инструмент в Dental Club, применяемый для выявления мельчайших дефектов и скрытых кариозных полостей. DiagnoCam использует лазерную систему диагностики, без облучения. Весь процесс диагностики пациент может наблюдать на мониторе.</p>
+                        <button class="btn-outline diagnost-btn" id="openAppointmentBtn3" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                     <div class="info-image tomograph-image">
                         <img class="tomograph-img" src="../assets/images/service-menu2-page/service-menu2_3.jpg" alt="3D Томограф">
@@ -85,24 +92,24 @@
                     </div>
                     <div class="info-text specialists-text-block">
                         <div class="accent-line specialists-line"></div>
-                        <p class="specialists-text">Специалисты <strong>Dental Club</strong> всегда производят обследования с применением специальных оптических увеличителей: Дентальный микроскоп <strong>Leica</strong> и бинокуляры <strong>Carl Zeiss</strong>. Точность диагноза пропорциональна коэффициенту увеличения данных приборов – в десятки раз точнее, чем при простом осмотре.</p>
-                        <p class="team-text">Наша команда – профессионалы, которые ежегодно совершенствуют свои знания в ведущих медицинских учреждениях Европы.</p>
+                        <p class="specialists-text" data-translate="specialists_text">Специалисты <strong>Dental Club</strong> всегда производят обследования с применением специальных оптических увеличителей: Дентальный микроскоп <strong>Leica</strong> и бинокуляры <strong>Carl Zeiss</strong>. Точность диагноза пропорциональна коэффициенту увеличения данных приборов – в десятки раз точнее, чем при простом осмотре.</p>
+                        <p class="team-text" data-translate="team_text">Наша команда – профессионалы, которые ежегодно совершенствуют свои знания в ведущих медицинских учреждениях Европы.</p>
                     </div>
                 </div>
 
                 <div class="info-row reverse steps-row">
                     <div class="info-text steps-text-block">
                         <div class="accent-line steps-accent"></div>
-                        <p class="steps-description">У нас своя электронная картотека, позволяющая отследить все этапы лечения наших пациентов.</p>
-                        <p class="steps-title"><strong>Этапы</strong></p>
+                        <p class="steps-description" data-translate="steps_description">У нас своя электронная картотека, позволяющая отследить все этапы лечения наших пациентов.</p>
+                        <p class="steps-title"><strong data-translate="steps_title">Этапы</strong></p>
                         <ol class="steps-list">
-                            <li class="step-item step-1">Анкетирование и опрос.</li>
-                            <li class="step-item step-2">Осмотр пациента в удобном кресле, с применением бинокуляров Carl Zeiss или микроскопа Leica.</li>
-                            <li class="step-item step-3">При необходимости визуализация скрытых полостей и микродефектов зубов при помощи DiagnoCam.</li>
-                            <li class="step-item step-4">3D цифровая диагностика, с огромным функционалом: от локальных участков зубов, суставов и челюстей, до всех костных тканей головы.</li>
-                            <li class="step-item step-5">Обсуждение результатов с пациентом и совместное планирование лечения.</li>
+                            <li class="step-item step-1" data-translate="step_1">Анкетирование и опрос.</li>
+                            <li class="step-item step-2" data-translate="step_2">Осмотр пациента в удобном кресле, с применением бинокуляров Carl Zeiss или микроскопа Leica.</li>
+                            <li class="step-item step-3" data-translate="step_3">При необходимости визуализация скрытых полостей и микродефектов зубов при помощи DiagnoCam.</li>
+                            <li class="step-item step-4" data-translate="step_4">3D цифровая диагностика, с огромным функционалом: от локальных участков зубов, суставов и челюстей, до всех костных тканей головы.</li>
+                            <li class="step-item step-5" data-translate="step_5">Обсуждение результатов с пациентом и совместное планирование лечения.</li>
                         </ol>
-                        <button class="btn-outline steps-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <button class="btn-outline steps-btn" id="openAppointmentBtn4" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                     <div class="info-image double-img">
                         <img class="microscope-img" src="../assets/images/service-menu2-page/service-menu2_5.jpg" alt="Работа под микроскопом">
@@ -115,67 +122,45 @@
 
     <div id="footer-placeholder"></div>
 
+    <script src="../js/localstorage.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/components.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const burgerIcon = document.getElementById('burgerIcon');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                const closeMenuBtn = document.getElementById('closeMenuBtn');
-                const body = document.body;
-
-                function openMenu() {
-                    if (burgerIcon) burgerIcon.classList.add('active');
-                    if (mobileMenu) mobileMenu.classList.add('active');
-                    if (menuOverlay) menuOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                }
-
-                function closeMenu() {
-                    if (burgerIcon) burgerIcon.classList.remove('active');
-                    if (mobileMenu) mobileMenu.classList.remove('active');
-                    if (menuOverlay) menuOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-
-                if (burgerIcon) {
-                    burgerIcon.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (mobileMenu && mobileMenu.classList.contains('active')) {
-                            closeMenu();
-                        } else {
-                            openMenu();
-                        }
-                    });
-                }
-
-                if (closeMenuBtn) {
-                    closeMenuBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMenu();
-                    });
-                }
-
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                        closeMenu();
-                    }
-                });
-            }, 100);
-        });
-    </script>
     <script src="../js/modal-appointment.js"></script>
+    <script src="../js/modal-profile.js"></script>
+    <script src="../js/preloader.js"></script>
 
+    <script>
+        function openAppointment() {
+            if (typeof openVisitorAppointmentModal === 'function') {
+                openVisitorAppointmentModal();
+            } else {
+                console.warn('openVisitorAppointmentModal не определена');
+            }
+        }
+
+        const appointmentBtns = document.querySelectorAll('#openAppointmentBtn1, #openAppointmentBtn2, #openAppointmentBtn3, #openAppointmentBtn4, .btn-white, .btn-outline');
+        
+        appointmentBtns.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openAppointment();
+                });
+            }
+        });
+
+        setTimeout(function() {
+            if (typeof window.updateAuthUI === 'function') {
+                console.log('🔄 Вызов updateAuthUI из service-menu2.html');
+                window.updateAuthUI();
+            }
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+        }, 200);
+    </script>
+    <script src="../js/special-version.js"></script>
 </body>
 </html>

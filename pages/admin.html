@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../media/admin_media.css">
     <link rel="stylesheet" href="../css/theme.css">
-        <link rel="stylesheet" href="../css/admin-analytics.css">
+    <link rel="stylesheet" href="../css/admin-analytics.css">
+<link rel="stylesheet" href="../css/special-version.css">
 
+<script src="../js/special-version.js"></script>
 </head>
 <body>
     <div class="admin-wrapper">
@@ -21,43 +23,43 @@
             <nav class="sidebar-nav">
                 <button class="nav-tab" data-tab="services">
                     <span class="nav-icon">📋</span>
-                    <span>Услуги</span>
+                    <span data-admin-translate="tab_services">Услуги</span>
                 </button>
                 <button class="nav-tab" data-tab="service-details">
                     <span class="nav-icon">📝</span>
-                    <span>Детали услуг</span>
+                    <span data-admin-translate="tab_service_details">Детали услуг</span>
                 </button>
                 <button class="nav-tab" data-tab="doctors">
                     <span class="nav-icon">👨‍⚕️</span>
-                    <span>Врачи</span>
+                    <span data-admin-translate="tab_doctors">Врачи</span>
                 </button>
                 <button class="nav-tab" data-tab="appointments">
                     <span class="nav-icon">📅</span>
-                    <span>Запись на прием</span>
+                    <span data-admin-translate="tab_appointments">Запись на прием</span>
                 </button>
                 <button class="nav-tab" data-tab="reviews">
                     <span class="nav-icon">⭐</span>
-                    <span>Отзывы</span>
+                    <span data-admin-translate="tab_reviews">Отзывы</span>
                 </button>
                 <button class="nav-tab" data-tab="prices">
                     <span class="nav-icon">💰</span>
-                    <span>Прайс-лист</span>
+                    <span data-admin-translate="tab_prices">Прайс-лист</span>
                 </button>
                 <button class="nav-tab" data-tab="schedule">
                     <span class="nav-icon">📆</span>
-                    <span>Расписание</span>
+                    <span data-admin-translate="tab_schedule">Расписание</span>
                 </button>
                 <button class="nav-tab" data-tab="analytics">
                     <span class="nav-icon">📊</span>
-                    <span>Аналитика</span>
+                    <span data-admin-translate="tab_analytics">Аналитика</span>
                 </button>
                 <button class="nav-tab" data-tab="discounts">
                     <span class="nav-icon">🏷️</span>
-                    <span>Скидки</span>
+                    <span data-admin-translate="tab_discounts">Скидки</span>
                 </button>
             </nav>
             <div class="sidebar-footer">
-                <a href="index.html" class="back-to-site">← На сайт</a>
+                <a href="../index.html" class="back-to-site" data-admin-translate="back_to_site">← На сайт</a>
             </div>
         </div>
 
@@ -65,28 +67,28 @@
             <!-- Услуги -->
             <div class="tab-content" id="tab-services">
                 <div class="content-header">
-                    <h1>Управление услугами</h1>
-                    <button class="btn-add" id="addServiceBtn">+ Добавить услугу</button>
+                    <h1 data-admin-translate="services_title">Управление услугами</h1>
+                    <button class="btn-add" id="addServiceBtn" data-admin-translate="add_service">+ Добавить услугу</button>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
                         <span class="stat-value" id="servicesCount">0</span>
-                        <span class="stat-label">Всего услуг</span>
+                        <span class="stat-label" data-admin-translate="stat_total_services">Всего услуг</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="activeServicesCount">0</span>
-                        <span class="stat-label">Активных</span>
+                        <span class="stat-label" data-admin-translate="stat_active_services">Активных</span>
                     </div>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Название</th>
-                                <th>URL страницы</th>
-                                <th>Статус</th>
-                                <th>Действия</th>
+                                <th data-admin-translate="th_id">ID</th>
+                                <th data-admin-translate="th_name">Название</th>
+                                <th data-admin-translate="th_url">URL страницы</th>
+                                <th data-admin-translate="th_status">Статус</th>
+                                <th data-admin-translate="th_actions">Действия</th>
                             </tr>
                         </thead>
                         <tbody id="servicesList"></tbody>
@@ -97,23 +99,23 @@
             <!-- Детали услуг -->
             <div class="tab-content" id="tab-service-details">
                 <div class="content-header">
-                    <h1>Детальная информация услуг</h1>
-                    <button class="btn-add" id="addDetailBtn">+ Добавить детальную услугу</button>
+                    <h1 data-admin-translate="service_details_title">Детальная информация услуг</h1>
+                    <button class="btn-add" id="addDetailBtn" data-admin-translate="add_service_detail">+ Добавить детальную услугу</button>
                 </div>
                 <div class="filter-row">
                     <select id="detailServiceFilter" class="filter-select">
-                        <option value="">Все услуги</option>
+                        <option value="" data-admin-translate="filter_all_services">Все услуги</option>
                     </select>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Услуга</th>
-                                <th>Основной текст</th>
-                                <th>Статус</th>
-                                <th>Действия</th>
+                                <th data-admin-translate="th_id">ID</th>
+                                <th data-admin-translate="th_name">Услуга</th>
+                                <th data-admin-translate="th_main_text">Основной текст</th>
+                                <th data-admin-translate="th_status">Статус</th>
+                                <th data-admin-translate="th_actions">Действия</th>
                             </tr>
                         </thead>
                         <tbody id="serviceDetailsList"></tbody>
@@ -124,25 +126,25 @@
             <!-- Врачи -->
             <div class="tab-content" id="tab-doctors">
                 <div class="content-header">
-                    <h1>Управление врачами</h1>
-                    <button class="btn-add" id="addDoctorBtn">+ Добавить врача</button>
+                    <h1 data-admin-translate="doctors_title">Управление врачами</h1>
+                    <button class="btn-add" id="addDoctorBtn" data-admin-translate="add_doctor">+ Добавить врача</button>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
                         <span class="stat-value" id="doctorsCount">0</span>
-                        <span class="stat-label">Всего врачей</span>
+                        <span class="stat-label" data-admin-translate="stat_total_doctors">Всего врачей</span>
                     </div>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Фото</th>
-                                <th>ФИО</th>
-                                <th>Специализация</th>
-                                <th>Статус</th>
-                                <th>Действия</th>
+                                <th data-admin-translate="th_id">ID</th>
+                                <th data-admin-translate="th_photo">Фото</th>
+                                <th data-admin-translate="th_fullname">ФИО</th>
+                                <th data-admin-translate="th_specialization">Специализация</th>
+                                <th data-admin-translate="th_status">Статус</th>
+                                <th data-admin-translate="th_actions">Действия</th>
                             </tr>
                         </thead>
                         <tbody id="doctorsList"></tbody>
@@ -153,50 +155,50 @@
             <!-- Запись на прием -->
             <div class="tab-content" id="tab-appointments">
                 <div class="content-header">
-                    <h1>Запись на прием</h1>
-                    <button class="btn-add" id="addAppointmentBtn">+ Новая запись</button>
+                    <h1 data-admin-translate="appointments_title">Запись на прием</h1>
+                    <button class="btn-add" id="addAppointmentBtn" data-admin-translate="new_appointment">+ Новая запись</button>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
                         <span class="stat-value" id="appointmentsCount">0</span>
-                        <span class="stat-label">Всего записей</span>
+                        <span class="stat-label" data-admin-translate="stat_total_appointments">Всего записей</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="appointmentsTodayCount">0</span>
-                        <span class="stat-label">На сегодня</span>
+                        <span class="stat-label" data-admin-translate="stat_today_appointments">На сегодня</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="appointmentsWeekCount">0</span>
-                        <span class="stat-label">На неделю</span>
+                        <span class="stat-label" data-admin-translate="stat_week_appointments">На неделю</span>
                     </div>
                 </div>
                 <div class="filter-row">
                     <select id="appointmentDoctorFilter" class="filter-select">
-                        <option value="">Все врачи</option>
+                        <option value="" data-admin-translate="filter_all_doctors">Все врачи</option>
                     </select>
-                    <input type="date" id="appointmentDateFilter" class="filter-date">
+                    <input type="text" id="appointmentDateFilter" class="filter-date" placeholder="ДД.ММ.ГГГГ" autocomplete="off">
                     <select id="appointmentStatusFilter" class="filter-select">
-                        <option value="">Все статусы</option>
-                        <option value="pending">⏳ Ожидает</option>
-                        <option value="confirmed">✅ Подтверждена</option>
-                        <option value="completed">✔️ Завершена</option>
-                        <option value="cancelled">❌ Отменена</option>
+                        <option value="" data-admin-translate="filter_all_statuses">Все статусы</option>
+                        <option value="pending" data-admin-translate="status_pending">⏳ Ожидает</option>
+                        <option value="confirmed" data-admin-translate="status_confirmed">✅ Подтверждена</option>
+                        <option value="completed" data-admin-translate="status_completed">✔️ Завершена</option>
+                        <option value="cancelled" data-admin-translate="status_cancelled">❌ Отменена</option>
                     </select>
-                    <button id="resetAppointmentFilters" class="btn-reset">Сбросить</button>
+                    <button id="resetAppointmentFilters" class="btn-reset" data-admin-translate="btn_reset">Сбросить</button>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Пациент</th>
-                                <th>Телефон</th>
-                                <th>Врач</th>
-                                <th>Услуга</th>
-                                <th>Дата</th>
-                                <th>Время</th>
-                                <th>Статус</th>
-                                <th>Действия</th>
+                                <th data-admin-translate="th_id">ID</th>
+                                <th data-admin-translate="th_patient">Пациент</th>
+                                <th data-admin-translate="th_phone">Телефон</th>
+                                <th data-admin-translate="th_doctor">Врач</th>
+                                <th data-admin-translate="th_service">Услуга</th>
+                                <th data-admin-translate="th_date">Дата</th>
+                                <th data-admin-translate="th_time">Время</th>
+                                <th data-admin-translate="th_status">Статус</th>
+                                <th data-admin-translate="th_actions">Действия</th>
                             </tr>
                         </thead>
                         <tbody id="appointmentsList"></tbody>
@@ -207,45 +209,45 @@
             <!-- Отзывы -->
             <div class="tab-content" id="tab-reviews">
                 <div class="content-header">
-                    <h1>Модерация отзывов</h1>
+                    <h1 data-admin-translate="reviews_title">Модерация отзывов</h1>
                     <div class="header-buttons">
-                        <button class="btn-export" id="exportReviewsBtn">📥 Экспорт отзывов</button>
+                        <button class="btn-export" id="exportReviewsBtn" data-admin-translate="export_reviews">📥 Экспорт отзывов</button>
                     </div>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
                         <span class="stat-value" id="totalReviews">0</span>
-                        <span class="stat-label">Всего отзывов</span>
+                        <span class="stat-label" data-admin-translate="stat_total_reviews">Всего отзывов</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="publishedReviews">0</span>
-                        <span class="stat-label">Опубликовано</span>
+                        <span class="stat-label" data-admin-translate="stat_published_reviews">Опубликовано</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="hiddenReviews">0</span>
-                        <span class="stat-label">Скрыто</span>
+                        <span class="stat-label" data-admin-translate="stat_hidden_reviews">Скрыто</span>
                     </div>
                 </div>
                 <div class="filter-row">
                     <select id="reviewStatusFilter" class="filter-select">
-                        <option value="all">Все статусы</option>
-                        <option value="published">Опубликованы</option>
-                        <option value="hidden">Скрыты</option>
+                        <option value="all" data-admin-translate="filter_all_statuses">Все статусы</option>
+                        <option value="published" data-admin-translate="filter_published">Опубликованы</option>
+                        <option value="hidden" data-admin-translate="filter_hidden">Скрыты</option>
                     </select>
-                    <input type="text" id="reviewSearchFilter" placeholder="Поиск по имени или тексту..." class="filter-search">
-                    <button id="resetReviewFilters" class="btn-reset">Сбросить</button>
+                    <input type="text" id="reviewSearchFilter" class="filter-search" placeholder="Поиск по имени или тексту...">
+                    <button id="resetReviewFilters" class="btn-reset" data-admin-translate="btn_reset">Сбросить</button>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Автор</th>
-                                <th>Текст отзыва</th>
-                                <th>Рейтинг</th>
-                                <th>Дата</th>
-                                <th>Статус</th>
-                                <th>Действия</th>
+                                <th data-admin-translate="th_id">ID</th>
+                                <th data-admin-translate="th_author">Автор</th>
+                                <th data-admin-translate="th_review_text">Текст отзыва</th>
+                                <th data-admin-translate="th_rating">Рейтинг</th>
+                                <th data-admin-translate="th_date">Дата</th>
+                                <th data-admin-translate="th_status">Статус</th>
+                                <th data-admin-translate="th_actions">Действия</th>
                             </tr>
                         </thead>
                         <tbody id="reviewsList"></tbody>
@@ -256,28 +258,28 @@
             <!-- Прайс-лист -->
             <div class="tab-content" id="tab-prices">
                 <div class="content-header">
-                    <h1>Управление прайс-листом</h1>
+                    <h1 data-admin-translate="prices_title">Управление прайс-листом</h1>
                     <div class="header-buttons">
-                        <button class="btn-add" id="addPriceCategoryBtn">+ Добавить категорию</button>
-                        <button class="btn-add" id="addPriceServiceBtn">+ Добавить услугу</button>
-                        <button class="btn-export" id="exportPricesBtn">📥 Экспорт</button>
+                        <button class="btn-add" id="addPriceCategoryBtn" data-admin-translate="add_category">+ Добавить категорию</button>
+                        <button class="btn-add" id="addPriceServiceBtn" data-admin-translate="add_price_service">+ Добавить услугу</button>
+                        <button class="btn-export" id="exportPricesBtn" data-admin-translate="export_prices">📥 Экспорт</button>
                     </div>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
                         <span class="stat-value" id="totalCategories">0</span>
-                        <span class="stat-label">Категорий</span>
+                        <span class="stat-label" data-admin-translate="stat_categories">Категорий</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="totalPriceServices">0</span>
-                        <span class="stat-label">Услуг</span>
+                        <span class="stat-label" data-admin-translate="stat_services_count">Услуг</span>
                     </div>
                 </div>
                 <div class="filter-row">
                     <select id="priceCategoryFilter" class="filter-select">
-                        <option value="all">Все категории</option>
+                        <option value="all" data-admin-translate="filter_all_categories">Все категории</option>
                     </select>
-                    <input type="text" id="priceSearchFilter" placeholder="Поиск по услуге..." class="filter-search">
+                    <input type="text" id="priceSearchFilter" class="filter-search" placeholder="Поиск по услуге...">
                 </div>
                 <div id="pricesAdminContainer" class="prices-admin-container"></div>
             </div>
@@ -285,16 +287,16 @@
             <!-- Расписание врачей -->
             <div class="tab-content" id="tab-schedule">
                 <div class="content-header">
-                    <h1>Управление расписанием врачей</h1>
+                    <h1 data-admin-translate="schedule_title">Управление расписанием врачей</h1>
                     <div class="header-buttons">
-                        <button class="btn-add" id="addScheduleBtn">+ Настроить расписание</button>
-                        <button class="btn-export" id="exportScheduleBtn">📥 Экспорт</button>
+                        <button class="btn-add" id="addScheduleBtn" data-admin-translate="configure_schedule">+ Настроить расписание</button>
+                        <button class="btn-export" id="exportScheduleBtn" data-admin-translate="export_schedule">📥 Экспорт</button>
                     </div>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
                         <span class="stat-value" id="totalDoctorsSchedule">0</span>
-                        <span class="stat-label">Врачей</span>
+                        <span class="stat-label" data-admin-translate="stat_total_doctors">Врачей</span>
                     </div>
                 </div>
                 <div id="scheduleAdminContainer" class="schedule-admin-container"></div>
@@ -303,100 +305,118 @@
             <!-- Аналитика -->
             <div class="tab-content" id="tab-analytics">
                 <div class="content-header">
-                    <h1>Аналитика посещений</h1>
+                    <h1 data-admin-translate="analytics_title">Аналитика посещений</h1>
                     <div class="header-buttons">
-                        <button class="btn-export" id="exportAnalyticsBtn">📥 Экспорт отчета</button>
-                        <button class="btn-add" id="refreshAnalyticsBtn">🔄 Обновить</button>
+                        <button class="btn-export" id="exportAnalyticsBtn" data-admin-translate="export_report">📥 Экспорт отчета</button>
+                        <button class="btn-add" id="refreshAnalyticsBtn" data-admin-translate="refresh">🔄 Обновить</button>
                     </div>
                 </div>
                 <div class="analytics-period">
                     <div class="period-group">
-                        <label>Период:</label>
+                        <label data-admin-translate="period_label">Период:</label>
                         <select id="periodSelect" class="period-select">
-                            <option value="week">Последние 7 дней</option>
-                            <option value="month" selected>Последние 30 дней</option>
-                            <option value="quarter">Последние 90 дней</option>
-                            <option value="year">Последний год</option>
-                            <option value="all">За все время</option>
+                            <option value="week" data-admin-translate="period_week">Последние 7 дней</option>
+                            <option value="month" selected data-admin-translate="period_month">Последние 30 дней</option>
+                            <option value="quarter" data-admin-translate="period_quarter">Последние 90 дней</option>
+                            <option value="year" data-admin-translate="period_year">Последний год</option>
+                            <option value="all" data-admin-translate="period_all">За все время</option>
                         </select>
                     </div>
                     <div class="period-group custom-period">
-                        <label>С:</label>
+                        <label data-admin-translate="from_label">С:</label>
                         <input type="date" id="startDate">
-                        <label>По:</label>
+                        <label data-admin-translate="to_label">По:</label>
                         <input type="date" id="endDate">
-                        <button id="applyCustomPeriod" class="btn-small">Применить</button>
+                        <button id="applyCustomPeriod" class="btn-small" data-admin-translate="apply_btn">Применить</button>
                     </div>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
                         <span class="stat-value" id="totalAppointments">0</span>
-                        <span class="stat-label">Всего записей</span>
+                        <span class="stat-label" data-admin-translate="stat_total_appointments">Всего записей</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="confirmedAppointments">0</span>
-                        <span class="stat-label">Подтверждено</span>
+                        <span class="stat-label" data-admin-translate="status_confirmed">Подтверждено</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="completedAppointments">0</span>
-                        <span class="stat-label">Завершено</span>
+                        <span class="stat-label" data-admin-translate="status_completed">Завершено</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="pendingAppointments">0</span>
-                        <span class="stat-label">Ожидают</span>
+                        <span class="stat-label" data-admin-translate="status_pending">Ожидают</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="cancelledAppointments">0</span>
-                        <span class="stat-label">Отменено</span>
+                        <span class="stat-label" data-admin-translate="status_cancelled">Отменено</span>
                     </div>
                 </div>
                 <div class="conversion-card">
-                    <div class="conversion-title">📈 Конверсия записей</div>
+                    <div class="conversion-title" data-admin-translate="conversion_title">📈 Конверсия записей</div>
                     <div class="conversion-stats">
                         <div class="conversion-item">
                             <span class="conversion-value" id="confirmationRate">0%</span>
-                            <span class="conversion-label">Подтверждение</span>
+                            <span class="conversion-label" data-admin-translate="confirmation_label">Подтверждение</span>
                         </div>
                         <div class="conversion-item">
                             <span class="conversion-value" id="completionRate">0%</span>
-                            <span class="conversion-label">Завершение</span>
+                            <span class="conversion-label" data-admin-translate="completion_label">Завершение</span>
                         </div>
                         <div class="conversion-item">
                             <span class="conversion-value" id="cancellationRate">0%</span>
-                            <span class="conversion-label">Отмена</span>
+                            <span class="conversion-label" data-admin-translate="cancellation_label">Отмена</span>
                         </div>
                     </div>
                 </div>
                 <div class="analytics-grid">
-                    <div class="analytics-card"><div class="card-header"><h3>📈 Динамика записей</h3></div><div class="card-body"><canvas id="appointmentsChart" width="400" height="200"></canvas></div></div>
-                    <div class="analytics-card"><div class="card-header"><h3>👨‍⚕️ Востребованность врачей</h3></div><div class="card-body"><canvas id="doctorsChart" width="400" height="200"></canvas></div><div class="card-footer"><table id="doctorsStatsTable"><thead><tr><th>Врач</th><th>Кол-во записей</th><th>%</th></tr></thead><tbody></tbody></table></div></div>
-                    <div class="analytics-card"><div class="card-header"><h3>🦷 Популярные услуги</h3></div><div class="card-body"><canvas id="servicesChart" width="400" height="200"></canvas></div><div class="card-footer"><table id="servicesStatsTable"><thead><tr><th>Услуга</th><th>Кол-во записей</th><th>%</th></tr></thead><tbody></tbody></table></div></div>
-                    <div class="analytics-card"><div class="card-header"><h3>⏰ Часы пик</h3></div><div class="card-body"><canvas id="hoursChart" width="400" height="200"></canvas></div><div class="card-footer"><div class="peak-hours-info"><span id="peakHour">—</span></div></div></div>
-                    <div class="analytics-card"><div class="card-header"><h3>📅 Загрузка по дням недели</h3></div><div class="card-body"><canvas id="weekdaysChart" width="400" height="200"></canvas></div><div class="card-footer"><div class="busiest-day-info"><span id="busiestDay">—</span></div></div></div>
-                    <div class="analytics-card"><div class="card-header"><h3>📊 Статусы записей</h3></div><div class="card-body"><canvas id="statusChart" width="400" height="200"></canvas></div></div>
+                    <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_dynamics">📈 Динамика записей</h3></div><div class="card-body"><canvas id="appointmentsChart" width="400" height="200"></canvas></div></div>
+                    <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_doctors">👨‍⚕️ Востребованность врачей</h3></div><div class="card-body"><canvas id="doctorsChart" width="400" height="200"></canvas></div><div class="card-footer"><table id="doctorsStatsTable"><thead><tr><th data-admin-translate="th_fullname">Врач</th><th data-admin-translate="th_count">Кол-во записей</th><th data-admin-translate="th_percent">%</th></tr></thead><tbody></tbody></table></div></div>
+                    <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_services">🦷 Популярные услуги</h3></div><div class="card-body"><canvas id="servicesChart" width="400" height="200"></canvas></div><div class="card-footer"><table id="servicesStatsTable"><thead><tr><th data-admin-translate="th_name">Услуга</th><th data-admin-translate="th_count">Кол-во записей</th><th data-admin-translate="th_percent">%</th><tr></thead><tbody></tbody></table></div></div>
+                    <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_peak_hours">⏰ Часы пик</h3></div><div class="card-body"><canvas id="hoursChart" width="400" height="200"></canvas></div><div class="card-footer"><div class="peak-hours-info"><span data-admin-translate="peak_hour_label">Часы пик:</span> <span id="peakHour">—</span></div></div></div>
+                    <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_weekdays">📅 Загрузка по дням недели</h3></div><div class="card-body"><canvas id="weekdaysChart" width="400" height="200"></canvas></div><div class="card-footer"><div class="busiest-day-info"><span data-admin-translate="busiest_day_label">Самый загруженный день:</span> <span id="busiestDay">—</span></div></div></div>
+                    <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_statuses">📊 Статусы записей</h3></div><div class="card-body"><canvas id="statusChart" width="400" height="200"></canvas></div></div>
                 </div>
             </div>
 
             <!-- Скидки -->
             <div class="tab-content" id="tab-discounts">
                 <div class="content-header">
-                    <h1>Управление скидками</h1>
-                    <button class="btn-add" id="addDiscountBtn">+ Добавить скидку</button>
+                    <h1 data-admin-translate="discounts_title">Управление скидками</h1>
+                    <button class="btn-add" id="addDiscountBtn" data-admin-translate="add_discount">+ Добавить скидку</button>
                 </div>
                 <div class="stats-row">
-                    <div class="stat-card"><span class="stat-value" id="activeDiscounts">0</span><span class="stat-label">Активных скидок</span></div>
-                    <div class="stat-card"><span class="stat-value" id="expiredDiscounts">0</span><span class="stat-label">Просроченных</span></div>
-                    <div class="stat-card"><span class="stat-value" id="upcomingDiscounts">0</span><span class="stat-label">Предстоящие</span></div>
+                    <div class="stat-card"><span class="stat-value" id="activeDiscounts">0</span><span class="stat-label" data-admin-translate="stat_active_discounts">Активных скидок</span></div>
+                    <div class="stat-card"><span class="stat-value" id="expiredDiscounts">0</span><span class="stat-label" data-admin-translate="stat_expired_discounts">Просроченных</span></div>
+                    <div class="stat-card"><span class="stat-value" id="upcomingDiscounts">0</span><span class="stat-label" data-admin-translate="stat_upcoming_discounts">Предстоящие</span></div>
                 </div>
                 <div class="filter-row">
-                    <select id="discountStatusFilter" class="filter-select"><option value="all">Все скидки</option><option value="active">Активные</option><option value="expired">Просроченные</option><option value="upcoming">Предстоящие</option></select>
-                    <select id="discountServiceFilter" class="filter-select"><option value="all">Все услуги</option></select>
-                    <input type="text" id="discountSearchFilter" placeholder="Поиск по названию..." class="filter-search">
-                    <button id="resetDiscountFilters" class="btn-reset">Сбросить</button>
+                    <select id="discountStatusFilter" class="filter-select">
+                        <option value="all" data-admin-translate="filter_all_discounts">Все скидки</option>
+                        <option value="active" data-admin-translate="filter_active">Активные</option>
+                        <option value="expired" data-admin-translate="filter_expired">Просроченные</option>
+                        <option value="upcoming" data-admin-translate="filter_upcoming">Предстоящие</option>
+                    </select>
+                    <select id="discountCategoryFilter" class="filter-select">
+                        <option value="all" data-admin-translate="filter_all_categories">Все категории</option>
+                    </select>
+                    <input type="text" id="discountSearchFilter" class="filter-search" placeholder="Поиск по названию...">
+                    <button id="resetDiscountFilters" class="btn-reset" data-admin-translate="btn_reset">Сбросить</button>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table">
-                        <thead><tr><th>ID</th><th>Услуга</th><th>Название скидки</th><th>Тип</th><th>Размер</th><th>Период действия</th><th>Статус</th><th>Действия</th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th data-admin-translate="th_id">ID</th>
+                                <th data-admin-translate="th_category">Категория</th>
+                                <th data-admin-translate="th_discount_name">Название скидки</th>
+                                <th data-admin-translate="th_discount_type">Тип</th>
+                                <th data-admin-translate="th_discount_value">Размер</th>
+                                <th data-admin-translate="th_period">Период действия</th>
+                                <th data-admin-translate="th_status">Статус</th>
+                                <th data-admin-translate="th_actions">Действия</th>
+                            </tr>
+                        </thead>
                         <tbody id="discountsList"></tbody>
                     </table>
                 </div>
@@ -404,6 +424,9 @@
         </div>
     </div>
 
+    <!-- ==================== МОДАЛЬНЫЕ ОКНА ==================== -->
+    
+    <!-- Модальное окно услуги -->
     <div id="serviceModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -412,35 +435,80 @@
             </div>
             <form id="serviceForm">
                 <input type="hidden" id="serviceId">
-                <div class="form-group"><label>Название услуги *</label><input type="text" id="serviceName" required placeholder="Например: ДИАГНОСТИКА"></div>
-                <div class="form-group"><label>URL страницы *</label><input type="text" id="servicePage" required placeholder="service-menu2.html"><small>Путь к файлу страницы услуги</small></div>
-                <div class="form-group"><label>Фоновое изображение</label><input type="text" id="serviceBgImage" placeholder="../assets/images/..."></div>
-                <div class="form-group"><label>Заголовок на странице</label><input type="text" id="serviceTitle" placeholder="ДИАГНОСТИКА"></div>
-                <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="serviceActive" checked>Активна (показывать на сайте)</label></div>
-                <div class="form-actions"><button type="submit" class="btn-save">Сохранить</button><button type="button" class="btn-cancel" data-modal="serviceModal">Отмена</button></div>
+                <div class="form-group">
+                    <label data-admin-translate="service_name_label">Название услуги *</label>
+                    <input type="text" id="serviceName" required placeholder="Например: ДИАГНОСТИКА">
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="service_url_label">URL страницы *</label>
+                    <input type="text" id="servicePage" required placeholder="service-menu2.html">
+                    <small data-admin-translate="service_url_hint">Путь к файлу страницы услуги</small>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="service_bg_label">Фоновое изображение</label>
+                    <input type="text" id="serviceBgImage" placeholder="../assets/images/...">
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="service_title_label">Заголовок на странице</label>
+                    <input type="text" id="serviceTitle" placeholder="ДИАГНОСТИКА">
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="serviceActive" checked> <span data-admin-translate="service_active_label">Активна (показывать на сайте)</span>
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="serviceModal" data-admin-translate="cancel_btn">Отмена</button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Модальное окно детальной услуги -->
     <div id="detailModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
-                <h2 id="detailModalTitle">Детальная информация услуги</h2>
+                <h2 id="detailModalTitle">Добавить детальную информацию</h2>
                 <span class="modal-close" data-modal="detailModal">&times;</span>
             </div>
             <form id="detailForm">
                 <input type="hidden" id="detailId">
-                <div class="form-row"><div class="form-group"><label>Выберите услугу *</label><select id="detailServiceId" required><option value="">-- Выберите услугу --</option></select></div></div>
-                <div class="form-group"><label>Основной текст (первый блок)</label><textarea id="detailMainText" rows="4" placeholder="Основное описание услуги..."></textarea></div>
-                <div class="form-group"><label>Дополнительный текст (второй блок)</label><textarea id="detailSecondaryText" rows="4" placeholder="Дополнительная информация..."></textarea></div>
-                <div class="form-group"><label>Список преимуществ (по одному на строку)</label><textarea id="detailFeatures" rows="4" placeholder="Преимущество 1&#10;Преимущество 2&#10;Преимущество 3"></textarea></div>
-                <div class="form-group"><label>Этапы лечения (по одному на строку)</label><textarea id="detailSteps" rows="5" placeholder="1. Консультация&#10;2. Диагностика&#10;3. Лечение"></textarea></div>
-                <div class="form-group"><label>Дополнительные изображения (URL через запятую)</label><input type="text" id="detailImages" placeholder="../assets/images/... , ../assets/images/..."></div>
-                <div class="form-actions"><button type="submit" class="btn-save">Сохранить</button><button type="button" class="btn-cancel" data-modal="detailModal">Отмена</button></div>
+                <div class="form-group">
+                    <label data-admin-translate="service_select_label">Услуга *</label>
+                    <select id="detailServiceId" required>
+                        <option value="" data-admin-translate="select_service_option">-- Выберите услугу --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="main_text_label">Основной текст</label>
+                    <textarea id="detailMainText" rows="4" data-admin-translate="main_text_placeholder" placeholder="Введите основной текст..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="secondary_text_label">Вторичный текст</label>
+                    <textarea id="detailSecondaryText" rows="3" data-admin-translate="secondary_text_placeholder" placeholder="Введите дополнительный текст..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="features_label">Особенности (через запятую)</label>
+                    <textarea id="detailFeatures" rows="3" data-admin-translate="features_placeholder" placeholder="Особенность 1, Особенность 2..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="steps_label">Этапы (через запятую)</label>
+                    <textarea id="detailSteps" rows="3" data-admin-translate="steps_placeholder" placeholder="Этап 1, Этап 2..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="images_label">Изображения (URL)</label>
+                    <input type="text" id="detailImages" placeholder="../assets/images/...">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="detailModal" data-admin-translate="cancel_btn">Отмена</button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Модальное окно врача -->
     <div id="doctorModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
@@ -450,129 +518,382 @@
             <form id="doctorForm">
                 <input type="hidden" id="doctorId">
                 <div class="form-row">
-                    <div class="form-group"><label>Фамилия *</label><input type="text" id="doctorLastName" required placeholder="Волкова"></div>
-                    <div class="form-group"><label>Имя *</label><input type="text" id="doctorFirstName" required placeholder="Екатерина"></div>
-                    <div class="form-group"><label>Отчество</label><input type="text" id="doctorMiddleName" placeholder="Андреевна"></div>
+                    <div class="form-group">
+                        <label data-admin-translate="last_name_label">Фамилия *</label>
+                        <input type="text" id="doctorLastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-admin-translate="first_name_label">Имя *</label>
+                        <input type="text" id="doctorFirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-admin-translate="middle_name_label">Отчество</label>
+                        <input type="text" id="doctorMiddleName">
+                    </div>
                 </div>
-                <div class="form-group"><label>Специализация *</label><input type="text" id="doctorSpecialization" required placeholder="Стоматолог-терапевт, детский стоматолог"></div>
-                <div class="form-group"><label>Фото (URL)</label><input type="text" id="doctorPhoto" placeholder="../assets/images/team/..."></div>
-                <div class="form-group"><label>Образование</label><textarea id="doctorEducation" rows="2" placeholder="Белорусский государственный медицинский университет (2010 г)"></textarea></div>
-                <div class="form-group"><label>Опыт работы</label><input type="text" id="doctorExperience" placeholder="более 12 лет"></div>
-                <div class="form-group"><label>Повышение квалификации</label><textarea id="doctorImprovement" rows="2" placeholder="Регулярно повышает квалификацию..."></textarea></div>
-                <div class="form-group"><label>График работы</label><input type="text" id="doctorSchedule" placeholder="Пн-Сб, 09:00 - 18:00"></div>
-                <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="doctorActive" checked>Активен (показывать на сайте)</label></div>
-                <div class="form-actions"><button type="submit" class="btn-save">Сохранить</button><button type="button" class="btn-cancel" data-modal="doctorModal">Отмена</button></div>
+                <div class="form-group">
+                    <label data-admin-translate="specialization_label">Специализация *</label>
+                    <input type="text" id="doctorSpecialization" required>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="photo_label">Фото (URL)</label>
+                    <input type="text" id="doctorPhoto" placeholder="../assets/images/team/...">
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="education_label">Образование</label>
+                    <textarea id="doctorEducation" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="experience_label">Опыт работы</label>
+                    <input type="text" id="doctorExperience">
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="improvement_label">Повышение квалификации</label>
+                    <textarea id="doctorImprovement" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="schedule_label">Расписание</label>
+                    <input type="text" id="doctorSchedule" placeholder="Пн-Пт, 10:00 - 18:00">
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="doctorActive" checked> <span data-admin-translate="doctor_active_label">Активен (показывать на сайте)</span>
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="doctorModal" data-admin-translate="cancel_btn">Отмена</button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Модальное окно записи -->
     <div id="appointmentModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
-                <h2 id="appointmentModalTitle">Запись на прием</h2>
+                <h2 id="appointmentModalTitle">Новая запись</h2>
                 <span class="modal-close" data-modal="appointmentModal">&times;</span>
             </div>
             <form id="appointmentForm">
                 <input type="hidden" id="appointmentId">
-                <div class="form-group"><label>ФИО пациента *</label><input type="text" id="appointmentPatientName" required placeholder="Иванов Иван Иванович"></div>
-                <div class="form-row"><div class="form-group"><label>Телефон *</label><input type="tel" id="appointmentPhone" required placeholder="+375 (29) 123-45-67"></div><div class="form-group"><label>Email</label><input type="email" id="appointmentEmail" placeholder="patient@example.com"></div></div>
-                <div class="form-row"><div class="form-group"><label>Врач *</label><select id="appointmentDoctorId" required><option value="">-- Выберите врача --</option></select></div><div class="form-group"><label>Услуга *</label><select id="appointmentServiceId" required><option value="">-- Выберите услугу --</option></select></div></div>
-                <div class="form-row"><div class="form-group"><label>Дата *</label><input type="date" id="appointmentDate" required></div><div class="form-group"><label>Время *</label><select id="appointmentTime" required><option value="">-- Выберите время --</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option></select></div></div>
-                <div class="form-group"><label>Комментарий</label><textarea id="appointmentComment" rows="3" placeholder="Дополнительная информация..."></textarea></div>
-                <div class="form-group"><label>Статус записи</label><select id="appointmentStatus"><option value="pending">⏳ Ожидает</option><option value="confirmed">✅ Подтверждена</option><option value="completed">✔️ Завершена</option><option value="cancelled">❌ Отменена</option></select></div>
-                <div class="form-actions"><button type="submit" class="btn-save">Сохранить запись</button><button type="button" class="btn-cancel" data-modal="appointmentModal">Отмена</button></div>
-            </form>
-        </div>
-    </div>
-
-    <div id="viewReviewModal" class="modal">
-        <div class="modal-content modal-medium">
-            <div class="modal-header"><h2>Просмотр отзыва</h2><span class="modal-close" data-modal="viewReviewModal">&times;</span></div>
-            <div class="view-review-content">
-                <div class="view-review-author"><strong id="viewAuthor"></strong><span id="viewUserInfo" class="view-user-info"></span></div>
-                <div class="view-review-rating" id="viewRating"></div>
-                <div class="view-review-text" id="viewText"></div>
-                <div class="view-review-date" id="viewDate"></div>
-                <div class="view-review-photo" id="viewPhoto"></div>
-            </div>
-            <div class="form-actions"><button type="button" class="btn-cancel" data-modal="viewReviewModal">Закрыть</button></div>
-        </div>
-    </div>
-
-    <div id="priceCategoryModal" class="modal">
-        <div class="modal-content modal-medium">
-            <div class="modal-header"><h2 id="priceCategoryModalTitle">Добавить категорию</h2><span class="modal-close" data-modal="priceCategoryModal">&times;</span></div>
-            <form id="priceCategoryForm">
-                <input type="hidden" id="priceCategoryId">
-                <div class="form-group"><label>Название категории *</label><input type="text" id="priceCategoryName" required placeholder="Например: Диагностика"></div>
-                <div class="form-group"><label>Порядок сортировки</label><input type="number" id="priceCategoryOrder" placeholder="1"></div>
-                <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="priceCategoryActive" checked>Активна (показывать на сайте)</label></div>
-                <div class="form-actions"><button type="submit" class="btn-save">Сохранить</button><button type="button" class="btn-cancel" data-modal="priceCategoryModal">Отмена</button></div>
-            </form>
-        </div>
-    </div>
-
-    <div id="priceServiceModal" class="modal">
-        <div class="modal-content modal-medium">
-            <div class="modal-header"><h2 id="priceServiceModalTitle">Добавить услугу</h2><span class="modal-close" data-modal="priceServiceModal">&times;</span></div>
-            <form id="priceServiceForm">
-                <input type="hidden" id="priceServiceId">
-                <div class="form-group"><label>Категория *</label><select id="priceServiceCategoryId" required><option value="">-- Выберите категорию --</option></select></div>
-                <div class="form-group"><label>Название услуги *</label><input type="text" id="priceServiceName" required placeholder="Например: Первичная консультация"></div>
-                <div class="form-group"><label>Цена</label><input type="text" id="priceServicePrice" placeholder="25"></div>
-                <div class="form-group"><label>Валюта</label><select id="priceServiceUnit"><option value="BYN">BYN</option><option value="₸">₸</option><option value="$">$</option><option value="€">€</option></select></div>
-                <div class="form-group"><label>Примечание</label><input type="text" id="priceServiceDescription" placeholder="например: Один зуб"></div>
-                <div class="form-group"><label>Порядок сортировки</label><input type="number" id="priceServiceOrder" placeholder="1"></div>
-                <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="priceServiceActive" checked>Активна (показывать на сайте)</label></div>
-                <div class="form-actions"><button type="submit" class="btn-save">Сохранить</button><button type="button" class="btn-cancel" data-modal="priceServiceModal">Отмена</button></div>
-            </form>
-        </div>
-    </div>
-
-    <div id="scheduleModal" class="modal">
-        <div class="modal-content modal-large">
-            <div class="modal-header"><h2 id="scheduleModalTitle">Настройка расписания</h2><span class="modal-close" data-modal="scheduleModal">&times;</span></div>
-            <form id="scheduleForm">
-                <input type="hidden" id="scheduleDoctorId">
-                <div class="form-group"><label>Врач</label><select id="scheduleDoctorSelect" required><option value="">-- Выберите врача --</option></select></div>
-                <div class="schedule-days-container">
-                    <div class="schedule-day-card"><h4>Понедельник</h4><div class="form-row"><div class="form-group"><label class="checkbox-label"><input type="checkbox" class="schedule-working" data-day="monday">Рабочий день</label></div></div><div class="form-row work-hours-row" data-day="monday"><div class="form-group"><label>Начало работы</label><input type="time" class="schedule-start" data-day="monday"></div><div class="form-group"><label>Конец работы</label><input type="time" class="schedule-end" data-day="monday"></div><div class="form-group"><label>Начало перерыва</label><input type="time" class="schedule-break-start" data-day="monday"></div><div class="form-group"><label>Конец перерыва</label><input type="time" class="schedule-break-end" data-day="monday"></div></div></div>
-                    <div class="schedule-day-card"><h4>Вторник</h4><div class="form-row"><div class="form-group"><label class="checkbox-label"><input type="checkbox" class="schedule-working" data-day="tuesday">Рабочий день</label></div></div><div class="form-row work-hours-row" data-day="tuesday"><div class="form-group"><label>Начало работы</label><input type="time" class="schedule-start" data-day="tuesday"></div><div class="form-group"><label>Конец работы</label><input type="time" class="schedule-end" data-day="tuesday"></div><div class="form-group"><label>Начало перерыва</label><input type="time" class="schedule-break-start" data-day="tuesday"></div><div class="form-group"><label>Конец перерыва</label><input type="time" class="schedule-break-end" data-day="tuesday"></div></div></div>
-                    <div class="schedule-day-card"><h4>Среда</h4><div class="form-row"><div class="form-group"><label class="checkbox-label"><input type="checkbox" class="schedule-working" data-day="wednesday">Рабочий день</label></div></div><div class="form-row work-hours-row" data-day="wednesday"><div class="form-group"><label>Начало работы</label><input type="time" class="schedule-start" data-day="wednesday"></div><div class="form-group"><label>Конец работы</label><input type="time" class="schedule-end" data-day="wednesday"></div><div class="form-group"><label>Начало перерыва</label><input type="time" class="schedule-break-start" data-day="wednesday"></div><div class="form-group"><label>Конец перерыва</label><input type="time" class="schedule-break-end" data-day="wednesday"></div></div></div>
-                    <div class="schedule-day-card"><h4>Четверг</h4><div class="form-row"><div class="form-group"><label class="checkbox-label"><input type="checkbox" class="schedule-working" data-day="thursday">Рабочий день</label></div></div><div class="form-row work-hours-row" data-day="thursday"><div class="form-group"><label>Начало работы</label><input type="time" class="schedule-start" data-day="thursday"></div><div class="form-group"><label>Конец работы</label><input type="time" class="schedule-end" data-day="thursday"></div><div class="form-group"><label>Начало перерыва</label><input type="time" class="schedule-break-start" data-day="thursday"></div><div class="form-group"><label>Конец перерыва</label><input type="time" class="schedule-break-end" data-day="thursday"></div></div></div>
-                    <div class="schedule-day-card"><h4>Пятница</h4><div class="form-row"><div class="form-group"><label class="checkbox-label"><input type="checkbox" class="schedule-working" data-day="friday">Рабочий день</label></div></div><div class="form-row work-hours-row" data-day="friday"><div class="form-group"><label>Начало работы</label><input type="time" class="schedule-start" data-day="friday"></div><div class="form-group"><label>Конец работы</label><input type="time" class="schedule-end" data-day="friday"></div><div class="form-group"><label>Начало перерыва</label><input type="time" class="schedule-break-start" data-day="friday"></div><div class="form-group"><label>Конец перерыва</label><input type="time" class="schedule-break-end" data-day="friday"></div></div></div>
-                    <div class="schedule-day-card"><h4>Суббота</h4><div class="form-row"><div class="form-group"><label class="checkbox-label"><input type="checkbox" class="schedule-working" data-day="saturday">Рабочий день</label></div></div><div class="form-row work-hours-row" data-day="saturday"><div class="form-group"><label>Начало работы</label><input type="time" class="schedule-start" data-day="saturday"></div><div class="form-group"><label>Конец работы</label><input type="time" class="schedule-end" data-day="saturday"></div><div class="form-group"><label>Начало перерыва</label><input type="time" class="schedule-break-start" data-day="saturday"></div><div class="form-group"><label>Конец перерыва</label><input type="time" class="schedule-break-end" data-day="saturday"></div></div></div>
-                    <div class="schedule-day-card"><h4>Воскресенье</h4><div class="form-row"><div class="form-group"><label class="checkbox-label"><input type="checkbox" class="schedule-working" data-day="sunday">Рабочий день</label></div></div><div class="form-row work-hours-row" data-day="sunday"><div class="form-group"><label>Начало работы</label><input type="time" class="schedule-start" data-day="sunday"></div><div class="form-group"><label>Конец работы</label><input type="time" class="schedule-end" data-day="sunday"></div><div class="form-group"><label>Начало перерыва</label><input type="time" class="schedule-break-start" data-day="sunday"></div><div class="form-group"><label>Конец перерыва</label><input type="time" class="schedule-break-end" data-day="sunday"></div></div></div>
+                <div class="form-group">
+                    <label data-admin-translate="patient_name_label">Пациент *</label>
+                    <input type="text" id="appointmentPatientName" required>
                 </div>
-                <div class="form-actions"><button type="submit" class="btn-save">Сохранить расписание</button><button type="button" class="btn-cancel" data-modal="scheduleModal">Отмена</button></div>
+                <div class="form-group">
+                    <label data-admin-translate="phone_label">Телефон *</label>
+                    <input type="tel" id="appointmentPhone" required>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="email_label">Email</label>
+                    <input type="email" id="appointmentEmail">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-admin-translate="doctor_label">Врач *</label>
+                        <select id="appointmentDoctorId" required>
+                            <option value="" data-admin-translate="select_doctor_option">-- Выберите врача --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-admin-translate="service_label">Услуга *</label>
+                        <select id="appointmentServiceId" required>
+                            <option value="" data-admin-translate="select_service_option">-- Выберите услугу --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-admin-translate="date_label">Дата *</label>
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-admin-translate="time_label">Время *</label>
+                        <select id="appointmentTime" required>
+                            <option value="" data-admin-translate="select_time_option">-- Выберите время --</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="status_label">Статус</label>
+                    <select id="appointmentStatus">
+                        <option value="pending" data-admin-translate="status_pending">⏳ Ожидает</option>
+                        <option value="confirmed" data-admin-translate="status_confirmed">✅ Подтверждена</option>
+                        <option value="completed" data-admin-translate="status_completed">✔️ Завершена</option>
+                        <option value="cancelled" data-admin-translate="status_cancelled">❌ Отменена</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="comment_label">Комментарий</label>
+                    <textarea id="appointmentComment" rows="2"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="appointmentModal" data-admin-translate="cancel_btn">Отмена</button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Модальное окно скидки -->
     <div id="discountModal" class="modal">
         <div class="modal-content modal-medium">
-            <div class="modal-header"><h2 id="discountModalTitle">Добавить скидку</h2><span class="modal-close" data-modal="discountModal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="discountModalTitle">Добавить скидку</h2>
+                <span class="modal-close" data-modal="discountModal">&times;</span>
+            </div>
             <form id="discountForm">
                 <input type="hidden" id="discountId">
-                <div class="form-group"><label>Выберите услугу *</label><select id="discountServiceId" required><option value="">-- Выберите услугу --</option></select></div>
-                <div class="form-group"><label>Название скидки *</label><input type="text" id="discountName" required placeholder="Например: Осенняя распродажа"></div>
-                <div class="form-row"><div class="form-group"><label>Тип скидки *</label><select id="discountType" required><option value="percentage">Процентная (%)</option><option value="fixed">Фиксированная (BYN)</option></select></div><div class="form-group"><label>Размер скидки *</label><input type="number" id="discountValue" required step="0.01" min="0" max="100" placeholder="Например: 20"></div></div>
-                <div class="form-row"><div class="form-group"><label>Дата начала</label><input type="date" id="discountStartDate"></div><div class="form-group"><label>Дата окончания</label><input type="date" id="discountEndDate"></div></div>
-                <div class="form-group"><label>Описание скидки</label><textarea id="discountDescription" rows="3" placeholder="Подробное описание скидки..."></textarea></div>
-                <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="discountActive" checked>Активна (показывать на сайте)</label></div>
-                <div class="form-actions"><button type="submit" class="btn-save">Сохранить</button><button type="button" class="btn-cancel" data-modal="discountModal">Отмена</button></div>
+                <div class="form-group">
+                    <label data-admin-translate="category_label">Категория *</label>
+                    <select id="discountServiceId" required>
+                        <option value="" data-admin-translate="select_category_option">-- Выберите категорию --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="discount_name_label">Название скидки *</label>
+                    <input type="text" id="discountName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-admin-translate="discount_type_label">Тип скидки *</label>
+                        <select id="discountType" required>
+                            <option value="percentage" data-admin-translate="discount_percentage">Процентная (%)</option>
+                            <option value="fixed" data-admin-translate="discount_fixed">Фиксированная (BYN)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-admin-translate="discount_value_label">Размер скидки *</label>
+                        <input type="number" id="discountValue" required step="1">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-admin-translate="start_date_label">Дата начала</label>
+                        <input type="date" id="discountStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label data-admin-translate="end_date_label">Дата окончания</label>
+                        <input type="date" id="discountEndDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="description_label">Описание</label>
+                    <textarea id="discountDescription" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="discountActive" checked> <span data-admin-translate="discount_active_label">Активна</span>
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="discountModal" data-admin-translate="cancel_btn">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно услуги прайс-листа -->
+    <div id="priceServiceModal" class="modal">
+        <div class="modal-content modal-medium">
+            <div class="modal-header">
+                <h2 id="priceServiceModalTitle">Добавить услугу</h2>
+                <span class="modal-close" data-modal="priceServiceModal">&times;</span>
+            </div>
+            <form id="priceServiceForm">
+                <input type="hidden" id="priceServiceId">
+                <div class="form-group">
+                    <label data-admin-translate="category_label">Категория *</label>
+                    <select id="priceServiceCategoryId" required>
+                        <option value="" data-admin-translate="select_category_option">-- Выберите категорию --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="service_name_label">Название услуги *</label>
+                    <input type="text" id="priceServiceName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-admin-translate="price_label">Цена *</label>
+                        <input type="text" id="priceServicePrice" required placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label data-admin-translate="currency_label">Валюта</label>
+                        <select id="priceServiceUnit">
+                            <option value="BYN">BYN</option>
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="note_label">Примечание</label>
+                    <input type="text" id="priceServiceDescription" placeholder="Описание услуги">
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="order_label">Порядок сортировки</label>
+                    <input type="number" id="priceServiceOrder" value="999">
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="priceServiceActive" checked> <span data-admin-translate="active_label">Активна</span>
+                    </label>
+                </div>
+                <div id="priceServiceDiscountInfo" class="discount-info" style="display: none;"></div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="priceServiceModal" data-admin-translate="cancel_btn">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно расписания -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="scheduleModalTitle">Настройка расписания</h2>
+                <span class="modal-close" data-modal="scheduleModal">&times;</span>
+            </div>
+            <form id="scheduleForm">
+                <input type="hidden" id="scheduleDoctorId">
+                <div class="form-group">
+                    <label data-admin-translate="doctor_label">Врач</label>
+                    <select id="scheduleDoctorSelect" disabled>
+                        <option value="" data-admin-translate="select_doctor_option">-- Выберите врача --</option>
+                    </select>
+                </div>
+                <div class="schedule-days-container" id="scheduleDaysContainer">
+                    <!-- Дни недели будут добавлены динамически -->
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" data-admin-translate="save_schedule_btn">Сохранить расписание</button>
+                    <button type="button" class="btn-cancel" data-modal="scheduleModal" data-admin-translate="cancel_btn">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно просмотра отзыва -->
+    <div id="viewReviewModal" class="modal">
+        <div class="modal-content modal-medium">
+            <div class="modal-header">
+                <h2 data-admin-translate="view_review_title">Просмотр отзыва</h2>
+                <span class="modal-close" data-modal="viewReviewModal">&times;</span>
+            </div>
+            <div class="review-view-content">
+                <div class="review-view-author">
+                    <strong data-admin-translate="author_label">Автор:</strong> <span id="viewAuthor"></span>
+                </div>
+                <div class="review-view-user">
+                    <strong data-admin-translate="about_label">О себе:</strong> <span id="viewUserInfo"></span>
+                </div>
+                <div class="review-view-rating">
+                    <strong data-admin-translate="rating_label">Рейтинг:</strong> <span id="viewRating"></span>
+                </div>
+                <div class="review-view-text">
+                    <strong data-admin-translate="review_text_label">Текст отзыва:</strong>
+                    <p id="viewText"></p>
+                </div>
+                <div class="review-view-date">
+                    <strong data-admin-translate="date_label">Дата:</strong> <span id="viewDate"></span>
+                </div>
+                <div id="viewPhoto" class="review-view-photo"></div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" data-modal="viewReviewModal" data-admin-translate="close_btn">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно категории прайс-листа -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content modal-medium">
+            <div class="modal-header">
+                <h2 id="categoryModalTitle">Добавить категорию</h2>
+                <span class="modal-close" data-modal="categoryModal">&times;</span>
+            </div>
+            <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+                <div class="form-group">
+                    <label data-admin-translate="category_name_label">Название категории *</label>
+                    <input type="text" id="categoryName" required placeholder="Например: Диагностика">
+                </div>
+                <div class="form-group">
+                    <label data-admin-translate="category_order_label">Порядок сортировки</label>
+                    <input type="number" id="categoryOrder" value="1" placeholder="Чем меньше число, тем выше в списке">
+                    <small data-admin-translate="category_order_hint">Порядок отображения категорий на сайте</small>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="categoryActive" checked> <span data-admin-translate="category_active_label">Активна (показывать на сайте)</span>
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="categoryModal" data-admin-translate="cancel_btn">Отмена</button>
+                </div>
             </form>
         </div>
     </div>
 
     <div id="toast" class="toast"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="../js/translations.js"></script>
     <script src="../js/personalization.js"></script>
     <script src="../js/admin.js"></script>
-        <script src="../js/api.js"></script>
-        <script src="../js/admin-analytics.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/admin-analytics.js"></script>
 
+    <!-- Переключатель языка для админ-панели -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #2F353B; border-radius: 30px; padding: 5px;">
+        <button id="adminLangToggle" style="background: #A5C33C; border: none; padding: 8px 16px; border-radius: 25px; cursor: pointer; font-weight: bold;">
+            🌐 RUS / ENG
+        </button>
+    </div>
+
+    <script>
+        // Переключатель языка
+        const langToggle = document.getElementById('adminLangToggle');
+        if (langToggle) {
+            langToggle.addEventListener('click', function() {
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                const newLang = currentLang === 'ru' ? 'en' : 'ru';
+                localStorage.setItem('dental_language', newLang);
+                this.innerHTML = newLang === 'ru' ? '🌐 RUS / ENG' : '🌐 ENG / RUS';
+                const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
+                document.dispatchEvent(event);
+                const toast = document.getElementById('toast');
+                if (toast) {
+                    toast.textContent = newLang === 'ru' ? '🌐 Язык изменён на русский' : '🌐 Language changed to English';
+                    toast.className = 'toast success show';
+                    setTimeout(() => toast.classList.remove('show'), 2000);
+                }
+            });
+        }
+
+        // Создание модального окна профиля
+        setTimeout(function() {
+            if (!document.getElementById('profileModal') && typeof window.createProfileModal === 'function') {
+                window.createProfileModal();
+            }
+            if (typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI();
+            }
+        }, 500);
+    </script>
 </body>
 </html>

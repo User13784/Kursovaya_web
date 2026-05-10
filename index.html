@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Dental Club — Стоматологическая клиника в Могилеве</title>
+    <title data-translate="hero_title">Dental Club — Стоматологическая клиника в Могилеве</title>
     
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="media/index_media.css">
@@ -11,11 +11,9 @@
     <link rel="stylesheet" href="css/modal-profile.css">
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/search.css">
-        <link rel="stylesheet" href="css/preloader.css">
+    <link rel="stylesheet" href="css/preloader.css">
+<link rel="stylesheet" href="../css/special-version.css">
 
-    
-    <script src="js/translations.js"></script>
-    <script src="js/personalization.js"></script>
 </head>
 <body>
 
@@ -38,165 +36,214 @@
         <div class="preloader-brand">DENTAL CLUB</div>
     </div>
 </div>
-    <div id="header-placeholder"></div>
 
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="close-menu-btn" id="closeMenuBtn">
-            <span></span>
-            <span></span>
-        </div>
-        <nav class="mobile-nav">
-            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
-            <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="#" class="mobile-login-link">ВОЙТИ</a>
-            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="team.html" class="mobile-link">КОМАНДА</a>
-            <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
-            <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
-            <a href="faq.html" class="mobile-link">ВОПРОС-ОТВЕТ</a>
-        </nav>
+<div id="header-placeholder"></div>
+
+<div class="mobile-menu" id="mobileMenu">
+    <div class="close-menu-btn" id="closeMenuBtn">
+        <span></span>
+        <span></span>
     </div>
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <main>
-       <section class="hero">
-    <div class="hero-content">
-        <div class="hero-search-container">
-            <div class="hero-search-wrapper">
-                <input type="text" id="heroSearchInput" class="hero-search-input" placeholder="🔍 Поиск по сайту..." autocomplete="off">
-            </div>
-            <div id="heroSearchResults" class="hero-search-results"></div>
+    <nav class="mobile-nav">
+        <div class="mobile-login-container" id="mobileLoginContainer">
+            <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
         </div>
-        
-        <h1>СТОМАТОЛОГИЧЕСКАЯ КЛИНИКА <br><span class="city-text">В МОГИЛЕВЕ</span></h1>
-        <button class="btn btn-primary" id="openAppointmentBtn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
-    </div>
-    <div class="scroll-down"></div>
-</section>
+        <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
+        <a href="#" class="mobile-lang-selector">RUS</a>
+        <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+        <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+        <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+        <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+        <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+        <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+        <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
+    </nav>
+</div>
+<div class="menu-overlay" id="menuOverlay"></div>
 
-        <section class="clinic-info">
-            <div class="container grid-2">
-                <div class="text-block">
-                    <h2>КЛИНИКА <br> DENTAL CLUB</h2>
+<main>
+   <section class="hero">
+        <div class="hero-content">
+            <div class="hero-search-container">
+                <div class="hero-search-wrapper">
+                    <input type="text" id="heroSearchInput" class="hero-search-input" data-translate="search_placeholder" placeholder="🔍 Поиск по сайту..." autocomplete="off">
                 </div>
-                <div class="content-block">
-                    <p>Первая клиника в Беларуси, предоставляющая<br> полный спектр стоматологических услуг на европейском уровне. Мы используем передовое оборудование и digital технологии.</p>
-                    <button class="btn btn-outline" id="openAppointmentBtn2">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
-                </div>
+                <div id="heroSearchResults" class="hero-search-results"></div>
             </div>
-            <div class="image-gallery">
-                 <div class="img-left"><img src="assets/images/main-page/main3.jpg" alt="Кабинет"></div>
-                 <div class="img-right"><img src="assets/images/main-page/main2.jpg" alt="Ресепшн"></div>
-            </div>
-        </section>
-
-        <section class="advantages">
-            <div class="container grid-2">
-                <div class="text-block">
-                    <h2 class="advantages-title">НАШИ <br> ПРЕИМУЩЕСТВА</h2>
-                </div>
-                <div class="content-block">
-                    <ul>
-                        <li>Оборудование и материалы от ведущих мировых брендов.</li>
-                        <li>Профессионалы, владеющие самыми современными методиками и способные в минимальные сроки решить задачи любой сложности.</li>
-                        <li>Надежность и гарантии.</li>
-                        <li>Абсолютная уверенность в результатах лечения.</li>
-                        <li>Индивидуальный подход и экономия времени пациента.</li>
-                        <li>Безупречный сервис и интерьер, в котором приятно находиться.</li>
-                    </ul>
-                    <button class="btn btn-outline" id="openAppointmentBtn3">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
-                </div>
-            </div>
-            <div class="image-gallery-alt">
-                 <div class="img-bottom-left"><img src="assets/images/main-page/main4.jpg" alt="Врачи"></div>
-                 <div class="img-bottom-right"><img src="assets/images/main-page/main5.jpg" alt="Пациент"></div>
-            </div>
-        </section>
-    </main>
-
-    <div id="footer-placeholder"></div>
-
-    <script src="js/components.js"></script>
-    <script src="js/search.js"></script>
-    <script src="js/modal-appointment.js"></script>
-    <script src="js/modal-profile.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const burgerIcon = document.getElementById('burgerIcon');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                const closeMenuBtn = document.getElementById('closeMenuBtn');
-                const body = document.body;
-
-                function openMenu() {
-                    if (burgerIcon) burgerIcon.classList.add('active');
-                    if (mobileMenu) mobileMenu.classList.add('active');
-                    if (menuOverlay) menuOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                }
-
-                function closeMenu() {
-                    if (burgerIcon) burgerIcon.classList.remove('active');
-                    if (mobileMenu) mobileMenu.classList.remove('active');
-                    if (menuOverlay) menuOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-
-                if (burgerIcon) {
-                    burgerIcon.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (mobileMenu && mobileMenu.classList.contains('active')) {
-                            closeMenu();
-                        } else {
-                            openMenu();
-                        }
-                    });
-                }
-
-                if (closeMenuBtn) {
-                    closeMenuBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMenu();
-                    });
-                }
-
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                        closeMenu();
-                    }
-                });
-            }, 100);
             
-            const openBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2, #openAppointmentBtn3');
-            openBtns.forEach(btn => {
-                if (btn && typeof openVisitorAppointmentModal === 'function') {
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        openVisitorAppointmentModal();
-                    });
-                }
-            });
-            
-            if (typeof initHeroSearch === 'function') {
-                initHeroSearch();
+            <h1><span data-translate="hero_title_full">СТОМАТОЛОГИЧЕСКАЯ КЛИНИКА</span><br><span class="city-text" data-translate="city_text">В МОГИЛЕВЕ</span></h1>
+            <button class="btn btn-primary" id="openAppointmentBtn" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+        </div>
+        <div class="scroll-down"></div>
+    </section>
+
+    <section class="clinic-info">
+        <div class="container grid-2">
+            <div class="text-block">
+                <h2><span data-translate="clinic_name">КЛИНИКА</span><br> DENTAL CLUB</h2>
+            </div>
+            <div class="content-block">
+                <p data-translate="clinic_desc">Первая клиника в Беларуси, предоставляющая<br> полный спектр стоматологических услуг на европейском уровне. Мы используем передовое оборудование и digital технологии.</p>
+                <button class="btn btn-outline" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+            </div>
+        </div>
+        <div class="image-gallery">
+             <div class="img-left"><img src="assets/images/main-page/main3.jpg" alt="Кабинет"></div>
+             <div class="img-right"><img src="assets/images/main-page/main2.jpg" alt="Ресепшн"></div>
+        </div>
+    </section>
+
+    <section class="advantages">
+        <div class="container grid-2">
+            <div class="text-block">
+                <h2 class="advantages-title"><span data-translate="advantages_title">НАШИ</span><br> <span data-translate="advantages_subtitle">ПРЕИМУЩЕСТВА</span></h2>
+            </div>
+            <div class="content-block">
+                <ul>
+                    <li data-translate="advantage_1">Оборудование и материалы от ведущих мировых брендов.</li>
+                    <li data-translate="advantage_2">Профессионалы, владеющие самыми современными методиками и способные в минимальные сроки решить задачи любой сложности.</li>
+                    <li data-translate="advantage_3">Надежность и гарантии.</li>
+                    <li data-translate="advantage_4">Абсолютная уверенность в результатах лечения.</li>
+                    <li data-translate="advantage_5">Индивидуальный подход и экономия времени пациента.</li>
+                    <li data-translate="advantage_6">Безупречный сервис и интерьер, в котором приятно находиться.</li>
+                </ul>
+                <button class="btn btn-outline" id="openAppointmentBtn3" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+            </div>
+        </div>
+        <div class="image-gallery-alt">
+             <div class="img-bottom-left"><img src="assets/images/main-page/main4.jpg" alt="Врачи"></div>
+             <div class="img-bottom-right"><img src="assets/images/main-page/main5.jpg" alt="Пациент"></div>
+        </div>
+    </section>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/localstorage.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/translations.js"></script>
+<script src="js/api.js"></script>
+<script src="js/components.js"></script>
+<script src="js/search.js"></script>
+<script src="js/modal-appointment.js"></script>
+<script src="js/modal-profile.js"></script>
+<script src="js/preloader.js"></script>
+
+<script>
+(function() {
+    function initMobileMenu() {
+        const burgerIcon = document.getElementById('burgerIcon');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const body = document.body;
+
+        if (!burgerIcon || !mobileMenu) return;
+
+        function openMenu() {
+            if (burgerIcon) burgerIcon.classList.add('active');
+            if (mobileMenu) mobileMenu.classList.add('active');
+            if (menuOverlay) menuOverlay.classList.add('active');
+            body.classList.add('menu-open');
+            body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            if (burgerIcon) burgerIcon.classList.remove('active');
+            if (mobileMenu) mobileMenu.classList.remove('active');
+            if (menuOverlay) menuOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            body.style.overflow = '';
+        }
+
+        burgerIcon.removeEventListener('click', burgerIcon._handler);
+        burgerIcon._handler = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (mobileMenu.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        };
+        burgerIcon.addEventListener('click', burgerIcon._handler);
+
+        if (closeMenuBtn) {
+            closeMenuBtn.removeEventListener('click', closeMenuBtn._handler);
+            closeMenuBtn._handler = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeMenu();
+            };
+            closeMenuBtn.addEventListener('click', closeMenuBtn._handler);
+        }
+
+        if (menuOverlay) {
+            menuOverlay.removeEventListener('click', menuOverlay._handler);
+            menuOverlay._handler = closeMenu;
+            menuOverlay.addEventListener('click', menuOverlay._handler);
+        }
+
+        const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
+        mobileLinks.forEach(link => {
+            link.removeEventListener('click', link._closeHandler);
+            link._closeHandler = closeMenu;
+            link.addEventListener('click', link._closeHandler);
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992 && mobileMenu.classList.contains('active')) {
+                closeMenu();
             }
         });
-    </script>
-<script src="js/preloader.js"></script>
-<script src="js/api.js"></script>
-<script src="js/localstorage.js"></script>
+    }
+
+    // Кнопки записи
+    function initAppointmentButtons() {
+        const openBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2, #openAppointmentBtn3');
+        openBtns.forEach(btn => {
+            btn.removeEventListener('click', btn._handler);
+            btn._handler = function(e) {
+                e.preventDefault();
+                if (typeof window.openVisitorAppointmentModal === 'function') {
+                    window.openVisitorAppointmentModal();
+                } else {
+                    console.warn('openVisitorAppointmentModal не определена');
+                }
+            };
+            btn.addEventListener('click', btn._handler);
+        });
+    }
+
+    // Применение переводов
+    function applyPageTranslations() {
+        if (typeof window.applyTranslations === 'function') {
+            window.applyTranslations();
+        }
+    }
+
+    // Инициализация
+    setTimeout(function() {
+        initMobileMenu();
+        initAppointmentButtons();
+        
+        if (typeof window.initHeroSearch === 'function') {
+            window.initHeroSearch();
+        }
+        
+        applyPageTranslations();
+        
+        if (typeof window.updateAuthUI === 'function') {
+            window.updateAuthUI();
+        }
+    }, 200);
+
+    document.addEventListener('languageChanged', function() {
+        applyPageTranslations();
+    });
+})();
+</script>
+<script src="../js/special-version.js"></script>
+
 </body>
 </html>

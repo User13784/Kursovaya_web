@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Профилактика кариеса — Dental Club</title>
+    <title data-translate="prevention_title">Профилактика кариеса — Dental Club</title>
     
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/service-menu3.css">
     <link rel="stylesheet" href="../media/service-menu3_media.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
-    <script src="../js/api.js"></script>
+    <link rel="stylesheet" href="../css/modal-profile.css">
+        <link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/special-version.css">
 
 
 </head>
@@ -23,14 +25,18 @@
             <span></span>
         </div>
         <nav class="mobile-nav">
-            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <div class="mobile-login-container" id="mobileLoginContainer">
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+            </div>
+            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
             <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="#" class="mobile-login-link">ВОЙТИ</a>
-            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="#" class="mobile-link">КОМАНДА</a>
-            <a href="#" class="mobile-link">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -38,8 +44,8 @@
     <main>
         <section class="hero-diagnostics">
             <div class="hero-content">
-                <h1>ПРОФИЛАКТИКА КАРИЕСА</h1>
-                <button class="btn-white">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                <h1 data-translate="prevention_title">ПРОФИЛАКТИКА КАРИЕСА</h1>
+                <button class="btn-white" id="openAppointmentBtn1" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
@@ -49,12 +55,12 @@
                 <div class="info-row">
                     <div class="info-text first-text-block"> 
                         <div class="accent-line first-accent"></div>
-                        <p class="diagnosis-text">
+                        <p class="diagnosis-text" data-translate="prevention_text">
                             Профилактика - это комплекс мер, направленных на предупреждение возникновения и развития стоматологических заболеваний.
                             <br><br>
                             Системный подход позволяет контролировать состояние ваших зубов и десен в течение всего периода наблюдения в <strong>Dental Club</strong>.
                         </p>
-                        <button class="btn-outline first-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <button class="btn-outline first-btn" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                     <div class="info-image side-img">
                         <img src="../assets/images/service-menu3-page/service-menu3.jpg" alt="Стоматологическое кресло">
@@ -72,13 +78,13 @@
                 <div class="info-row reverse tomograph-row">
                     <div class="info-text tomograph-text-block">
                         <div class="accent-line tomograph-accent"></div>
-                        <p class="tomograph-text">
+                        <p class="tomograph-text" data-translate="prevention_tomograph_text">
                             Мы оповещаем пациентов о необходимости произвести профосмотр и пройти профилактику. Специальная программа напоминает нам о вашем индивидуальном графике, исключая неточности в датах.
                         </p>
-                        <p class="safety-text">
+                        <p class="safety-text" data-translate="prevention_safety_text">
                             Регулярная профилактика по системе <strong>Dental Club</strong> в несколько раз снижает риск возникновения кариеса и заболеваний десен. Профосмотр мы рекомендуем проходить не реже двух раз в год.
                         </p>
-                        <button class="btn-outline diagnost-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <button class="btn-outline diagnost-btn" id="openAppointmentBtn3" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                     <div class="info-image tomograph-image">
                         <img class="tomograph-img" src="../assets/images/service-menu3-page/service-menu5.jpg" alt="Врач проводит осмотр">
@@ -91,19 +97,19 @@
                     </div>
                     <div class="info-text specialists-text-block">
                         <div class="accent-line specialists-line"></div>
-                        <p class="steps-title">Этапы системы <strong>Dental Club</strong></p>
+                        <p class="steps-title" data-translate="prevention_steps_title">Этапы системы <strong>Dental Club</strong></p>
                         <ul class="steps-list">
-                            <li>Оценка состояния полости рта, по степени окрашивания биоплёнки.</li>
-                            <li><strong>Prophylflex</strong> (KaVo) — устранение биоплёнки и пигментации.</li>
-                            <li>Удаление зубного камня скалером <strong>Sonyflex</strong> (KaVo).</li>
-                            <li>Полировка фторированной пастой <strong>Proxyt</strong> (Ivoclar).</li>
-                            <li>Покрытие зубной эмали препаратом <strong>Fluor Protector</strong> (Ivoclar) для укрепления эмали.</li>
-                            <li>Индивидуальное обучение по правильному уходу за полостью рта в домашних условиях.</li>
+                            <li data-translate="prevention_step_1">Оценка состояния полости рта, по степени окрашивания биоплёнки.</li>
+                            <li data-translate="prevention_step_2"><strong>Prophylflex</strong> (KaVo) — устранение биоплёнки и пигментации.</li>
+                            <li data-translate="prevention_step_3">Удаление зубного камня скалером <strong>Sonyflex</strong> (KaVo).</li>
+                            <li data-translate="prevention_step_4">Полировка фторированной пастой <strong>Proxyt</strong> (Ivoclar).</li>
+                            <li data-translate="prevention_step_5">Покрытие зубной эмали препаратом <strong>Fluor Protector</strong> (Ivoclar) для укрепления эмали.</li>
+                            <li data-translate="prevention_step_6">Индивидуальное обучение по правильному уходу за полостью рта в домашних условиях.</li>
                         </ul>
-                        <p class="team-text">
+                        <p class="team-text" data-translate="prevention_vector_text">
                             При необходимости, после этих этапов мы производим лечение дёсен аппаратом <strong>Vector</strong> (Dürr Dental).
                         </p>
-                        <button class="btn-outline steps-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <button class="btn-outline steps-btn" id="openAppointmentBtn4" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                 </div>
 
@@ -121,67 +127,46 @@
 
     <div id="footer-placeholder"></div>
 
+    <script src="../js/localstorage.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/components.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const burgerIcon = document.getElementById('burgerIcon');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                const closeMenuBtn = document.getElementById('closeMenuBtn');
-                const body = document.body;
-
-                function openMenu() {
-                    if (burgerIcon) burgerIcon.classList.add('active');
-                    if (mobileMenu) mobileMenu.classList.add('active');
-                    if (menuOverlay) menuOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                }
-
-                function closeMenu() {
-                    if (burgerIcon) burgerIcon.classList.remove('active');
-                    if (mobileMenu) mobileMenu.classList.remove('active');
-                    if (menuOverlay) menuOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-
-                if (burgerIcon) {
-                    burgerIcon.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (mobileMenu && mobileMenu.classList.contains('active')) {
-                            closeMenu();
-                        } else {
-                            openMenu();
-                        }
-                    });
-                }
-
-                if (closeMenuBtn) {
-                    closeMenuBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMenu();
-                    });
-                }
-
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                        closeMenu();
-                    }
-                });
-            }, 100);
-        });
-    </script>
     <script src="../js/modal-appointment.js"></script>
+    <script src="../js/modal-profile.js"></script>
+    <script src="../js/preloader.js"></script>
+
+    <script>
+        function openAppointment() {
+            if (typeof openVisitorAppointmentModal === 'function') {
+                openVisitorAppointmentModal();
+            } else {
+                console.warn('openVisitorAppointmentModal не определена');
+            }
+        }
+
+        const appointmentBtns = document.querySelectorAll('#openAppointmentBtn1, #openAppointmentBtn2, #openAppointmentBtn3, #openAppointmentBtn4, .btn-white, .btn-outline');
+        
+        appointmentBtns.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openAppointment();
+                });
+            }
+        });
+
+        setTimeout(function() {
+            if (typeof window.updateAuthUI === 'function') {
+                console.log('🔄 Вызов updateAuthUI из service-menu3.html');
+                window.updateAuthUI();
+            }
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+        }, 200);
+    </script>
+    <script src="../js/special-version.js"></script>
 
 </body>
 </html>

@@ -135,3 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.toggleFaq = toggleFaq;
+
+document.addEventListener('languageChanged', function() {
+    displayFaq();
+});

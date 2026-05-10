@@ -1,5 +1,39 @@
-
 const API_BASE_URL = 'http://localhost:3000';
+
+function getCurrentLang() {
+    return localStorage.getItem('dental_language') || 'ru';
+}
+
+function getLocalizedText(obj, defaultValue = '') {
+    if (!obj) return defaultValue;
+    if (typeof obj === 'string') return obj;
+    const lang = getCurrentLang();
+    return obj[lang] || obj.ru || defaultValue;
+}
+
+function localizeArray(items, fields = []) {
+    if (!items || !Array.isArray(items)) return [];
+    return items.map(item => {
+        const localized = { ...item };
+        fields.forEach(field => {
+            if (item[field]) {
+                localized[field] = getLocalizedText(item[field]);
+            }
+        });
+        return localized;
+    });
+}
+
+function localizeObject(item, fields = []) {
+    if (!item) return item;
+    const localized = { ...item };
+    fields.forEach(field => {
+        if (item[field]) {
+            localized[field] = getLocalizedText(item[field]);
+        }
+    });
+    return localized;
+}
 
 async function apiRequest(endpoint, options = {}) {
     try {
@@ -26,12 +60,21 @@ async function getServices(filters = {}) {
     if (filters._limit) params.append('_limit', filters._limit);
     
     const queryString = params.toString();
-    const result = await apiRequest(`${query}${queryString ? '?' + queryString : ''}`);
-    return result || [];
+    let services = await apiRequest(`${query}${queryString ? '?' + queryString : ''}`);
+    
+    if (services && Array.isArray(services)) {
+        services = localizeArray(services, ['name', 'title']);
+    }
+    
+    return services || [];
 }
 
 async function getServiceById(id) {
-    return await apiRequest(`/services/${id}`);
+    let service = await apiRequest(`/services/${id}`);
+    if (service) {
+        service = localizeObject(service, ['name', 'title']);
+    }
+    return service;
 }
 
 async function addService(service) {
@@ -56,11 +99,19 @@ async function deleteService(id) {
 }
 
 async function getServiceDetails() {
-    return await apiRequest('/serviceDetails') || [];
+    let details = await apiRequest('/serviceDetails') || [];
+    if (details && Array.isArray(details)) {
+        details = localizeArray(details, ['mainText', 'secondaryText', 'features', 'steps']);
+    }
+    return details;
 }
 
 async function getServiceDetailById(id) {
-    return await apiRequest(`/serviceDetails/${id}`);
+    let detail = await apiRequest(`/serviceDetails/${id}`);
+    if (detail) {
+        detail = localizeObject(detail, ['mainText', 'secondaryText', 'features', 'steps']);
+    }
+    return detail;
 }
 
 async function addServiceDetail(detail) {
@@ -91,12 +142,21 @@ async function getDoctors(filters = {}) {
     if (filters.active !== undefined) params.append('active', filters.active);
     
     const queryString = params.toString();
-    const result = await apiRequest(`${query}${queryString ? '?' + queryString : ''}`);
-    return result || [];
+    let doctors = await apiRequest(`${query}${queryString ? '?' + queryString : ''}`);
+    
+    if (doctors && Array.isArray(doctors)) {
+        doctors = localizeArray(doctors, ['lastName', 'firstName', 'middleName', 'specialization', 'education', 'experience', 'improvement']);
+    }
+    
+    return doctors || [];
 }
 
 async function getDoctorById(id) {
-    return await apiRequest(`/doctors/${id}`);
+    let doctor = await apiRequest(`/doctors/${id}`);
+    if (doctor) {
+        doctor = localizeObject(doctor, ['lastName', 'firstName', 'middleName', 'specialization', 'education', 'experience', 'improvement']);
+    }
+    return doctor;
 }
 
 async function addDoctor(doctor) {
@@ -129,12 +189,21 @@ async function getReviews(filters = {}) {
     if (filters._limit) params.append('_limit', filters._limit);
     
     const queryString = params.toString();
-    const result = await apiRequest(`${query}${queryString ? '?' + queryString : ''}`);
-    return result || [];
+    let reviews = await apiRequest(`${query}${queryString ? '?' + queryString : ''}`);
+    
+    if (reviews && Array.isArray(reviews)) {
+        reviews = localizeArray(reviews, ['author', 'userInfo', 'text']);
+    }
+    
+    return reviews || [];
 }
 
 async function getReviewById(id) {
-    return await apiRequest(`/reviews/${id}`);
+    let review = await apiRequest(`/reviews/${id}`);
+    if (review) {
+        review = localizeObject(review, ['author', 'userInfo', 'text']);
+    }
+    return review;
 }
 
 async function addReview(review) {
@@ -164,8 +233,18 @@ async function deleteReview(id) {
 }
 
 async function getPrices() {
-    const result = await apiRequest('/prices');
-    return result || { version: '2.0', categories: [], services: [] };
+    let result = await apiRequest('/prices');
+    if (!result) return { version: '2.0', categories: [], services: [] };
+    
+    if (result.categories && Array.isArray(result.categories)) {
+        result.categories = localizeArray(result.categories, ['name']);
+    }
+    
+    if (result.services && Array.isArray(result.services)) {
+        result.services = localizeArray(result.services, ['name', 'description']);
+    }
+    
+    return result;
 }
 
 async function updatePrices(pricesData) {
@@ -196,12 +275,21 @@ async function getFaq(filters = {}) {
     if (filters.search) params.append('q', filters.search);
     
     const queryString = params.toString();
-    const result = await apiRequest(`${query}${queryString ? '?' + queryString : ''}`);
-    return result || [];
+    let faq = await apiRequest(`${query}${queryString ? '?' + queryString : ''}`);
+    
+    if (faq && Array.isArray(faq)) {
+        faq = localizeArray(faq, ['question', 'answer']);
+    }
+    
+    return faq || [];
 }
 
 async function getFaqById(id) {
-    return await apiRequest(`/faq/${id}`);
+    let faq = await apiRequest(`/faq/${id}`);
+    if (faq) {
+        faq = localizeObject(faq, ['question', 'answer']);
+    }
+    return faq;
 }
 
 async function addFaq(faqItem) {
@@ -336,3 +424,20 @@ async function deleteDiscount(id) {
         method: 'DELETE'
     });
 }
+
+function getLocalizedUnit(unit) {
+    if (!unit) return '';
+    if (typeof unit === 'string') {
+        if (unit === 'BYN') {
+            const lang = getCurrentLang();
+            return lang === 'ru' ? 'BYN' : 'BYN'; 
+        }
+        return unit;
+    }
+    return getLocalizedText(unit);
+}
+
+window.getCurrentLang = getCurrentLang;
+window.getLocalizedText = getLocalizedText;
+window.localizeArray = localizeArray;
+window.localizeObject = localizeObject;

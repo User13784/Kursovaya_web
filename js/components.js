@@ -1,3 +1,4 @@
+
 function saveCurrentPageForMenu() {
     let fullPath = window.location.pathname.split('/').pop();
     const searchParams = window.location.search;
@@ -14,23 +15,19 @@ function saveCurrentPageForMenu() {
 
 function getMenuPath() {
     const currentPath = window.location.pathname;
-    
     if (currentPath.includes('/pages/')) {
-        console.log('📍 В папке pages, путь к меню: ../menu.html');
         return '../menu.html';
     }
-    
-    console.log('📍 В корне, путь к меню: menu.html');
     return 'menu.html';
 }
 
 async function loadComponent(elementId, url) {
     try {
+        console.log('📥 Загрузка компонента:', url);
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         let html = await response.text();
-        
         const isInPages = window.location.pathname.includes('/pages/');
         
         if (isInPages) {
@@ -56,9 +53,18 @@ async function loadComponent(elementId, url) {
                 } else {
                     newScript.textContent = oldScript.textContent;
                 }
-                document.body.appendChild(newScript);
                 oldScript.remove();
+                document.body.appendChild(newScript);
             });
+            
+            setTimeout(() => {
+                if (typeof window.updateAuthUI === 'function') {
+                    window.updateAuthUI();
+                }
+                if (typeof window.applyTranslations === 'function') {
+                    window.applyTranslations();
+                }
+            }, 150);
         }
     } catch (error) {
         console.error('Ошибка загрузки компонента:', error);
@@ -66,7 +72,7 @@ async function loadComponent(elementId, url) {
 }
 
 function setupMenuButton() {
-    const menuBtn = document.querySelector('.menu-btn');
+    const menuBtn = document.getElementById('menuBtn');
     if (menuBtn && !menuBtn.hasAttribute('data-menu-initialized')) {
         menuBtn.setAttribute('data-menu-initialized', 'true');
         
@@ -76,12 +82,8 @@ function setupMenuButton() {
         newMenuBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
             saveCurrentPageForMenu();
-            
-            const menuPath = getMenuPath();
-            console.log('🔗 Переход в меню по пути:', menuPath);
-            window.location.href = menuPath;
+            window.location.href = getMenuPath();
         });
     }
 }
@@ -150,18 +152,27 @@ function initMobileMenuAfterLoad() {
         
         const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
         mobileLinks.forEach(link => {
-            link.addEventListener('click', closeMenu);
+            if (link) {
+                link.addEventListener('click', closeMenu);
+            }
         });
         
         window.addEventListener('resize', function() {
-            if (window.innerWidth > 992 && mobileMenu.classList.contains('active')) {
+            if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
                 closeMenu();
             }
         });
+        
+        setTimeout(() => {
+            if (typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI();
+            }
+        }, 100);
     }, 200);
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('🚀 DOMContentLoaded в components.js');
     const isInPages = window.location.pathname.includes('/pages/');
     const basePath = isInPages ? '../' : '';
     
@@ -173,6 +184,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupMenuButton();
     
     setTimeout(() => {
+        if (typeof window.updateAuthUI === 'function') {
+            window.updateAuthUI();
+            console.log('✅ updateAuthUI вызван после загрузки компонентов');
+        }
+        if (typeof window.getCurrentUser === 'function') {
+            const user = window.getCurrentUser();
+            console.log('👤 Текущий пользователь после загрузки компонентов:', user ? user.email : 'не авторизован');
+        }
+    }, 300);
+    
+    setTimeout(() => {
         const openAppointmentBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2, #openAppointmentBtn3');
         openAppointmentBtns.forEach(btn => {
             if (btn && typeof openVisitorAppointmentModal === 'function') {
@@ -182,7 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
         });
-    }, 300);
+    }, 500);
 });
 
 window.loadComponent = loadComponent;

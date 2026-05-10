@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Контакты | Dental Club</title>
+    <title data-translate="contacts_title">Контакты | Dental Club</title>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/contacts.css">
     <link rel="stylesheet" href="../media/contacts_media.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
     <link rel="stylesheet" href="../css/theme.css">
-    <script src="../js/api.js"></script>
+<link rel="stylesheet" href="../css/special-version.css">
 
+<script src="../js/special-version.js"></script>
     
     <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_ключ&lang=ru_RU" type="text/javascript"></script>
 </head>
@@ -24,15 +25,19 @@
             <span></span>
         </div>
         <nav class="mobile-nav">
-            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <div class="mobile-login-container" id="mobileLoginContainer">
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+            </div>
+            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
             <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="#" class="mobile-login-link">ВОЙТИ</a>
-            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="team.html" class="mobile-link">КОМАНДА</a>
-            <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
-            <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -40,8 +45,8 @@
     <main>
         <section class="hero-contacts">
             <div class="hero-content">
-                <h1>КОНТАКТЫ</h1>
-                <button class="btn-white" id="openAppointmentBtn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                <h1 data-translate="contacts_title">КОНТАКТЫ</h1>
+                <button class="btn-white" id="openAppointmentBtn" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
@@ -50,15 +55,15 @@
             <div class="container">
                 <div class="contacts-grid">
                     <div class="contacts-details">
-                        <h2>СВЯЗАТЬСЯ С НАМИ</h2>
+                        <h2 data-translate="contact_us">СВЯЗАТЬСЯ С НАМИ</h2>
                         <div class="phones">
                             <a href="tel:+375291234567">+375 (29) 123-45-67</a>
                             <a href="tel:+375333456789">+375 (33) 345-67-89</a>
                         </div>
-                        <p class="address">Беларусь, г. Могилев, ул. Ленинская, 25<br>(вход со стороны улицы Первомайской)</p>
-                        <p class="schedule">• &nbsp;Пн - Пт: 10:00 - 20:00</p>
-                        <p class="schedule">• &nbsp;Сб: 10:00 - 16:00</p>
-                        <p class="schedule">• &nbsp;Вс: выходной</p>
+                        <p class="address" data-translate="address_value">Беларусь, г. Могилев, ул. Ленинская, 25<br>(вход со стороны улицы Первомайской)</p>
+                        <p class="schedule">• &nbsp;<span data-translate="mon_fri">Пн - Пт: 10:00 - 20:00</span></p>
+                        <p class="schedule">• &nbsp;<span data-translate="sat">Сб: 10:00 - 16:00</span></p>
+                        <p class="schedule">• &nbsp;<span data-translate="sun">Вс: выходной</span></p>
                         <a href="mailto:dentalclubreception@gmail.com" class="email">dentalclubreception@gmail.com</a>
                         
                         <div class="social-icons">
@@ -69,7 +74,7 @@
                         </div>
                     </div>
                     <div class="contacts-cta">
-                         <button class="btn-outline" id="openAppointmentBtn2">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                         <button class="btn-outline" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                 </div>
 
@@ -87,28 +92,30 @@
         <section class="feedback-section">
             <div class="container feedback-flex">
                 <div class="feedback-title">
-                    <h2>ОБРАТНАЯ <br>СВЯЗЬ</h2>
+                    <h2 data-translate="feedback_title">ОБРАТНАЯ <br>СВЯЗЬ</h2>
                 </div>
-                <form class="feedback-form">
-                    <input type="text" placeholder="Ваше имя" required>
-                    <input type="email" placeholder="Email" required>
-                    <input type="tel" placeholder="+375 (29) 123-45-67" required>
-                    <textarea placeholder="Введите ваш вопрос"></textarea>
-                    <button type="submit" class="btn-submit">ОТПРАВИТЬ ЗАЯВКУ</button>
+                <form class="feedback-form" id="feedbackForm">
+                    <input type="text" data-translate="name_placeholder" placeholder="Ваше имя" id="feedbackName" required>
+                    <input type="email" data-translate="email_placeholder" placeholder="Email" id="feedbackEmail" required>
+                    <input type="tel" data-translate="phone_placeholder" placeholder="+375 (29) 123-45-67" id="feedbackPhone" required>
+                    <textarea data-translate="question_placeholder" placeholder="Введите ваш вопрос" id="feedbackQuestion" required></textarea>
+                    <button type="submit" class="btn-submit" data-translate="send_request">ОТПРАВИТЬ ЗАЯВКУ</button>
                 </form>
             </div>
         </section>
     </main>
 
     <div id="footer-placeholder"></div>
-    
+
+    <script src="../js/localstorage.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/translations.js"></script>
-    <script src="../js/personalization.js"></script>
     <script src="../js/components.js"></script>
     <script src="../js/modal-appointment.js"></script>
     <script src="../js/modal-profile.js"></script>
-    <script src="../js/prices.js"></script>
-    
+    <script src="../js/preloader.js"></script>
+
     <script>
         function initYandexMap() {
             if (typeof ymaps === 'undefined') {
@@ -145,85 +152,42 @@
                 }, {
                     preset: 'islands#redIcon',
                     iconShadow: true,
-                    iconShadowLayout: 'default#image',
-                    iconShadowImageHref: 'https://api-maps.yandex.ru/2.1/images/placemarks/red_shadow.png',
-                    iconShadowSize: [44, 36],
-                    iconShadowOffset: [-12, -34],
                     iconAnimation: true
                 });
                 
                 map.geoObjects.add(placemark);
             });
         }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const burgerIcon = document.getElementById('burgerIcon');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                const closeMenuBtn = document.getElementById('closeMenuBtn');
-                const body = document.body;
 
-                function openMenu() {
-                    if (burgerIcon) burgerIcon.classList.add('active');
-                    if (mobileMenu) mobileMenu.classList.add('active');
-                    if (menuOverlay) menuOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                }
-
-                function closeMenu() {
-                    if (burgerIcon) burgerIcon.classList.remove('active');
-                    if (mobileMenu) mobileMenu.classList.remove('active');
-                    if (menuOverlay) menuOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-
-                if (burgerIcon) {
-                    burgerIcon.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (mobileMenu && mobileMenu.classList.contains('active')) {
-                            closeMenu();
-                        } else {
-                            openMenu();
-                        }
-                    });
-                }
-
-                if (closeMenuBtn) {
-                    closeMenuBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMenu();
-                    });
-                }
-
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                        closeMenu();
-                    }
-                });
-            }, 100);
-            
-            const openAppointmentBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2');
-            openAppointmentBtns.forEach(btn => {
-                if (btn && typeof openVisitorAppointmentModal === 'function') {
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        openVisitorAppointmentModal();
-                    });
-                }
+        const feedbackForm = document.getElementById('feedbackForm');
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert(window.currentLanguage && window.currentLanguage() === 'ru' ? '✅ Ваше сообщение отправлено!' : '✅ Your message has been sent!');
+                feedbackForm.reset();
             });
-            
-            initYandexMap();
+        }
+
+        const openAppointmentBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2');
+        openAppointmentBtns.forEach(btn => {
+            if (btn && typeof openVisitorAppointmentModal === 'function') {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openVisitorAppointmentModal();
+                });
+            }
         });
+
+        setTimeout(function() {
+            if (typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI();
+            }
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+        }, 200);
+
+        initYandexMap();
     </script>
 </body>
 </html>

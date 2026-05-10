@@ -1,307 +1,206 @@
 <!doctype html>
 <html lang="ru">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Виниры и Люминиры | Dental Club</title>
+    <title data-translate="veneers_title">Виниры и Люминиры | Dental Club</title>
 
     <link rel="stylesheet" href="../css/index.css" />
     <link rel="stylesheet" href="../css/service-menu9.css" />
     <link rel="stylesheet" href="../media/service-menu9_media.css" />
     <link rel="stylesheet" href="../css/modal-appointment.css">
-    <script src="../js/api.js"></script>
+    <link rel="stylesheet" href="../css/modal-profile.css">
+        <link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/special-version.css">
 
 
-  </head>
-  <body>
+</head>
+<body>
     <div id="header-placeholder"></div>
 
     <div class="mobile-menu" id="mobileMenu">
-      <div class="close-menu-btn" id="closeMenuBtn">
-        <span></span>
-        <span></span>
-      </div>
-      <nav class="mobile-nav">
-        <a href="#" class="mobile-menu-btn">МЕНЮ</a>
-        <a href="#" class="mobile-lang-selector">RUS</a>
-        <a href="#" class="mobile-login-link">ВОЙТИ</a>
-        <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-        <a href="#" class="mobile-link">УСЛУГИ</a>
-        <a href="#" class="mobile-link">КОМАНДА</a>
-        <a href="#" class="mobile-link">ОТЗЫВЫ</a>
-        <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
-      </nav>
+        <div class="close-menu-btn" id="closeMenuBtn">
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="mobile-nav">
+            <div class="mobile-login-container" id="mobileLoginContainer">
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+            </div>
+            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
+            <a href="#" class="mobile-lang-selector">RUS</a>
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
+        </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
-      <section class="hero-diagnostics">
-        <div class="hero-content">
-          <h1>ВИНИРЫ. ЛЮМИНИРЫ</h1>
-          <button class="btn-white">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+        <section class="hero-diagnostics">
+            <div class="hero-content">
+                <h1 data-translate="veneers_title">ВИНИРЫ. ЛЮМИНИРЫ</h1>
+                <button class="btn-white" id="openAppointmentBtn1" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+            </div>
+            <div class="scroll-down"></div>
+        </section>
+
+        <div class="diagnostics-wrapper">
+            <div class="container">
+                <div class="info-row">
+                    <div class="info-text first-text-block">
+                        <div class="accent-line first-accent"></div>
+                        <h2 data-translate="veneers_title_main">ВИНИРЫ</h2>
+                        <p class="diagnosis-text first-part" data-translate="veneers_text">
+                            Виниры – это тонкие керамические пластинки, которые фиксируются
+                            на заранее обработанную поверхность, с целью изменить форму и
+                            цвет зубов.
+                        </p>
+                        <button class="btn-outline first-btn" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    </div>
+                    <div class="info-image side-img">
+                        <img src="../assets/images/service-menu9-page/service-menu1.jpg" alt="Интерьер клиники">
+                    </div>
+                </div>
+
+                <div class="full-width-section">
+                    <img class="full-width-img" src="../assets/images/service-menu9-page/service-menu2.jpg" alt="Врач и пациент">
+                </div>
+            </div>
         </div>
-        <div class="scroll-down"></div>
-      </section>
 
-      <div class="diagnostics-wrapper">
-        <div class="container">
-          <div class="info-row">
-            <div class="info-text first-text-block">
-              <div class="accent-line first-accent"></div>
-              <h2>ВИНИРЫ</h2>
-              <p class="diagnosis-text first-part">
-                Виниры – это тонкие керамические пластинки, которые фиксируются
-                на заранее обработанную поверхность, с целью изменить форму и
-                цвет зубов.
-              </p>
-              <button class="btn-outline first-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
-            </div>
-            <div class="info-image side-img">
-              <img
-                src="../assets/images/service-menu9-page/service-menu1.jpg"
-                alt="Интерьер клиники"
-              />
-            </div>
-          </div>
+        <div class="white-bg-section">
+            <div class="container">
+                <div class="info-row reverse tomograph-row">
+                    <div class="info-text tomograph-text-block">
+                        <div class="accent-line tomograph-accent"></div>
+                        <h2 data-translate="luminirs_title">ЛЮМИНИРЫ</h2>
+                        <p class="tomograph-text first-paragraph" data-translate="luminirs_text">
+                            Люминиры - это тончайшие керамические пластинки, которые
+                            одеваются прямо на поверхность зуба. На сегодняшний день этот
+                            способ реставрации зубов можно считать вершиной косметической
+                            стоматологии.
+                        </p>
+                        <button class="btn-outline diagnost-btn" id="openAppointmentBtn3" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    </div>
+                    <div class="info-image tomograph-image">
+                        <img class="tomograph-img" src="../assets/images/service-menu9-page/service-menu3.jpg" alt="Процесс работы">
+                    </div>
+                </div>
 
-          <div class="full-width-section">
-            <img
-              class="full-width-img"
-              src="../assets/images/service-menu9-page/service-menu2.jpg"
-              alt="Врач и пациент"
-            />
-          </div>
+                <div class="info-row specialists-row">
+                    <div class="info-image specialists-image">
+                        <img class="specialists-img" src="../assets/images/service-menu9-page/service-menu4.jpg" alt="Консультация">
+                    </div>
+                    <div class="info-text specialists-text-block">
+                        <div class="accent-line specialists-line"></div>
+                        <p class="tomograph-text specialists-text-first" data-translate="veneers_materials">
+                            В <strong>Dental Club</strong> мы используем полный спектр
+                            материалов для изготовления и виниров и люминиров, которые
+                            подбираются индивидуально для каждого пациента.
+                        </p>
+                        <p class="tomograph-text specialists-text-second" data-translate="veneers_choice">
+                            Выбор зависит от вашего предпочтения и показаний. Мы используем
+                            в своей практике цирконий, <strong>IPS.E-max</strong>,
+                            керамические виниры (люминиры), в том числе на рефракторе.
+                            Толщина таких пластинок до 5 микрон.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-row reverse steps-row">
+                    <div class="info-text steps-text-block">
+                        <p class="tomograph-text steps-text-1" data-translate="veneers_preparation">
+                            Перед установкой виниров мы проводим детальный чек-ап полости
+                            рта чтобы убедиться, здоровы ли ваши зубы и правильный ли у Вас
+                            прикус. На компьютере создаём дизайн Вашей новой улыбки, при
+                            необходимости создаем мок-ап - моделирование формы зубов
+                            непосредственно в полости рта. Такой подход &nbsp;даёт
+                            длительную гарантию и понимание конечного результата.
+                        </p>
+                        <p class="tomograph-text steps-text-2" data-translate="veneers_final">
+                            После того, как мы скорректируем индивидуальный план и
+                            подготовим ваши зубы, останется всего лишь два финальных этапа
+                            до идеального результата.
+                        </p>
+                        <p class="tomograph-text steps-text-3" data-translate="veneers_durability">
+                            Отличительной особенностью ортопедических конструкций,
+                            изготовленных современными цифровыми методами, является
+                            прочность и устойчивость к изменению цвета. Высокая стоимость
+                            таких реставраций обоснована их надёжностью и долговечностью.
+                        </p>
+                        <button class="btn-outline steps-btn" id="openAppointmentBtn4" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    </div>
+                    <div class="info-image double-img">
+                        <img class="microscope-img" src="../assets/images/service-menu9-page/service-menu5.jpg" alt="Портрет пациента">
+                    </div>
+                </div>
+
+                <div class="info-row specialists-row">
+                    <div class="info-image specialists-image">
+                        <img class="specialists-img-six" src="../assets/images/service-menu9-page/service-menu6.jpg" alt="Администратор">
+                    </div>
+                    <div class="info-text specialists-text-block">
+                        <p class="steps-title" data-translate="veneers_steps_title">Этапы установки виниров и люминиров</p>
+                        <ol class="steps-list">
+                            <li data-translate="veneers_step_1">1. Снятие слепков, фотопротокол лица, чек-ап совместно с терапевтом и ортодонтом.</li>
+                            <li data-translate="veneers_step_2">2. Моделирование цифровой версии - wax-up.</li>
+                            <li data-translate="veneers_step_3">3. Перенос в полость рта временной реставрации — mock-up.</li>
+                            <li data-translate="veneers_step_4">4. Обсуждение и утверждение с пациентом новой формы и цвета.</li>
+                            <li data-translate="veneers_step_5">5. Обработка зубов, снятие финального слепка, изготовление временных виниров.</li>
+                            <li data-translate="veneers_step_6">6. Изготовление постоянных керамических виниров и их фиксация.</li>
+                            <li data-translate="veneers_step_7">7. Финальная коррекция и полировка, фото-фиксация результата.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="white-bg-section">
-        <div class="container">
-          <div class="info-row reverse tomograph-row">
-            <div class="info-text tomograph-text-block">
-              <div class="accent-line tomograph-accent"></div>
-              <h2>ЛЮМИНИРЫ</h2>
-              <p class="tomograph-text first-paragraph">
-                Люминиры - это тончайшие керамические пластинки, которые
-                одеваются прямо на поверхность зуба. На сегодняшний день этот
-                способ реставрации зубов можно считать вершиной косметической
-                стоматологии.
-              </p>
-              <button class="btn-outline diagnost-btn">
-                ЗАПИСАТЬСЯ НА ПРИЕМ
-              </button>
-            </div>
-            <div class="info-image tomograph-image">
-              <img
-                class="tomograph-img"
-                src="../assets/images/service-menu9-page/service-menu3.jpg"
-                alt="Процесс работы"
-              />
-            </div>
-          </div>
-
-          <div class="info-row specialists-row">
-            <div class="info-image specialists-image">
-              <img
-                class="specialists-img"
-                src="../assets/images/service-menu9-page/service-menu4.jpg"
-                alt="Консультация"
-              />
-            </div>
-            <div class="info-text specialists-text-block">
-              <div class="accent-line specialists-line"></div>
-              <p class="tomograph-text specialists-text-first">
-                В <strong>Dental Club</strong> мы используем полный спектр
-                материалов для изготовления и виниров и люминиров, которые
-                подбираются индивидуально для каждого пациента.
-              </p>
-              <p class="tomograph-text specialists-text-second">
-                Выбор зависит от вашего предпочтения и показаний. Мы используем
-                в своей практике цирконий, <strong>IPS.E-max</strong>,
-                керамические виниры (люминиры), в том числе на рефракторе.
-                Толщина таких пластинок до 5 микрон.
-              </p>
-            </div>
-          </div>
-
-          <div class="info-row reverse steps-row">
-            <div class="info-text steps-text-block">
-              <p class="tomograph-text steps-text-1">
-                Перед установкой виниров мы проводим детальный чек-ап полости
-                рта чтобы убедиться, здоровы ли ваши зубы и правильный ли у Вас
-                прикус. На компьютере создаём дизайн Вашей новой улыбки, при
-                необходимости создаем мок-ап - моделирование формы зубов
-                непосредственно в полости рта. Такой подход &nbsp;даёт
-                длительную гарантию и понимание конечного результата.
-              </p>
-              <p class="tomograph-text steps-text-2">
-                После того, как мы скорректируем индивидуальный план и
-                подготовим ваши зубы, останется всего лишь два финальных этапа
-                до идеального результата.
-              </p>
-              <p class="tomograph-text steps-text-3">
-                Отличительной особенностью ортопедических конструкций,
-                изготовленных современными цифровыми методами, является
-                прочность и устойчивость к изменению цвета. Высокая стоимость
-                таких реставраций обоснована их надёжностью и долговечностью.
-              </p>
-              <button class="btn-outline steps-btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
-            </div>
-            <div class="info-image double-img">
-              <img
-                class="microscope-img"
-                src="../assets/images/service-menu9-page/service-menu5.jpg"
-                alt="Портрет пациента"
-              />
-            </div>
-          </div>
-
-          <div class="info-row specialists-row">
-            <div class="info-image specialists-image">
-              <img
-                class="specialists-img-six"
-                src="../assets/images/service-menu9-page/service-menu6.jpg"
-                alt="Администратор"
-              />
-            </div>
-            <div class="info-text specialists-text-block">
-              <p class="steps-title">Этапы установки виниров и люминиров</p>
-              <ol class="steps-list">
-                <li>
-                  1. Снятие слепков, фотопротокол лица, чек-ап совместно с
-                  &nbsp;&nbsp;&nbsp;терапевтом и ортодонтом.
-                </li>
-                <li>2. Моделирование цифровой версии - wax-up.</li>
-                <li>
-                  3. Перенос в полость рта временной реставрации — mock-up.
-                </li>
-                <li>
-                  4. Обсуждение и утверждение с пациентом новой формы и
-                  &nbsp;&nbsp;&nbsp;&nbsp;цвета.
-                </li>
-                <li>
-                  5. Обработка зубов, снятие финального слепка, изготовление
-                  &nbsp;&nbsp;&nbsp;&nbsp;временных виниров.
-                </li>
-                <li>
-                  6. Изготовление постоянных керамических виниров и их
-                  &nbsp;&nbsp;&nbsp;&nbsp;фиксация.
-                </li>
-                <li>
-                  7. Финальная коррекция и полировка, фото-фиксация
-                  &nbsp;&nbsp;&nbsp;&nbsp;результата.
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
     </main>
 
     <div id="footer-placeholder"></div>
-    
+
+    <script src="../js/localstorage.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/components.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function initMenu() {
-                const burgerIcon = document.getElementById('burgerIcon');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                const closeMenuBtn = document.getElementById('closeMenuBtn');
-                const body = document.body;
-
-                if (!burgerIcon) {
-                    const headerPlaceholder = document.getElementById('header-placeholder');
-                    if (headerPlaceholder && headerPlaceholder.innerHTML === '') {
-                        headerPlaceholder.innerHTML = `
-                            <header>
-                                <div class="header-container">
-                                    <div class="logo">
-                                        <a href="index.html">
-                                            <img src="../assets/images/logo.svg" alt="Dental Club">
-                                        </a>
-                                    </div>
-                                    <div class="header-right">
-                                        <button class="menu-btn">МЕНЮ</button>
-                                        <div class="lang-selector">RUS</div>
-                                        <a href="#" class="login-link">ВОЙТИ</a>
-                                        <div class="burger-icon" id="burgerIcon">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </header>
-                        `;
-                    }
-                    const newBurgerIcon = document.getElementById('burgerIcon');
-                    if (newBurgerIcon) {
-                        attachEvents(newBurgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body);
-                    }
-                    return;
-                }
-                
-                attachEvents(burgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body);
-            }
-            
-            function attachEvents(burgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body) {
-                function openMenu() {
-                    if (burgerIcon) burgerIcon.classList.add('active');
-                    if (mobileMenu) mobileMenu.classList.add('active');
-                    if (menuOverlay) menuOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                }
-
-                function closeMenu() {
-                    if (burgerIcon) burgerIcon.classList.remove('active');
-                    if (mobileMenu) mobileMenu.classList.remove('active');
-                    if (menuOverlay) menuOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-
-                if (burgerIcon) {
-                    const newBurgerIcon = burgerIcon.cloneNode(true);
-                    burgerIcon.parentNode.replaceChild(newBurgerIcon, burgerIcon);
-                    
-                    newBurgerIcon.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (mobileMenu && mobileMenu.classList.contains('active')) {
-                            closeMenu();
-                        } else {
-                            openMenu();
-                        }
-                    });
-                }
-
-                if (closeMenuBtn) {
-                    closeMenuBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMenu();
-                    });
-                }
-
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                        closeMenu();
-                    }
-                });
-            }
-            
-            setTimeout(initMenu, 100);
-            setTimeout(initMenu, 500);
-        });
-    </script>
     <script src="../js/modal-appointment.js"></script>
+    <script src="../js/modal-profile.js"></script>
+    <script src="../js/preloader.js"></script>
 
-  </body>
+    <script>
+        function openAppointment() {
+            if (typeof openVisitorAppointmentModal === 'function') {
+                openVisitorAppointmentModal();
+            } else {
+                console.warn('openVisitorAppointmentModal не определена');
+            }
+        }
+
+        const appointmentBtns = document.querySelectorAll('#openAppointmentBtn1, #openAppointmentBtn2, #openAppointmentBtn3, #openAppointmentBtn4, .btn-white, .btn-outline');
+        
+        appointmentBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openAppointment();
+            });
+        });
+
+        setTimeout(function() {
+            if (typeof window.updateAuthUI === 'function') {
+                console.log('🔄 Вызов updateAuthUI из service-menu9.html');
+                window.updateAuthUI();
+            }
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+        }, 200);
+    </script>
+    <script src="../js/special-version.js"></script>
+
+</body>
 </html>

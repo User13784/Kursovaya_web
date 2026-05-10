@@ -74,6 +74,8 @@ body, html {
 
 .menu-list li {
     position: absolute;
+    left: 230px;        
+    right: auto;       
 }
 
 .menu-list a {
@@ -92,44 +94,37 @@ body, html {
     letter-spacing: 2px;
 }
 
+/* ===== ВСЕ КНОПКИ ВЕРТИКАЛЬНО ДРУГ ПОД ДРУГОМ ===== */
 .item-home {
     top: 300px;
-    left: 370px;
-}
-
-.item-team {
-    top: 460px;
-    left: 358px;
-}
-
-.item-contacts {
-    top: 620px;
-    left: 351px;
-}
-
-.item-schedule {
-    top: 780px;
-    left: 310px !important;
 }
 
 .item-services {
-    top: 380px;
-    right: 99px;
+    top: 440px;
+}
+
+.item-team {
+    top: 580px;
 }
 
 .item-reviews {
-    top: 540px;
-    right: 100px;
+    top: 720px;
+}
+
+.item-contacts {
+    top: 860px;
 }
 
 .item-prices {
-    top: 700px;
-    right: 100px;
+    top: 1000px;
+}
+
+.item-schedule {
+    top: 1140px;
 }
 
 .item-faq {
-    top: 860px;
-    right: 97px;
+    top: 1280px;
 }
 
 .loading-item {
@@ -139,4 +134,29 @@ body, html {
     transform: translate(-50%, -50%);
     color: white;
     font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .menu-list li {
+        left: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-list li {
+        left: 20px;
+    }
+    
+    .menu-list a {
+        font-size: 18px;
+    }
+    
+    .item-home { top: 280px; }
+    .item-services { top: 400px; }
+    .item-team { top: 520px; }
+    .item-reviews { top: 640px; }
+    .item-contacts { top: 760px; }
+    .item-prices { top: 880px; }
+    .item-schedule { top: 1000px; }
+    .item-faq { top: 1120px; }
 }

@@ -1,259 +1,162 @@
 <!doctype html>
 <html lang="ru">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Команда | Dental Club</title>
+    <title data-translate="team_title">Команда | Dental Club</title>
 
     <link rel="stylesheet" href="../css/index.css" />
     <link rel="stylesheet" href="../css/team.css" />
     <link rel="stylesheet" href="../media/team_media.css" />
     <link rel="stylesheet" href="../css/modal-appointment.css">
-    <script src="../js/api.js"></script>
+    <link rel="stylesheet" href="../css/modal-profile.css">
+    <link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/special-version.css">
 
+</head>
 
-  </head>
-
-  <body>
+<body>
     <div id="header-placeholder"></div>
 
     <div class="mobile-menu" id="mobileMenu">
-      <div class="close-menu-btn" id="closeMenuBtn">
-        <span></span>
-        <span></span>
-      </div>
-      <nav class="mobile-nav">
-        <a href="#" class="mobile-menu-btn">МЕНЮ</a>
-        <a href="#" class="mobile-lang-selector">RUS</a>
-        <a href="#" class="mobile-login-link">ВОЙТИ</a>
-        <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-        <a href="#" class="mobile-link">УСЛУГИ</a>
-        <a href="#" class="mobile-link">КОМАНДА</a>
-        <a href="#" class="mobile-link">ОТЗЫВЫ</a>
-        <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
-      </nav>
+        <div class="close-menu-btn" id="closeMenuBtn">
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="mobile-nav">
+            <div class="mobile-login-container" id="mobileLoginContainer">
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+            </div>
+            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
+            <a href="#" class="mobile-lang-selector">RUS</a>
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
+        </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
-      <section class="hero-team">
-        <div class="hero-content">
-          <h1>КОМАНДА DENTAL CLUB</h1>
-          <button class="btn-white">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+        <section class="hero-team">
+            <div class="hero-content">
+                <h1 data-translate="team_title">КОМАНДА DENTAL CLUB</h1>
+                <button class="btn-white" id="openAppointmentBtn" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+            </div>
+            <div class="scroll-down"></div>
+        </section>
+
+        <div class="team-wrapper">
+            <div class="container">
+                <div class="team-grid">
+                    <div class="team-item" data-doctor-id="1">
+                        <div class="team-image">
+                            <img src="../assets/images/team/team-menu2.jpg" alt="Волкова Екатерина Андреевна">
+                        </div>
+                        <div class="team-info">
+                            <h3>Волкова Екатерина <br />Андреевна</h3>
+                            <p data-translate="doctor_therapist">Стоматолог-терапевт, детский стоматолог</p>
+                        </div>
+                    </div>
+
+                    <div class="team-item" data-doctor-id="2">
+                        <div class="team-image">
+                            <img src="../assets/images/team/team-menu3.jpg" alt="Кузнецов Андрей Владимирович">
+                        </div>
+                        <div class="team-info">
+                            <h3>Кузнецов Андрей Владимирович</h3>
+                            <p data-translate="doctor_parodontologist">Стоматолог-пародонтолог</p>
+                        </div>
+                    </div>
+
+                    <div class="team-item" data-doctor-id="3">
+                        <div class="team-image">
+                            <img src="../assets/images/team/team-menu4.jpg" alt="Соколова Мария Александровна">
+                        </div>
+                        <div class="team-info">
+                            <h3>Соколова Мария Александровна</h3>
+                            <p data-translate="doctor_hygienist">Стоматолог-пародонтолог, гигиенист</p>
+                        </div>
+                    </div>
+
+                    <div class="team-item" data-doctor-id="4">
+                        <div class="team-image">
+                            <img src="../assets/images/team/team-menu5.jpg" alt="Новикова Валентина Сергеевна">
+                        </div>
+                        <div class="team-info">
+                            <h3>Новикова Валентина Сергеевна</h3>
+                            <p data-translate="doctor_endodontist">Стоматолог-терапевт, эндодонтист</p>
+                        </div>
+                    </div>
+
+                    <div class="team-item" data-doctor-id="5">
+                        <div class="team-image">
+                            <img src="../assets/images/team/team-menu6.jpg" alt="Щеголев Дмитрий Владиславович">
+                        </div>
+                        <div class="team-info">
+                            <h3>Щеголев Дмитрий Владиславович</h3>
+                            <p data-translate="doctor_implantologist">Стоматолог-имплантолог, ортопед</p>
+                        </div>
+                    </div>
+
+                    <div class="team-item" data-doctor-id="6">
+                        <div class="team-image">
+                            <img src="../assets/images/team/team-menu7.jpg" alt="Ковальчук Анастасия Дмитриевна">
+                        </div>
+                        <div class="team-info">
+                            <h3>Ковальчук Анастасия Дмитриевна</h3>
+                            <p data-translate="doctor_surgeon">Стоматолог-хирург, имплантолог</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="scroll-down"></div>
-      </section>
-
-      <div class="team-wrapper">
-        <div class="container">
-          <div class="team-grid">
-            <!-- 1-й врач -->
-            <div class="team-item" data-doctor-id="1">
-              <div class="team-image">
-                <img
-                  src="../assets/images/team/team-menu2.jpg"
-                  alt="Волкова Екатерина Андреевна"
-                />
-              </div>
-              <div class="team-info">
-                <h3>Волкова Екатерина <br />Андреевна</h3>
-                <p>Стоматолог-терапевт, детский стоматолог</p>
-              </div>
-            </div>
-
-            <!-- 2-й врач -->
-            <div class="team-item" data-doctor-id="2">
-              <div class="team-image">
-                <img
-                  src="../assets/images/team/team-menu3.jpg"
-                  alt="Кузнецов Андрей Владимирович"
-                />
-              </div>
-              <div class="team-info">
-                <h3>Кузнецов Андрей Владимирович</h3>
-                <p>Стоматолог-пародонтолог</p>
-              </div>
-            </div>
-
-            <!-- 3-й врач -->
-            <div class="team-item" data-doctor-id="3">
-              <div class="team-image">
-                <img
-                  src="../assets/images/team/team-menu4.jpg"
-                  alt="Соколова Мария Александровна"
-                />
-              </div>
-              <div class="team-info">
-                <h3>Соколова Мария Александровна</h3>
-                <p>Стоматолог-пародонтолог, гигиенист</p>
-              </div>
-            </div>
-
-            <!-- 4-й врач -->
-            <div class="team-item" data-doctor-id="4">
-              <div class="team-image">
-                <img
-                  src="../assets/images/team/team-menu5.jpg"
-                  alt="Новикова Валентина Сергеевна"
-                />
-              </div>
-              <div class="team-info">
-                <h3>Новикова Валентина Сергеевна</h3>
-                <p>Стоматолог-терапевт, эндодонтист</p>
-              </div>
-            </div>
-
-            <!-- 5-й врач -->
-            <div class="team-item" data-doctor-id="5">
-              <div class="team-image">
-                <img
-                  src="../assets/images/team/team-menu6.jpg"
-                  alt="Щеголев Дмитрий Владиславович"
-                />
-              </div>
-              <div class="team-info">
-                <h3>Щеголев Дмитрий Владиславович</h3>
-                <p>Стоматолог-имплантолог, ортопед</p>
-              </div>
-            </div>
-
-            <!-- 6-й врач -->
-            <div class="team-item" data-doctor-id="6">
-              <div class="team-image">
-                <img
-                  src="../assets/images/team/team-menu7.jpg"
-                  alt="Ковальчук Анастасия Дмитриевна"
-                />
-              </div>
-              <div class="team-info">
-                <h3>Ковальчук Анастасия Дмитриевна</h3>
-                <p>Стоматолог-хирург, имплантолог</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </main>
 
     <div id="footer-placeholder"></div>
 
+    <script src="../js/localstorage.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/components.js"></script>
-    
-    <script>
-      const teamItems = document.querySelectorAll('.team-item');
-      
-      teamItems.forEach((item) => {
-        item.style.cursor = 'pointer';
-        
-        item.addEventListener('click', () => {
-          const doctorId = item.getAttribute('data-doctor-id');
-          sessionStorage.setItem('selectedDoctorId', doctorId);
-          window.location.href = 'team-details.html';
-        });
-      });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function initMenu() {
-                const burgerIcon = document.getElementById('burgerIcon');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('menuOverlay');
-                const closeMenuBtn = document.getElementById('closeMenuBtn');
-                const body = document.body;
-
-                if (!burgerIcon) {
-                    const headerPlaceholder = document.getElementById('header-placeholder');
-                    if (headerPlaceholder && headerPlaceholder.innerHTML === '') {
-                        headerPlaceholder.innerHTML = `
-                            <header>
-                                <div class="header-container">
-                                    <div class="logo">
-                                        <a href="index.html">
-                                            <img src="../assets/images/logo.svg" alt="Dental Club">
-                                        </a>
-                                    </div>
-                                    <div class="header-right">
-                                        <button class="menu-btn">МЕНЮ</button>
-                                        <div class="lang-selector">RUS</div>
-                                        <a href="#" class="login-link">ВОЙТИ</a>
-                                        <div class="burger-icon" id="burgerIcon">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </header>
-                        `;
-                    }
-                    const newBurgerIcon = document.getElementById('burgerIcon');
-                    if (newBurgerIcon) {
-                        attachEvents(newBurgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body);
-                    }
-                    return;
-                }
-                
-                attachEvents(burgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body);
-            }
-            
-            function attachEvents(burgerIcon, mobileMenu, menuOverlay, closeMenuBtn, body) {
-                function openMenu() {
-                    if (burgerIcon) burgerIcon.classList.add('active');
-                    if (mobileMenu) mobileMenu.classList.add('active');
-                    if (menuOverlay) menuOverlay.classList.add('active');
-                    body.classList.add('menu-open');
-                }
-
-                function closeMenu() {
-                    if (burgerIcon) burgerIcon.classList.remove('active');
-                    if (mobileMenu) mobileMenu.classList.remove('active');
-                    if (menuOverlay) menuOverlay.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-
-                if (burgerIcon) {
-                    const newBurgerIcon = burgerIcon.cloneNode(true);
-                    burgerIcon.parentNode.replaceChild(newBurgerIcon, burgerIcon);
-                    
-                    newBurgerIcon.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (mobileMenu && mobileMenu.classList.contains('active')) {
-                            closeMenu();
-                        } else {
-                            openMenu();
-                        }
-                    });
-                }
-
-                if (closeMenuBtn) {
-                    closeMenuBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMenu();
-                    });
-                }
-
-                if (menuOverlay) {
-                    menuOverlay.addEventListener('click', closeMenu);
-                }
-
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link');
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', closeMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth > 992 && mobileMenu && mobileMenu.classList.contains('active')) {
-                        closeMenu();
-                    }
-                });
-            }
-            
-            setTimeout(initMenu, 100);
-            setTimeout(initMenu, 500);
-        });
-    </script>
     <script src="../js/modal-appointment.js"></script>
+    <script src="../js/modal-profile.js"></script>
+    <script src="../js/preloader.js"></script>
 
-  </body>
+    <script>
+        const teamItems = document.querySelectorAll('.team-item');
+        
+        teamItems.forEach((item) => {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', () => {
+                const doctorId = item.getAttribute('data-doctor-id');
+                sessionStorage.setItem('selectedDoctorId', doctorId);
+                window.location.href = 'team-details.html';
+            });
+        });
+
+        const openAppointmentBtn = document.getElementById('openAppointmentBtn');
+        if (openAppointmentBtn && typeof openVisitorAppointmentModal === 'function') {
+            openAppointmentBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openVisitorAppointmentModal();
+            });
+        }
+
+        setTimeout(function() {
+            if (typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI();
+            }
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+        }, 200);
+    </script>
+    <script src="../js/special-version.js"></script>
+
+</body>
 </html>

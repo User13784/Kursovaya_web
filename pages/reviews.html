@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Отзывы | Dental Club</title>
+    <title data-translate="reviews_title">Отзывы | Dental Club</title>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/reviews.css">
     <link rel="stylesheet" href="../media/reviews_media.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="../css/modal-appointment.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
+    <link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/special-version.css">
+
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -20,15 +23,18 @@
             <span></span>
         </div>
         <nav class="mobile-nav">
-            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
+            <div class="mobile-login-container" id="mobileLoginContainer">
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+            </div>
+            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
             <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="#" class="mobile-login-link">ВОЙТИ</a>
-            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="team.html" class="mobile-link">КОМАНДА</a>
-            <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
-            <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -36,8 +42,8 @@
     <main>
         <section class="hero-reviews">
             <div class="hero-content">
-                <h1>ОТЗЫВЫ НАШИХ КЛИЕНТОВ</h1>
-                <button class="btn-white-caps" id="openReviewModal">ОТПРАВИТЬ СВОЙ ОТЗЫВ</button>
+                <h1 data-translate="reviews_title">ОТЗЫВЫ НАШИХ КЛИЕНТОВ</h1>
+                <button class="btn-white-caps" id="openReviewModal" data-translate="send_review_btn">ОТПРАВИТЬ СВОЙ ОТЗЫВ</button>
             </div>
             <div class="scroll-down-arrow"></div>
         </section>
@@ -45,12 +51,12 @@
         <section class="clinic-intro">
             <div class="container intro-grid">
                 <div class="intro-title">
-                    <h2>КЛИНИКА<br>DENTAL CLUB</h2>
+                    <h2 data-translate="clinic_name">КЛИНИКА<br>DENTAL CLUB</h2>
                 </div>
                 <div class="intro-text">
-                    <p>Клиника <strong>Dental Club</strong> работает по европейским стандартам и уделяет особое внимание / инвестирует в обучение и профессиональный рост своих сотрудников.</p>
-                    <p>Наши принципы: гарантировать пациентам лучшее лечение, а сотрудникам – лучшие условия труда и профессиональное развитие.</p>
-                    <p>Если Вы хотите стать частью дружной команды и реализоваться как профессионал, присылайте Ваше резюме на почту:</p>
+                    <p data-translate="clinic_desc_1">Клиника <strong>Dental Club</strong> работает по европейским стандартам и уделяет особое внимание / инвестирует в обучение и профессиональный рост своих сотрудников.</p>
+                    <p data-translate="clinic_desc_2">Наши принципы: гарантировать пациентам лучшее лечение, а сотрудникам – лучшие условия труда и профессиональное развитие.</p>
+                    <p data-translate="clinic_desc_3">Если Вы хотите стать частью дружной команды и реализоваться как профессионал, присылайте Ваше резюме на почту:</p>
                     <a href="mailto:dentalclubreception@gmail.com" class="btn-email-link">DENTALCLUBRECEPTION@GMAIL.COM</a>
                 </div>
             </div>
@@ -59,7 +65,7 @@
         <section class="reviews-list" id="reviewsSection">
             <div class="container">
                 <div id="reviewsListContainer">
-                    <div class="loading-reviews">Загрузка отзывов...</div>
+                    <div class="loading-reviews" data-translate="loading">Загрузка отзывов...</div>
                 </div>
             </div>
         </section>
@@ -67,14 +73,14 @@
         <section class="feedback-simple">
             <div class="container feedback-flex">
                 <div class="feedback-title">
-                    <h2>ОБРАТНАЯ<br>СВЯЗЬ</h2>
+                    <h2 data-translate="feedback_title">ОБРАТНАЯ<br>СВЯЗЬ</h2>
                 </div>
                 <form class="feedback-form-styled" id="feedbackForm">
-                    <input type="text" placeholder="Ваше имя" id="feedbackName">
-                    <input type="email" placeholder="Email" id="feedbackEmail">
-                    <input type="tel" placeholder="+7 (___) ___ __ __" id="feedbackPhone">
-                    <input type="text" placeholder="Введите ваш вопрос" id="feedbackQuestion">
-                    <button type="submit" class="btn-dark-outline">ОТПРАВИТЬ ЗАЯВКУ</button>
+                    <input type="text" data-translate="name_placeholder" placeholder="Ваше имя" id="feedbackName">
+                    <input type="email" data-translate="email_placeholder" placeholder="Email" id="feedbackEmail">
+                    <input type="tel" data-translate="phone_placeholder" placeholder="+7 (___) ___ __ __" id="feedbackPhone">
+                    <input type="text" data-translate="question_placeholder" placeholder="Введите ваш вопрос" id="feedbackQuestion">
+                    <button type="submit" class="btn-dark-outline" data-translate="send_btn">ОТПРАВИТЬ ЗАЯВКУ</button>
                 </form>
             </div>
         </section>
@@ -82,30 +88,30 @@
         <section class="video-slider-section">
             <div class="container">
                 <div class="video-slider-title">
-                    <h2>ФОТО И ВИДЕО</h2>
-                    <p>Наши работы и моменты из жизни клиники</p>
+                    <h2 data-translate="photo_video">ФОТО И ВИДЕО</h2>
+                    <p data-translate="photo_video_desc">Наши работы и моменты из жизни клиники</p>
                 </div>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <img src="../assets/images/reviews/reviews4.png" alt="Фото 1">
-                            <div class="slide-caption">Современный кабинет</div>
+                            <div class="slide-caption" data-translate="modern_cabinet">Современный кабинет</div>
                         </div>
                         <div class="swiper-slide">
                             <img src="../assets/images/reviews/reviews5.png" alt="Фото 2">
-                            <div class="slide-caption">Процесс лечения</div>
+                            <div class="slide-caption" data-translate="treatment_process">Процесс лечения</div>
                         </div>
                         <div class="swiper-slide">
                             <img src="../assets/images/reviews/reviews6.png" alt="Фото 3">
-                            <div class="slide-caption">Команда Dental Club</div>
+                            <div class="slide-caption" data-translate="team_caption">Команда Dental Club</div>
                         </div>
                         <div class="swiper-slide">
                             <img src="../assets/images/reviews/reviews1.jpg" alt="Фото 4">
-                            <div class="slide-caption">Уютная атмосфера</div>
+                            <div class="slide-caption" data-translate="cozy_atmosphere">Уютная атмосфера</div>
                         </div>
                         <div class="swiper-slide">
                             <img src="../assets/images/reviews/reviews2.jpg" alt="Фото 5">
-                            <div class="slide-caption">Счастливые пациенты</div>
+                            <div class="slide-caption" data-translate="happy_patients">Счастливые пациенты</div>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -121,24 +127,61 @@
     <div id="reviewModal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
-            <h2>НАПИШИТЕ СВОЙ ОТЗЫВ</h2>
+            <h2 data-translate="write_review">НАПИШИТЕ СВОЙ ОТЗЫВ</h2>
             <form class="modal-form" id="reviewForm">
-                <input type="text" placeholder="Ваше имя" id="reviewName" required>
-                <input type="email" placeholder="Email" id="reviewEmail" required>
-                <input type="tel" placeholder="+7 (___) ___ __ __" id="reviewPhone" required>
-                <textarea placeholder="Ваш отзыв" rows="5" id="reviewText" required></textarea>
-                <button type="submit" class="modal-submit-btn">ОТПРАВИТЬ ОТЗЫВ</button>
+                <input type="text" data-translate="review_name" placeholder="Ваше имя" id="reviewName" required>
+                <input type="email" data-translate="review_email" placeholder="Email" id="reviewEmail" required>
+                <input type="tel" data-translate="review_phone" placeholder="+7 (___) ___ __ __" id="reviewPhone" required>
+                <textarea data-translate="review_text" placeholder="Ваш отзыв" rows="5" id="reviewText" required></textarea>
+                <button type="submit" class="modal-submit-btn" data-translate="submit_review">ОТПРАВИТЬ ОТЗЫВ</button>
             </form>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="../js/localstorage.js"></script>
     <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/translations.js"></script>
-    <script src="../js/personalization.js"></script>
     <script src="../js/components.js"></script>
     <script src="../js/modal-appointment.js"></script>
     <script src="../js/modal-profile.js"></script>
     <script src="../js/reviews.js"></script>
+    <script src="../js/preloader.js"></script>
+
+    <script>
+        if (typeof Swiper !== 'undefined') {
+            new Swiper('.mySwiper', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: { delay: 4000, disableOnInteraction: false },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                breakpoints: { 640: { slidesPerView: 2, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 30 } }
+            });
+        }
+
+        const openAppointmentBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2, #openAppointmentBtn3');
+        openAppointmentBtns.forEach(btn => {
+            if (btn && typeof openVisitorAppointmentModal === 'function') {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openVisitorAppointmentModal();
+                });
+            }
+        });
+
+        setTimeout(function() {
+            if (typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI();
+            }
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+        }, 200);
+    </script>
+    <script src="../js/special-version.js"></script>
+
 </body>
 </html>

@@ -284,9 +284,7 @@ body {
     }
 }
 
-/* ========== БУРГЕР-МЕНЮ ========== */
 
-/* Бургер-иконка - скрыта на десктопе */
 .burger-icon {
     display: none;
     flex-direction: column;
@@ -307,7 +305,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Анимация при открытом меню */
 .burger-icon.active span:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
 }
@@ -320,7 +317,6 @@ body {
     transform: translateY(-9px) rotate(-45deg);
 }
 
-/* Мобильное меню */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -366,7 +362,6 @@ body {
     color: #A5C33C;
 }
 
-/* Оверлей (затемнение фона) */
 .menu-overlay {
     position: fixed;
     top: 0;
@@ -385,12 +380,10 @@ body {
     visibility: visible;
 }
 
-/* Запрет скролла при открытом меню */
 body.menu-open {
     overflow: hidden;
 }
 
-/* ========== КРЕСТИК ДЛЯ ЗАКРЫТИЯ МОБИЛЬНОГО МЕНЮ ========== */
 
 .close-menu-btn {
     position: absolute;
@@ -427,7 +420,6 @@ body.menu-open {
     background-color: #A5C33C;
 }
 
-/* Показываем бургер на планшетах и мобильных устройствах */
 @media (max-width: 1200px) {
     .burger-icon {
         display: flex !important;

@@ -1121,3 +1121,15 @@ body {
         display: none;
     }
 }
+
+html[data-theme="system"] html, 
+html[data-theme="system"] body,
+html[data-theme="system"] .prices-section,
+html[data-theme="system"] .prices-list,
+html[data-theme="system"] .price-category,
+html[data-theme="system"] .container,
+html[data-theme="system"] main,
+html[data-theme="system"] #footer-placeholder {
+    background: #ffffff !important;
+}
+
