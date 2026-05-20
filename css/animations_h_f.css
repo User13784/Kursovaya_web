@@ -488,3 +488,85 @@
     filter: none !important;
     transform: none !important;
 }
+
+.scroll-down {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 10;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.scroll-down::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    transform: translate(-50%, -50%) rotate(45deg);
+    opacity: 0.8;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(-50%) translateY(10px);
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 768px) {
+    .scroll-down {
+        width: 24px;
+        height: 40px;
+        bottom: 20px;
+    }
+    
+    .scroll-down::before {
+        width: 8px;
+        height: 8px;
+        border-width: 2px;
+    }
+}
+
+@media (max-width: 576px) {
+    .scroll-down {
+        width: 20px;
+        height: 34px;
+        bottom: 15px;
+    }
+    
+    .scroll-down::before {
+        width: 6px;
+        height: 6px;
+    }
+}
+
+[data-theme="dark"] .scroll-down::before {
+    border-color: #FFFFFF;
+}
+
+[data-theme="light"] .scroll-down::before {
+    border-color: #FFFFFF;
+}
+
+[data-accessibility="no-animation"] .scroll-down,
+body.special-mode .scroll-down {
+    animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-down {
+        animation: none !important;
+    }
+}

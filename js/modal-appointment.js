@@ -24,30 +24,30 @@ function createAppointmentModal() {
                     <form id="visitorAppointmentForm">
                         <div class="appointment-form-group">
                             <label id="modalNameLabel">Ваше имя <span class="required">*</span></label>
-                            <input type="text" id="visitorName" required placeholder="Иванов Иван Иванович">
+                            <input type="text" id="visitorName" required placeholder="Иванов Иван Иванович" style="background: transparent; border-bottom: 1px solid #9F9F9F; border-top: none; border-left: none; border-right: none; padding: 12px 5px 12px 8px; width: 100%; box-sizing: border-box;">
                         </div>
                         
                         <div class="appointment-form-row">
                             <div class="appointment-form-group">
                                 <label id="modalPhoneLabel">Телефон <span class="required">*</span></label>
-                                <input type="tel" id="visitorPhone" required placeholder="+375 (29) 123-45-67">
+                                <input type="tel" id="visitorPhone" required placeholder="+375 (29) 123-45-67" style="background: transparent; border-bottom: 1px solid #9F9F9F; border-top: none; border-left: none; border-right: none; padding: 12px 5px 12px 8px; width: 100%; box-sizing: border-box;">
                             </div>
                             <div class="appointment-form-group">
                                 <label id="modalEmailLabel">Email</label>
-                                <input type="email" id="visitorEmail" placeholder="ivanov@example.com">
+                                <input type="email" id="visitorEmail" placeholder="ivanov@example.com" style="background: transparent; border-bottom: 1px solid #9F9F9F; border-top: none; border-left: none; border-right: none; padding: 12px 5px 12px 8px; width: 100%; box-sizing: border-box;">
                             </div>
                         </div>
                         
                         <div class="appointment-form-group">
                             <label id="modalServiceLabel">Выберите услугу <span class="required">*</span></label>
-                            <select id="visitorServiceId" required>
+                            <select id="visitorServiceId" required style="background: transparent; border-bottom: 1px solid #9F9F9F; border-top: none; border-left: none; border-right: none; padding: 12px 5px 12px 8px; width: 100%; box-sizing: border-box;">
                                 <option value="">-- Выберите услугу --</option>
                             </select>
                         </div>
                         
                         <div class="appointment-form-group">
                             <label id="modalDoctorLabel">Выберите врача <span class="required">*</span></label>
-                            <select id="visitorDoctorId" required>
+                            <select id="visitorDoctorId" required style="background: transparent; border-bottom: 1px solid #9F9F9F; border-top: none; border-left: none; border-right: none; padding: 12px 5px 12px 8px; width: 100%; box-sizing: border-box;">
                                 <option value="">-- Выберите врача --</option>
                             </select>
                         </div>
@@ -55,11 +55,11 @@ function createAppointmentModal() {
                         <div class="appointment-form-row">
                             <div class="appointment-form-group">
                                 <label id="modalDateLabel">Дата <span class="required">*</span></label>
-                                <input type="date" id="visitorDate" required>
+                                <input type="date" id="visitorDate" required style="background: transparent; border-bottom: 1px solid #9F9F9F; border-top: none; border-left: none; border-right: none; padding: 12px 5px 12px 8px; width: 100%; box-sizing: border-box;">
                             </div>
                             <div class="appointment-form-group">
                                 <label id="modalTimeLabel">Время <span class="required">*</span></label>
-                                <select id="visitorTime" required>
+                                <select id="visitorTime" required style="background: transparent; border-bottom: 1px solid #9F9F9F; border-top: none; border-left: none; border-right: none; padding: 12px 5px 12px 8px; width: 100%; box-sizing: border-box;">
                                     <option value="">-- Выберите время --</option>
                                     <option value="09:00">09:00</option>
                                     <option value="10:00">10:00</option>
@@ -77,10 +77,10 @@ function createAppointmentModal() {
                         
                         <div class="appointment-form-group">
                             <label id="modalCommentLabel">Комментарий</label>
-                            <textarea id="visitorComment" rows="3" placeholder="Дополнительная информация..."></textarea>
+                            <textarea id="visitorComment" rows="3" placeholder="Дополнительная информация..." style="background: transparent; border-bottom: 1px solid #9F9F9F; border-top: none; border-left: none; border-right: none; padding: 12px 5px 12px 8px; width: 100%; box-sizing: border-box; resize: vertical;"></textarea>
                         </div>
                         
-                        <button type="submit" class="appointment-submit-btn" id="modalSubmitBtn">📝 ЗАПИСАТЬСЯ</button>
+                        <button type="submit" class="appointment-submit-btn" id="modalSubmitBtn" style="background: #2F353B; color: white; border: none; padding: 14px; border-radius: 30px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px; width: 100%;">📝 ЗАПИСАТЬСЯ</button>
                     </form>
                 </div>
             </div>
@@ -88,6 +88,33 @@ function createAppointmentModal() {
     `;
     
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    if (!document.querySelector('#toast-styles')) {
+        const style = document.createElement('style');
+        style.id = 'toast-styles';
+        style.textContent = `
+            .appointment-toast {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #2F353B;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 12px;
+                font-family: 'Mulish', sans-serif;
+                font-size: 14px;
+                z-index: 10010;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                pointer-events: none;
+            }
+            .appointment-toast.show {
+                transform: translateX(0);
+            }
+        `;
+        document.head.appendChild(style);
+    }
     
     if (!document.querySelector('link[href*="modal-appointment.css"]')) {
         const link = document.createElement('link');
@@ -137,7 +164,6 @@ function updateAppointmentModalTranslations() {
     const submitBtn = document.getElementById('modalSubmitBtn');
     if (submitBtn) submitBtn.textContent = getModalTranslation('modal_appointment_submit', '📝 ЗАПИСАТЬСЯ');
     
-    // Обновляем option "Выберите услугу/врача"
     const serviceSelect = document.getElementById('visitorServiceId');
     if (serviceSelect && serviceSelect.options[0]) {
         serviceSelect.options[0].textContent = getModalTranslation('modal_appointment_select_service', '-- Выберите услугу --');
@@ -182,6 +208,153 @@ function initAppointmentModal() {
     }
     
     loadServicesAndDoctors();
+}
+
+function isUserLoggedIn() {
+    const session = localStorage.getItem('dental_club_session') || sessionStorage.getItem('dental_club_session');
+    if (session) {
+        try {
+            const userData = JSON.parse(session);
+            return userData && userData.userId;
+        } catch(e) {
+            return false;
+        }
+    }
+    return false;
+}
+
+function getCurrentUserData() {
+    const session = localStorage.getItem('dental_club_session') || sessionStorage.getItem('dental_club_session');
+    if (session) {
+        try {
+            return JSON.parse(session);
+        } catch(e) {
+            return null;
+        }
+    }
+    return null;
+}
+
+function fillFormWithUserData() {
+    const userData = getCurrentUserData();
+    if (!userData) return;
+    
+    const nameInput = document.getElementById('visitorName');
+    const phoneInput = document.getElementById('visitorPhone');
+    const emailInput = document.getElementById('visitorEmail');
+    
+    if (nameInput && !nameInput.value && userData.lastName && userData.firstName) {
+        nameInput.value = `${userData.lastName} ${userData.firstName}`.trim();
+    }
+    
+    if (phoneInput && !phoneInput.value && userData.phone) {
+        phoneInput.value = userData.phone;
+    }
+    
+    if (emailInput && !emailInput.value && userData.email) {
+        emailInput.value = userData.email;
+    }
+}
+
+function updateAvailableTimeSlots() {
+    const dateInput = document.getElementById('visitorDate');
+    const timeSelect = document.getElementById('visitorTime');
+    
+    if (!dateInput || !timeSelect) return;
+    
+    const selectedDate = dateInput.value;
+    if (!selectedDate) {
+        enableAllTimeSlots();
+        return;
+    }
+    
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+    const isToday = selectedDate === todayStr;
+    
+    const currentHour = today.getHours();
+    const currentMinute = today.getMinutes();
+    
+    const timeOptions = timeSelect.querySelectorAll('option');
+    
+    timeOptions.forEach(option => {
+        const timeValue = option.value;
+        if (timeValue && timeValue !== '') {
+            if (isToday) {
+                const [hours, minutes] = timeValue.split(':').map(Number);
+                const isTimePassed = (hours < currentHour) || (hours === currentHour && minutes <= currentMinute);
+                
+                if (isTimePassed) {
+                    option.disabled = true;
+                    option.style.color = '#9CA3AF';
+                    option.style.backgroundColor = 'transparent';
+                    option.textContent = `${timeValue} (время прошло)`;
+                } else {
+                    option.disabled = false;
+                    option.style.color = '';
+                    option.style.backgroundColor = 'transparent';
+                    option.textContent = timeValue;
+                }
+            } else {
+                option.disabled = false;
+                option.style.color = '';
+                option.style.backgroundColor = 'transparent';
+                if (option.textContent.includes('(время прошло)')) {
+                    option.textContent = timeValue;
+                }
+            }
+        }
+    });
+}
+
+function enableAllTimeSlots() {
+    const timeSelect = document.getElementById('visitorTime');
+    if (!timeSelect) return;
+    
+    const timeOptions = timeSelect.querySelectorAll('option');
+    timeOptions.forEach(option => {
+        if (option.value && option.value !== '') {
+            option.disabled = false;
+            option.style.color = '';
+            option.style.backgroundColor = 'transparent';
+            if (option.textContent.includes('(время прошло)')) {
+                option.textContent = option.value;
+            }
+        }
+    });
+}
+
+function setupDatePicker() {
+    const dateInput = document.getElementById('visitorDate');
+    if (!dateInput) return;
+    
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${year}-${month}-${day}`;
+    
+    dateInput.min = todayStr;
+    
+    dateInput.addEventListener('keydown', function(e) {
+        e.preventDefault();
+        this.showPicker();
+    });
+    
+    dateInput.addEventListener('click', function() {
+        this.showPicker();
+    });
+    
+    dateInput.addEventListener('change', function() {
+        const selectedDate = this.value;
+        if (selectedDate && selectedDate < todayStr) {
+            showAppointmentToast('❌ Нельзя выбрать дату в прошлом!', 'error');
+            this.value = '';
+            enableAllTimeSlots();
+        } else {
+            updateAvailableTimeSlots();
+        }
+    });
 }
 
 async function loadServicesAndDoctors() {
@@ -233,11 +406,17 @@ async function loadServicesAndDoctors() {
             });
         }
         
-        const dateInput = document.getElementById('visitorDate');
-        if (dateInput) {
-            const today = new Date().toISOString().split('T')[0];
-            dateInput.min = today;
-        }
+        setupDatePicker();
+        updateAvailableTimeSlots();
+        
+        fillFormWithUserData();
+        
+        setInterval(function() {
+            const dateInput = document.getElementById('visitorDate');
+            if (dateInput && dateInput.value) {
+                updateAvailableTimeSlots();
+            }
+        }, 60000);
         
     } catch (error) {
         console.error('Ошибка загрузки данных:', error);
@@ -245,6 +424,21 @@ async function loadServicesAndDoctors() {
 }
 
 function openVisitorAppointmentModal() {
+    if (!isUserLoggedIn()) {
+        showAppointmentToast('🔐 Для записи на прием необходимо войти в аккаунт. Перенаправление на страницу входа...', 'error');
+        
+        const modal = document.getElementById('visitorAppointmentModal');
+        if (modal && modal.style.display === 'flex') {
+            closeAppointmentModal();
+        }
+        
+        setTimeout(() => {
+            const isInPages = window.location.pathname.includes('/pages/');
+            window.location.href = isInPages ? 'login.html' : '../pages/login.html';
+        }, 2000);
+        return;
+    }
+    
     const modal = document.getElementById('visitorAppointmentModal');
     if (!modal) {
         createAppointmentModal();
@@ -254,6 +448,12 @@ function openVisitorAppointmentModal() {
     updateAppointmentModalTranslations();
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    
+    setTimeout(() => {
+        setupDatePicker();
+        updateAvailableTimeSlots();
+        fillFormWithUserData();
+    }, 100);
 }
 
 function closeAppointmentModal() {
@@ -266,6 +466,16 @@ function closeAppointmentModal() {
 
 async function submitAppointment(event) {
     event.preventDefault();
+    
+    if (!isUserLoggedIn()) {
+        showAppointmentToast('🔐 Для записи на прием необходимо войти в аккаунт', 'error');
+        closeAppointmentModal();
+        setTimeout(() => {
+            const isInPages = window.location.pathname.includes('/pages/');
+            window.location.href = isInPages ? 'login.html' : '../pages/login.html';
+        }, 1500);
+        return;
+    }
     
     const name = document.getElementById('visitorName')?.value.trim();
     const phone = document.getElementById('visitorPhone')?.value.trim();
@@ -283,6 +493,28 @@ async function submitAppointment(event) {
         return;
     }
     
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+    
+    if (date < todayStr) {
+        showAppointmentToast('❌ Нельзя записаться на прошедшую дату!', 'error');
+        return;
+    }
+    
+    if (date === todayStr) {
+        const [hours, minutes] = time.split(':').map(Number);
+        const currentHour = today.getHours();
+        const currentMinute = today.getMinutes();
+        
+        if (hours < currentHour || (hours === currentHour && minutes <= currentMinute)) {
+            showAppointmentToast('❌ Нельзя записаться на время, которое уже прошло!', 'error');
+            return;
+        }
+    }
+    
+    const userData = getCurrentUserData();
+    const userId = userData ? userData.userId : null;
+    
     const appointmentData = {
         patientName: name,
         phone: phone.replace(/\D/g, ''),
@@ -293,6 +525,7 @@ async function submitAppointment(event) {
         time: time,
         comment: comment || '',
         status: 'pending',
+        userId: userId,
         createdAt: new Date().toISOString()
     };
     
@@ -335,30 +568,15 @@ function showAppointmentToast(message, type = 'success') {
     if (!toast) {
         toast = document.createElement('div');
         toast.className = 'appointment-toast';
-        toast.style.cssText = `
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #2F353B;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-family: 'Mulish', sans-serif;
-            font-size: 14px;
-            z-index: 10010;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        `;
         document.body.appendChild(toast);
     }
     
     toast.textContent = message;
     toast.style.background = type === 'error' ? '#EF4444' : '#10B981';
-    toast.style.transform = 'translateX(0)';
+    toast.classList.add('show');
     
     setTimeout(() => {
-        toast.style.transform = 'translateX(400px)';
+        toast.classList.remove('show');
     }, 3000);
 }
 
