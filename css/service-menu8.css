@@ -686,3 +686,7 @@ body.menu-open {
         display: none !important;
     }
 }
+
+#openAppointmentBtn4, #openAppointmentBtn5 {
+    display: none !important;
+}

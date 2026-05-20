@@ -1,18 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Врач | Dental Club</title>
-    <link rel="stylesheet" href="../css/index.css" />
-    <link rel="stylesheet" href="../css/team-details.css" />
-    <link rel="stylesheet" href="../media/team-details_media.css" />
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/team-details.css">
+    <link rel="stylesheet" href="../media/team-details_media.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
-        <link rel="stylesheet" href="../css/theme.css">
-<link rel="stylesheet" href="../css/special-version.css">
-
-
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/special-version.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -24,17 +22,27 @@
         </div>
         <nav class="mobile-nav">
             <div class="mobile-login-container" id="mobileLoginContainer">
-                <a href="#" class="mobile-login-link">ВОЙТИ</a>
+                <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
             </div>
-            <a href="#" class="mobile-menu-btn">МЕНЮ</a>
-            <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="index.html" class="mobile-link">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link">УСЛУГИ</a>
-            <a href="team.html" class="mobile-link">КОМАНДА</a>
-            <a href="reviews.html" class="mobile-link">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link">КОНТАКТЫ</a>
-            <a href="prices.html" class="mobile-link">ПРАЙС-ЛИСТ</a>
-            <a href="faq.html" class="mobile-link">ВОПРОС-ОТВЕТ</a>
+            
+            <a href="#" class="mobile-lang-selector" id="mobileLangSelector">ENG</a>
+            
+            <div class="mobile-theme-switcher">
+                <span class="mobile-theme-icon" data-theme="dark" title="Тёмная тема">🌙 Тёмная</span>
+                <span class="mobile-theme-icon" data-theme="light" title="Светлая тема">☀️ Светлая</span>
+                <span class="mobile-theme-icon" data-theme="system" title="Системная тема">💻 Системная</span>
+            </div>
+            
+            <a href="#" id="mobileSpecialButton" class="mobile-special-button">👁️ Режим для слабовидящих</a>
+            
+            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
+            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -43,7 +51,7 @@
         <div class="container">
             <div class="doctor-card">
                 <div class="doctor-photo">
-                    <img id="doctor-photo" src="" alt="Фото врача" />
+                    <img id="doctor-photo" src="" alt="Фото врача">
                 </div>
 
                 <div class="doctor-details">
@@ -51,31 +59,31 @@
                     <h1 id="doctor-name" class="doctor-name"></h1>
 
                     <div class="info-block spec">
-                        <h4 class="spec-title">Специализация:</h4>
+                        <h4 class="spec-title" data-translate="specialization">Специализация:</h4>
                         <p id="spec-desc" class="spec-desc"></p>
                     </div>
 
                     <div class="info-block edu">
-                        <h4 class="edu-title">Образование:</h4>
+                        <h4 class="edu-title" data-translate="education">Образование:</h4>
                         <p id="edu-desc" class="edu-desc"></p>
                     </div>
 
                     <div class="info-block exp">
-                        <h4 class="exp-title">Опыт работы:</h4>
+                        <h4 class="exp-title" data-translate="experience">Опыт работы:</h4>
                         <p id="exp-desc" class="exp-desc"></p>
                     </div>
 
                     <div class="info-block improve">
-                        <h4 class="improve-title">Усовершенствования:</h4>
+                        <h4 class="improve-title" data-translate="improvement">Повышение квалификации:</h4>
                         <p id="improve-desc" class="improve-desc"></p>
                     </div>
 
                     <div class="info-block time">
-                        <h4 class="time-title">Время приема:</h4>
+                        <h4 class="time-title" data-translate="work_time">Время приема:</h4>
                         <p id="time-desc" class="time-desc"></p>
                     </div>
 
-                    <button class="btn-submit" id="openAppointmentBtn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    <button class="btn-submit" id="openAppointmentBtn" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                 </div>
             </div>
         </div>
@@ -93,60 +101,289 @@
     <script src="../js/preloader.js"></script>
 
     <script>
+        function initMobileMenu() {
+            setTimeout(function() {
+                const burgerIcon = document.getElementById('burgerIcon');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('menuOverlay');
+                const closeMenuBtn = document.getElementById('closeMenuBtn');
+                const body = document.body;
 
-async function loadDoctorData() {
-    const doctorId = sessionStorage.getItem('selectedDoctorId') || '1';
-    const apiUrl = `http://localhost:3000/doctors/${doctorId}`;
-    const currentLang = localStorage.getItem('dental_language') || 'ru';
-    
-    console.log('🔄 Загрузка данных врача из API:', apiUrl);
-    
-    document.getElementById('doctor-name').innerHTML = 'Загрузка...';
-    
-    try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+                if (!burgerIcon || !mobileMenu) return;
+
+                let scrollPosition = 0;
+
+                function openMenu() {
+                    scrollPosition = window.pageYOffset;
+                    burgerIcon.classList.add('active');
+                    mobileMenu.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                    body.style.top = `-${scrollPosition}px`;
+                }
+
+                function closeMenu() {
+                    burgerIcon.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    body.style.top = '';
+                    window.scrollTo(0, scrollPosition);
+                }
+
+                burgerIcon.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
+                };
+
+                if (closeMenuBtn) {
+                    closeMenuBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                    };
+                }
+
+                if (menuOverlay) {
+                    menuOverlay.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                    };
+                }
+
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link, .mobile-special-button, .mobile-theme-icon');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (!this.classList.contains('mobile-theme-icon')) {
+                            setTimeout(closeMenu, 200);
+                        }
+                    });
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 1200 && mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }, 100);
         }
-        const doctor = await response.json();
-        
-        // Извлекаем локализованные значения
-        const lastName = doctor.lastName?.[currentLang] || doctor.lastName?.ru || doctor.lastName || '';
-        const firstName = doctor.firstName?.[currentLang] || doctor.firstName?.ru || doctor.firstName || '';
-        const middleName = doctor.middleName?.[currentLang] || doctor.middleName?.ru || doctor.middleName || '';
-        const specialization = doctor.specialization?.[currentLang] || doctor.specialization?.ru || doctor.specialization || '';
-        const education = doctor.education?.[currentLang] || doctor.education?.ru || doctor.education || '';
-        const experience = doctor.experience?.[currentLang] || doctor.experience?.ru || doctor.experience || '';
-        const improvement = doctor.improvement?.[currentLang] || doctor.improvement?.ru || doctor.improvement || '';
-        
-        console.log('✅ Данные врача загружены:', doctor);
-        
-        document.getElementById('doctor-photo').src = doctor.photo || '../assets/images/team/placeholder.jpg';
-        document.getElementById('doctor-photo').alt = `${lastName} ${firstName}`;
-        
-        document.getElementById('doctor-subtitle').textContent = specialization;
-        
-        let fullName = '';
-        if (lastName) fullName += lastName;
-        if (firstName) fullName += ' ' + firstName;
-        if (middleName) fullName += '<br>' + middleName;
-        document.getElementById('doctor-name').innerHTML = fullName || 'Врач';
-        
-        document.getElementById('spec-desc').textContent = specialization || 'Не указана';
-        document.getElementById('edu-desc').textContent = education || 'Не указано';
-        document.getElementById('exp-desc').textContent = experience || 'Не указан';
-        document.getElementById('improve-desc').textContent = improvement || 'Не указано';
-        document.getElementById('time-desc').textContent = doctor.schedule || 'Не указано';
-        
-        const plainName = `${lastName} ${firstName} ${middleName}`.trim();
-        document.title = `${plainName || 'Врач'} | Dental Club`;
-        
-    } catch (error) {
-        console.error('❌ Ошибка загрузки данных врача:', error);
-        document.getElementById('doctor-name').innerHTML = 'Ошибка загрузки данных';
-        showErrorMessage('Не удалось загрузить данные врача. Проверьте подключение к серверу.');
-    }
-}
+
+        function syncMobileThemeWithDesktop() {
+            const currentTheme = localStorage.getItem('dental_theme') || 'system';
+            const mobileThemeIcons = document.querySelectorAll('.mobile-theme-icon');
+            
+            mobileThemeIcons.forEach(icon => {
+                if (icon.dataset.theme === currentTheme) {
+                    icon.classList.add('active');
+                } else {
+                    icon.classList.remove('active');
+                }
+            });
+        }
+
+        function initMobileThemeSwitcher() {
+            const mobileThemeIcons = document.querySelectorAll('.mobile-theme-icon');
+            
+            mobileThemeIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const theme = this.dataset.theme;
+                    
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('dental_theme', theme);
+                    
+                    mobileThemeIcons.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const desktopIcons = document.querySelectorAll('.theme-icon');
+                    desktopIcons.forEach(desktopIcon => {
+                        desktopIcon.classList.remove('active');
+                        if ((theme === 'dark' && desktopIcon.classList.contains('theme-dark')) ||
+                            (theme === 'light' && desktopIcon.classList.contains('theme-light')) ||
+                            (theme === 'system' && desktopIcon.classList.contains('theme-system'))) {
+                            desktopIcon.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        function initMobileSpecialButton() {
+            const mobileSpecialBtn = document.getElementById('mobileSpecialButton');
+            if (mobileSpecialBtn) {
+                mobileSpecialBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (typeof window.toggleSpecialVersion === 'function') {
+                        window.toggleSpecialVersion();
+                    } else if (typeof window.initSpecialVersion === 'function') {
+                        window.initSpecialVersion();
+                    } else {
+                        alert('👁️ Режим для слабовидящих будет доступен в ближайшее время');
+                    }
+                    
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    const menuOverlay = document.getElementById('menuOverlay');
+                    const burgerIcon = document.getElementById('burgerIcon');
+                    const body = document.body;
+                    
+                    if (burgerIcon) burgerIcon.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    body.style.top = '';
+                });
+            }
+        }
+
+        function updateMobileLangButton() {
+            const mobileLangSelector = document.getElementById('mobileLangSelector');
+            if (mobileLangSelector) {
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                mobileLangSelector.textContent = currentLang === 'ru' ? 'ENG' : 'RUS';
+            }
+        }
+
+        function initMobileLangSwitcher() {
+            const mobileLangSelector = document.getElementById('mobileLangSelector');
+            if (mobileLangSelector) {
+                const newSelector = mobileLangSelector.cloneNode(true);
+                mobileLangSelector.parentNode.replaceChild(newSelector, mobileLangSelector);
+                
+                newSelector.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const currentLang = localStorage.getItem('dental_language') || 'ru';
+                    const newLang = currentLang === 'ru' ? 'en' : 'ru';
+                    localStorage.setItem('dental_language', newLang);
+                    
+                    this.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
+                    
+                    if (typeof window.switchLanguage === 'function') {
+                        window.switchLanguage();
+                    } else if (typeof window.applyTranslations === 'function') {
+                        window.applyTranslations();
+                    }
+                    
+                    const desktopLangText = document.getElementById('langSelectorText');
+                    if (desktopLangText) {
+                        desktopLangText.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
+                    }
+                    
+                    const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
+                    document.dispatchEvent(event);
+                });
+            }
+        }
+
+        function getLocalizedTextFromField(field, currentLang, defaultValue = '') {
+            if (!field) return defaultValue;
+            if (typeof field === 'string') return field;
+            if (typeof field === 'object') {
+                return field[currentLang] || field.ru || defaultValue;
+            }
+            return defaultValue;
+        }
+
+        function fixTextPositionForLanguage() {
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
+            const expDesc = document.getElementById('exp-desc');
+            const timeDesc = document.getElementById('time-desc');
+            
+            if (!expDesc) return;
+            
+            if (currentLang === 'en') {
+                expDesc.style.transform = 'translate(120px, 130px)';
+                expDesc.style.whiteSpace = 'nowrap';
+                expDesc.style.display = 'inline-block';
+                
+                if (timeDesc) {
+                    timeDesc.style.transform = 'translate(130px, 183px)';
+                    timeDesc.style.width = '350px';
+                    timeDesc.style.whiteSpace = 'nowrap';
+                    timeDesc.style.display = 'inline-block';
+                }
+            } else {
+                expDesc.style.transform = 'translate(41px, 130px)';
+                expDesc.style.whiteSpace = '';
+                expDesc.style.display = '';
+                
+                if (timeDesc) {
+                    timeDesc.style.transform = 'translate(51px, 180px)';
+                    timeDesc.style.width = '300px';
+                    timeDesc.style.whiteSpace = '';
+                    timeDesc.style.display = '';
+                }
+            }
+        }
+
+        async function loadDoctorData() {
+            const doctorId = sessionStorage.getItem('selectedDoctorId') || '1';
+            const apiUrl = `http://localhost:3000/doctors/${doctorId}`;
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
+            
+            console.log('🔄 Загрузка данных врача из API:', apiUrl);
+            console.log('🌐 Текущий язык:', currentLang);
+            
+            document.getElementById('doctor-name').innerHTML = 'Загрузка...';
+            
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const doctor = await response.json();
+                
+                let lastName = getLocalizedTextFromField(doctor.lastName, currentLang, '');
+                let firstName = getLocalizedTextFromField(doctor.firstName, currentLang, '');
+                let middleName = getLocalizedTextFromField(doctor.middleName, currentLang, '');
+                let specialization = getLocalizedTextFromField(doctor.specialization, currentLang, '');
+                let education = getLocalizedTextFromField(doctor.education, currentLang, '');
+                let experience = getLocalizedTextFromField(doctor.experience, currentLang, '');
+                let improvement = getLocalizedTextFromField(doctor.improvement, currentLang, '');
+                let schedule = getLocalizedTextFromField(doctor.schedule, currentLang, 'Не указано');
+                
+                console.log('✅ Данные врача загружены:', doctor);
+                console.log('📅 Расписание (локализованное):', schedule);
+                
+                document.getElementById('doctor-photo').src = doctor.photo || '../assets/images/team/placeholder.jpg';
+                document.getElementById('doctor-photo').alt = `${lastName} ${firstName}`;
+                
+                document.getElementById('doctor-subtitle').textContent = specialization;
+                
+                let fullName = '';
+                if (lastName) fullName += lastName;
+                if (firstName) fullName += ' ' + firstName;
+                if (middleName) fullName += '<br>' + middleName;
+                document.getElementById('doctor-name').innerHTML = fullName || 'Врач';
+                
+                document.getElementById('spec-desc').textContent = specialization || 'Не указана';
+                document.getElementById('edu-desc').textContent = education || 'Не указано';
+                document.getElementById('exp-desc').textContent = experience || 'Не указан';
+                document.getElementById('improve-desc').textContent = improvement || 'Не указано';
+                document.getElementById('time-desc').textContent = schedule;
+                
+                const plainName = `${lastName} ${firstName} ${middleName}`.trim();
+                document.title = `${plainName || 'Врач'} | Dental Club`;
+                
+                setTimeout(fixTextPositionForLanguage, 50);
+                
+            } catch (error) {
+                console.error('❌ Ошибка загрузки данных врача:', error);
+                document.getElementById('doctor-name').innerHTML = 'Ошибка загрузки данных';
+                showErrorMessage('Не удалось загрузить данные врача. Проверьте подключение к серверу.');
+            }
+        }
         
         function showErrorMessage(message) {
             const errorDiv = document.createElement('div');
@@ -174,7 +411,6 @@ async function loadDoctorData() {
             }, 3000);
         }
 
-        // Кнопка записи на прием
         const openAppointmentBtn = document.getElementById('openAppointmentBtn');
         if (openAppointmentBtn && typeof openVisitorAppointmentModal === 'function') {
             openAppointmentBtn.addEventListener('click', function(e) {
@@ -183,14 +419,42 @@ async function loadDoctorData() {
             });
         }
 
+        document.addEventListener('DOMContentLoaded', function() {
+            initMobileMenu();
+            syncMobileThemeWithDesktop();
+            initMobileThemeSwitcher();
+            initMobileSpecialButton();
+            updateMobileLangButton();
+            initMobileLangSwitcher();
+        });
+
+        document.addEventListener('languageChanged', function() {
+            updateMobileLangButton();
+            setTimeout(loadDoctorData, 100);
+            setTimeout(fixTextPositionForLanguage, 150);
+        });
+
         setTimeout(function() {
             if (typeof window.updateAuthUI === 'function') {
                 console.log('🔄 Вызов updateAuthUI из team-details.html');
                 window.updateAuthUI();
             }
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+            syncMobileThemeWithDesktop();
+            updateMobileLangButton();
+            loadDoctorData();
         }, 200);
+
+        const themeObserver = new MutationObserver(function() {
+            syncMobileThemeWithDesktop();
+        });
         
-        loadDoctorData();
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
     </script>
     <script src="../js/special-version.js"></script>
 

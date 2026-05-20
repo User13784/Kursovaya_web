@@ -1,6 +1,72 @@
-
 (function() {
     const API_BASE_URL = 'http://localhost:3000';
+    
+    function getCurrentLang() {
+        return localStorage.getItem('dental_language') || 'ru';
+    }
+    
+    function translateLoginText(key, defaultValue = '') {
+        const lang = getCurrentLang();
+        const translations = {
+            ru: {
+                'login_title': 'ВХОД В АККАУНТ',
+                'login_subtitle': 'Добро пожаловать обратно!',
+                'login_email_phone': 'Email или телефон',
+                'login_email_phone_placeholder': 'example@mail.com или +375 (29) 123-45-67',
+                'login_password': 'Пароль',
+                'login_password_placeholder': 'Введите пароль',
+                'login_remember': 'Запомнить меня',
+                'login_button': 'ВОЙТИ',
+                'login_no_account': 'Нет аккаунта?',
+                'login_register_link': 'Зарегистрироваться',
+                'login_error_required': 'Введите email или номер телефона',
+                'login_error_password_required': 'Введите пароль',
+                'login_error_invalid': 'Неверный email/телефон или пароль',
+                'login_success': 'Вход выполнен успешно! Перенаправление...',
+                'login_server_error': 'Ошибка подключения к серверу. Запустите json-server'
+            },
+            en: {
+                'login_title': 'LOGIN',
+                'login_subtitle': 'Welcome back!',
+                'login_email_phone': 'Email or phone',
+                'login_email_phone_placeholder': 'example@mail.com or +375 (29) 123-45-67',
+                'login_password': 'Password',
+                'login_password_placeholder': 'Enter your password',
+                'login_remember': 'Remember me',
+                'login_button': 'LOGIN',
+                'login_no_account': "Don't have an account?",
+                'login_register_link': 'Sign up',
+                'login_error_required': 'Enter email or phone number',
+                'login_error_password_required': 'Enter password',
+                'login_error_invalid': 'Invalid email/phone or password',
+                'login_success': 'Login successful! Redirecting...',
+                'login_server_error': 'Server connection error. Please start json-server'
+            }
+        };
+        return translations[lang]?.[key] || translations['ru'][key] || defaultValue;
+    }
+    
+    function updateLoginPageTranslations() {
+        const currentLang = getCurrentLang();
+        console.log('🌐 Обновление перевода страницы входа, язык:', currentLang);
+        
+        document.querySelectorAll('[data-translate]').forEach(el => {
+            const key = el.getAttribute('data-translate');
+            const translated = translateLoginText(key);
+            if (translated && translated !== key) {
+                if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
+                    el.placeholder = translated;
+                } else {
+                    el.textContent = translated;
+                }
+            }
+        });
+        
+        const titleEl = document.querySelector('title');
+        if (titleEl) {
+            titleEl.textContent = translateLoginText('login_title', 'Вход | Dental Club');
+        }
+    }
     
     async function loginViaAPI(email, password) {
         try {
@@ -25,7 +91,7 @@
             return null;
         } catch (error) {
             console.error('❌ Ошибка подключения к серверу:', error);
-            showNotification('❌ Ошибка подключения к серверу. Запустите json-server', true);
+            showNotification(translateLoginText('login_server_error'), true);
             return null;
         }
     }
@@ -98,6 +164,8 @@
         }
         console.log('✅ Форма входа найдена');
         
+        updateLoginPageTranslations();
+        
         const savedEmail = localStorage.getItem('dental_club_saved_email');
         if (savedEmail) {
             const emailInput = document.getElementById('loginEmail');
@@ -125,13 +193,13 @@
             let isValid = true;
             
             if (!login) {
-                showError('loginEmailError', 'Введите email или номер телефона');
+                showError('loginEmailError', translateLoginText('login_error_required'));
                 document.getElementById('loginEmail').classList.add('error');
                 isValid = false;
             }
             
             if (!password) {
-                showError('loginPasswordError', 'Введите пароль');
+                showError('loginPasswordError', translateLoginText('login_error_password_required'));
                 document.getElementById('loginPassword').classList.add('error');
                 isValid = false;
             }
@@ -139,7 +207,7 @@
             if (isValid) {
                 const submitBtn = form.querySelector('button[type="submit"]');
                 const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Вход...';
+                submitBtn.textContent = translateLoginText('login_button');
                 submitBtn.disabled = true;
                 
                 const user = await loginViaAPI(login, password);
@@ -172,15 +240,15 @@
                         localStorage.removeItem('dental_club_saved_email');
                     }
                     
-                    showNotification('✅ Вход выполнен успешно! Перенаправление...');
+                    showNotification(translateLoginText('login_success'));
                     
                     setTimeout(() => {
                         window.location.href = '../index.html';
                     }, 1500);
                 } else {
-                    showError('loginPasswordError', 'Неверный email/телефон или пароль');
+                    showError('loginPasswordError', translateLoginText('login_error_invalid'));
                     document.getElementById('loginPassword').classList.add('error');
-                    showNotification('❌ Неверный email/телефон или пароль', true);
+                    showNotification(translateLoginText('login_error_invalid'), true);
                 }
             }
         });
@@ -201,4 +269,14 @@
     } else {
         initLogin();
     }
+    
+    document.addEventListener('languageChanged', function() {
+        console.log('🌐 Смена языка на странице входа');
+        updateLoginPageTranslations();
+        
+        const submitBtn = document.querySelector('#loginForm button[type="submit"]');
+        if (submitBtn && !submitBtn.disabled) {
+            submitBtn.textContent = translateLoginText('login_button');
+        }
+    });
 })();

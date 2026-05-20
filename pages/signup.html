@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация | Dental Club</title>
+    <title data-translate="signup_title">Регистрация | Dental Club</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap">
     <link rel="stylesheet" href="../css/signup.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
-        <link rel="stylesheet" href="../css/theme.css">
-<link rel="stylesheet" href="../css/special-version.css">
-
-
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/special-version.css">
 </head>
 <body>
     <div class="signup-wrapper">
@@ -20,41 +18,41 @@
                     <a href="../index.html" class="signup-logo">
                         <img src="../assets/images/logo/logo4.png" alt="Dental Club">
                     </a>
-                    <h1>СОЗДАНИЕ АККАУНТА</h1>
-                    <p>Заполните форму для регистрации</p>
+                    <h1 data-translate="signup_title">СОЗДАНИЕ АККАУНТА</h1>
+                    <p data-translate="signup_subtitle">Заполните форму для регистрации</p>
                 </div>
 
                 <form id="signupForm" class="signup-form">
                     <div class="signup-form-row">
                         <div class="signup-form-group">
-                            <label for="firstName">Имя</label>
-                            <input type="text" id="firstName" name="firstName" placeholder="Введите ваше имя" required>
+                            <label for="firstName" data-translate="signup_first_name">Имя</label>
+                            <input type="text" id="firstName" name="firstName" data-translate="signup_first_name_placeholder" placeholder="Введите ваше имя" required>
                             <span class="signup-error-message" id="firstNameError"></span>
                         </div>
                         <div class="signup-form-group">
-                            <label for="lastName">Фамилия</label>
-                            <input type="text" id="lastName" name="lastName" placeholder="Введите вашу фамилию" required>
+                            <label for="lastName" data-translate="signup_last_name">Фамилия</label>
+                            <input type="text" id="lastName" name="lastName" data-translate="signup_last_name_placeholder" placeholder="Введите вашу фамилию" required>
                             <span class="signup-error-message" id="lastNameError"></span>
                         </div>
                     </div>
 
                     <div class="signup-form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                        <label for="email" data-translate="signup_email">Email</label>
+                        <input type="email" id="email" name="email" data-translate="signup_email_placeholder" placeholder="example@mail.com" required>
                         <span class="signup-error-message" id="emailError"></span>
                     </div>
 
                     <div class="signup-form-group">
-                        <label for="phone">Телефон</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+375 (29) 123-45-67" required>
+                        <label for="phone" data-translate="signup_phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" data-translate="signup_phone_placeholder" placeholder="+375 (29) 123-45-67" required>
                         <span class="signup-error-message" id="phoneError"></span>
                     </div>
 
                     <div class="signup-form-row">
                         <div class="signup-form-group">
-                            <label for="password">Пароль</label>
+                            <label for="password" data-translate="signup_password">Пароль</label>
                             <div class="signup-password-wrapper">
-                                <input type="password" id="password" name="password" placeholder="Минимум 6 символов" required>
+                                <input type="password" id="password" name="password" data-translate="signup_password_placeholder" placeholder="Минимум 6 символов" required>
                                 <button type="button" class="signup-toggle-password" data-target="password">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -65,9 +63,9 @@
                             <span class="signup-error-message" id="passwordError"></span>
                         </div>
                         <div class="signup-form-group">
-                            <label for="confirmPassword">Подтверждение пароля</label>
+                            <label for="confirmPassword" data-translate="signup_confirm_password">Подтверждение пароля</label>
                             <div class="signup-password-wrapper">
-                                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль" required>
+                                <input type="password" id="confirmPassword" name="confirmPassword" data-translate="signup_confirm_password_placeholder" placeholder="Повторите пароль" required>
                                 <button type="button" class="signup-toggle-password" data-target="confirmPassword">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -83,15 +81,20 @@
                         <label class="signup-checkbox-label">
                             <input type="checkbox" id="agreeTerms" required>
                             <span class="signup-checkmark"></span>
-                            <span class="signup-agree-text">Я соглашаюсь с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a></span>
+                            <span class="signup-agree-text">
+                                <span data-translate="signup_agree_terms">Я соглашаюсь с</span> 
+                                <a href="#" data-translate="signup_terms_link">условиями использования</a> 
+                                <span data-translate="signup_and">и</span> 
+                                <a href="#" data-translate="signup_privacy_link">политикой конфиденциальности</a>
+                            </span>
                         </label>
                         <span class="signup-error-message" id="termsError"></span>
                     </div>
 
-                    <button type="submit" class="signup-btn signup-btn-primary">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                    <button type="submit" class="signup-btn signup-btn-primary" data-translate="signup_button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
 
                     <div class="signup-footer">
-                        <p>Уже есть аккаунт? <a href="login.html">Войти</a></p>
+                        <p><span data-translate="signup_have_account">Уже есть аккаунт?</span> <a href="login.html" data-translate="signup_login_link">Войти</a></p>
                     </div>
                 </form>
             </div>
@@ -101,7 +104,7 @@
     <script src="../js/api.js"></script>
     <script src="js/signup.js"></script>
     <script src="../js/modal-profile.js"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/special-version.js"></script>
-
 </body>
 </html>

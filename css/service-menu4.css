@@ -199,18 +199,30 @@ body {
     z-index: 100; 
 }
 
+.info-row {
+    display: flex;
+    gap: 80px;
+    margin-bottom: 120px;
+    align-items: flex-start;
+}
+
+
 .info-image.side-img {
     flex: 1;
     position: relative;
-    margin-top: 158px;  
-    
-    margin-left: -860px; 
+    margin-top: 158px;
+    margin-left: -140px;
+    order: 1; 
+}
+
+.info-text.first-text-block {
+    order: 2;  
 }
 
 .first-text-block {
     position: relative; 
     
-    transform: translate(522px, 42px);
+    transform: translate(0px, 42px);
 }
 
 .first-btn {
@@ -605,4 +617,8 @@ body.menu-open {
     .desktop-login {
         display: none !important;
     }
+}
+
+#openAppointmentBtn4 {
+    display: none !important;
 }

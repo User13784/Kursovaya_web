@@ -94,7 +94,6 @@ body, html {
     letter-spacing: 2px;
 }
 
-/* ===== ВСЕ КНОПКИ ВЕРТИКАЛЬНО ДРУГ ПОД ДРУГОМ ===== */
 .item-home {
     top: 300px;
 }
@@ -159,4 +158,296 @@ body, html {
     .item-prices { top: 880px; }
     .item-schedule { top: 1000px; }
     .item-faq { top: 1120px; }
+}
+
+
+.side-panel {
+    animation: slideInFromLeft 0.4s ease-out;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.menu-overlay::before {
+    animation: fadeInBg 0.3s ease-out;
+}
+
+@keyframes fadeInBg {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.close-btn {
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+    color: #A5C33C;
+}
+
+.close-btn:active {
+    transform: rotate(90deg) scale(0.95);
+}
+
+.menu-list li {
+    animation: fadeInItem 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInItem {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.item-home { animation-delay: 0.05s; }
+.item-services { animation-delay: 0.1s; }
+.item-team { animation-delay: 0.15s; }
+.item-reviews { animation-delay: 0.2s; }
+.item-contacts { animation-delay: 0.25s; }
+.item-prices { animation-delay: 0.3s; }
+.item-schedule { animation-delay: 0.35s; }
+.item-faq { animation-delay: 0.4s; }
+
+.menu-list a {
+    position: relative;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
+.menu-list a:hover {
+    color: #A5C33C;
+}
+
+.menu-list a::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #A5C33C;
+    transition: width 0.3s ease;
+}
+
+.menu-list a:hover::before {
+    width: 100%;
+}
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 0 0 0 rgba(165, 195, 60, 0);
+    }
+    100% {
+        text-shadow: 0 0 4px rgba(165, 195, 60, 0.5);
+    }
+}
+
+.menu-list a:hover {
+    animation: textGlow 0.2s ease-out;
+}
+
+.menu-list a:active {
+    transition: none;
+}
+
+.menu-list a:active::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -20px;
+    right: -20px;
+    bottom: -10px;
+    background: rgba(165, 195, 60, 0.15);
+    border-radius: 30px;
+    animation: fadeOut 0.3s ease-out;
+    pointer-events: none;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.loading-item {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.menu-list a:focus {
+    animation: focusGlow 0.5s ease-out;
+    outline: none;
+}
+
+@keyframes focusGlow {
+    0% {
+        text-shadow: 0 0 0 rgba(165, 195, 60, 0);
+    }
+    50% {
+        text-shadow: 0 0 6px rgba(165, 195, 60, 0.6);
+    }
+    100% {
+        text-shadow: 0 0 0 rgba(165, 195, 60, 0);
+    }
+}
+
+.menu-list li {
+    position: relative;
+}
+
+.menu-list li::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    background-color: #A5C33C;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.menu-list li:hover::before {
+    opacity: 1;
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body {
+    animation: pageFadeIn 0.3s ease;
+}
+
+.menu-list li {
+    position: absolute;
+    left: 230px;
+    right: auto;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+.item-home { top: 300px; }
+.item-services { top: 380px; }
+.item-team { top: 460px; }
+.item-reviews { top: 540px; }
+.item-contacts { top: 620px; }
+.item-prices { top: 700px; }
+.item-schedule { top: 780px; }
+.item-faq { top: 860px; }
+
+@media (max-width: 768px) {
+    .menu-list li {
+        left: 50px;
+    }
+    
+    .menu-list li::before {
+        left: -15px;
+        width: 4px;
+        height: 4px;
+    }
+    
+    .item-home { top: 280px; }
+    .item-services { top: 350px; }
+    .item-team { top: 420px; }
+    .item-reviews { top: 490px; }
+    .item-contacts { top: 560px; }
+    .item-prices { top: 630px; }
+    .item-schedule { top: 700px; }
+    .item-faq { top: 770px; }
+}
+
+@media (max-width: 480px) {
+    .menu-list li {
+        left: 20px;
+    }
+    
+    .menu-list a {
+        font-size: 18px;
+    }
+    
+    .item-home { top: 280px; }
+    .item-services { top: 340px; }
+    .item-team { top: 400px; }
+    .item-reviews { top: 460px; }
+    .item-contacts { top: 520px; }
+    .item-prices { top: 580px; }
+    .item-schedule { top: 640px; }
+    .item-faq { top: 700px; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .menu-list a:hover {
+        animation: none;
+    }
+    
+    .menu-list a::before {
+        display: none;
+    }
+    
+    .menu-list li::before {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .side-panel,
+    .menu-list li,
+    .menu-list a,
+    .close-btn,
+    .menu-overlay::before {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+    
+    .menu-list li {
+        opacity: 1 !important;
+    }
+    
+    .menu-list a::before,
+    .menu-list li::before {
+        display: none;
+    }
 }

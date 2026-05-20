@@ -8,7 +8,7 @@
             
             <div class="lang-selector" id="headerLangSelector">
                 <img src="assets/images/logo/logo3.png" alt="Lang" class="lang-logo">
-                <span id="langSelectorText">ENG</span>
+                <span id="langSelectorText">АНГЛ</span>
             </div>
             
             <div class="theme-switcher" id="themeSwitcher">
@@ -178,6 +178,119 @@
         gap: 8px;
     }
 }
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0;
+}
+
+.header-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+@media screen and (min-width: 769px) and (max-width: 1000px) {
+    .menu-btn,
+    .lang-selector,
+    .theme-switcher {
+        display: none !important;
+    }
+    
+    .special-button,
+    .desktop-login {
+        display: none !important;
+    }
+    
+    .burger-icon {
+        display: flex !important;
+    }
+    
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+
+@media screen and (max-width: 992px) {
+    .menu-btn span,
+    .lang-selector span,
+    .login-link {
+        display: none !important;
+    }
+    
+    .menu-btn img,
+    .lang-selector img {
+        display: block !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu-btn,
+    .lang-selector {
+        display: none !important;
+    }
+    
+    .theme-switcher {
+        display: none !important;
+    }
+    
+    .special-button {
+        display: none !important;
+    }
+    
+    .login-link {
+        display: none !important;
+    }
+    
+    .burger-icon {
+        display: flex !important;
+    }
+    
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .header-left {
+        flex: 0;
+    }
+    
+    .header-right {
+        flex: 0;
+        gap: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .logo img {
+        max-height: 35px;
+        width: auto;
+    }
+}
 </style>
 
 <link rel="stylesheet" href="css/special-version.css">
@@ -185,22 +298,48 @@
 
 <script>
 (function() {
-    const headerTranslations = {
-        ru: { 'menu': 'МЕНЮ', 'login': 'ВОЙТИ', 'lang': 'ENG' },
-        en: { 'menu': 'MENU', 'login': 'LOGIN', 'lang': 'RUS' }
-    };
-
-    let currentLang = localStorage.getItem('dental_language') || 'ru';
-
-    function applyHeaderTranslations() {
-        const t = headerTranslations[currentLang];
-        if (!t) return;
-        const menuText = document.getElementById('menuText');
-        if (menuText && menuText.getAttribute('data-translate') !== 'menu') menuText.textContent = t.menu;
+    function updateLangButtonText() {
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
         const langText = document.getElementById('langSelectorText');
-        if (langText) langText.textContent = t.lang;
+        if (langText) {
+            if (currentLang === 'ru') {
+                langText.textContent = 'АНГЛ';
+            } else {
+                langText.textContent = 'RUS';
+            }
+        }
+    }
+
+    function updateLoginButtonText() {
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
         const loginLink = document.getElementById('desktopLoginLink');
-        if (loginLink && loginLink.getAttribute('data-translate') !== 'login') loginLink.textContent = t.login;
+        
+        if (loginLink) {
+            loginLink.textContent = currentLang === 'ru' ? 'ВОЙТИ' : 'LOGIN';
+            loginLink.setAttribute('data-translate', 'login');
+        }
+        
+        const mobileLoginLinks = document.querySelectorAll('.mobile-login-link');
+        mobileLoginLinks.forEach(function(link) {
+            if (link) {
+                link.textContent = currentLang === 'ru' ? 'ВОЙТИ' : 'LOGIN';
+                link.setAttribute('data-translate', 'login');
+            }
+        });
+        
+        if (typeof window.updateAuthUI === 'function') {
+            setTimeout(function() {
+                window.updateAuthUI();
+            }, 10);
+        }
+    }
+
+    function updateMenuButtonText() {
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        const menuText = document.getElementById('menuText');
+        if (menuText) {
+            menuText.textContent = currentLang === 'ru' ? 'МЕНЮ' : 'MENU';
+        }
     }
 
     function initThemeSwitcher() {
@@ -231,14 +370,6 @@
         if (themeIcons.system) themeIcons.system.addEventListener('click', (e) => { e.preventDefault(); applyTheme('system'); });
     }
 
-    function switchLanguage() {
-        currentLang = currentLang === 'ru' ? 'en' : 'ru';
-        localStorage.setItem('dental_language', currentLang);
-        applyHeaderTranslations();
-        if (typeof window.switchLanguage === 'function') window.switchLanguage();
-        else if (typeof window.applyTranslations === 'function') window.applyTranslations();
-    }
-
     function getPath(path) {
         const currentPath = window.location.pathname;
         const isInPages = currentPath.includes('/pages/');
@@ -255,18 +386,34 @@
             menuBtn.parentNode.replaceChild(newMenuBtn, menuBtn);
             newMenuBtn.addEventListener('click', (e) => { e.preventDefault(); window.location.href = getPath('menu'); });
         }
+        
         const langSelector = document.getElementById('headerLangSelector');
         if (langSelector) {
             const newLangSelector = langSelector.cloneNode(true);
             langSelector.parentNode.replaceChild(newLangSelector, langSelector);
-            newLangSelector.addEventListener('click', (e) => { e.preventDefault(); switchLanguage(); });
+            newLangSelector.addEventListener('click', (e) => { 
+                e.preventDefault(); 
+                if (typeof window.switchLanguage === 'function') {
+                    window.switchLanguage();
+                } else {
+                    const newLang = localStorage.getItem('dental_language') === 'ru' ? 'en' : 'ru';
+                    localStorage.setItem('dental_language', newLang);
+                    updateLangButtonText();
+                    updateLoginButtonText();
+                    updateMenuButtonText();
+                    const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
+                    document.dispatchEvent(event);
+                }
+            });
         }
+        
         const desktopLoginLink = document.getElementById('desktopLoginLink');
         if (desktopLoginLink) {
             const newLoginLink = desktopLoginLink.cloneNode(true);
             desktopLoginLink.parentNode.replaceChild(newLoginLink, desktopLoginLink);
             newLoginLink.addEventListener('click', (e) => { e.preventDefault(); const isInPages = window.location.pathname.includes('/pages/'); window.location.href = isInPages ? 'login.html' : 'pages/login.html'; });
         }
+        
         const logoLink = document.querySelector('.logo a');
         if (logoLink) {
             const newLogoLink = logoLink.cloneNode(true);
@@ -275,14 +422,30 @@
         }
     }
 
+    document.addEventListener('languageChanged', function() {
+        updateLangButtonText();
+        updateLoginButtonText();
+        updateMenuButtonText();
+    });
+
     initButtons();
-    applyHeaderTranslations();
+    updateLangButtonText();
+    updateLoginButtonText();
+    updateMenuButtonText();
     initThemeSwitcher();
 
     function waitForAuthAndUpdate() {
-        if (typeof window.updateAuthUI === 'function') window.updateAuthUI();
-        else setTimeout(waitForAuthAndUpdate, 100);
+        if (typeof window.updateAuthUI === 'function') {
+            window.updateAuthUI();
+        } else {
+            setTimeout(waitForAuthAndUpdate, 100);
+        }
     }
     setTimeout(waitForAuthAndUpdate, 100);
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        updateLoginButtonText();
+    });
 })();
 </script>
+<link rel="stylesheet" href="../css/animations_h_f.css">

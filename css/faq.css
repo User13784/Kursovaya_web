@@ -646,3 +646,59 @@ body {
         font-size: 14px !important;
     }
 }
+
+
+.hero-faq .btn-white {
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+}
+
+.hero-faq .btn-white:hover {
+    background: #A5C33C !important;
+    color: #1a1e22 !important;
+    transform: scale(1.08) !important;
+    box-shadow: 0 10px 25px rgba(165, 195, 60, 0.4) !important;
+}
+
+.hero-faq .btn-white:active {
+    transform: scale(0.97) !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.hero-faq h1,
+.hero-faq p,
+.hero-faq .btn-white,
+.faq-categories,
+.faq-search,
+.faq-list {
+    animation: fadeIn 0.4s ease forwards !important;
+    opacity: 0;
+}
+
+.hero-faq p { animation-delay: 0.1s; }
+.hero-faq .btn-white { animation-delay: 0.15s; }
+.faq-categories { animation-delay: 0.2s; }
+.faq-search { animation-delay: 0.25s; }
+.faq-list { animation-delay: 0.3s; }
+
+.category-btn {
+    transition: all 0.3s ease !important;
+}
+
+.faq-question {
+    transition: background 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+.faq-toggle {
+    transition: transform 0.3s ease !important;
+}
+
+.search-input:focus {
+    border-color: #A5C33C !important;
+    outline: none !important;
+}

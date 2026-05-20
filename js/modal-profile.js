@@ -71,8 +71,30 @@ function updateProfileModalTranslations() {
     
     const currentLang = localStorage.getItem('dental_language') || 'ru';
     
+    function getCleanTranslation(key) {
+        let translated = getProfileTranslation(key);
+        if (!translated) return '';
+        return translated.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}]+\s*/u, '');
+    }
+    
+    function extractEmoji(text) {
+        const emojiMatch = text.match(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}]/u);
+        return emojiMatch ? emojiMatch[0] : '';
+    }
+    
     modal.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.getAttribute('data-translate');
+        if (el.classList && (
+            el.classList.contains('profile-tab-btn') ||
+            el.classList.contains('visits-filter-btn') ||
+            el.classList.contains('reviews-filter-btn') ||
+            el.id === 'profileEditBtn' ||
+            el.id === 'profileLogoutBtn' ||
+            el.id === 'goToAdminPanelBtn'
+        )) {
+            return;
+        }
+        
         const translated = getProfileTranslation(key);
         if (translated && translated !== key) {
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
@@ -80,12 +102,7 @@ function updateProfileModalTranslations() {
                     el.placeholder = translated;
                 }
             } else if (el.tagName === 'BUTTON') {
-                const icon = el.innerHTML.match(/[✏️💾❌🚪⚙️📋📅⭐✅⏳✔️❌]/);
-                if (icon) {
-                    el.innerHTML = icon[0] + ' ' + translated;
-                } else {
-                    el.textContent = translated;
-                }
+                el.textContent = translated;
             } else {
                 el.textContent = translated;
             }
@@ -131,28 +148,22 @@ function updateProfileModalTranslations() {
     const tabKeys = ['profile_personal_data', 'profile_visits', 'profile_reviews'];
     tabBtns.forEach((btn, idx) => {
         if (tabKeys[idx]) {
-            const translated = getProfileTranslation(tabKeys[idx]);
+            const translated = getCleanTranslation(tabKeys[idx]);
             if (translated) {
-                const icon = btn.innerHTML.match(/[📋📅⭐]/);
-                if (icon) {
-                    btn.innerHTML = icon[0] + ' ' + translated;
-                } else {
-                    btn.textContent = translated;
-                }
+                const currentHtml = btn.innerHTML;
+                const existingIcon = extractEmoji(currentHtml);
+                btn.innerHTML = existingIcon + ' ' + translated;
             }
         }
     });
     
     const modalHeader = modal.querySelector('.profile-modal-header h2');
     if (modalHeader) {
-        const translated = getProfileTranslation('profile_title');
+        const translated = getCleanTranslation('profile_title');
         if (translated) {
-            const icon = modalHeader.innerHTML.match(/[👤]/);
-            if (icon) {
-                modalHeader.innerHTML = icon[0] + ' ' + translated;
-            } else {
-                modalHeader.textContent = translated;
-            }
+            const currentHtml = modalHeader.innerHTML;
+            const existingIcon = extractEmoji(currentHtml);
+            modalHeader.innerHTML = existingIcon + ' ' + translated;
         }
     }
     
@@ -160,14 +171,11 @@ function updateProfileModalTranslations() {
     const visitsFilterKeys = ['profile_visits_all', 'profile_visits_pending', 'profile_visits_confirmed', 'profile_visits_completed', 'profile_visits_cancelled'];
     visitsFilterBtns.forEach((btn, idx) => {
         if (visitsFilterKeys[idx]) {
-            const translated = getProfileTranslation(visitsFilterKeys[idx]);
+            const translated = getCleanTranslation(visitsFilterKeys[idx]);
             if (translated) {
-                const icon = btn.innerHTML.match(/[⏳✅✔️❌]/);
-                if (icon) {
-                    btn.innerHTML = icon[0] + ' ' + translated;
-                } else {
-                    btn.textContent = translated;
-                }
+                const currentHtml = btn.innerHTML;
+                const existingIcon = extractEmoji(currentHtml);
+                btn.innerHTML = existingIcon + ' ' + translated;
             }
         }
     });
@@ -176,42 +184,56 @@ function updateProfileModalTranslations() {
     const reviewsFilterKeys = ['profile_reviews_all', 'profile_reviews_published', 'profile_reviews_pending'];
     reviewsFilterBtns.forEach((btn, idx) => {
         if (reviewsFilterKeys[idx]) {
-            const translated = getProfileTranslation(reviewsFilterKeys[idx]);
+            const translated = getCleanTranslation(reviewsFilterKeys[idx]);
             if (translated) {
-                const icon = btn.innerHTML.match(/[✅⏳]/);
-                if (icon) {
-                    btn.innerHTML = icon[0] + ' ' + translated;
-                } else {
-                    btn.textContent = translated;
-                }
+                const currentHtml = btn.innerHTML;
+                const existingIcon = extractEmoji(currentHtml);
+                btn.innerHTML = existingIcon + ' ' + translated;
             }
         }
     });
     
     const logoutBtn = modal.querySelector('#profileLogoutBtn');
     if (logoutBtn) {
-        const translated = getProfileTranslation('profile_logout_btn');
+        const translated = getCleanTranslation('profile_logout_btn');
         if (translated) {
-            const icon = '🚪';
-            logoutBtn.innerHTML = icon + ' ' + translated;
+            logoutBtn.innerHTML = '🚪 ' + translated;
         }
     }
     
     const adminBtn = modal.querySelector('#goToAdminPanelBtn');
     if (adminBtn) {
-        const translated = getProfileTranslation('profile_admin_panel');
+        const translated = getCleanTranslation('profile_admin_panel');
         if (translated) {
-            const icon = '⚙️';
-            adminBtn.innerHTML = icon + ' ' + translated;
+            adminBtn.innerHTML = '⚙️ ' + translated;
         }
     }
     
     const editBtn = modal.querySelector('#profileEditBtn');
     if (editBtn) {
-        const translated = getProfileTranslation('profile_edit_btn');
+        const translated = getCleanTranslation('profile_edit_btn');
         if (translated) {
-            const icon = '✏️';
-            editBtn.innerHTML = icon + ' ' + translated;
+            editBtn.innerHTML = '✏️ ' + translated;
+        }
+    }
+    
+    const saveBtn = modal.querySelector('#profileSaveBtn');
+    if (saveBtn) {
+        const translated = getCleanTranslation('profile_save_btn');
+        if (translated) {
+            const currentHtml = saveBtn.innerHTML;
+            const existingIcon = extractEmoji(currentHtml);
+            saveBtn.innerHTML = existingIcon + ' ' + translated;
+        }
+    }
+    
+    const cancelBtn = modal.querySelector('#profileCancelBtn');
+    if (cancelBtn) {
+        const translated = getCleanTranslation('profile_cancel_btn');
+        if (translated) {
+            const currentHtml = cancelBtn.innerHTML;
+            const existingIcon = extractEmoji(currentHtml);
+            cancelBtn.innerHTML = existingIcon + ' ' + translated;
         }
     }
     
@@ -222,7 +244,7 @@ function updateProfileModalTranslations() {
     ];
     labels.forEach((label, idx) => {
         if (labelKeys[idx]) {
-            const translated = getProfileTranslation(labelKeys[idx]);
+            const translated = getCleanTranslation(labelKeys[idx]);
             if (translated) {
                 const starSpan = label.querySelector('.required');
                 if (starSpan) {
@@ -271,12 +293,6 @@ async function openProfileModal() {
         
         const inputs = document.querySelectorAll('#profileForm input');
         inputs.forEach(input => input.disabled = true);
-        
-        const editBtn = document.getElementById('profileEditBtn');
-        if (editBtn) {
-            const translated = getProfileTranslation('profile_edit_btn');
-            editBtn.innerHTML = '✏️ ' + (translated || 'Редактировать');
-        }
         
         const isAdmin = userData.role === 'admin';
         const visitsTab = document.querySelector('.profile-tab-btn[data-tab="visits"]');
@@ -447,7 +463,7 @@ function initProfileModal() {
     
     if (adminPanelBtn) {
         adminPanelBtn.addEventListener('click', function() {
-            window.location.href = 'pages/admin.html';
+            window.location.href = '../pages/admin.html';
         });
     }
     
@@ -528,12 +544,6 @@ async function loadUserData(userId) {
         const inputs = document.querySelectorAll('#profileForm input');
         inputs.forEach(input => input.disabled = true);
         
-        const editBtn = document.getElementById('profileEditBtn');
-        if (editBtn) {
-            const translated = getProfileTranslation('profile_edit_btn');
-            editBtn.innerHTML = '✏️ ' + (translated || 'Редактировать');
-        }
-        
         const isAdmin = user.role === 'admin';
         const visitsTab = document.querySelector('.profile-tab-btn[data-tab="visits"]');
         const reviewsTab = document.querySelector('.profile-tab-btn[data-tab="reviews"]');
@@ -610,7 +620,7 @@ function cancelProfileEdit() {
     if (saveBtn) saveBtn.remove();
     if (cancelBtn) cancelBtn.remove();
     if (editBtn) {
-        const editText = getProfileTranslation('profile_edit_btn', '✏️ Редактировать');
+        const editText = getProfileTranslation('profile_edit_btn', 'Редактировать');
         editBtn.innerHTML = '✏️ ' + editText;
         editBtn.style.display = 'block';
     }

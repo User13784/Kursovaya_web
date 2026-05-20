@@ -295,3 +295,395 @@ body, html {
         font-size: 12px;
     }
 }
+
+.sidebar {
+    animation: slideInLeft 0.4s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.content-area {
+    animation: fadeInRight 0.5s ease-out;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.close-btn img {
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover img {
+    transform: rotate(90deg) scale(1.1);
+    opacity: 0.8;
+}
+
+.close-btn:active img {
+    transform: rotate(90deg) scale(0.95);
+}
+
+.back-link {
+    position: relative;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.back-link:hover {
+    transform: translate(-44px, 64px) translateX(5px);
+    color: #A5C33C;
+}
+
+.back-link::before {
+    transition: all 0.3s ease;
+}
+
+.back-link:hover::before {
+    transform: translate(0px, -7px) scale(1.1);
+}
+
+.menu-list li {
+    opacity: 0;
+    animation: fadeInUp 0.3s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-list li:nth-child(1) { animation-delay: 0.05s; }
+.menu-list li:nth-child(2) { animation-delay: 0.1s; }
+.menu-list li:nth-child(3) { animation-delay: 0.15s; }
+.menu-list li:nth-child(4) { animation-delay: 0.2s; }
+.menu-list li:nth-child(5) { animation-delay: 0.25s; }
+.menu-list li:nth-child(6) { animation-delay: 0.3s; }
+.menu-list li:nth-child(7) { animation-delay: 0.35s; }
+.menu-list li:nth-child(8) { animation-delay: 0.4s; }
+.menu-list li:nth-child(9) { animation-delay: 0.45s; }
+.menu-list li:nth-child(10) { animation-delay: 0.5s; }
+
+.menu-list a {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.menu-list a:hover {
+    color: #A5C33C;
+    transform: translateX(-5px);
+}
+
+.menu-list a::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #A5C33C, transparent);
+    transition: width 0.3s ease;
+}
+
+.menu-list a:hover::before {
+    width: 100%;
+}
+
+.menu-list a.active {
+    color: #A5C33C;
+    position: relative;
+}
+
+.menu-list a.active::after {
+    content: '•';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #A5C33C;
+    font-size: 20px;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.hero-content h1 {
+    animation: fadeInDown 0.5s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-more {
+    transition: all 0.3s ease;
+    animation: fadeInScale 0.5s ease-out 0.2s both;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.btn-more:hover {
+    background-color: #A5C33C;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-more:active {
+    transform: translateY(2px);
+    transition: all 0.05s ease;
+}
+
+.btn-more:active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    animation: ripple 0.5s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
+}
+
+.chevron-wrapper {
+    animation: bounce 2s ease-in-out infinite;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.chevron-wrapper:hover {
+    opacity: 1;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+.content-area {
+    transition: background-image 0.4s ease-in-out;
+}
+
+.loading-item {
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 0 0 0 rgba(165, 195, 60, 0);
+    }
+    100% {
+        text-shadow: 0 0 5px rgba(165, 195, 60, 0.5);
+    }
+}
+
+.menu-list a:hover {
+    animation: textGlow 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        animation: slideInTop 0.4s ease-out;
+    }
+    
+    @keyframes slideInTop {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .content-area {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    .menu-list a:hover {
+        transform: translateX(-3px);
+    }
+    
+    .chevron-wrapper {
+        display: none;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .menu-list a:hover {
+        transform: none;
+        animation: none;
+    }
+    
+    .menu-list a::before {
+        display: none;
+    }
+    
+    .btn-more:hover {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sidebar,
+    .content-area,
+    .menu-list li,
+    .hero-content h1,
+    .btn-more,
+    .chevron-wrapper {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+    
+    .menu-list li {
+        opacity: 1 !important;
+    }
+    
+    .close-btn img {
+        transition: none !important;
+    }
+    
+    .close-btn:hover img {
+        transform: none !important;
+    }
+    
+    .menu-list a.active::after {
+        animation: none !important;
+    }
+}
+
+
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-btn img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    filter: brightness(0) invert(1); 
+}
+
+.close-btn:hover img {
+    filter: brightness(0) saturate(100%) invert(68%) sepia(27%) saturate(749%) hue-rotate(46deg) brightness(92%) contrast(87%);
+    transform: rotate(90deg) scale(1.1);
+}
+
+.close-btn:active img {
+    transform: rotate(90deg) scale(0.95);
+    transition: all 0.05s ease;
+}
+
+.close-btn:hover img.alt-red {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(89%) saturate(7488%) hue-rotate(358deg) brightness(94%) contrast(118%);
+}
+
+.close-btn:hover img.alt-gold {
+    filter: brightness(0) saturate(100%) invert(61%) sepia(92%) saturate(1554%) hue-rotate(2deg) brightness(102%) contrast(101%);
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .close-btn:hover img {
+        transform: rotate(90deg) scale(1);
+        filter: brightness(0) invert(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .close-btn img {
+        transition: none !important;
+    }
+    
+    .close-btn:hover img {
+        transform: none !important;
+    }
+}
+

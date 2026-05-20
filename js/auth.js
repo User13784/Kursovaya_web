@@ -1,4 +1,3 @@
-
 let cachedUser = null;
 
 function getCurrentUser() {
@@ -65,8 +64,9 @@ function updateAuthUI() {
     const user = getCurrentUser();
     const loginContainer = document.getElementById('desktopLoginContainer');
     const mobileLoginContainer = document.getElementById('mobileLoginContainer');
+    const currentLang = localStorage.getItem('dental_language') || 'ru';
     
-    console.log('🔄 updateAuthUI вызван, пользователь:', user ? user.email : 'не авторизован');
+    console.log('🔄 updateAuthUI вызван, пользователь:', user ? user.email : 'не авторизован', 'язык:', currentLang);
     
     if (!loginContainer) return;
     
@@ -123,7 +123,8 @@ function updateAuthUI() {
         loginLink.href = '#';
         loginLink.className = 'login-link';
         loginLink.id = 'desktopLoginLink';
-        loginLink.textContent = 'ВОЙТИ';
+        loginLink.setAttribute('data-translate', 'login');
+        loginLink.textContent = currentLang === 'ru' ? 'ВОЙТИ' : 'LOGIN';
         loginLink.style.cssText = 'text-decoration: none; color: white; font-size: 18px;';
         loginLink.addEventListener('click', function(e) {
             e.preventDefault();
@@ -138,7 +139,8 @@ function updateAuthUI() {
             const mobileLink = document.createElement('a');
             mobileLink.href = '#';
             mobileLink.className = 'mobile-login-link';
-            mobileLink.textContent = 'ВОЙТИ';
+            mobileLink.setAttribute('data-translate', 'login');
+            mobileLink.textContent = currentLang === 'ru' ? 'ВОЙТИ' : 'LOGIN';
             mobileLink.style.cssText = 'text-decoration: none; color: white; font-size: 18px;';
             mobileLink.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -148,7 +150,7 @@ function updateAuthUI() {
             mobileLoginContainer.appendChild(mobileLink);
         }
         
-        console.log('✅ UI обновлен - показана кнопка ВОЙТИ');
+        console.log('✅ UI обновлен - показана кнопка ВОЙТИ с текстом:', loginLink.textContent);
     }
 }
 
@@ -174,4 +176,9 @@ window.addEventListener('storage', function(e) {
         cachedUser = null;
         updateAuthUI();
     }
+});
+
+document.addEventListener('languageChanged', function() {
+    console.log('🌐 languageChanged в auth.js, обновляем UI');
+    updateAuthUI();
 });

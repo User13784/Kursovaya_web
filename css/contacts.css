@@ -51,11 +51,6 @@
     transform: translate(5px, -18px);  
 }
 
-.btn-white:hover {
-    background: #f0f0f0;
-    transform: translate(5px, -18px) scale(1.02);
-}
-
 .contacts-info-section {
     padding: 100px 0;
     color: #ffffff;
@@ -194,11 +189,6 @@
     transform: translate(-115px, 355px);  
 }
 
-.btn-outline:hover {
-    background: #ffffff;
-    color: #2F353B;
-}
-
 .map-container {
     display: flex;
     height: 450px;
@@ -321,12 +311,6 @@
     width: 280px;          
     height: 57px; 
     transform: translate(-130px, 117px); 
-}
-
-.btn-submit:hover {
-    background: #2F353B;
-    color: #fff;
-    border-color: #2F353B;
 }
 
 #footer-placeholder {
@@ -565,3 +549,229 @@ body.menu-open {
         margin: 0 auto;
     }
 }
+
+.hero-contacts .btn-white {
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.hero-contacts .btn-white:hover {
+    transform: translate(5px, -18px) scale(1.08);
+    background: #e8e8e8;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.hero-contacts .btn-white:active {
+    transform: translate(5px, -18px) scale(0.97);
+    transition: all 0.05s ease;
+}
+
+.contacts-info-section .btn-outline {
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                background 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.contacts-info-section .btn-outline:hover {
+    transform: translate(-115px, 355px) scale(1.08);
+    background: rgba(165, 195, 60, 0.2);
+    border-color: #A5C33C;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.contacts-info-section .btn-outline:active {
+    transform: translate(-115px, 355px) scale(0.97);
+    transition: all 0.05s ease;
+}
+
+.feedback-section .btn-submit {
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                background 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.feedback-section .btn-submit:hover {
+    transform: translate(-130px, 117px) scale(1.08);
+    background: #1a1e22;
+    color: #ffffff;
+    border-color: #1a1e22;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.feedback-section .btn-submit:active {
+    transform: translate(-130px, 117px) scale(0.97);
+    transition: all 0.05s ease;
+}
+
+@keyframes btnAppear {
+    from {
+        opacity: 0;
+        transform: translate(5px, -8px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(5px, -18px);
+    }
+}
+
+.hero-contacts .btn-white {
+    animation: btnAppear 0.5s ease forwards;
+}
+
+@keyframes btnAppearOutline {
+    from {
+        opacity: 0;
+        transform: translate(-115px, 365px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-115px, 355px);
+    }
+}
+
+.contacts-info-section .btn-outline {
+    animation: btnAppearOutline 0.5s ease 0.1s forwards;
+    opacity: 0;
+}
+
+@keyframes btnAppearSubmit {
+    from {
+        opacity: 0;
+        transform: translate(-130px, 127px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-130px, 117px);
+    }
+}
+
+.feedback-section .btn-submit {
+    animation: btnAppearSubmit 0.5s ease 0.2s forwards;
+    opacity: 0;
+}
+
+.hero-contacts .btn-white:active::after,
+.contacts-info-section .btn-outline:active::after,
+.feedback-section .btn-submit:active::after {
+    display: none !important;
+    content: none !important;
+}
+
+.hero-contacts .btn-white::before,
+.hero-contacts .btn-white::after,
+.contacts-info-section .btn-outline::before,
+.contacts-info-section .btn-outline::after,
+.feedback-section .btn-submit::before,
+.feedback-section .btn-submit::after {
+    display: none !important;
+    content: none !important;
+}
+
+.contacts-info-section .phones a {
+    transition: color 0.3s ease;
+}
+
+.contacts-info-section .phones a:hover {
+    color: #A5C33C !important;
+}
+
+a[href^="tel"] {
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+a[href^="tel"]:hover {
+    color: #A5C33C !important;
+}
+
+@media (max-width: 768px) {
+    .phones a:hover {
+        color: #A5C33C !important;
+    }
+}
+
+
+.map-image-side img {
+    transition: transform 0.3s ease-in-out !important;
+    cursor: pointer !important;
+}
+
+.map-image-side img:hover {
+    transform: scale(1.05) !important;
+}
+
+.container img {
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.container img:hover {
+    transform: scale(1.03);
+}
+
+.map-image-side img {
+    transition: transform 0.3s ease-in-out !important;
+    cursor: pointer !important;
+}
+
+.map-image-side img:hover {
+    transform: translate(-40px, 617px) scale(1.05) !important;
+}
+
+.hero-contacts .btn-white {
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    cursor: pointer;
+}
+
+.hero-contacts .btn-white:hover {
+    transform: translate(5px, -18px) scale(1.08);
+    background: #e8e8e8;
+    border-color: #A5C33C;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.hero-contacts .btn-white:active {
+    transform: translate(5px, -18px) scale(0.97);
+}
+
+.contacts-info-section .btn-outline {
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    cursor: pointer;
+}
+
+.contacts-info-section .btn-outline:hover {
+    transform: translate(-115px, 355px) scale(1.08);
+    background: rgba(165, 195, 60, 0.2);
+    border-color: #A5C33C;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.contacts-info-section .btn-outline:active {
+    transform: translate(-115px, 355px) scale(0.97);
+}
+
+.feedback-section .btn-submit {
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    cursor: pointer;
+}
+
+.feedback-section .btn-submit:hover {
+    transform: translate(-130px, 117px) scale(1.08);
+    background: #1a1e22;
+    color: #fff;
+    border-color: #A5C33C;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.feedback-section .btn-submit:active {
+    transform: translate(-130px, 117px) scale(0.97);
+}
+

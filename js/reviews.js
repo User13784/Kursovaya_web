@@ -15,7 +15,6 @@ async function loadReviews() {
     }
 }
 
-
 function escapeHtml(str) {
     if (!str) return '';
     return str
@@ -91,16 +90,103 @@ function formatReviewText(text, author) {
     return html;
 }
 
+let allReviews = [];
+let currentVisibleCount = 3; 
+const STEP = 3; 
+
+function createFullReviewCard(review) {
+    let photo = review.photo || '';
+    const isLogoReview = review.author === 'Эленора Тен' || review.author === 'Eleonora Ten' || photo.includes('logo');
+    
+    if (!photo || photo === '') {
+        photo = '../assets/images/logo/logo4.png';
+    }
+    
+    const reviewHtml = formatReviewText(review.text, review.author);
+    
+    return `
+        <div class="review-card">
+            <div class="review-img ${isLogoReview ? 'logo-placeholder' : ''}">
+                <img src="${photo}" alt="${escapeHtml(review.author)}" onerror="this.src='../assets/images/logo/logo4.png'">
+            </div>
+            <div class="review-content">
+                <h3>${escapeHtml(review.author)}</h3>
+                ${review.userInfo ? `<p class="user-info">${escapeHtml(review.userInfo)}</p>` : ''}
+                ${reviewHtml}
+            </div>
+        </div>
+    `;
+}
+
+function renderReviews() {
+    const reviewsContainer = document.getElementById('reviewsListContainer');
+    if (!reviewsContainer) return;
+    
+    const visibleReviews = allReviews.slice(0, currentVisibleCount);
+    const hasMore = currentVisibleCount < allReviews.length;
+    const hasExtra = currentVisibleCount > 3;
+    
+    let html = '';
+    
+    visibleReviews.forEach(review => {
+        html += createFullReviewCard(review);
+    });
+    
+    if (allReviews.length > 3) {
+        html += `
+            <div class="reviews-control-buttons">
+                ${hasMore ? `
+                    <button class="reviews-control-btn show-more-btn" id="showMoreReviewsBtn">
+                        Показать еще 3 отзыва
+                    </button>
+                ` : ''}
+                ${hasExtra ? `
+                    <button class="reviews-control-btn show-less-btn" id="showLessReviewsBtn">
+                        Скрыть все, кроме первых 
+                    </button>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    reviewsContainer.innerHTML = html;
+    
+    const showMoreBtn = document.getElementById('showMoreReviewsBtn');
+    const showLessBtn = document.getElementById('showLessReviewsBtn');
+    
+    if (showMoreBtn) {
+        const newBtn = showMoreBtn.cloneNode(true);
+        showMoreBtn.parentNode.replaceChild(newBtn, showMoreBtn);
+        newBtn.addEventListener('click', () => {
+            currentVisibleCount = Math.min(currentVisibleCount + STEP, allReviews.length);
+            renderReviews();
+        });
+    }
+    
+    if (showLessBtn) {
+        const newBtn = showLessBtn.cloneNode(true);
+        showLessBtn.parentNode.replaceChild(newBtn, showLessBtn);
+        newBtn.addEventListener('click', () => {
+            currentVisibleCount = 3;
+            renderReviews();
+            const reviewsSection = document.getElementById('reviewsSection');
+            if (reviewsSection) {
+                reviewsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+}
+
 async function displayReviews() {
     const reviewsContainer = document.getElementById('reviewsListContainer');
     if (!reviewsContainer) return;
     
     reviewsContainer.innerHTML = '<div class="loading-reviews">Загрузка отзывов...</div>';
     
-    const reviews = await loadReviews();
+    allReviews = await loadReviews();
     const reviewsSection = document.getElementById('reviewsSection');
     
-    if (!reviews || reviews.length === 0) {
+    if (!allReviews || allReviews.length === 0) {
         if (reviewsSection) {
             reviewsSection.style.display = 'none';
         }
@@ -112,34 +198,8 @@ async function displayReviews() {
         reviewsSection.style.display = 'block';
     }
     
-    let html = '';
-    
-    reviews.forEach((review, index) => {
-        let photo = review.photo || '';
-        
-        const isLogoReview = review.author === 'Эленора Тен' || review.author === 'Eleonora Ten' || photo.includes('logo');
-        
-        if (!photo || photo === '') {
-            photo = '../assets/images/logo/logo4.png';
-        }
-        
-        const reviewHtml = formatReviewText(review.text, review.author);
-        
-        html += `
-            <div class="review-card">
-                <div class="review-img ${isLogoReview ? 'logo-placeholder' : ''}">
-                    <img src="${photo}" alt="${escapeHtml(review.author)}" onerror="this.src='../assets/images/logo/logo4.png'">
-                </div>
-                <div class="review-content">
-                    <h3>${escapeHtml(review.author)}</h3>
-                    ${review.userInfo ? `<p class="user-info">${escapeHtml(review.userInfo)}</p>` : ''}
-                    ${reviewHtml}
-                </div>
-            </div>
-        `;
-    });
-    
-    reviewsContainer.innerHTML = html;
+    currentVisibleCount = 3;
+    renderReviews();
 }
 
 async function submitReview(event) {
@@ -218,6 +278,8 @@ async function submitReview(event) {
             modal.style.display = 'none';
             document.body.classList.remove('modal-open');
         }
+        
+        await displayReviews();
         
     } catch (error) {
         console.error('❌ Ошибка при отправке отзыва:', error);

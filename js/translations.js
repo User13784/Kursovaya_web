@@ -1,12 +1,11 @@
 
 const translations = {
     ru: {
-        // ========== НАВИГАЦИЯ (Header & Menu) ==========
         'menu': 'МЕНЮ',
         'login': 'ВОЙТИ',
         'profile': 'ПРОФИЛЬ',
         'logout': 'ВЫЙТИ',
-        'lang': 'RUS',
+        'lang': 'АНГЛ',
         
          'profile_title': 'Личный кабинет',
         'profile_personal_data': '📋 Личные данные',
@@ -19,11 +18,11 @@ const translations = {
         'profile_phone': 'Телефон',
         'profile_birth_date': 'Дата рождения',
         'profile_address': 'Адрес',
-        'profile_edit_btn': '✏️ Редактировать',
-        'profile_save_btn': '💾 Сохранить',
-        'profile_cancel_btn': '❌ Отменить',
-        'profile_logout_btn': '🚪 Выйти из аккаунта',
-        'profile_admin_panel': '⚙️ Перейти в админ-панель',
+        'profile_edit_btn': 'Редактировать',
+        'profile_save_btn': 'Сохранить',
+        'profile_cancel_btn': 'Отменить',
+        'profile_logout_btn': 'Выйти из аккаунта',
+        'profile_admin_panel': 'Перейти в админ-панель',
         'profile_visits_all': 'Все',
         'profile_visits_pending': '⏳ Ожидают',
         'profile_visits_confirmed': '✅ Подтверждены',
@@ -46,7 +45,61 @@ const translations = {
         'profile_loading': 'Загрузка...',
         'profile_login_required': 'Войдите в аккаунт',
 
-        // ========== ФУТЕР (Footer) ==========
+         // Страница входа (login)
+        'login_title': 'ВХОД В АККАУНТ',
+        'login_subtitle': 'Добро пожаловать обратно!',
+        'login_email_phone': 'Email или телефон',
+        'login_email_phone_placeholder': 'example@mail.com или +375 (29) 123-45-67',
+        'login_password': 'Пароль',
+        'login_password_placeholder': 'Введите пароль',
+        'login_remember': 'Запомнить меня',
+        'login_button': 'ВОЙТИ',
+        'login_no_account': 'Нет аккаунта?',
+        'login_register_link': 'Зарегистрироваться',
+        'login_error_required': 'Введите email/телефон',
+        'login_error_password_required': 'Введите пароль',
+        'login_error_invalid': 'Неверный email/телефон или пароль',
+        'login_success': 'Вход выполнен успешно! Перенаправление...',
+        'login_server_error': 'Ошибка подключения к серверу. Запустите json-server',
+
+        // Страница регистрации (signup)
+        'signup_title': 'СОЗДАНИЕ АККАУНТА',
+        'signup_subtitle': 'Заполните форму для регистрации',
+        'signup_first_name': 'Имя',
+        'signup_first_name_placeholder': 'Введите ваше имя',
+        'signup_last_name': 'Фамилия',
+        'signup_last_name_placeholder': 'Введите вашу фамилию',
+        'signup_email': 'Email',
+        'signup_email_placeholder': 'example@mail.com',
+        'signup_phone': 'Телефон',
+        'signup_phone_placeholder': '+375 (29) 123-45-67',
+        'signup_password': 'Пароль',
+        'signup_password_placeholder': 'Минимум 6 символов',
+        'signup_confirm_password': 'Подтверждение пароля',
+        'signup_confirm_password_placeholder': 'Повторите пароль',
+        'signup_agree_terms': 'Я соглашаюсь с',
+        'signup_terms_link': 'условиями использования',
+        'signup_and': 'и',
+        'signup_privacy_link': 'политикой конфиденциальности',
+        'signup_button': 'ЗАРЕГИСТРИРОВАТЬСя',
+        'signup_have_account': 'Уже есть аккаунт?',
+        'signup_login_link': 'Войти',
+        'signup_error_first_name': 'Введите имя',
+        'signup_error_first_name_min': 'Имя должно содержать минимум 2 символа',
+        'signup_error_last_name': 'Введите фамилию',
+        'signup_error_last_name_min': 'Фамилия должна содержать минимум 2 символа',
+        'signup_error_email': 'Введите email',
+        'signup_error_email_invalid': 'Введите корректный email',
+        'signup_error_phone': 'Введите номер телефона',
+        'signup_error_phone_invalid': 'Введите корректный номер телефона',
+        'signup_error_password': 'Введите пароль',
+        'signup_error_password_min': 'Пароль должен содержать минимум 6 символов',
+        'signup_error_confirm': 'Пароли не совпадают',
+        'signup_error_terms': 'Необходимо согласиться с условиями использования',
+        'signup_email_exists': 'Пользователь с таким email уже существует',
+        'signup_phone_exists': 'Пользователь с таким номером телефона уже существует',
+        'signup_success': 'Регистрация успешна! Перенаправление на страницу входа...',
+
         'home': 'ГЛАВНАЯ',
         'services': 'УСЛУГИ',
         'team': 'КОМАНДА',
@@ -56,7 +109,21 @@ const translations = {
         'schedule': 'РАСПИСАНИЕ',
         'faq': 'ВОПРОС-ОТВЕТ',
         
-        // ========== ГЛАВНАЯ СТРАНИЦА (index.html) ==========
+        'modal_appointment_title': '📅 Запись на прием',
+'modal_appointment_name': 'Ваше имя',
+'modal_appointment_phone': 'Телефон',
+'modal_appointment_email': 'Email',
+'modal_appointment_select_service': 'Выберите услугу',
+'modal_appointment_select_doctor': 'Выберите врача',
+'modal_appointment_date': 'Дата',
+'modal_appointment_time': 'Время',
+'modal_appointment_comment': 'Комментарий',
+'modal_appointment_comment_placeholder': 'Дополнительная информация...',
+'modal_appointment_submit': '📝 ЗАПИСАТЬСЯ',
+'modal_appointment_required_fields': 'Заполните все обязательные поля!',
+'modal_appointment_success': '✅ Запись успешно создана! Мы свяжемся с вами для подтверждения.',
+'modal_appointment_error': '❌ Ошибка при создании записи. Попробуйте позже.',
+        
         'hero_title': 'Dental Club — Стоматологическая клиника в Могилеве',
         'search_placeholder': '🔍 Поиск по сайту...',
         'hero_title_full': 'СТОМАТОЛОГИЧЕСКАЯ КЛИНИКА',
@@ -73,7 +140,6 @@ const translations = {
         'advantage_5': 'Индивидуальный подход и экономия времени пациента.',
         'advantage_6': 'Безупречный сервис и интерьер, в котором приятно находиться.',
         
-        // ========== СТРАНИЦЫ УСЛУГ ==========
         'diagnostics_title': 'ДИАГНОСТИКА',
         'diagnostics_text': 'Диагностика необходима для составления качественного плана лечения, гарантирующего результат.',
         'diagnostic_intro': 'Dental Club производит 3D-диагностику на оборудовании последнего поколения.',
@@ -90,7 +156,6 @@ const translations = {
         'step_4': '3D цифровая диагностика, с огромным функционалом: от локальных участков зубов, суставов и челюстей, до всех костных тканей головы.',
         'step_5': 'Обсуждение результатов с пациентом и совместное планирование лечения.',
         
-        // Профилактика кариеса
         'prevention_title': 'ПРОФИЛАКТИКА КАРИЕСА',
         'prevention_text': 'Профилактика - это комплекс мер, направленных на предупреждение возникновения и развития стоматологических заболеваний.',
         'prevention_tomograph_text': 'Мы оповещаем пациентов о необходимости произвести профосмотр и пройти профилактику.',
@@ -104,7 +169,6 @@ const translations = {
         'prevention_step_6': 'Индивидуальное обучение по правильному уходу за полостью рта в домашних условиях.',
         'prevention_vector_text': 'При необходимости, после этих этапов мы производим лечение дёсен аппаратом Vector (Dürr Dental).',
         
-        // Терапия
         'therapy_title': 'ТЕРАПИЯ',
         'therapy_text': 'Терапевтическая стоматология - раздел медицины, занимающийся диагностикой и лечением болезней зубов, околозубных тканей и слизистой оболочки полости рта.',
         'caries_treatment': 'ЛЕЧЕНИЕ КАРИЕСА',
@@ -125,7 +189,6 @@ const translations = {
         'step_fixation': 'Фиксация вкладки на композиционный цемент',
         'step_final_polishing': 'Пришлифовка и полировка',
         
-        // Цифровое протезирование
         'prosthetics_title': 'ЦИФРОВОЕ ПРОТЕЗИРОВАНИЕ',
         'prosthetics_text': 'Цифровое протезирование зубов – это направление эстетической стоматологии, с использованием цифровых технологий.',
         'prosthetics_tomograph_text': 'Согласно вашим требованиям и возможностям подбирается оптимальный вариант ортопедической конструкции.',
@@ -138,7 +201,6 @@ const translations = {
         'prosthetics_step_3': 'Изготовление временной конструкции',
         'prosthetics_step_4': 'Установка финальной конструкции.',
         
-        // Цифровая имплантация
         'implantation_title': 'ЦИФРОВАЯ ИМПЛАНТАЦИЯ',
         'implantation_text': 'Имплантация зубов – это операция по установке имплантатов, в качестве опоры для ортопедических конструкций.',
         'implantation_navigation_text': 'В Dental Club мы используем навигационную стоматологию.',
@@ -150,7 +212,6 @@ const translations = {
         'implantation_step_3': 'Установка имплантата, формирователя десны или временной коронки.',
         'implantation_step_4': 'Рекомендация к установке постоянных ортопедических конструкций максимум через 2 месяца.',
         
-        // Сложная имплантация
         'complex_title': 'СЛОЖНАЯ ИМПЛАНТАЦИЯ',
         'complex_text_1': 'Часто в нашу клинику обращаются пациенты, которым отказали устанавливать имплантаты в других местах.',
         'complex_text_2': 'В Dental Club мы можем произвести установку имплантатов даже в самых сложных ситуациях.',
@@ -165,7 +226,6 @@ const translations = {
         'complex_step_3': 'Установка имплантата, фиксация мульти-юнит абатментов и несъемного протеза.',
         'complex_final_text': 'По показаниям, врач ортопед установит несъёмные протезы либо в день операции, либо через 1 – 2 дня.',
         
-        // Эстетическая ортодонтия
         'orthodontics_title': 'ЭСТЕТИЧЕСКАЯ ОРТОДОНТИЯ',
         'orthodontics_text_1': 'Эстетическая ортодонтия – область стоматологии, специализирующаяся на коррекции прикуса.',
         'orthodontics_text_2': 'Ортодонтическое лечение не имеет строгих возрастных рамок.',
@@ -182,7 +242,6 @@ const translations = {
         'aligners_consult': 'Специалисты нашей клиники помогут Вам получить идеально ровные зубы.',
         'aligners_certified': 'Dental Club является сертифицированной клиникой Invisalign.',
         
-        // Виниры и Люминиры
         'veneers_title': 'ВИНИРЫ. ЛЮМИНИРЫ',
         'veneers_title_main': 'ВИНИРЫ',
         'luminirs_title': 'ЛЮМИНИРЫ',
@@ -202,7 +261,6 @@ const translations = {
         'veneers_step_6': 'Изготовление постоянных керамических виниров и их фиксация.',
         'veneers_step_7': 'Финальная коррекция и полировка.',
         
-        // ========== СТРАНИЦА КОМАНДЫ (team.html) ==========
         'team_title': 'КОМАНДА DENTAL CLUB',
         'doctor_therapist': 'Стоматолог-терапевт, детский стоматолог',
         'doctor_parodontologist': 'Стоматолог-пародонтолог',
@@ -211,14 +269,12 @@ const translations = {
         'doctor_implantologist': 'Стоматолог-имплантолог, ортопед',
         'doctor_surgeon': 'Стоматолог-хирург, имплантолог',
         
-        // ========== СТРАНИЦА ДЕТАЛЕЙ ВРАЧА (team-details.html) ==========
         'specialization': 'Специализация:',
         'education': 'Образование:',
         'experience': 'Опыт работы:',
         'improvement': 'Повышение квалификации:',
         'work_time': 'Время приема:',
         
-        // ========== СТРАНИЦА ОТЗЫВОВ (reviews.html) ==========
         'reviews_title': 'ОТЗЫВЫ НАШИХ КЛИЕНТОВ',
         'send_review_btn': 'ОТПРАВИТЬ СВОЙ ОТЗЫВ',
         'write_review': 'НАПИШИТЕ СВОЙ ОТЗЫВ',
@@ -230,7 +286,7 @@ const translations = {
         'feedback_title': 'ОБРАТНАЯ СВЯЗЬ',
         'name_placeholder': 'Ваше имя',
         'email_placeholder': 'Email',
-        'phone_placeholder': '+7 (___) ___ __ __',
+        'phone_placeholder': '+375 (___) ___ __ __',
         'question_placeholder': 'Введите ваш вопрос',
         'send_btn': 'ОТПРАВИТЬ ЗАЯВКУ',
         'photo_video': 'ФОТО И ВИДЕО',
@@ -244,7 +300,6 @@ const translations = {
         'clinic_desc_2': 'Наши принципы: гарантировать пациентам лучшее лечение, а сотрудникам – лучшие условия труда.',
         'clinic_desc_3': 'Если Вы хотите стать частью дружной команды, присылайте Ваше резюме на почту:',
         
-        // ========== СТРАНИЦА КОНТАКТОВ (contacts.html) ==========
         'contacts_title': 'КОНТАКТЫ',
         'contact_us': 'СВЯЗАТЬСЯ С НАМИ',
         'address_value': 'Беларусь, г. Могилев, ул. Ленинская, 25 (вход со стороны улицы Первомайской)',
@@ -253,7 +308,6 @@ const translations = {
         'sun': 'Вс: выходной',
         'send_request': 'ОТПРАВИТЬ ЗАЯВКУ',
         
-        // ========== СТРАНИЦА ПРАЙС-ЛИСТА (prices.html) ==========
         'prices_title': 'ПРАЙС-ЛИСТ',
         'all_services': 'Все услуги',
         'all_categories': 'Категория:',
@@ -263,7 +317,6 @@ const translations = {
         'prices_note_1': '⚠️ Цены, указанные на сайте, не являются публичной офертой. Точную стоимость уточняйте у администратора клиники.',
         'prices_note_2': '📞 Для записи на прием и уточнения цены звоните:',
         
-        // ========== СТРАНИЦА РАСПИСАНИЯ (schedule.html) ==========
         'schedule_title': 'РАСПИСАНИЕ ВРАЧЕЙ',
         'clinic_hours': '📅 Режим работы клиники:',
         'mon_fri_hours': 'Пн-Пт: 10:00 - 20:00',
@@ -284,7 +337,6 @@ const translations = {
         'schedule_note_1': '⚠️ Расписание может меняться. Актуальное время приема уточняйте по телефону.',
         'schedule_note_2': '💡 Вы можете записаться на прием онлайн через форму записи.',
         
-        // ========== СТРАНИЦА ВОПРОС-ОТВЕТ (faq.html) ==========
         'faq_title': 'ВОПРОС-ОТВЕТ',
         'faq_subtitle': 'Часто задаваемые вопросы о нашей клинике',
         'all_questions': 'Все вопросы',
@@ -297,7 +349,6 @@ const translations = {
         'doctors_cat': '👨‍⚕️ Врачи',
         'general_cat': 'ℹ️ Общие',
         
-        // ========== МОДАЛЬНЫЕ ОКНА ==========
         'modal_appointment': 'Запись на прием',
         'modal_patient_name': 'ФИО пациента',
         'modal_select_service': 'Выберите услугу',
@@ -308,7 +359,6 @@ const translations = {
         'modal_submit': 'ЗАПИСАТЬСЯ',
         'modal_close': 'Закрыть',
         
-        // ========== ОБЩИЕ ФРАЗЫ ==========
         'more_btn': 'ПОДРОБНЕЕ',
         'send': 'ОТПРАВИТЬ',
         'save': 'СОХРАНИТЬ',
@@ -324,14 +374,12 @@ const translations = {
     },
     
     en: {
-        // ========== NAVIGATION (Header & Menu) ==========
         'menu': 'MENU',
         'login': 'LOGIN',
         'profile': 'PROFILE',
         'logout': 'LOGOUT',
-        'lang': 'ENG',
+        'lang': 'RUS',
         
-  // ========== PROFILE MODAL ==========
         'profile_title': 'Profile',
         'profile_personal_data': '📋 Personal Data',
         'profile_visits': '📅 My Visits',
@@ -343,11 +391,11 @@ const translations = {
         'profile_phone': 'Phone',
         'profile_birth_date': 'Date of Birth',
         'profile_address': 'Address',
-        'profile_edit_btn': '✏️ Edit',
-        'profile_save_btn': '💾 Save',
-        'profile_cancel_btn': '❌ Cancel',
-        'profile_logout_btn': '🚪 Logout',
-        'profile_admin_panel': '⚙️ Go to Admin Panel',
+        'profile_edit_btn': 'Edit',
+        'profile_save_btn': 'Save',
+        'profile_cancel_btn': 'Cancel',
+        'profile_logout_btn': 'Logout',
+        'profile_admin_panel': 'Go to Admin Panel',
         'profile_visits_all': 'All',
         'profile_visits_pending': '⏳ Pending',
         'profile_visits_confirmed': '✅ Confirmed',
@@ -370,7 +418,61 @@ const translations = {
         'profile_loading': 'Loading...',
         'profile_login_required': 'Please log in',
 
-        // ========== FOOTER ==========
+         // Login page
+        'login_title': 'LOGIN',
+        'login_subtitle': 'Welcome back!',
+        'login_email_phone': 'Email or phone',
+        'login_email_phone_placeholder': 'example@mail.com or +375 (29) 123-45-67',
+        'login_password': 'Password',
+        'login_password_placeholder': 'Enter your password',
+        'login_remember': 'Remember me',
+        'login_button': 'LOGIN',
+        'login_no_account': 'Don\'t have an account?',
+        'login_register_link': 'Sign up',
+        'login_error_required': 'Enter email/phone',
+        'login_error_password_required': 'Enter password',
+        'login_error_invalid': 'Invalid email/phone or password',
+        'login_success': 'Login successful! Redirecting...',
+        'login_server_error': 'Server connection error. Please start json-server',
+
+        // Signup page
+        'signup_title': 'CREATE ACCOUNT',
+        'signup_subtitle': 'Fill out the form to register',
+        'signup_first_name': 'First Name',
+        'signup_first_name_placeholder': 'Enter your first name',
+        'signup_last_name': 'Last Name',
+        'signup_last_name_placeholder': 'Enter your last name',
+        'signup_email': 'Email',
+        'signup_email_placeholder': 'example@mail.com',
+        'signup_phone': 'Phone',
+        'signup_phone_placeholder': '+375 (29) 123-45-67',
+        'signup_password': 'Password',
+        'signup_password_placeholder': 'Minimum 6 characters',
+        'signup_confirm_password': 'Confirm Password',
+        'signup_confirm_password_placeholder': 'Repeat password',
+        'signup_agree_terms': 'I agree to the',
+        'signup_terms_link': 'Terms of Use',
+        'signup_and': 'and',
+        'signup_privacy_link': 'Privacy Policy',
+        'signup_button': 'SIGN UP',
+        'signup_have_account': 'Already have an account?',
+        'signup_login_link': 'Login',
+        'signup_error_first_name': 'Enter your first name',
+        'signup_error_first_name_min': 'First name must be at least 2 characters',
+        'signup_error_last_name': 'Enter your last name',
+        'signup_error_last_name_min': 'Last name must be at least 2 characters',
+        'signup_error_email': 'Enter email',
+        'signup_error_email_invalid': 'Enter a valid email',
+        'signup_error_phone': 'Enter phone number',
+        'signup_error_phone_invalid': 'Enter a valid phone number',
+        'signup_error_password': 'Enter password',
+        'signup_error_password_min': 'Password must be at least 6 characters',
+        'signup_error_confirm': 'Passwords do not match',
+        'signup_error_terms': 'You must agree to the terms of use',
+        'signup_email_exists': 'User with this email already exists',
+        'signup_phone_exists': 'User with this phone number already exists',
+        'signup_success': 'Registration successful! Redirecting to login page...',
+
         'home': 'HOME',
         'services': 'SERVICES',
         'team': 'TEAM',
@@ -380,13 +482,27 @@ const translations = {
         'schedule': 'SCHEDULE',
         'faq': 'FAQ',
         
-        // ========== HOME PAGE (index.html) ==========
+        'modal_appointment_title': '📅 Book Appointment',
+'modal_appointment_name': 'Your name',
+'modal_appointment_phone': 'Phone',
+'modal_appointment_email': 'Email',
+'modal_appointment_select_service': 'Select service',
+'modal_appointment_select_doctor': 'Select doctor',
+'modal_appointment_date': 'Date',
+'modal_appointment_time': 'Time',
+'modal_appointment_comment': 'Comment',
+'modal_appointment_comment_placeholder': 'Additional information...',
+'modal_appointment_submit': '📝 BOOK NOW',
+'modal_appointment_required_fields': 'Please fill in all required fields!',
+'modal_appointment_success': '✅ Appointment created successfully! We will contact you for confirmation.',
+'modal_appointment_error': '❌ Error creating appointment. Please try again later.',
+
         'hero_title': 'Dental Club — Dental Clinic in Mogilev',
         'search_placeholder': '🔍 Search the site...',
         'hero_title_full': 'DENTAL CLINIC',
         'city_text': 'IN MOGILEV',
         'appointment_btn': 'BOOK APPOINTMENT',
-        'clinic_name': 'CLINIC',
+        'clinic_name': 'CLINIC DENTAL CLUB',
         'clinic_desc': 'The first clinic in Belarus providing a full range of dental services at European level. We use advanced equipment and digital technologies.',
         'advantages_title': 'OUR',
         'advantages_subtitle': 'ADVANTAGES',
@@ -397,7 +513,6 @@ const translations = {
         'advantage_5': 'Individual approach and saving patient time.',
         'advantage_6': 'Impeccable service and pleasant interior.',
         
-        // ========== SERVICE PAGES ==========
         'diagnostics_title': 'DIAGNOSTICS',
         'diagnostics_text': 'Diagnostics is necessary to create a quality treatment plan that guarantees results.',
         'diagnostic_intro': 'Dental Club performs 3D diagnostics using the latest generation equipment.',
@@ -414,7 +529,6 @@ const translations = {
         'step_4': '3D digital diagnostics.',
         'step_5': 'Discussion of results and joint treatment planning.',
         
-        // Prevention
         'prevention_title': 'CARIES PREVENTION',
         'prevention_text': 'Prevention is a set of measures aimed at preventing dental diseases.',
         'prevention_tomograph_text': 'We notify patients about the need for professional examination.',
@@ -428,7 +542,6 @@ const translations = {
         'prevention_step_6': 'Individual training on proper oral care.',
         'prevention_vector_text': 'If necessary, we treat gums with the Vector device.',
         
-        // Therapy
         'therapy_title': 'THERAPY',
         'therapy_text': 'Therapeutic dentistry deals with diagnosis and treatment of teeth diseases.',
         'caries_treatment': 'CARIES TREATMENT',
@@ -449,7 +562,6 @@ const translations = {
         'step_fixation': 'Fixation of the inlay',
         'step_final_polishing': 'Grinding and polishing',
         
-        // Digital prosthetics
         'prosthetics_title': 'DIGITAL PROSTHETICS',
         'prosthetics_text': 'Digital prosthetics uses digital technologies in manufacturing orthopedic structures.',
         'prosthetics_tomograph_text': 'The optimal variant of orthopedic structure is selected according to your requirements.',
@@ -462,7 +574,6 @@ const translations = {
         'prosthetics_step_3': 'Manufacturing of a temporary structure',
         'prosthetics_step_4': 'Installation of the final structure.',
         
-        // Digital implantation
         'implantation_title': 'DIGITAL IMPLANTATION',
         'implantation_text': 'Dental implantation is an operation to install implants.',
         'implantation_navigation_text': 'At Dental Club, we use navigational dentistry.',
@@ -474,7 +585,6 @@ const translations = {
         'implantation_step_3': 'Installation of the implant.',
         'implantation_step_4': 'Recommendation for installation of permanent structures.',
         
-        // Complex implantation
         'complex_title': 'COMPLEX IMPLANTATION',
         'complex_text_1': 'Often patients come to our clinic who were refused implants elsewhere.',
         'complex_text_2': 'At Dental Club, we can install implants even in difficult situations.',
@@ -489,7 +599,6 @@ const translations = {
         'complex_step_3': 'Implant installation, fixation of abutments and denture.',
         'complex_final_text': 'According to indications, dentures will be installed on the day of surgery or after 1-2 days.',
         
-        // Aesthetic orthodontics
         'orthodontics_title': 'AESTHETIC ORTHODONTICS',
         'orthodontics_text_1': 'Aesthetic orthodontics specializes in bite correction.',
         'orthodontics_text_2': 'Orthodontic treatment has no strict age restrictions.',
@@ -506,7 +615,6 @@ const translations = {
         'aligners_consult': 'Our specialists will help you get perfectly straight teeth.',
         'aligners_certified': 'Dental Club is a certified Invisalign clinic.',
         
-        // Veneers and Lumineers
         'veneers_title': 'VENEERS. LUMINEERS',
         'veneers_title_main': 'VENEERS',
         'luminirs_title': 'LUMINEERS',
@@ -526,7 +634,6 @@ const translations = {
         'veneers_step_6': 'Manufacturing of permanent ceramic veneers and their fixation.',
         'veneers_step_7': 'Final correction and polishing.',
         
-        // ========== TEAM PAGE (team.html) ==========
         'team_title': 'DENTAL CLUB TEAM',
         'doctor_therapist': 'General Dentist, Pediatric Dentist',
         'doctor_parodontologist': 'Periodontist',
@@ -535,14 +642,12 @@ const translations = {
         'doctor_implantologist': 'Implantologist, Orthopedist',
         'doctor_surgeon': 'Oral Surgeon, Implantologist',
         
-        // ========== DOCTOR DETAILS PAGE ==========
         'specialization': 'Specialization:',
         'education': 'Education:',
         'experience': 'Work experience:',
         'improvement': 'Advanced training:',
         'work_time': 'Working hours:',
         
-        // ========== REVIEWS PAGE ==========
         'reviews_title': 'CLIENT REVIEWS',
         'send_review_btn': 'SEND YOUR REVIEW',
         'write_review': 'WRITE A REVIEW',
@@ -554,7 +659,7 @@ const translations = {
         'feedback_title': 'FEEDBACK',
         'name_placeholder': 'Your name',
         'email_placeholder': 'Email',
-        'phone_placeholder': '+7 (___) ___ __ __',
+        'phone_placeholder': '+375 (___) ___ __ __',
         'question_placeholder': 'Enter your question',
         'send_btn': 'SEND REQUEST',
         'photo_video': 'PHOTO AND VIDEO',
@@ -568,7 +673,6 @@ const translations = {
         'clinic_desc_2': 'Our principles: to guarantee patients the best treatment, and employees the best working conditions.',
         'clinic_desc_3': 'If you want to become part of a friendly team, send your resume to:',
         
-        // ========== CONTACTS PAGE ==========
         'contacts_title': 'CONTACTS',
         'contact_us': 'CONTACT US',
         'address_value': 'Belarus, Mogilev, Leninskaya str., 25 (entrance from Pervomayskaya str.)',
@@ -577,7 +681,6 @@ const translations = {
         'sun': 'Sun: closed',
         'send_request': 'SEND REQUEST',
         
-        // ========== PRICE LIST PAGE ==========
         'prices_title': 'PRICE LIST',
         'all_services': 'All services',
         'all_categories': 'Category:',
@@ -587,7 +690,6 @@ const translations = {
         'prices_note_1': '⚠️ The prices listed are not a public offer. Please check the exact cost with the administrator.',
         'prices_note_2': '📞 To make an appointment and check prices, call:',
         
-        // ========== SCHEDULE PAGE ==========
         'schedule_title': 'DOCTORS SCHEDULE',
         'clinic_hours': '📅 Clinic working hours:',
         'mon_fri_hours': 'Mon-Fri: 10:00 - 20:00',
@@ -608,7 +710,6 @@ const translations = {
         'schedule_note_1': '⚠️ The schedule may change. Please check the current appointment time by phone.',
         'schedule_note_2': '💡 You can make an appointment online through the booking form.',
         
-        // ========== FAQ PAGE ==========
         'faq_title': 'FAQ',
         'faq_subtitle': 'Frequently asked questions about our clinic',
         'all_questions': 'All questions',
@@ -621,7 +722,6 @@ const translations = {
         'doctors_cat': '👨‍⚕️ Doctors',
         'general_cat': 'ℹ️ General',
         
-        // ========== MODAL WINDOWS ==========
         'modal_appointment': 'Book appointment',
         'modal_patient_name': 'Full name',
         'modal_select_service': 'Select service',
@@ -632,7 +732,6 @@ const translations = {
         'modal_submit': 'BOOK',
         'modal_close': 'Close',
         
-        // ========== COMMON PHRASES ==========
         'more_btn': 'MORE',
         'send': 'SEND',
         'save': 'SAVE',
@@ -724,12 +823,14 @@ function applyTranslations() {
     const headerLangSelector = document.getElementById('headerLangSelector');
     if (headerLangSelector) {
         const langText = headerLangSelector.querySelector('#langSelectorText');
-        if (langText) langText.textContent = currentLanguage === 'ru' ? 'RUS' : 'ENG';
+        if (langText) {
+            langText.textContent = currentLanguage === 'ru' ? 'АНГЛ' : 'RUS';
+        }
     }
     
     const mobileLangSelector = document.querySelector('.mobile-lang-selector');
     if (mobileLangSelector) {
-        mobileLangSelector.textContent = currentLanguage === 'ru' ? 'RUS' : 'ENG';
+        mobileLangSelector.textContent = currentLanguage === 'ru' ? 'АНГЛ' : 'RUS';
     }
     
     console.log(`✅ Перевод применён: ${currentLanguage}`);
@@ -743,12 +844,12 @@ function switchLanguage() {
     const headerLangSelector = document.getElementById('headerLangSelector');
     if (headerLangSelector) {
         const langText = headerLangSelector.querySelector('#langSelectorText');
-        if (langText) langText.textContent = currentLanguage === 'ru' ? 'RUS' : 'ENG';
+        if (langText) langText.textContent = currentLanguage === 'ru' ? 'RUS' : 'АНГЛ';
     }
     
     const mobileLangSelector = document.querySelector('.mobile-lang-selector');
     if (mobileLangSelector) {
-        mobileLangSelector.textContent = currentLanguage === 'ru' ? 'RUS' : 'ENG';
+        mobileLangSelector.textContent = currentLanguage === 'ru' ? 'RUS' : 'АНГЛ';
     }
     
     refreshDynamicContent();

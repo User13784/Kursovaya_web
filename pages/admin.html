@@ -424,9 +424,7 @@
         </div>
     </div>
 
-    <!-- ==================== МОДАЛЬНЫЕ ОКНА ==================== -->
-    
-    <!-- Модальное окно услуги -->
+
     <div id="serviceModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -465,7 +463,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно детальной услуги -->
     <div id="detailModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
@@ -508,7 +505,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно врача -->
     <div id="doctorModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
@@ -568,7 +564,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно записи -->
     <div id="appointmentModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -646,7 +641,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно скидки -->
     <div id="discountModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -705,7 +699,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно услуги прайс-листа -->
     <div id="priceServiceModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -760,7 +753,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно расписания -->
     <div id="scheduleModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
@@ -776,7 +768,6 @@
                     </select>
                 </div>
                 <div class="schedule-days-container" id="scheduleDaysContainer">
-                    <!-- Дни недели будут добавлены динамически -->
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-save" data-admin-translate="save_schedule_btn">Сохранить расписание</button>
@@ -786,7 +777,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно просмотра отзыва -->
     <div id="viewReviewModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -818,7 +808,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно категории прайс-листа -->
     <div id="categoryModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -858,7 +847,6 @@
     <script src="../js/api.js"></script>
     <script src="../js/admin-analytics.js"></script>
 
-    <!-- Переключатель языка для админ-панели -->
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #2F353B; border-radius: 30px; padding: 5px;">
         <button id="adminLangToggle" style="background: #A5C33C; border: none; padding: 8px 16px; border-radius: 25px; cursor: pointer; font-weight: bold;">
             🌐 RUS / ENG
@@ -866,7 +854,6 @@
     </div>
 
     <script>
-        // Переключатель языка
         const langToggle = document.getElementById('adminLangToggle');
         if (langToggle) {
             langToggle.addEventListener('click', function() {
@@ -885,7 +872,6 @@
             });
         }
 
-        // Создание модального окна профиля
         setTimeout(function() {
             if (!document.getElementById('profileModal') && typeof window.createProfileModal === 'function') {
                 window.createProfileModal();

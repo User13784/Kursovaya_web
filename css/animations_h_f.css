@@ -1,0 +1,469 @@
+.menu-btn {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.menu-btn:hover {
+    transform: translateY(-2px);
+}
+
+.menu-btn:hover .menu-logo {
+    transform: rotate(5deg) scale(1.1);
+}
+
+.menu-logo {
+    transition: transform 0.3s ease;
+}
+
+.lang-selector {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.lang-selector:hover {
+    transform: translateY(-2px);
+}
+
+.lang-selector:hover .lang-logo {
+    transform: rotate(10deg) scale(1.1);
+}
+
+.lang-logo {
+    transition: transform 0.3s ease;
+}
+
+.logo {
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.02);
+}
+
+.logo img {
+    transition: all 0.3s ease;
+}
+
+.logo:hover img {
+    filter: brightness(1.05);
+}
+
+.login-link {
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.login-link:hover {
+    transform: translateX(3px);
+    opacity: 0.85;
+}
+
+.login-link::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #A5C33C, transparent);
+    transition: width 0.3s ease;
+}
+
+.login-link:hover::before {
+    width: 100%;
+}
+
+.special-button {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.special-button:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(165, 195, 60, 0.3);
+    border-color: #A5C33C;
+}
+
+.special-button:active {
+    transform: scale(0.95);
+}
+
+.theme-icon {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.theme-icon:hover {
+    transform: scale(1.15);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.theme-icon.active {
+    transform: scale(1.05);
+    background: rgba(165, 195, 60, 0.3);
+    box-shadow: 0 0 10px rgba(165, 195, 60, 0.5);
+}
+
+.burger-icon {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.burger-icon:hover span {
+    background-color: #A5C33C;
+}
+
+.burger-icon span {
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    border-radius: 3px;
+}
+
+.burger-icon.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.burger-icon.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-icon.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.header-stripe {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-stripe::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.header:hover .header-stripe::before {
+    left: 100%;
+}
+
+.auth-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.auth-group > * {
+    transition: all 0.3s ease;
+}
+
+.auth-group:hover > *:not(:hover) {
+    opacity: 0.7;
+}
+
+.footer-logo {
+    transition: all 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: translateY(-3px);
+}
+
+.footer-logo img {
+    transition: all 0.3s ease;
+}
+
+.footer-logo:hover img {
+    filter: brightness(1.1);
+    transform: scale(1.02);
+}
+
+.footer-line {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.footer-line:hover {
+    border-top-color: rgba(165, 195, 60, 0.6);
+    transform: scaleX(1.02);
+}
+
+.footer-nav a {
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.footer-nav a::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #A5C33C, #FFFFFF);
+    transition: width 0.3s ease;
+}
+
+.footer-nav a:hover {
+    transform: translateX(5px);
+    color: #A5C33C;
+}
+
+.footer-nav a:hover::before {
+    width: 100%;
+}
+
+.footer-links-row {
+    transition: all 0.3s ease;
+}
+
+.footer-links-row:hover {
+    transform: translateX(3px);
+}
+
+.social-link {
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(165, 195, 60, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.social-link:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.social-link:hover {
+    transform: translateY(-5px) scale(1.1);
+}
+
+.social-link img {
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+.social-link:hover img {
+    transform: scale(1.1);
+    filter: brightness(0) invert(1) drop-shadow(0 0 5px #A5C33C);
+}
+
+.footer-socials {
+    transition: all 0.3s ease;
+}
+
+.footer-socials:hover .social-link:not(:hover) {
+    opacity: 0.6;
+    transform: scale(0.95);
+}
+
+.footer-container {
+    transition: all 0.3s ease;
+}
+
+.footer-container:hover {
+    transform: translateY(-2px);
+}
+
+@keyframes socialPulse {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.05);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+.social-notification {
+    animation: fadeInUp 0.3s ease, socialPulse 0.5s ease 0.3s !important;
+}
+
+.footer-nav a {
+    position: relative;
+}
+
+.footer-nav a::after {
+    content: '→';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: #A5C33C;
+    font-size: 14px;
+}
+
+.footer-nav a:hover::after {
+    opacity: 1;
+    right: -25px;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 17px;
+    justify-content: center;
+}
+
+
+@keyframes subtlePulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.special-button:active,
+.login-link:active,
+.menu-btn:active,
+.lang-selector:active {
+    animation: subtlePulse 0.2s ease;
+}
+
+@keyframes glowEffect {
+    0% {
+        box-shadow: 0 0 0 0 rgba(165, 195, 60, 0);
+    }
+    100% {
+        box-shadow: 0 0 20px 5px rgba(165, 195, 60, 0.3);
+    }
+}
+
+.social-link:hover,
+.special-button:hover {
+    animation: glowEffect 0.3s ease forwards;
+}
+
+
+@media (max-width: 768px) {
+    .menu-btn:hover {
+        transform: translateY(-1px);
+    }
+    
+    .logo:hover {
+        transform: scale(1.01);
+    }
+    
+    .social-link:hover {
+        transform: translateY(-3px) scale(1.05);
+    }
+    
+    .footer-nav a:hover {
+        transform: translateX(3px);
+    }
+    
+    .footer-nav a::after {
+        display: none;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .menu-btn:hover,
+    .lang-selector:hover,
+    .logo:hover,
+    .login-link:hover,
+    .special-button:hover,
+    .social-link:hover,
+    .footer-nav a:hover {
+        transform: none;
+    }
+    
+    .footer-nav a::before,
+    .login-link::before {
+        display: none;
+    }
+    
+    .social-link::before {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .menu-btn,
+    .lang-selector,
+    .logo,
+    .login-link,
+    .special-button,
+    .theme-icon,
+    .burger-icon,
+    .footer-logo,
+    .footer-nav a,
+    .social-link,
+    .footer-line,
+    .footer-container,
+    .menu-logo,
+    .lang-logo,
+    .logo img,
+    .footer-logo img,
+    .social-link img {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+    
+    .footer-nav a::before,
+    .login-link::before,
+    .social-link::before {
+        display: none;
+    }
+    
+    .header-stripe::before {
+        display: none;
+    }
+}
+
+.special-button,
+.special-button:hover,
+.special-button:active,
+.special-button:focus {
+
+    transform: translateX(-85px) !important;
+    scale: 1 !important;
+    transform-origin: center center !important;
+}
+

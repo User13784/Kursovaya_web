@@ -1,3 +1,13 @@
+function getModalTranslation(key, defaultValue = '') {
+    if (typeof window.translate === 'function') {
+        const translated = window.translate(key);
+        if (translated && translated !== key) {
+            return translated;
+        }
+    }
+    return defaultValue;
+}
+
 function createAppointmentModal() {
     if (document.getElementById('visitorAppointmentModal')) {
         return;
@@ -7,36 +17,36 @@ function createAppointmentModal() {
         <div id="visitorAppointmentModal" class="appointment-modal">
             <div class="appointment-modal-content">
                 <div class="appointment-modal-header">
-                    <h2>📅 Запись на прием</h2>
+                    <h2 id="modalAppointmentTitle">📅 Запись на прием</h2>
                     <span class="appointment-modal-close">&times;</span>
                 </div>
                 <div class="appointment-modal-body">
                     <form id="visitorAppointmentForm">
                         <div class="appointment-form-group">
-                            <label>Ваше имя <span class="required">*</span></label>
+                            <label id="modalNameLabel">Ваше имя <span class="required">*</span></label>
                             <input type="text" id="visitorName" required placeholder="Иванов Иван Иванович">
                         </div>
                         
                         <div class="appointment-form-row">
                             <div class="appointment-form-group">
-                                <label>Телефон <span class="required">*</span></label>
+                                <label id="modalPhoneLabel">Телефон <span class="required">*</span></label>
                                 <input type="tel" id="visitorPhone" required placeholder="+375 (29) 123-45-67">
                             </div>
                             <div class="appointment-form-group">
-                                <label>Email</label>
+                                <label id="modalEmailLabel">Email</label>
                                 <input type="email" id="visitorEmail" placeholder="ivanov@example.com">
                             </div>
                         </div>
                         
                         <div class="appointment-form-group">
-                            <label>Выберите услугу <span class="required">*</span></label>
+                            <label id="modalServiceLabel">Выберите услугу <span class="required">*</span></label>
                             <select id="visitorServiceId" required>
                                 <option value="">-- Выберите услугу --</option>
                             </select>
                         </div>
                         
                         <div class="appointment-form-group">
-                            <label>Выберите врача <span class="required">*</span></label>
+                            <label id="modalDoctorLabel">Выберите врача <span class="required">*</span></label>
                             <select id="visitorDoctorId" required>
                                 <option value="">-- Выберите врача --</option>
                             </select>
@@ -44,11 +54,11 @@ function createAppointmentModal() {
                         
                         <div class="appointment-form-row">
                             <div class="appointment-form-group">
-                                <label>Дата <span class="required">*</span></label>
+                                <label id="modalDateLabel">Дата <span class="required">*</span></label>
                                 <input type="date" id="visitorDate" required>
                             </div>
                             <div class="appointment-form-group">
-                                <label>Время <span class="required">*</span></label>
+                                <label id="modalTimeLabel">Время <span class="required">*</span></label>
                                 <select id="visitorTime" required>
                                     <option value="">-- Выберите время --</option>
                                     <option value="09:00">09:00</option>
@@ -66,11 +76,11 @@ function createAppointmentModal() {
                         </div>
                         
                         <div class="appointment-form-group">
-                            <label>Комментарий</label>
+                            <label id="modalCommentLabel">Комментарий</label>
                             <textarea id="visitorComment" rows="3" placeholder="Дополнительная информация..."></textarea>
                         </div>
                         
-                        <button type="submit" class="appointment-submit-btn">📝 ЗАПИСАТЬСЯ</button>
+                        <button type="submit" class="appointment-submit-btn" id="modalSubmitBtn">📝 ЗАПИСАТЬСЯ</button>
                     </form>
                 </div>
             </div>
@@ -87,6 +97,61 @@ function createAppointmentModal() {
     }
     
     initAppointmentModal();
+    updateAppointmentModalTranslations();
+}
+
+function updateAppointmentModalTranslations() {
+    const modal = document.getElementById('visitorAppointmentModal');
+    if (!modal) return;
+    
+    const title = document.getElementById('modalAppointmentTitle');
+    if (title) title.textContent = getModalTranslation('modal_appointment_title', '📅 Запись на прием');
+    
+    const nameLabel = document.getElementById('modalNameLabel');
+    if (nameLabel) nameLabel.innerHTML = getModalTranslation('modal_appointment_name', 'Ваше имя') + ' <span class="required">*</span>';
+    
+    const phoneLabel = document.getElementById('modalPhoneLabel');
+    if (phoneLabel) phoneLabel.innerHTML = getModalTranslation('modal_appointment_phone', 'Телефон') + ' <span class="required">*</span>';
+    
+    const emailLabel = document.getElementById('modalEmailLabel');
+    if (emailLabel) emailLabel.textContent = getModalTranslation('modal_appointment_email', 'Email');
+    
+    const serviceLabel = document.getElementById('modalServiceLabel');
+    if (serviceLabel) serviceLabel.innerHTML = getModalTranslation('modal_appointment_select_service', 'Выберите услугу') + ' <span class="required">*</span>';
+    
+    const doctorLabel = document.getElementById('modalDoctorLabel');
+    if (doctorLabel) doctorLabel.innerHTML = getModalTranslation('modal_appointment_select_doctor', 'Выберите врача') + ' <span class="required">*</span>';
+    
+    const dateLabel = document.getElementById('modalDateLabel');
+    if (dateLabel) dateLabel.innerHTML = getModalTranslation('modal_appointment_date', 'Дата') + ' <span class="required">*</span>';
+    
+    const timeLabel = document.getElementById('modalTimeLabel');
+    if (timeLabel) timeLabel.innerHTML = getModalTranslation('modal_appointment_time', 'Время') + ' <span class="required">*</span>';
+    
+    const commentLabel = document.getElementById('modalCommentLabel');
+    if (commentLabel) commentLabel.textContent = getModalTranslation('modal_appointment_comment', 'Комментарий');
+    
+    const commentTextarea = document.getElementById('visitorComment');
+    if (commentTextarea) commentTextarea.placeholder = getModalTranslation('modal_appointment_comment_placeholder', 'Дополнительная информация...');
+    
+    const submitBtn = document.getElementById('modalSubmitBtn');
+    if (submitBtn) submitBtn.textContent = getModalTranslation('modal_appointment_submit', '📝 ЗАПИСАТЬСЯ');
+    
+    // Обновляем option "Выберите услугу/врача"
+    const serviceSelect = document.getElementById('visitorServiceId');
+    if (serviceSelect && serviceSelect.options[0]) {
+        serviceSelect.options[0].textContent = getModalTranslation('modal_appointment_select_service', '-- Выберите услугу --');
+    }
+    
+    const doctorSelect = document.getElementById('visitorDoctorId');
+    if (doctorSelect && doctorSelect.options[0]) {
+        doctorSelect.options[0].textContent = getModalTranslation('modal_appointment_select_doctor', '-- Выберите врача --');
+    }
+    
+    const timeSelect = document.getElementById('visitorTime');
+    if (timeSelect && timeSelect.options[0]) {
+        timeSelect.options[0].textContent = getModalTranslation('modal_appointment_time', '-- Выберите время --');
+    }
 }
 
 function initAppointmentModal() {
@@ -133,21 +198,37 @@ async function loadServicesAndDoctors() {
         const doctorSelect = document.getElementById('visitorDoctorId');
         
         if (serviceSelect) {
-            serviceSelect.innerHTML = '<option value="">-- Выберите услугу --</option>';
+            const selectOptionText = getModalTranslation('modal_appointment_select_service', '-- Выберите услугу --');
+            serviceSelect.innerHTML = `<option value="">${selectOptionText}</option>`;
             services.filter(s => s.active).forEach(service => {
                 const option = document.createElement('option');
                 option.value = service.id;
-                option.textContent = service.name;
+                const serviceName = typeof service.name === 'object' 
+                    ? (service.name.ru || service.name.en || 'Unknown')
+                    : service.name;
+                option.textContent = serviceName;
                 serviceSelect.appendChild(option);
             });
         }
         
         if (doctorSelect) {
-            doctorSelect.innerHTML = '<option value="">-- Выберите врача --</option>';
+            const selectOptionText = getModalTranslation('modal_appointment_select_doctor', '-- Выберите врача --');
+            doctorSelect.innerHTML = `<option value="">${selectOptionText}</option>`;
             doctors.filter(d => d.active).forEach(doctor => {
                 const option = document.createElement('option');
                 option.value = doctor.id;
-                option.textContent = `${doctor.lastName} ${doctor.firstName} ${doctor.middleName || ''}`.trim();
+                let lastName = '', firstName = '';
+                if (typeof doctor.lastName === 'object') {
+                    lastName = doctor.lastName.ru || doctor.lastName.en || '';
+                } else {
+                    lastName = doctor.lastName || '';
+                }
+                if (typeof doctor.firstName === 'object') {
+                    firstName = doctor.firstName.ru || doctor.firstName.en || '';
+                } else {
+                    firstName = doctor.firstName || '';
+                }
+                option.textContent = `${lastName} ${firstName}`.trim();
                 doctorSelect.appendChild(option);
             });
         }
@@ -170,6 +251,7 @@ function openVisitorAppointmentModal() {
         setTimeout(() => openVisitorAppointmentModal(), 100);
         return;
     }
+    updateAppointmentModalTranslations();
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
@@ -194,8 +276,10 @@ async function submitAppointment(event) {
     const time = document.getElementById('visitorTime')?.value;
     const comment = document.getElementById('visitorComment')?.value;
     
+    const requiredFieldsText = getModalTranslation('modal_appointment_required_fields', 'Заполните все обязательные поля!');
+    
     if (!name || !phone || !serviceId || !doctorId || !date || !time) {
-        showAppointmentToast('Заполните все обязательные поля!', 'error');
+        showAppointmentToast(requiredFieldsText, 'error');
         return;
     }
     
@@ -227,7 +311,8 @@ async function submitAppointment(event) {
         });
         
         if (response.ok) {
-            showAppointmentToast('✅ Запись успешно создана! Мы свяжемся с вами для подтверждения.', 'success');
+            const successText = getModalTranslation('modal_appointment_success', '✅ Запись успешно создана! Мы свяжемся с вами для подтверждения.');
+            showAppointmentToast(successText, 'success');
             closeAppointmentModal();
             event.target.reset();
         } else {
@@ -235,7 +320,8 @@ async function submitAppointment(event) {
         }
     } catch (error) {
         console.error('Ошибка:', error);
-        showAppointmentToast('❌ Ошибка при создании записи. Попробуйте позже.', 'error');
+        const errorText = getModalTranslation('modal_appointment_error', '❌ Ошибка при создании записи. Попробуйте позже.');
+        showAppointmentToast(errorText, 'error');
     } finally {
         if (submitBtn) {
             submitBtn.textContent = originalText;
@@ -280,5 +366,11 @@ document.addEventListener('DOMContentLoaded', function() {
     createAppointmentModal();
 });
 
+document.addEventListener('languageChanged', function() {
+    updateAppointmentModalTranslations();
+    loadServicesAndDoctors();
+});
+
 window.openVisitorAppointmentModal = openVisitorAppointmentModal;
 window.closeAppointmentModal = closeAppointmentModal;
+window.updateAppointmentModalTranslations = updateAppointmentModalTranslations;

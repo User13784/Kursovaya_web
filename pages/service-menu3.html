@@ -3,17 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title data-translate="prevention_title">Профилактика кариеса — Dental Club</title>
+    <title data-translate="therapy_title">Терапия — Dental Club</title>
     
     <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/service-menu3.css">
-    <link rel="stylesheet" href="../media/service-menu3_media.css">
+    <link rel="stylesheet" href="../css/service-menu4.css">
+    <link rel="stylesheet" href="../media/service-menu4_media.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
-        <link rel="stylesheet" href="../css/theme.css">
-<link rel="stylesheet" href="../css/special-version.css">
-
-
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/special-version.css">
+    
+    <style>
+        .hero-diagnostics .btn-white {
+            transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+            cursor: pointer !important;
+        }
+        
+        .hero-diagnostics .btn-white:hover {
+            transform: scale(1.02) !important;
+            background: #A5C33C !important;
+            color: #1a1e22 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .hero-diagnostics .btn-white:active {
+            transform: scale(0.98) !important;
+            transition: all 0.05s ease !important;
+        }
+        
+        .btn-outline, .first-btn, .diagnost-btn, .steps-btn, .last-step-btn {
+            transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+            cursor: pointer !important;
+        }
+        
+        .btn-outline:hover, .first-btn:hover, .diagnost-btn:hover, .steps-btn:hover, .last-step-btn:hover {
+            transform: scale(1.02) !important;
+            background: rgba(165, 195, 60, 0.2) !important;
+            border-color: #A5C33C !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .btn-outline:active, .first-btn:active, .diagnost-btn:active, .steps-btn:active, .last-step-btn:active {
+            transform: scale(0.98) !important;
+            transition: all 0.05s ease !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -28,15 +62,25 @@
             <div class="mobile-login-container" id="mobileLoginContainer">
                 <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
             </div>
-            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
-            <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
-            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
-            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
-            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
-            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
+            
+            <a href="#" class="mobile-lang-selector" id="mobileLangSelector">ENG</a>
+            
+            <div class="mobile-theme-switcher">
+                <span class="mobile-theme-icon" data-theme="dark" title="Тёмная тема">🌙 Тёмная</span>
+                <span class="mobile-theme-icon" data-theme="light" title="Светлая тема">☀️ Светлая</span>
+                <span class="mobile-theme-icon" data-theme="system" title="Системная тема">💻 Системная</span>
+            </div>
+            
+            <a href="#" id="mobileSpecialButton" class="mobile-special-button">👁️ Режим для слабовидящих</a>
+            
+        <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+        <a href="pages/service-detail.html" class="mobile-link" data-translate="services">УСЛУГИ</a>
+        <a href="pages/team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+        <a href="pages/reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+        <a href="pages/contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+        <a href="pages/prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+        <a href="pages/schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
+        <a href="pages/faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -44,7 +88,7 @@
     <main>
         <section class="hero-diagnostics">
             <div class="hero-content">
-                <h1 data-translate="prevention_title">ПРОФИЛАКТИКА КАРИЕСА</h1>
+                <h1 data-translate="therapy_title">ТЕРАПИЯ</h1>
                 <button class="btn-white" id="openAppointmentBtn1" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
@@ -55,20 +99,18 @@
                 <div class="info-row">
                     <div class="info-text first-text-block"> 
                         <div class="accent-line first-accent"></div>
-                        <p class="diagnosis-text" data-translate="prevention_text">
-                            Профилактика - это комплекс мер, направленных на предупреждение возникновения и развития стоматологических заболеваний.
-                            <br><br>
-                            Системный подход позволяет контролировать состояние ваших зубов и десен в течение всего периода наблюдения в <strong>Dental Club</strong>.
+                        <p class="diagnosis-text" data-translate="therapy_text">
+                            Терапевтическая стоматология - раздел медицины, занимающийся диагностикой и лечением болезней зубов, околозубных тканей и слизистой оболочки полости рта.
                         </p>
                         <button class="btn-outline first-btn" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                     <div class="info-image side-img">
-                        <img src="../assets/images/service-menu3-page/service-menu3.jpg" alt="Стоматологическое кресло">
+                        <img src="../assets/images/service-menu4-page/service-menu3.jpg" alt="Специалист за микроскопом">
                     </div>
                 </div>
 
                 <div class="full-width-section">
-                    <img class="full-width-img" src="../assets/images/service-menu3-page/service-menu4.jpg" alt="Консультация стоматолога">
+                    <img class="full-width-img" src="../assets/images/service-menu4-page/service-menu4.jpg" alt="Процесс лечения зубов">
                 </div>
             </div>
         </div>
@@ -78,47 +120,60 @@
                 <div class="info-row reverse tomograph-row">
                     <div class="info-text tomograph-text-block">
                         <div class="accent-line tomograph-accent"></div>
-                        <p class="tomograph-text" data-translate="prevention_tomograph_text">
-                            Мы оповещаем пациентов о необходимости произвести профосмотр и пройти профилактику. Специальная программа напоминает нам о вашем индивидуальном графике, исключая неточности в датах.
+                        <h2 class="steps-title" data-translate="caries_treatment">ЛЕЧЕНИЕ КАРИЕСА</h2>
+                        <p class="tomograph-text" data-translate="caries_text">
+                            Наиболее частой причиной обращения в стоматологию является кариес. Это поражение твердых тканей зуба, которое при отсутствии лечения может привести к возникновению воспалительных осложнений со стороны пульпы и периодонта. После тщательной диагностики, для восстановления зубов устанавливается два варианта реставраций- прямая, с помощью пломбировочного материала и непрямая: керамические вкладки, накладки.
                         </p>
-                        <p class="safety-text" data-translate="prevention_safety_text">
-                            Регулярная профилактика по системе <strong>Dental Club</strong> в несколько раз снижает риск возникновения кариеса и заболеваний десен. Профосмотр мы рекомендуем проходить не реже двух раз в год.
-                        </p>
-                        <button class="btn-outline diagnost-btn" id="openAppointmentBtn3" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                     <div class="info-image tomograph-image">
-                        <img class="tomograph-img" src="../assets/images/service-menu3-page/service-menu5.jpg" alt="Врач проводит осмотр">
+                        <img class="tomograph-img" src="../assets/images/service-menu4-page/service-menu5.jpg" alt="Врачи в процессе работы">
                     </div>
                 </div>
 
                 <div class="info-row specialists-row">
                     <div class="info-image specialists-image">
-                        <img class="specialists-img" src="../assets/images/service-menu3-page/service-menu6.jpg" alt="Процесс чистки">
+                        <img class="specialists-img" src="../assets/images/service-menu4-page/service-menu6.jpg" alt="Пациентка осматривает результат">
                     </div>
                     <div class="info-text specialists-text-block">
                         <div class="accent-line specialists-line"></div>
-                        <p class="steps-title" data-translate="prevention_steps_title">Этапы системы <strong>Dental Club</strong></p>
-                        <ul class="steps-list">
-                            <li data-translate="prevention_step_1">Оценка состояния полости рта, по степени окрашивания биоплёнки.</li>
-                            <li data-translate="prevention_step_2"><strong>Prophylflex</strong> (KaVo) — устранение биоплёнки и пигментации.</li>
-                            <li data-translate="prevention_step_3">Удаление зубного камня скалером <strong>Sonyflex</strong> (KaVo).</li>
-                            <li data-translate="prevention_step_4">Полировка фторированной пастой <strong>Proxyt</strong> (Ivoclar).</li>
-                            <li data-translate="prevention_step_5">Покрытие зубной эмали препаратом <strong>Fluor Protector</strong> (Ivoclar) для укрепления эмали.</li>
-                            <li data-translate="prevention_step_6">Индивидуальное обучение по правильному уходу за полостью рта в домашних условиях.</li>
-                        </ul>
-                        <p class="team-text" data-translate="prevention_vector_text">
-                            При необходимости, после этих этапов мы производим лечение дёсен аппаратом <strong>Vector</strong> (Dürr Dental).
+                        <p class="safety-text" data-translate="therapy_safety_text_1">
+                            В <strong>Dental Club</strong> всегда проводят лечение с применением специальных оптических увеличителей: <br>Дентальный микроскоп <strong>Leica</strong> и бинокуляры <strong>Carl Zeiss</strong>.
                         </p>
-                        <button class="btn-outline steps-btn" id="openAppointmentBtn4" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <p class="safety-text" data-translate="therapy_safety_text_2">
+                            Для прямых реставраций используются лучшие немецкие пломбировочные материалы от фирмы <strong>Ivoclar</strong>. <br>Высококачественные инструменты от компании <strong>LM</strong> (Финляндия) позволяют нам добиться высоко-эстетичного результата, который не отличить от естественного зуба.
+                        </p>
+                        <p class="safety-text" data-translate="therapy_safety_text_3">
+                            Вкладки и накладки изготавливаются в нашей лаборатории из таких материалов, как: оксид циркония, <strong>IPS. E-max</strong>, керамика. <br>Под такими реставрациями не возникает вторичный кариес и они прослужат значительно дольше пломб.
+                        </p>
+                        <button class="btn-outline steps-btn" id="openAppointmentBtn3" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                 </div>
 
                 <div class="info-row reverse steps-row">
-                    <div class="info-image double-img">
-                        <img class="microscope-img" src="../assets/images/service-menu3-page/service-menu7.jpg" alt="Пациент после процедуры">
+                     <div class="info-image double-img">
+                        <img class="microscope-img" src="../assets/images/service-menu4-page/service-menu7.jpg" alt="Стоматолог крупным планом">
                     </div>
-                    <div class="info-image side-img">
-                        <img class="team-img" src="../assets/images/service-menu3-page/service-menu8.jpg" alt="Работа врача">
+                    <div class="info-text steps-text-block">
+                        <div class="accent-line steps-line"></div>
+                        <p class="steps-title" data-translate="therapy_steps_title">Этапы лечения кариеса (пломбы)</p>
+                        <p><strong data-translate="visit_1">1-ое посещение</strong></p>
+                        <ul class="steps-list">
+                            <li data-translate="step_anesthesia">Обезболивание</li>
+                            <li data-translate="step_preparation">Препарирование кариозного процесса и удаление старых реставраций</li>
+                            <li data-translate="step_impression">Снятие слепка</li>
+                            <li data-translate="step_temporary">Изготовление временной пломбы</li>
+                            <li data-translate="step_polishing">Пришлифовка и полировка временной пломбы</li>
+                        </ul>
+                        <p><strong data-translate="visit_2">2-ое посещение</strong></p>
+                        <ul class="steps-list">
+                            <li data-translate="step_anesthesia">Обезболивание</li>
+                            <li data-translate="step_remove_temporary">Удаление временной пломбы</li>
+                            <li data-translate="step_processing">Обработка вкладки и полости зуба</li>
+                            <li data-translate="step_fixation">Фиксация вкладки на композиционный цемент</li>
+                            <li data-translate="step_final_polishing">Пришлифовка и полировка</li>
+                        </ul>
+                        <img src="../assets/images/service-menu4-page/service-menu8.jpg" class="extra-service-img" alt="Дополнительное фото">
+                        <button class="btn-outline last-step-btn" id="openAppointmentBtn4" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
                     </div>
                 </div>
             </div>
@@ -137,6 +192,194 @@
     <script src="../js/preloader.js"></script>
 
     <script>
+        function updateMobileLangButton() {
+            const mobileLangSelector = document.getElementById('mobileLangSelector');
+            if (mobileLangSelector) {
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                mobileLangSelector.textContent = currentLang === 'ru' ? 'ENG' : 'RUS';
+                console.log('🌐 Обновлена кнопка языка в бургер-меню (service-menu4):', mobileLangSelector.textContent);
+            }
+        }
+
+        function initMobileLangSwitcher() {
+            const mobileLangSelector = document.getElementById('mobileLangSelector');
+            if (mobileLangSelector) {
+                const newSelector = mobileLangSelector.cloneNode(true);
+                mobileLangSelector.parentNode.replaceChild(newSelector, mobileLangSelector);
+                
+                newSelector.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const currentLang = localStorage.getItem('dental_language') || 'ru';
+                    const newLang = currentLang === 'ru' ? 'en' : 'ru';
+                    localStorage.setItem('dental_language', newLang);
+                    
+                    this.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
+                    
+                    if (typeof window.switchLanguage === 'function') {
+                        window.switchLanguage();
+                    } else if (typeof window.applyTranslations === 'function') {
+                        window.applyTranslations();
+                    }
+                    
+                    const desktopLangText = document.getElementById('langSelectorText');
+                    if (desktopLangText) {
+                        desktopLangText.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
+                    }
+                    
+                    const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
+                    document.dispatchEvent(event);
+                    
+                    console.log('🌐 Язык изменён на:', newLang);
+                });
+            }
+        }
+
+        function initMobileMenu() {
+            setTimeout(function() {
+                const burgerIcon = document.getElementById('burgerIcon');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('menuOverlay');
+                const closeMenuBtn = document.getElementById('closeMenuBtn');
+                const body = document.body;
+
+                if (!burgerIcon || !mobileMenu) return;
+
+                let scrollPosition = 0;
+
+                function openMenu() {
+                    scrollPosition = window.pageYOffset;
+                    burgerIcon.classList.add('active');
+                    mobileMenu.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                    body.style.top = `-${scrollPosition}px`;
+                }
+
+                function closeMenu() {
+                    burgerIcon.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    body.style.top = '';
+                    window.scrollTo(0, scrollPosition);
+                }
+
+                burgerIcon.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
+                };
+
+                if (closeMenuBtn) {
+                    closeMenuBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                    };
+                }
+
+                if (menuOverlay) {
+                    menuOverlay.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                    };
+                }
+
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link, .mobile-special-button, .mobile-theme-icon');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (!this.classList.contains('mobile-theme-icon')) {
+                            setTimeout(closeMenu, 200);
+                        }
+                    });
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 1200 && mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }, 100);
+        }
+
+        function syncMobileThemeWithDesktop() {
+            const currentTheme = localStorage.getItem('dental_theme') || 'system';
+            const mobileThemeIcons = document.querySelectorAll('.mobile-theme-icon');
+            
+            mobileThemeIcons.forEach(icon => {
+                if (icon.dataset.theme === currentTheme) {
+                    icon.classList.add('active');
+                } else {
+                    icon.classList.remove('active');
+                }
+            });
+        }
+
+        function initMobileThemeSwitcher() {
+            const mobileThemeIcons = document.querySelectorAll('.mobile-theme-icon');
+            
+            mobileThemeIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const theme = this.dataset.theme;
+                    
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('dental_theme', theme);
+                    
+                    mobileThemeIcons.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const desktopIcons = document.querySelectorAll('.theme-icon');
+                    desktopIcons.forEach(desktopIcon => {
+                        desktopIcon.classList.remove('active');
+                        if ((theme === 'dark' && desktopIcon.classList.contains('theme-dark')) ||
+                            (theme === 'light' && desktopIcon.classList.contains('theme-light')) ||
+                            (theme === 'system' && desktopIcon.classList.contains('theme-system'))) {
+                            desktopIcon.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        function initMobileSpecialButton() {
+            const mobileSpecialBtn = document.getElementById('mobileSpecialButton');
+            if (mobileSpecialBtn) {
+                mobileSpecialBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (typeof window.toggleSpecialVersion === 'function') {
+                        window.toggleSpecialVersion();
+                    } else if (typeof window.initSpecialVersion === 'function') {
+                        window.initSpecialVersion();
+                    } else {
+                        alert('👁️ Режим для слабовидящих будет доступен в ближайшее время');
+                    }
+                    
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    const menuOverlay = document.getElementById('menuOverlay');
+                    const burgerIcon = document.getElementById('burgerIcon');
+                    const body = document.body;
+                    
+                    if (burgerIcon) burgerIcon.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    body.style.top = '';
+                });
+            }
+        }
+
         function openAppointment() {
             if (typeof openVisitorAppointmentModal === 'function') {
                 openVisitorAppointmentModal();
@@ -145,26 +388,52 @@
             }
         }
 
-        const appointmentBtns = document.querySelectorAll('#openAppointmentBtn1, #openAppointmentBtn2, #openAppointmentBtn3, #openAppointmentBtn4, .btn-white, .btn-outline');
+        const appointmentBtns = document.querySelectorAll('#openAppointmentBtn1, #openAppointmentBtn2, #openAppointmentBtn3, #openAppointmentBtn4, .btn-white, .btn-outline, .first-btn, .diagnost-btn, .steps-btn, .last-step-btn');
         
         appointmentBtns.forEach(btn => {
             if (btn) {
-                btn.addEventListener('click', function(e) {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                newBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     openAppointment();
                 });
             }
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            initMobileMenu();
+            syncMobileThemeWithDesktop();
+            initMobileThemeSwitcher();
+            initMobileSpecialButton();
+            updateMobileLangButton();      
+            initMobileLangSwitcher();      
+        });
+
+        document.addEventListener('languageChanged', function() {
+            updateMobileLangButton();
+        });
+
         setTimeout(function() {
             if (typeof window.updateAuthUI === 'function') {
-                console.log('🔄 Вызов updateAuthUI из service-menu3.html');
+                console.log('🔄 Вызов updateAuthUI из service-menu4.html');
                 window.updateAuthUI();
             }
             if (typeof window.applyTranslations === 'function') {
                 window.applyTranslations();
             }
+            syncMobileThemeWithDesktop();
+            updateMobileLangButton();      
         }, 200);
+
+        const themeObserver = new MutationObserver(function() {
+            syncMobileThemeWithDesktop();
+        });
+        
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
     </script>
     <script src="../js/special-version.js"></script>
 

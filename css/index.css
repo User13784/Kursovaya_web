@@ -492,23 +492,9 @@ transform: translateY(-12px) scaleY(1.1);
     color: #007bff;
 }
 
-.menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
 
-.menu-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
+
+
 
 body.menu-open {
     overflow: hidden;
@@ -628,24 +614,6 @@ body.menu-open {
     color: #aaa;
 }
 
-
-.menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.menu-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
 
 body.menu-open {
     overflow: hidden;
@@ -979,5 +947,1175 @@ body.menu-open {
 
 [data-theme="dark"] .hero-search-result-item:hover .hero-search-result-icon {
     background: rgba(255, 255, 255, 0.15);
+}
+
+.btn,
+.btn-primary,
+#openAppointmentBtn {
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+    will-change: transform;
+}
+
+.btn:hover,
+.btn-primary:hover,
+#openAppointmentBtn:hover {
+    transform: scale(1.05);
+    background-color: #e8e8e8;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active,
+.btn-primary:active,
+#openAppointmentBtn:active {
+    transform: scale(0.95);
+    transition: all 0.05s ease;
+}
+
+.btn-outline,
+#openAppointmentBtn2,
+#openAppointmentBtn3 {
+    transition: all 0.3s ease;
+    position: relative;
+    background: transparent;
+    cursor: pointer;
+    will-change: transform;
+}
+
+.btn-outline:hover,
+#openAppointmentBtn2:hover,
+#openAppointmentBtn3:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #A5C33C;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline:active,
+#openAppointmentBtn2:active,
+#openAppointmentBtn3:active {
+    transform: scale(0.95);
+    transition: all 0.05s ease;
+}
+
+.btn:active::after,
+.btn-primary:active::after,
+.btn-outline:active::after,
+#openAppointmentBtn:active::after,
+#openAppointmentBtn2:active::after,
+#openAppointmentBtn3:active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(165, 195, 60, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    pointer-events: none;
+}
+
+.btn:active::after,
+.btn-primary:active::after,
+#openAppointmentBtn:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-outline:active::after,
+#openAppointmentBtn2:active::after,
+#openAppointmentBtn3:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+@keyframes btnGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(165, 195, 60, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(165, 195, 60, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(165, 195, 60, 0);
+    }
+}
+
+.btn:focus,
+.btn-primary:focus,
+.btn-outline:focus,
+#openAppointmentBtn:focus,
+#openAppointmentBtn2:focus,
+#openAppointmentBtn3:focus {
+    animation: btnGlow 0.8s ease-out;
+    outline: none;
+}
+
+.img-left,
+.img-right,
+.img-bottom-left,
+.img-bottom-right {
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+
+.image-gallery img,
+.image-gallery-alt img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    will-change: transform;
+}
+
+.image-gallery img:hover,
+.image-gallery-alt img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.img-left img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-left:hover img {
+    transform: scale(1.08);
+}
+
+.img-right img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-right:hover img {
+    transform: scale(1.08);
+}
+
+.img-bottom-left img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-bottom-left:hover img {
+    transform: scale(1.08);
+}
+
+.img-bottom-right img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-bottom-right:hover img {
+    transform: scale(1.08);
+}
+
+.img-left::after,
+.img-right::after,
+.img-bottom-left::after,
+.img-bottom-right::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.img-left:hover::after,
+.img-right:hover::after,
+.img-bottom-left:hover::after,
+.img-bottom-right:hover::after {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.image-gallery .img-left,
+.image-gallery .img-right,
+.image-gallery-alt .img-bottom-left,
+.image-gallery-alt .img-bottom-right {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.image-gallery .img-left {
+    animation-delay: 0.1s;
+}
+
+.image-gallery .img-right {
+    animation-delay: 0.2s;
+}
+
+.image-gallery-alt .img-bottom-left {
+    animation-delay: 0.3s;
+}
+
+.image-gallery-alt .img-bottom-right {
+    animation-delay: 0.4s;
+}
+
+
+@media (max-width: 768px) {
+    .image-gallery img:hover,
+    .image-gallery-alt img:hover {
+        transform: scale(1.03);
+    }
+    
+    .img-left:hover img,
+    .img-right:hover img,
+    .img-bottom-left:hover img,
+    .img-bottom-right:hover img {
+        transform: scale(1.05);
+    }
+    
+    .btn:hover,
+    .btn-primary:hover,
+    .btn-outline:hover,
+    #openAppointmentBtn:hover,
+    #openAppointmentBtn2:hover,
+    #openAppointmentBtn3:hover {
+        transform: scale(1.03);
+    }
+    
+    .btn:active,
+    .btn-primary:active,
+    .btn-outline:active,
+    #openAppointmentBtn:active,
+    #openAppointmentBtn2:active,
+    #openAppointmentBtn3:active {
+        transform: scale(0.97);
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .image-gallery img:hover,
+    .image-gallery-alt img:hover {
+        transform: none;
+    }
+    
+    .img-left:hover img,
+    .img-right:hover img,
+    .img-bottom-left:hover img,
+    .img-bottom-right:hover img {
+        transform: none;
+    }
+    
+    .btn:hover,
+    .btn-primary:hover,
+    .btn-outline:hover,
+    #openAppointmentBtn:hover,
+    #openAppointmentBtn2:hover,
+    #openAppointmentBtn3:hover {
+        transform: none;
+    }
+    
+    .img-left::after,
+    .img-right::after,
+    .img-bottom-left::after,
+    .img-bottom-right::after {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn-primary,
+    .btn-outline,
+    #openAppointmentBtn,
+    #openAppointmentBtn2,
+    #openAppointmentBtn3,
+    .image-gallery img,
+    .image-gallery-alt img,
+    .img-left img,
+    .img-right img,
+    .img-bottom-left img,
+    .img-bottom-right img,
+    .img-left::after,
+    .img-right::after,
+    .img-bottom-left::after,
+    .img-bottom-right::after {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+    
+    .image-gallery .img-left,
+    .image-gallery .img-right,
+    .image-gallery-alt .img-bottom-left,
+    .image-gallery-alt .img-bottom-right {
+        opacity: 1 !important;
+        animation: none !important;
+    }
+}
+
+.user-avatar-btn {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.user-avatar-btn:hover {
+    background: rgba(165, 195, 60, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.user-avatar-btn:active {
+    transform: scale(0.98);
+    transition: all 0.05s ease;
+}
+
+.avatar-circle {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-avatar-btn:hover .avatar-circle {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(165, 195, 60, 0.5);
+    animation: avatarRotate 0.5s ease;
+}
+
+@keyframes avatarRotate {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        transform: scale(1.1) rotate(0deg);
+    }
+}
+
+.avatar-circle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(165, 195, 60, 0);
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.user-avatar-btn:hover .avatar-circle::before {
+    width: 130%;
+    height: 130%;
+    background: rgba(165, 195, 60, 0.3);
+    animation: avatarPulse 1s ease-in-out infinite;
+}
+
+@keyframes avatarPulse {
+    0% {
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+    }
+    50% {
+        width: 135%;
+        height: 135%;
+        opacity: 0;
+    }
+    100% {
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+    }
+}
+
+.avatar-name {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.user-avatar-btn:hover .avatar-name {
+    color: #A5C33C;
+    transform: translateX(2px);
+    letter-spacing: 0.5px;
+}
+
+.user-avatar-btn span:last-child {
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.user-avatar-btn:hover span:last-child {
+    transform: scale(1.05);
+    background-color: #dc2626 !important;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+.user-avatar-btn:active .avatar-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(165, 195, 60, 0.4);
+    transform: translate(-50%, -50%);
+    animation: rippleWave 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes rippleWave {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
+}
+
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(165, 195, 60, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(165, 195, 60, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(165, 195, 60, 0);
+    }
+}
+
+.user-avatar-btn:focus {
+    animation: glowPulse 0.8s ease-out;
+    outline: none;
+}
+
+@keyframes avatarAppear {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.user-avatar-btn {
+    animation: avatarAppear 0.5s ease-out;
+}
+
+.mobile-theme-switcher {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 5px;
+}
+
+.mobile-theme-icon {
+    flex: 1;
+    text-align: center;
+    padding: 10px 5px;
+    font-size: 14px;
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Mulish', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.mobile-theme-icon:hover {
+    background: rgba(165, 195, 60, 0.3);
+}
+
+.mobile-theme-icon.active {
+    background: #A5C33C;
+    color: #1a1e22;
+}
+
+.mobile-special-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 12px 0;
+    transition: all 0.3s ease;
+    background: #A5C33C !important;
+    color: #1a1e22;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+.mobile-special-button:hover {
+    background: #7A9A2E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(165, 195, 60, 0.4);
+    color: #1a1e22;
+}
+
+.mobile-special-button:active {
+    transform: translateY(0);
+}
+
+.mobile-menu {
+    background: #1A1F23;
+}
+
+.mobile-menu-btn,
+.mobile-lang-selector,
+.mobile-login-link,
+.mobile-link,
+.mobile-special-button {
+    color: #FFFFFF;
+}
+
+.mobile-theme-icon {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .mobile-menu {
+    background: #FFFFFF;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .mobile-menu-btn,
+[data-theme="light"] .mobile-lang-selector,
+[data-theme="light"] .mobile-login-link,
+[data-theme="light"] .mobile-link {
+    color: #1a1e22;
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .mobile-menu-btn:hover,
+[data-theme="light"] .mobile-lang-selector:hover,
+[data-theme="light"] .mobile-login-link:hover,
+[data-theme="light"] .mobile-link:hover {
+    color: #A5C33C;
+}
+
+[data-theme="light"] .mobile-theme-switcher {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .mobile-theme-icon {
+    color: #1a1e22;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .mobile-theme-icon:hover {
+    background: rgba(165, 195, 60, 0.2);
+}
+
+[data-theme="light"] .mobile-theme-icon.active {
+    background: #A5C33C;
+    color: #1a1e22;
+}
+
+[data-theme="light"] .mobile-special-button {
+    color: #1a1e22;
+    background: rgba(165, 195, 60, 0.1);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .mobile-special-button:hover {
+    background: rgba(165, 195, 60, 0.2);
+    color: #A5C33C;
+}
+
+[data-theme="light"] .close-menu-btn span {
+    background-color: #1a1e22;
+}
+
+[data-theme="dark"] .mobile-menu {
+    background: #1A1F23;
+}
+
+[data-theme="dark"] .mobile-menu-btn,
+[data-theme="dark"] .mobile-lang-selector,
+[data-theme="dark"] .mobile-login-link,
+[data-theme="dark"] .mobile-link {
+    color: #FFFFFF;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .mobile-theme-icon {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .mobile-special-button {
+    color: #FFFFFF;
+    background: rgba(165, 195, 60, 0.15);
+}
+
+[data-theme="dark"] .mobile-special-button:hover {
+    background: rgba(165, 195, 60, 0.3);
+}
+
+[data-theme="dark"] .close-menu-btn span {
+    background-color: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="system"] .mobile-menu {
+        background: #1A1F23;
+    }
+    [data-theme="system"] .mobile-menu-btn,
+    [data-theme="system"] .mobile-lang-selector,
+    [data-theme="system"] .mobile-login-link,
+    [data-theme="system"] .mobile-link {
+        color: #FFFFFF;
+    }
+    [data-theme="system"] .mobile-theme-icon {
+        color: #FFFFFF;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    [data-theme="system"] .close-menu-btn span {
+        background-color: #FFFFFF;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme="system"] .mobile-menu {
+        background: #FFFFFF;
+    }
+    [data-theme="system"] .mobile-menu-btn,
+    [data-theme="system"] .mobile-lang-selector,
+    [data-theme="system"] .mobile-login-link,
+    [data-theme="system"] .mobile-link {
+        color: #1a1e22;
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+    }
+    [data-theme="system"] .mobile-theme-icon {
+        color: #1a1e22;
+        background: rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="system"] .close-menu-btn span {
+        background-color: #1a1e22;
+    }
+}
+
+[data-theme="light"] .user-avatar-btn .avatar-name {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .user-avatar-btn:hover .avatar-name {
+    color: #A5C33C !important;
+}
+
+[data-theme="light"] .user-avatar-btn .avatar-circle {
+    background: linear-gradient(135deg, #A5C33C, #7A9A2E) !important;
+}
+
+[data-theme="light"] .login-link {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .login-link:hover {
+    color: #A5C33C !important;
+}
+
+[data-theme="light"] .profile-modal-header h2 {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .profile-modal-content {
+    background: #ffffff !important;
+}
+
+[data-theme="light"] .profile-tab-btn {
+    color: #4B5563 !important;
+}
+
+[data-theme="light"] .profile-tab-btn.active {
+    color: #A5C33C !important;
+}
+
+[data-theme="light"] #profileForm label {
+    color: #374151 !important;
+}
+
+[data-theme="light"] #profileForm input {
+    color: #1a1e22 !important;
+    background: #f9fafb !important;
+    border-bottom-color: #d1d5db !important;
+}
+
+[data-theme="light"] #profileForm input:focus {
+    border-bottom-color: #A5C33C !important;
+}
+
+[data-theme="light"] #profileForm input::placeholder {
+    color: #9CA3AF !important;
+}
+
+[data-theme="light"] .profile-avatar-name {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .profile-avatar-email {
+    color: #6B7280 !important;
+}
+
+[data-theme="light"] .mobile-avatar-name {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .mobile-avatar-email {
+    color: #6B7280 !important;
+}
+
+[data-theme="light"] .mobile-user-avatar {
+    border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .profile-edit-btn,
+[data-theme="light"] .profile-save-btn,
+[data-theme="light"] .profile-cancel-btn,
+[data-theme="light"] .profile-logout-btn {
+    color: #1a1e22 !important;
+    border-color: #d1d5db !important;
+}
+
+[data-theme="light"] .profile-edit-btn:hover,
+[data-theme="light"] .profile-save-btn:hover,
+[data-theme="light"] .profile-cancel-btn:hover {
+    background: #f3f4f6 !important;
+}
+
+[data-theme="light"] .profile-logout-btn {
+    color: #EF4444 !important;
+    border-color: #EF4444 !important;
+}
+
+[data-theme="light"] .profile-logout-btn:hover {
+    background: #FEE2E2 !important;
+}
+
+[data-theme="light"] .visit-item {
+    background: #f9fafb !important;
+    border-color: #e5e7eb !important;
+}
+
+[data-theme="light"] .visit-date,
+[data-theme="light"] .visit-time,
+[data-theme="light"] .visit-doctor,
+[data-theme="light"] .visit-service,
+[data-theme="light"] .visit-comment {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .review-item {
+    background: #f9fafb !important;
+    border-color: #e5e7eb !important;
+}
+
+[data-theme="light"] .review-date,
+[data-theme="light"] .review-text {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .review-rating {
+    color: #F59E0B !important;
+}
+
+[data-theme="light"] .visits-divider span {
+    background: #ffffff !important;
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .empty-visits,
+[data-theme="light"] .empty-reviews {
+    color: #6B7280 !important;
+}
+
+[data-theme="light"] .review-view-content {
+    background: #f8f9fa !important;
+}
+
+[data-theme="light"] .review-info-card {
+    background: #ffffff !important;
+}
+
+[data-theme="light"] .card-value {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .review-text {
+    background: #f9fafb !important;
+    color: #374151 !important;
+}
+
+@media screen and (max-width: 1000px) {
+    .burger-icon {
+        display: flex !important;
+    }
+    
+    .desktop-login {
+        display: none !important;
+    }
+    
+    .theme-switcher {
+        display: none !important;
+    }
+    
+    .special-button {
+        display: none !important;
+    }
+    
+    .header-container {
+        padding: 15px 20px !important;
+    }
+    
+    .header-left {
+        gap: 15px !important;
+    }
+    
+    .logo {
+        margin-right: 0 !important;
+    }
+    
+    .logo img {
+        width: 90px !important;
+        height: auto !important;
+    }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1200px) {
+    .header-container {
+        padding: 20px 30px !important;
+    }
+    
+    .menu-btn {
+        margin-left: 20px !important;
+    }
+    
+    .logo {
+        margin-right: 100px !important;
+    }
+    
+    .login-link {
+        left: -30px !important;
+    }
+}
+
+.mobile-theme-switcher {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 5px;
+}
+
+.mobile-theme-icon {
+    flex: 1;
+    text-align: center;
+    padding: 10px 5px;
+    font-size: 14px;
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Mulish', sans-serif;
+}
+
+.mobile-theme-icon:hover {
+    background: rgba(165, 195, 60, 0.3);
+}
+
+.mobile-theme-icon.active {
+    background: #A5C33C;
+    color: #1a1e22;
+}
+
+.mobile-special-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #FFFFFF;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: color 0.3s;
+    background: rgba(165, 195, 60, 0.15);
+    margin-bottom: 10px;
+    border-radius: 30px;
+}
+
+.mobile-special-button:hover {
+    background: rgba(165, 195, 60, 0.3);
+    color: #A5C33C;
+}
+
+.mobile-menu {
+    background: #1A1F23;
+}
+
+.mobile-menu-btn,
+.mobile-lang-selector,
+.mobile-login-link,
+.mobile-link,
+.mobile-special-button {
+    color: #FFFFFF;
+}
+
+.mobile-theme-icon {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .mobile-menu {
+    background: #FFFFFF;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .mobile-menu-btn,
+[data-theme="light"] .mobile-lang-selector,
+[data-theme="light"] .mobile-login-link,
+[data-theme="light"] .mobile-link {
+    color: #1a1e22;
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .mobile-menu-btn:hover,
+[data-theme="light"] .mobile-lang-selector:hover,
+[data-theme="light"] .mobile-login-link:hover,
+[data-theme="light"] .mobile-link:hover {
+    color: #A5C33C;
+}
+
+[data-theme="light"] .mobile-theme-switcher {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .mobile-theme-icon {
+    color: #1a1e22;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .mobile-theme-icon:hover {
+    background: rgba(165, 195, 60, 0.2);
+}
+
+[data-theme="light"] .mobile-theme-icon.active {
+    background: #A5C33C;
+    color: #1a1e22;
+}
+
+[data-theme="light"] .mobile-special-button {
+    color: #1a1e22;
+    background: rgba(165, 195, 60, 0.1);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .mobile-special-button:hover {
+    background: rgba(165, 195, 60, 0.2);
+    color: #A5C33C;
+}
+
+[data-theme="light"] .close-menu-btn span {
+    background-color: #1a1e22;
+}
+
+[data-theme="dark"] .mobile-menu {
+    background: #1A1F23;
+}
+
+[data-theme="dark"] .mobile-menu-btn,
+[data-theme="dark"] .mobile-lang-selector,
+[data-theme="dark"] .mobile-login-link,
+[data-theme="dark"] .mobile-link {
+    color: #FFFFFF;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .mobile-theme-icon {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .mobile-special-button {
+    color: #FFFFFF;
+    background: rgba(165, 195, 60, 0.15);
+}
+
+[data-theme="dark"] .mobile-special-button:hover {
+    background: rgba(165, 195, 60, 0.3);
+}
+
+[data-theme="dark"] .close-menu-btn span {
+    background-color: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="system"] .mobile-menu {
+        background: #1A1F23;
+    }
+    [data-theme="system"] .mobile-menu-btn,
+    [data-theme="system"] .mobile-lang-selector,
+    [data-theme="system"] .mobile-login-link,
+    [data-theme="system"] .mobile-link {
+        color: #FFFFFF;
+    }
+    [data-theme="system"] .mobile-theme-icon {
+        color: #FFFFFF;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    [data-theme="system"] .close-menu-btn span {
+        background-color: #FFFFFF;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme="system"] .mobile-menu {
+        background: #FFFFFF;
+    }
+    [data-theme="system"] .mobile-menu-btn,
+    [data-theme="system"] .mobile-lang-selector,
+    [data-theme="system"] .mobile-login-link,
+    [data-theme="system"] .mobile-link {
+        color: #1a1e22;
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+    }
+    [data-theme="system"] .mobile-theme-icon {
+        color: #1a1e22;
+        background: rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="system"] .close-menu-btn span {
+        background-color: #1a1e22;
+    }
+}
+
+[data-theme="light"] .user-avatar-btn .avatar-name {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .user-avatar-btn:hover .avatar-name {
+    color: #A5C33C !important;
+}
+
+[data-theme="light"] .user-avatar-btn .avatar-circle {
+    background: linear-gradient(135deg, #A5C33C, #7A9A2E) !important;
+}
+
+[data-theme="light"] .login-link {
+    color: #1a1e22 !important;
+}
+
+[data-theme="light"] .login-link:hover {
+    color: #A5C33C !important;
+}
+
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+body.menu-open main,
+body.menu-open header,
+body.menu-open footer,
+body.menu-open .hero,
+body.menu-open .clinic-info,
+body.menu-open .advantages {
+    pointer-events: none;
+    user-select: none;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: pointer;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto; 
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 350px;
+    height: 100vh;
+    background: #1A1F23;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+    z-index: 1001; 
+    transition: right 0.3s ease;
+    padding: 100px 30px 30px;
+    overflow-y: auto;
+    pointer-events: auto; 
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+@media (max-width: 768px) {
+    body.menu-open {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.login-link,
+#desktopLoginLink {
+    margin-top: 9px !important;
+    display: inline-block !important;
 }
 

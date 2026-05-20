@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="../css/modal-appointment.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
     <link rel="stylesheet" href="../css/theme.css">
-<link rel="stylesheet" href="../css/special-version.css">
-
+    <link rel="stylesheet" href="../css/special-version.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -26,15 +25,25 @@
             <div class="mobile-login-container" id="mobileLoginContainer">
                 <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
             </div>
-            <a href="#" class="mobile-menu-btn" data-translate="menu">МЕНЮ</a>
-            <a href="#" class="mobile-lang-selector">RUS</a>
-            <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
-            <a href="#" class="mobile-link" data-translate="services">УСЛУГИ</a>
-            <a href="team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
-            <a href="reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
-            <a href="contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
-            <a href="prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
-            <a href="faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
+            
+            <a href="#" class="mobile-lang-selector" id="mobileLangSelector">ENG</a>
+            
+            <div class="mobile-theme-switcher">
+                <span class="mobile-theme-icon" data-theme="dark" title="Тёмная тема">🌙 Тёмная</span>
+                <span class="mobile-theme-icon" data-theme="light" title="Светлая тема">☀️ Светлая</span>
+                <span class="mobile-theme-icon" data-theme="system" title="Системная тема">💻 Системная</span>
+            </div>
+            
+            <a href="#" id="mobileSpecialButton" class="mobile-special-button">👁️ Режим для слабовидящих</a>
+            
+        <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+        <a href="pages/service-detail.html" class="mobile-link" data-translate="services">УСЛУГИ</a>
+        <a href="pages/team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+        <a href="pages/reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+        <a href="pages/contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+        <a href="pages/prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+        <a href="pages/schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
+        <a href="pages/faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -162,6 +171,192 @@
             });
         }
 
+        function updateMobileLangButton() {
+            const mobileLangSelector = document.getElementById('mobileLangSelector');
+            if (mobileLangSelector) {
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                mobileLangSelector.textContent = currentLang === 'ru' ? 'ENG' : 'RUS';
+                console.log('🌐 Обновлена кнопка языка в бургер-меню:', mobileLangSelector.textContent);
+            }
+        }
+
+        function initMobileLangSwitcher() {
+            const mobileLangSelector = document.getElementById('mobileLangSelector');
+            if (mobileLangSelector) {
+                const newSelector = mobileLangSelector.cloneNode(true);
+                mobileLangSelector.parentNode.replaceChild(newSelector, mobileLangSelector);
+                
+                newSelector.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const currentLang = localStorage.getItem('dental_language') || 'ru';
+                    const newLang = currentLang === 'ru' ? 'en' : 'ru';
+                    localStorage.setItem('dental_language', newLang);
+                    
+                    this.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
+                    
+                    if (typeof window.switchLanguage === 'function') {
+                        window.switchLanguage();
+                    } else if (typeof window.applyTranslations === 'function') {
+                        window.applyTranslations();
+                    }
+                    
+                    const desktopLangText = document.getElementById('langSelectorText');
+                    if (desktopLangText) {
+                        desktopLangText.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
+                    }
+                    
+                    const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
+                    document.dispatchEvent(event);
+                    
+                    console.log('🌐 Язык изменён на:', newLang);
+                });
+            }
+        }
+
+        function initMobileMenu() {
+            setTimeout(function() {
+                const burgerIcon = document.getElementById('burgerIcon');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('menuOverlay');
+                const closeMenuBtn = document.getElementById('closeMenuBtn');
+                const body = document.body;
+
+                if (!burgerIcon || !mobileMenu) return;
+
+                let scrollPosition = 0;
+
+                function openMenu() {
+                    scrollPosition = window.pageYOffset;
+                    burgerIcon.classList.add('active');
+                    mobileMenu.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
+                    body.classList.add('menu-open');
+                    body.style.top = `-${scrollPosition}px`;
+                }
+
+                function closeMenu() {
+                    burgerIcon.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    body.style.top = '';
+                    window.scrollTo(0, scrollPosition);
+                }
+
+                burgerIcon.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
+                };
+
+                if (closeMenuBtn) {
+                    closeMenuBtn.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                    };
+                }
+
+                if (menuOverlay) {
+                    menuOverlay.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                    };
+                }
+
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link, .mobile-special-button, .mobile-theme-icon');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (!this.classList.contains('mobile-theme-icon')) {
+                            setTimeout(closeMenu, 200);
+                        }
+                    });
+                });
+
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 1200 && mobileMenu.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }, 100);
+        }
+
+        function syncMobileThemeWithDesktop() {
+            const currentTheme = localStorage.getItem('dental_theme') || 'system';
+            const mobileThemeIcons = document.querySelectorAll('.mobile-theme-icon');
+            
+            mobileThemeIcons.forEach(icon => {
+                if (icon.dataset.theme === currentTheme) {
+                    icon.classList.add('active');
+                } else {
+                    icon.classList.remove('active');
+                }
+            });
+        }
+
+        function initMobileThemeSwitcher() {
+            const mobileThemeIcons = document.querySelectorAll('.mobile-theme-icon');
+            
+            mobileThemeIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const theme = this.dataset.theme;
+                    
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('dental_theme', theme);
+                    
+                    mobileThemeIcons.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const desktopIcons = document.querySelectorAll('.theme-icon');
+                    desktopIcons.forEach(desktopIcon => {
+                        desktopIcon.classList.remove('active');
+                        if ((theme === 'dark' && desktopIcon.classList.contains('theme-dark')) ||
+                            (theme === 'light' && desktopIcon.classList.contains('theme-light')) ||
+                            (theme === 'system' && desktopIcon.classList.contains('theme-system'))) {
+                            desktopIcon.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+
+        function initMobileSpecialButton() {
+            const mobileSpecialBtn = document.getElementById('mobileSpecialButton');
+            if (mobileSpecialBtn) {
+                mobileSpecialBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (typeof window.toggleSpecialVersion === 'function') {
+                        window.toggleSpecialVersion();
+                    } else if (typeof window.initSpecialVersion === 'function') {
+                        window.initSpecialVersion();
+                    }
+                    
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    const menuOverlay = document.getElementById('menuOverlay');
+                    const burgerIcon = document.getElementById('burgerIcon');
+                    const body = document.body;
+                    
+                    if (burgerIcon) burgerIcon.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    body.style.top = '';
+                });
+            }
+        }
+
         const openAppointmentBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2, #openAppointmentBtn3');
         openAppointmentBtns.forEach(btn => {
             if (btn && typeof openVisitorAppointmentModal === 'function') {
@@ -172,6 +367,44 @@
             }
         });
 
+        const reviewModal = document.getElementById('reviewModal');
+        const openReviewModalBtn = document.getElementById('openReviewModal');
+        const modalClose = document.querySelector('.modal-close');
+
+        if (openReviewModalBtn) {
+            openReviewModalBtn.addEventListener('click', function() {
+                reviewModal.style.display = 'block';
+                document.body.classList.add('modal-open');
+            });
+        }
+
+        if (modalClose) {
+            modalClose.addEventListener('click', function() {
+                reviewModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            });
+        }
+
+        window.addEventListener('click', function(e) {
+            if (e.target === reviewModal) {
+                reviewModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initMobileMenu();
+            syncMobileThemeWithDesktop();
+            initMobileThemeSwitcher();
+            initMobileSpecialButton();
+            updateMobileLangButton();      
+            initMobileLangSwitcher();    
+        });
+
+        document.addEventListener('languageChanged', function() {
+            updateMobileLangButton();
+        });
+
         setTimeout(function() {
             if (typeof window.updateAuthUI === 'function') {
                 window.updateAuthUI();
@@ -179,7 +412,18 @@
             if (typeof window.applyTranslations === 'function') {
                 window.applyTranslations();
             }
+            syncMobileThemeWithDesktop();
+            updateMobileLangButton();      
         }, 200);
+
+        const themeObserver = new MutationObserver(function() {
+            syncMobileThemeWithDesktop();
+        });
+        
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
     </script>
     <script src="../js/special-version.js"></script>
 

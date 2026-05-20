@@ -170,7 +170,6 @@
     cursor: pointer;
 }
 
-/* Адаптив */
 @media (max-width: 768px) {
     .header-buttons {
         flex-direction: column;
