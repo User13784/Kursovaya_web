@@ -3,71 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title data-translate="contacts_title">Контакты | Dental Club</title>
+    <title data-translate="orthodontics_title">Эстетическая ортодонтия — Dental Club</title>
+
     <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/contacts.css">
-    <link rel="stylesheet" href="../media/contacts_media.css">
+    <link rel="stylesheet" href="../css/service-menu8.css">
+    <link rel="stylesheet" href="../media/service-menu8_media.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
     <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/special-version.css">
     
     <style>
-        .btn-white, .btn-outline, .btn-submit {
+        .btn-white, .btn-outline, .first-btn, .diagnost-btn, .steps-btn {
             transform: none !important;
         }
         
-        .hero-contacts .btn-white {
+        .hero-diagnostics .btn-white {
             transition: all 0.2s ease !important;
             cursor: pointer !important;
         }
         
-        .hero-contacts .btn-white:hover {
+        .hero-diagnostics .btn-white:hover {
             transform: scale(1.02) !important;
             background: #A5C33C !important;
             color: #1a1e22 !important;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
         }
         
-        .hero-contacts .btn-white:active {
+        .hero-diagnostics .btn-white:active {
             transform: scale(0.98) !important;
         }
         
-        .btn-outline {
+        .btn-outline, .first-btn, .diagnost-btn, .steps-btn {
             transition: all 0.2s ease !important;
             cursor: pointer !important;
         }
         
-        .btn-outline:hover {
+        .btn-outline:hover, .first-btn:hover, .diagnost-btn:hover, .steps-btn:hover {
             transform: scale(1.02) !important;
             background: rgba(165, 195, 60, 0.2) !important;
             border-color: #A5C33C !important;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
         }
         
-        .btn-outline:active {
+        .btn-outline:active, .first-btn:active, .diagnost-btn:active, .steps-btn:active {
             transform: scale(0.98) !important;
         }
         
-        .btn-submit {
-            transition: all 0.2s ease !important;
-            cursor: pointer !important;
-        }
-        
-        .btn-submit:hover {
-            transform: scale(1.02) !important;
-            background: #A5C33C !important;
-            color: #1a1e22 !important;
-            border-color: #A5C33C !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-        }
-        
-        .btn-submit:active {
-            transform: scale(0.98) !important;
-        }
     </style>
-
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_ключ&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -82,7 +65,7 @@
                 <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
             </div>
             
-            <a href="#" class="mobile-lang-selector">ENG</a>
+            <a href="#" class="mobile-lang-selector" id="mobileLangSelector">ENG</a>
             
             <div class="mobile-theme-switcher">
                 <span class="mobile-theme-icon" data-theme="dark" title="Тёмная тема">🌙 Тёмная</span>
@@ -92,79 +75,145 @@
             
             <a href="#" id="mobileSpecialButton" class="mobile-special-button">👁️ Режим для слабовидящих</a>
             
-        <a href="index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
-        <a href="pages/service-detail.html" class="mobile-link" data-translate="services">УСЛУГИ</a>
-        <a href="pages/team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
-        <a href="pages/reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
-        <a href="pages/contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
-        <a href="pages/prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
-        <a href="pages/schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
-        <a href="pages/faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
+            <a href="../index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="../pages/service-detail.html" class="mobile-link" data-translate="services">УСЛУГИ</a>
+            <a href="../pages/team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+            <a href="../pages/reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+            <a href="../pages/contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+            <a href="../pages/prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+            <a href="../pages/schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
+            <a href="../pages/faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <main>
-        <section class="hero-contacts">
+        <section class="hero-diagnostics">
             <div class="hero-content">
-                <h1 data-translate="contacts_title">КОНТАКТЫ</h1>
-                <button class="btn-white" id="openAppointmentBtn" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                <h1 data-translate="orthodontics_title">ЭСТЕТИЧЕСКАЯ ОРТОДОНТИЯ</h1>
+                <button class="btn-white" id="openAppointmentBtn1" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
             </div>
             <div class="scroll-down"></div>
         </section>
 
-        <section class="contacts-info-section">
+        <div class="diagnostics-wrapper">
             <div class="container">
-                <div class="contacts-grid">
-                    <div class="contacts-details">
-                        <h2 data-translate="contact_us">СВЯЗАТЬСЯ С НАМИ</h2>
-                        <div class="phones">
-                            <a href="tel:+375291234567">+375 (29) 123-45-67</a>
-                            <a href="tel:+375333456789">+375 (33) 345-67-89</a>
-                        </div>
-                        <p class="address" data-translate="address_value">Беларусь, г. Могилев, ул. Ленинская, 25<br>(вход со стороны улицы Первомайской)</p>
-                        <p class="schedule">• &nbsp;<span data-translate="mon_fri">Пн - Пт: 10:00 - 20:00</span></p>
-                        <p class="schedule">• &nbsp;<span data-translate="sat">Сб: 10:00 - 16:00</span></p>
-                        <p class="schedule">• &nbsp;<span data-translate="sun">Вс: выходной</span></p>
-                        <a href="mailto:dentalclubreception@gmail.com" class="email">dentalclubreception@gmail.com</a>
+                <div class="info-row">
+                    <div class="info-text first-text-block">
+                        <div class="accent-line first-accent"></div>
+                        <p class="diagnosis-text first-part" data-translate="orthodontics_text_1">
+                            Эстетическая ортодонтия – область стоматологии, специализирующаяся на коррекции прикуса - выравнивании зубов и создании улыбки вашей мечты.
+                        </p>
+                        <p class="diagnosis-text second-part" data-translate="orthodontics_text_2">
+                            Ортодонтическое лечение не имеет строгих возрастных рамок и может проводиться как у взрослых пациентов, так и у детей!
+                        </p>
+                        <button class="btn-outline first-btn" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    </div>
+                    <div class="info-image side-img">
+                        <img src="../assets/images/service-menu8-page/service-menu2.jpg" alt="Интерьер Dental Club">
+                    </div>
+                </div>
+
+                <div class="full-width-section">
+                    <img class="full-width-img" src="../assets/images/service-menu8-page/service-menu1.jpg" alt="Кабинет ортодонтии">
+                </div>
+            </div>
+        </div>
+
+        <div class="white-bg-section">
+            <div class="container">
+                <div class="info-row reverse tomograph-row">
+                    <div class="info-text tomograph-text-block">
+                        <div class="accent-line tomograph-accent"></div>
+
+                        <p class="tomograph-text first-paragraph" data-translate="orthodontics_features">
+                            Ортодонтия в Dental Club - это:
+                        </p>
+                        <ul class="steps-list">
+                            <li data-translate="orthodontics_feature_1">Цифровые методы диагностики и планирования лечения по международным стандартам и протоколам.</li>
+                            <li data-translate="orthodontics_feature_2">Лучшие самолигирующие брекет-системы, производящиеся в США (H4, American Orthodontics).</li>
+                            <li data-translate="orthodontics_feature_3">Системы съёмного ортодонтического лечения от компании Invisaline, лидера среди производителей элайнеров в мире.</li>
+                            <li data-translate="orthodontics_feature_4">Детская ортодонтия, позволяющая избежать проблем с прикусом в более позднем возрасте, благодаря ранней диагностике и своевременному лечению.</li>
+                        </ul>
+
+                        <button class="btn-outline diagnost-btn" id="openAppointmentBtn3" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    </div>
+                    <div class="info-image tomograph-image">
+                        <img class="tomograph-img" src="../assets/images/service-menu8-page/service-menu3.jpg" alt="Консультация ортодонта">
+                    </div>
+                </div>
+
+                <div class="info-row specialists-row">
+                    <div class="info-image specialists-image">
+                        <img class="specialists-img" src="../assets/images/service-menu8-page/service-menu4.jpg" alt="Прием пациента">
+                    </div>
+                    <div class="info-text specialists-text-block">
+                        <div class="accent-line specialists-line"></div>
                         
-                        <div class="social-icons">
-                            <a href="#"><img src="../assets/images/icons/instagram.png" alt="Instagram"></a>
-                            <a href="#"><img src="../assets/images/icons/youtube.png" alt="YouTube"></a>
-                            <a href="#"><img src="../assets/images/icons/vk.png" alt="VK"></a>
-                            <a href="#"><img src="../assets/images/icons/whatsapp.png" alt="WhatsApp"></a>
-                        </div>
-                    </div>
-                    <div class="contacts-cta">
-                         <button class="btn-outline" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                        <h2 data-translate="aligners_title">ЭЛАЙНЕРЫ</h2>
+
+                        <p class="tomograph-text specialist-first" data-translate="aligners_text_1">
+                            Это индивидуально изготовленные капы из специального прозрачного материала. Они используются для коррекции зубов и считаются наиболее быстрым, современным и безболезненным методом ортодонтического лечения.
+                        </p>
+
+                        <p class="tomograph-text specialist-second" data-translate="aligners_text_2">
+                            В клинике <strong>Dental Club</strong> мы используем элайнеры от международного лидера <strong>Invisaline</strong> (США). Такие элайнеры отличаются от других высоким качеством, цифровыми методами моделирования результата – <strong>Clincheck</strong> и надёжным сервисом.
+                        </p>
+                        
+                        <p class="tomograph-text" data-translate="aligners_text_3">
+                            Элайнеры удобны и практически не заметны в повседневной жизни, а их форма создаётся по цифровой модели ваших зубов. В отличие от брекет-систем элайнеры можно снимать во время еды и чистки зубов.
+                        </p>
                     </div>
                 </div>
 
-                <div class="map-container">
-                    <div class="map-image-side">
-                        <img src="../assets/images/contacts/contacs2.jpg" alt="Reception">
-                    </div>
-                    <div class="map-iframe-wrapper">
-                        <div id="yandexMap" class="yandex-map"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div class="info-row reverse steps-row">
+                    <div class="info-text steps-text-block">
+                        <div class="accent-line steps-accent"></div>
 
-        <section class="feedback-section">
-            <div class="container feedback-flex">
-                <div class="feedback-title">
-                    <h2 data-translate="feedback_title">ОБРАТНАЯ <br>СВЯЗЬ</h2>
+                        <p class="tomograph-text step-text-second" data-translate="aligners_process">
+                            Весь процесс лечения пациент может увидеть в цифровом формате. <br>Каждый набор кап соответствует определённому этапу движения<br> зубов в полости рта.
+                        </p>
+                        <p class="tomograph-text custom-text" data-translate="aligners_consult">
+                            Специалисты нашей клиники смогут подробно проконсультировать Вас по этапам коррекции прикуса и помогут Вам получить идеально ровные зубы.
+                        </p>
+                        <p class="tomograph-text step-text-third" data-translate="aligners_certified">
+                            <strong>Dental Club</strong> является сертифицированной клиникой по продуктам компании <strong>Invisaline</strong>. Мы оказываем пациентам поддержку, в течение всего периода лечения.
+                        </p>
+                        
+                        <button class="btn-outline steps-btn" id="openAppointmentBtn4" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    </div>
+                    <div class="info-image double-img">
+                        <img class="microscope-img" src="../assets/images/service-menu8-page/service-menu5.jpg" alt="Процесс установки">
+                    </div>
                 </div>
-                <form class="feedback-form" id="feedbackForm">
-                    <input type="text" data-translate="name_placeholder" placeholder="Ваше имя" id="feedbackName" required>
-                    <input type="email" data-translate="email_placeholder" placeholder="Email" id="feedbackEmail" required>
-                    <input type="tel" data-translate="phone_placeholder" placeholder="+375 (29) 123-45-67" id="feedbackPhone" required>
-                    <textarea data-translate="question_placeholder" placeholder="Введите ваш вопрос" id="feedbackQuestion" required></textarea>
-                    <button type="submit" class="btn-submit" data-translate="send_request">ОТПРАВИТЬ ЗАЯВКУ</button>
-                </form>
+
+                <div class="info-row specialists-row">
+                    <div class="info-text specialists-text-block">
+                        <p class="steps-title" data-translate="therapy_steps_title">Этапы лечения кариеса (пломбы)</p>
+                        <p class="visit-title-first"><strong data-translate="visit_1">1-ое посещение</strong></p>
+                        <ul class="steps-list">
+                            <li class="step-item-1" data-translate="step_anesthesia">Обезболивание</li>
+                            <li class="step-item-2" data-translate="step_preparation">Препарирование кариозного процесса и удаление старых реставрации</li>
+                            <li class="step-item-3" data-translate="step_impression">Снятие слепка</li>
+                            <li class="step-item-4" data-translate="step_temporary">Изготовление временной пломбы</li>
+                            <li class="step-item-5" data-translate="step_polishing">Пришлифовка и полировка временной пломбы</li>
+                        </ul>
+                        <p class="visit-title-second"><strong data-translate="visit_2">2-ое посещение</strong></p>
+                        <ul class="steps-list2">
+                            <li data-translate="step_anesthesia">Обезболивание</li>
+                            <li data-translate="step_remove_temporary">Удаление временной пломбы</li>
+                            <li data-translate="step_processing">Обработка вкладки и полости зуба</li>
+                            <li data-translate="step_fixation">Фиксация вкладки на композиционный цемент</li>
+                            <li data-translate="step_final_polishing">Пришлифовка и полировка</li>
+                        </ul>
+                        <button class="btn-outline steps-btn" id="openAppointmentBtn5" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+                    </div>
+                    <div class="info-image specialists-image">
+                        <img class="specialists-img specialists-img-six" src="../assets/images/service-menu8-page/service-menu6.jpg" alt="Специалисты Dental Club">
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -179,6 +228,50 @@
     <script src="../js/preloader.js"></script>
 
     <script>
+        function updateMobileLangButton() {
+            const mobileLangSelector = document.getElementById('mobileLangSelector');
+            if (mobileLangSelector) {
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                mobileLangSelector.textContent = currentLang === 'ru' ? 'ENG' : 'RUS';
+                console.log('🌐 Обновлена кнопка языка в бургер-меню (service-menu8):', mobileLangSelector.textContent);
+            }
+        }
+
+        function initMobileLangSwitcher() {
+            const mobileLangSelector = document.getElementById('mobileLangSelector');
+            if (mobileLangSelector) {
+                const newSelector = mobileLangSelector.cloneNode(true);
+                mobileLangSelector.parentNode.replaceChild(newSelector, mobileLangSelector);
+                
+                newSelector.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const currentLang = localStorage.getItem('dental_language') || 'ru';
+                    const newLang = currentLang === 'ru' ? 'en' : 'ru';
+                    localStorage.setItem('dental_language', newLang);
+                    
+                    this.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
+                    
+                    if (typeof window.switchLanguage === 'function') {
+                        window.switchLanguage();
+                    } else if (typeof window.applyTranslations === 'function') {
+                        window.applyTranslations();
+                    }
+                    
+                    const desktopLangText = document.getElementById('langSelectorText');
+                    if (desktopLangText) {
+                        desktopLangText.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
+                    }
+                    
+                    const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
+                    document.dispatchEvent(event);
+                    
+                    console.log('🌐 Язык изменён на:', newLang);
+                });
+            }
+        }
+
         function initMobileMenu() {
             setTimeout(function() {
                 const burgerIcon = document.getElementById('burgerIcon');
@@ -235,7 +328,7 @@
                     };
                 }
 
-                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link, .mobile-theme-icon');
+                const mobileLinks = document.querySelectorAll('.mobile-menu-btn, .mobile-lang-selector, .mobile-login-link, .mobile-link, .mobile-special-button, .mobile-theme-icon');
                 mobileLinks.forEach(link => {
                     link.addEventListener('click', function() {
                         if (!this.classList.contains('mobile-theme-icon')) {
@@ -250,50 +343,6 @@
                     }
                 });
             }, 100);
-        }
-
-        function updateMobileLangButton() {
-            const mobileLangSelector = document.querySelector('.mobile-lang-selector');
-            if (mobileLangSelector) {
-                const currentLang = localStorage.getItem('dental_language') || 'ru';
-                mobileLangSelector.textContent = currentLang === 'ru' ? 'ENG' : 'RUS';
-            }
-        }
-
-        function initMobileLangSwitcher() {
-            const mobileLangSelector = document.querySelector('.mobile-lang-selector');
-            if (mobileLangSelector) {
-                const newSelector = mobileLangSelector.cloneNode(true);
-                mobileLangSelector.parentNode.replaceChild(newSelector, mobileLangSelector);
-                
-                newSelector.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const currentLang = localStorage.getItem('dental_language') || 'ru';
-                    const newLang = currentLang === 'ru' ? 'en' : 'ru';
-                    
-                    localStorage.setItem('dental_language', newLang);
-                    
-                    this.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
-                    
-                    if (typeof window.switchLanguage === 'function') {
-                        window.switchLanguage();
-                    } else if (typeof window.applyTranslations === 'function') {
-                        window.applyTranslations();
-                    }
-                    
-                    const desktopLangText = document.getElementById('langSelectorText');
-                    if (desktopLangText) {
-                        desktopLangText.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
-                    }
-                    
-                    const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
-                    document.dispatchEvent(event);
-                    
-                    console.log('🌐 Язык изменён на:', newLang);
-                });
-            }
         }
 
         function syncMobileThemeWithDesktop() {
@@ -345,58 +394,38 @@
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    const specialPanel = document.getElementById('specialPanel');
-                    if (specialPanel) {
-                        specialPanel.classList.toggle('active');
+                    if (typeof window.toggleSpecialVersion === 'function') {
+                        window.toggleSpecialVersion();
+                    } else if (typeof window.initSpecialVersion === 'function') {
+                        window.initSpecialVersion();
+                    } else {
+                        alert('👁️ Режим для слабовидящих будет доступен в ближайшее время');
                     }
+                    
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    const menuOverlay = document.getElementById('menuOverlay');
+                    const burgerIcon = document.getElementById('burgerIcon');
+                    const body = document.body;
+                    
+                    if (burgerIcon) burgerIcon.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    body.style.top = '';
                 });
             }
         }
 
-        function initYandexMap() {
-            if (typeof ymaps === 'undefined') {
-                setTimeout(initYandexMap, 500);
-                return;
+        function openAppointment() {
+            if (typeof openVisitorAppointmentModal === 'function') {
+                openVisitorAppointmentModal();
+            } else {
+                console.warn('openVisitorAppointmentModal не определена');
             }
-            
-            ymaps.ready(function() {
-                var coords = [53.9025, 30.3319];
-                
-                var map = new ymaps.Map('yandexMap', {
-                    center: coords,
-                    zoom: 17,
-                    controls: ['zoomControl', 'fullscreenControl']
-                });
-                
-                map.controls.remove('geolocationControl');
-                map.controls.remove('searchControl');
-                map.controls.remove('trafficControl');
-                map.controls.remove('typeSelector');
-                map.controls.remove('rulerControl');
-                
-                var placemark = new ymaps.Placemark(coords, {
-                    hintContent: 'Dental Club - Стоматологическая клиника',
-                    balloonContentHeader: '<div style="font-weight: bold; color: #A5C33C;">🦷 DENTAL CLUB</div>',
-                    balloonContentBody: [
-                        '<div style="padding: 5px 0;">',
-                        '<span style="font-size: 13px;">📍 ул. Ленинская, 25, Могилев</span><br>',
-                        '<span style="font-size: 13px;">📞 +375 (29) 123-45-67</span><br>',
-                        '<span style="font-size: 13px;">🕐 Пн-Сб: 10:00 - 20:00</span>',
-                        '</div>'
-                    ].join(''),
-                    balloonContentFooter: '<div style="margin-top: 8px;"><button onclick="openVisitorAppointmentModal()" style="background: #A5C33C; color: #1a1e22; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 11px;">📅 Записаться</button></div>'
-                }, {
-                    preset: 'islands#redIcon',
-                    iconShadow: true,
-                    iconAnimation: true
-                });
-                
-                map.geoObjects.add(placemark);
-            });
         }
 
         function initAppointmentButtons() {
-            const btnIds = ['openAppointmentBtn', 'openAppointmentBtn2'];
+            const btnIds = ['openAppointmentBtn1', 'openAppointmentBtn2', 'openAppointmentBtn3', 'openAppointmentBtn4', 'openAppointmentBtn5'];
             
             btnIds.forEach(function(id) {
                 const btn = document.getElementById(id);
@@ -406,26 +435,24 @@
                     newBtn.addEventListener('click', function(e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        if (typeof openVisitorAppointmentModal === 'function') {
-                            openVisitorAppointmentModal();
-                        }
+                        openAppointment();
                     });
                 }
             });
-        }
-
-        function initFeedbackForm() {
-            const feedbackForm = document.getElementById('feedbackForm');
-            if (feedbackForm) {
-                const newForm = feedbackForm.cloneNode(true);
-                feedbackForm.parentNode.replaceChild(newForm, feedbackForm);
-                
-                newForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    alert(window.currentLanguage && window.currentLanguage() === 'ru' ? '✅ Ваше сообщение отправлено!' : '✅ Your message has been sent!');
-                    newForm.reset();
-                });
-            }
+            
+            const classBtns = document.querySelectorAll('.btn-white, .btn-outline, .first-btn, .diagnost-btn, .steps-btn');
+            classBtns.forEach(function(btn) {
+                if (!btn.hasAttribute('data-listener-added')) {
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    newBtn.setAttribute('data-listener-added', 'true');
+                    newBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openAppointment();
+                    });
+                }
+            });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -436,7 +463,6 @@
             updateMobileLangButton();
             initMobileLangSwitcher();
             initAppointmentButtons();
-            initFeedbackForm();
         });
 
         document.addEventListener('languageChanged', function() {
@@ -445,12 +471,15 @@
 
         setTimeout(function() {
             if (typeof window.updateAuthUI === 'function') {
+                console.log('🔄 Вызов updateAuthUI из service-menu8.html');
                 window.updateAuthUI();
             }
             if (typeof window.applyTranslations === 'function') {
                 window.applyTranslations();
             }
             syncMobileThemeWithDesktop();
+            updateMobileLangButton();
+            initAppointmentButtons();
         }, 200);
 
         const themeObserver = new MutationObserver(function() {
@@ -461,8 +490,6 @@
             attributes: true,
             attributeFilter: ['data-theme']
         });
-
-        initYandexMap();
     </script>
     <script src="../js/special-version.js"></script>
 

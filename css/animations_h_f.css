@@ -467,3 +467,24 @@
     transform-origin: center center !important;
 }
 
+.logo {
+    --logo-transform: translateX(-50%);
+    transform: var(--logo-transform);
+    transition: none !important;
+    animation: none !important;
+}
+
+.logo:hover {
+    transform: var(--logo-transform) !important;  
+    scale: none !important;
+    transition: none !important;
+}
+
+.logo img {
+    transition: none !important;
+}
+
+.logo:hover img {
+    filter: none !important;
+    transform: none !important;
+}
