@@ -1,5 +1,56 @@
-
 const API_BASE_URL = 'http://localhost:3000';
+
+
+function getNextId(items) {
+    if (!items || items.length === 0) return 1;
+    const maxId = Math.max(...items.map(item => item.id));
+    return maxId + 1;
+}
+
+async function getNextServiceId() {
+    const response = await fetch(`${API_BASE_URL}/services`);
+    const services = await response.json();
+    return getNextId(services);
+}
+
+async function getNextServiceDetailId() {
+    const response = await fetch(`${API_BASE_URL}/serviceDetails`);
+    const details = await response.json();
+    return getNextId(details);
+}
+
+async function getNextDoctorId() {
+    const response = await fetch(`${API_BASE_URL}/doctors`);
+    const doctors = await response.json();
+    return getNextId(doctors);
+}
+
+async function getNextAppointmentId() {
+    const response = await fetch(`${API_BASE_URL}/appointments`);
+    const appointments = await response.json();
+    return getNextId(appointments);
+}
+
+async function getNextDiscountId() {
+    const response = await fetch(`${API_BASE_URL}/discounts`);
+    const discounts = await response.json();
+    return getNextId(discounts);
+}
+
+function getNextPriceCategoryId(pricesData) {
+    const categories = pricesData?.categories || [];
+    return getNextId(categories);
+}
+
+function getNextPriceServiceId(pricesData) {
+    const services = pricesData?.services || [];
+    return getNextId(services);
+}
+
+function getNextScheduleId(scheduleData) {
+    const schedule = scheduleData?.schedule || [];
+    return getNextId(schedule);
+}
 
 function getCurrentAdminLang() {
     return localStorage.getItem('dental_language') || 'ru';
@@ -28,9 +79,222 @@ function localizeArray(items, fields = []) {
     return items.map(item => localizeObject(item, fields));
 }
 
+
+function formatDateForDisplay(dateStr, lang = null) {
+    if (!dateStr) return '';
+    const currentLang = lang || getCurrentAdminLang();
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+        if (currentLang === 'ru') {
+            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+        } else {
+            return `${parts[1]}/${parts[2]}/${parts[0]}`;
+        }
+    }
+    return dateStr;
+}
+
+function getDatePlaceholder(lang = null) {
+    const currentLang = lang || getCurrentAdminLang();
+    return currentLang === 'ru' ? 'ДД.ММ.ГГГГ' : 'MM/DD/YYYY';
+}
+
+function parseDisplayDateToISO(displayDate) {
+    if (!displayDate) return '';
+    const currentLang = getCurrentAdminLang();
+    if (currentLang === 'ru') {
+        const parts = displayDate.split('.');
+        if (parts.length === 3) {
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        }
+    } else {
+        const parts = displayDate.split('/');
+        if (parts.length === 3) {
+            return `${parts[2]}-${parts[0]}-${parts[1]}`;
+        }
+    }
+    return displayDate;
+}
+
+
+function initDiscountDatePickers() {
+    const startDateInput = document.getElementById('discountStartDate');
+    const endDateInput = document.getElementById('discountEndDate');
+    
+    if (!startDateInput || !endDateInput) return;
+    
+    function isoToDisplayDate(isoDate) {
+        if (!isoDate) return '';
+        const parts = isoDate.split('-');
+        if (parts.length !== 3) return isoDate;
+        const lang = getCurrentAdminLang();
+        if (lang === 'ru') {
+            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+        } else {
+            return `${parts[1]}/${parts[2]}/${parts[0]}`;
+        }
+    }
+    
+    function displayToIsoDate(displayDate) {
+        if (!displayDate) return '';
+        const lang = getCurrentAdminLang();
+        let parts;
+        if (lang === 'ru') {
+            parts = displayDate.split('.');
+            if (parts.length === 3) {
+                return `${parts[2]}-${parts[1]}-${parts[0]}`;
+            }
+        } else {
+            parts = displayDate.split('/');
+            if (parts.length === 3) {
+                return `${parts[2]}-${parts[0]}-${parts[1]}`;
+            }
+        }
+        return displayDate;
+    }
+    
+    function convertToNativeDatePicker() {
+        const currentStartValue = startDateInput.value;
+        const currentEndValue = endDateInput.value;
+        
+        startDateInput.type = 'date';
+        endDateInput.type = 'date';
+        
+        if (currentStartValue) {
+            startDateInput.value = displayToIsoDate(currentStartValue);
+        }
+        if (currentEndValue) {
+            endDateInput.value = displayToIsoDate(currentEndValue);
+        }
+        
+        startDateInput.placeholder = '';
+        endDateInput.placeholder = '';
+    }
+    
+    function updateDatePlaceholders() {
+        const lang = getCurrentAdminLang();
+        const dateFormatHint = lang === 'ru' ? 'ДД.ММ.ГГГГ' : 'MM/DD/YYYY';
+        
+        if (startDateInput.type !== 'date') {
+            startDateInput.placeholder = dateFormatHint;
+        }
+        if (endDateInput.type !== 'date') {
+            endDateInput.placeholder = dateFormatHint;
+        }
+    }
+    
+    const testInput = document.createElement('input');
+    testInput.type = 'date';
+    const isDatePickerSupported = testInput.type === 'date';
+    
+    if (isDatePickerSupported) {
+        convertToNativeDatePicker();
+        
+        startDateInput.addEventListener('click', function() {
+            if (this.showPicker) {
+                this.showPicker();
+            }
+        });
+        
+        endDateInput.addEventListener('click', function() {
+            if (this.showPicker) {
+                this.showPicker();
+            }
+        });
+        
+        startDateInput.addEventListener('change', function() {
+            console.log('📅 Дата начала изменена:', this.value);
+        });
+        
+        endDateInput.addEventListener('change', function() {
+            console.log('📅 Дата окончания изменена:', this.value);
+        });
+    } else {
+        updateDatePlaceholders();
+        
+        startDateInput.addEventListener('click', function() {
+            if (this.showPicker) {
+                this.showPicker();
+            }
+        });
+        
+        endDateInput.addEventListener('click', function() {
+            if (this.showPicker) {
+                this.showPicker();
+            }
+        });
+    }
+    
+    document.addEventListener('languageChanged', function() {
+        if (startDateInput.type !== 'date') {
+            updateDatePlaceholders();
+        }
+    });
+}
+
+
+function initDateFilterWithCalendar() {
+    const dateFilter = document.getElementById('appointmentDateFilter');
+    if (!dateFilter) return;
+    
+    dateFilter.type = 'date';
+    
+    function updateDatePlaceholder() {
+        const lang = getCurrentAdminLang();
+        dateFilter.placeholder = getDatePlaceholder(lang);
+    }
+    updateDatePlaceholder();
+    
+    dateFilter.addEventListener('keydown', function(e) {
+        e.preventDefault();
+        if (this.showPicker) {
+            this.showPicker();
+        }
+    });
+    
+    dateFilter.addEventListener('click', function() {
+        if (this.showPicker) {
+            this.showPicker();
+        }
+    });
+    
+    dateFilter.removeAttribute('autocomplete');
+    
+    let currentDateValue = '';
+    
+    dateFilter.addEventListener('change', function(e) {
+        const selectedDate = this.value;
+        if (selectedDate) {
+            currentDateValue = selectedDate;
+            renderAppointments();
+        } else {
+            currentDateValue = '';
+            renderAppointments();
+        }
+    });
+    
+    window.setAppointmentDateFilter = function(dateStr) {
+        if (!dateStr) {
+            dateFilter.value = '';
+            currentDateValue = '';
+            renderAppointments();
+            return;
+        }
+        dateFilter.value = dateStr;
+        currentDateValue = dateStr;
+        renderAppointments();
+    };
+    
+    window.getAppointmentDateFilterValue = function() {
+        return dateFilter.value || '';
+    };
+    
+    console.log('✅ Фильтр по дате с календарём инициализирован');
+}
+
 const adminTranslations = {
     ru: {
-                'prices_title': 'Управление прайс-листом',
+        'prices_title': 'Управление прайс-листом',
         'status_active': 'Активна',
         'status_inactive': 'Скрыта',
         'status_active_doctor': 'Активен',
@@ -44,20 +308,19 @@ const adminTranslations = {
         'status_expired': 'Просрочена',
         'status_not_active': 'Неактивна',
         'status_day_off': 'Выходной',
-        
-  'profile_last_name_placeholder': 'Иванов',
+        'status_filled': 'Заполнена',
+        'status_not_filled': 'Не заполнена',
+        'profile_last_name_placeholder': 'Иванов',
         'profile_first_name_placeholder': 'Иван',
         'profile_middle_name_placeholder': 'Иванович',
         'profile_email_placeholder': 'ivanov@example.com',
         'profile_phone_placeholder': '+375 29 123-45-67',
         'profile_address_placeholder': 'г. Минск, ул. Примерная, д. 1',
         'profile_birth_date_placeholder': 'Выберите дату рождения',
-
         'th_main_text': 'Основной текст',
         'th_count': 'Кол-во записей',
         'th_percent': '%',
         'th_category': 'Категория',
-        
         'tab_services': 'Услуги',
         'tab_service_details': 'Детали услуг',
         'tab_doctors': 'Врачи',
@@ -67,11 +330,9 @@ const adminTranslations = {
         'tab_schedule': 'Расписание',
         'tab_analytics': 'Аналитика',
         'tab_discounts': 'Скидки',
-        
         'back_to_site': '← На сайт',
         'services_title': 'Управление услугами',
         'add_service': '+ Добавить услугу',
-        'add_service_detail': '+ Добавить детальную услугу',
         'service_details_title': 'Детальная информация услуг',
         'doctors_title': 'Управление врачами',
         'add_doctor': '+ Добавить врача',
@@ -92,20 +353,16 @@ const adminTranslations = {
         'add_price_service': '+ Добавить услугу',
         'modal_add_category': 'Добавить категорию',
         'modal_edit_category': 'Редактировать категорию',
-        
         'save_btn': 'Сохранить',
         'cancel_btn': 'Отмена',
         'close_btn': 'Закрыть',
         'save_schedule_btn': 'Сохранить расписание',
-'date_placeholder': 'ДД.ММ.ГГГГ',
-
         'service_name_label': 'Название услуги *',
         'service_url_label': 'URL страницы *',
         'service_url_hint': 'Путь к файлу страницы услуги',
         'service_bg_label': 'Фоновое изображение',
         'service_title_label': 'Заголовок на странице',
         'service_active_label': 'Активна (показывать на сайте)',
-
         'service_name_placeholder': 'Например: ДИАГНОСТИКА',
         'service_url_placeholder': 'service-menu2.html',
         'service_title_placeholder': 'ДИАГНОСТИКА',
@@ -113,13 +370,11 @@ const adminTranslations = {
         'price_placeholder': '0',
         'note_placeholder': 'Описание услуги',
         'category_name_placeholder': 'Например: Диагностика',
-
         'working_day_label': 'Рабочий день',
         'work_start_label': 'Начало работы',
         'work_end_label': 'Конец работы',
         'break_start_label': 'Начало перерыва',
         'break_end_label': 'Конец перерыва',
-
         'modal_add_service_detail': 'Добавить детальную информацию',
         'service_select_label': 'Услуга *',
         'main_text_label': 'Основной текст',
@@ -131,7 +386,6 @@ const adminTranslations = {
         'steps_label': 'Этапы (через запятую)',
         'steps_placeholder': 'Этап 1, Этап 2...',
         'images_label': 'Изображения (URL)',
-
         'last_name_label': 'Фамилия *',
         'first_name_label': 'Имя *',
         'middle_name_label': 'Отчество',
@@ -142,7 +396,6 @@ const adminTranslations = {
         'improvement_label': 'Повышение квалификации',
         'schedule_label': 'Расписание',
         'doctor_active_label': 'Активен (показывать на сайте)',
-
         'patient_name_label': 'Пациент *',
         'phone_label': 'Телефон *',
         'email_label': 'Email',
@@ -156,7 +409,6 @@ const adminTranslations = {
         'select_service_option': '-- Выберите услугу --',
         'select_time_option': '-- Выберите время --',
         'select_category_option': '-- Выберите категорию --',
-
         'discount_name_label': 'Название скидки *',
         'discount_type_label': 'Тип скидки *',
         'discount_value_label': 'Размер скидки *',
@@ -164,25 +416,21 @@ const adminTranslations = {
         'end_date_label': 'Дата окончания',
         'description_label': 'Описание',
         'discount_active_label': 'Активна',
-
         'category_label': 'Категория *',
         'price_label': 'Цена *',
         'currency_label': 'Валюта',
         'note_label': 'Примечание',
         'order_label': 'Порядок сортировки',
         'active_label': 'Активна',
-
         'category_name_label': 'Название категории *',
         'category_order_label': 'Порядок сортировки',
         'category_order_hint': 'Порядок отображения категорий на сайте',
         'category_active_label': 'Активна (показывать на сайте)',
-
         'view_review_title': 'Просмотр отзыва',
         'author_label': 'Автор:',
         'about_label': 'О себе:',
         'rating_label': 'Рейтинг:',
         'review_text_label': 'Текст отзыва:',
-        
         'filter_all_doctors': 'Все врачи',
         'filter_all_statuses': 'Все статусы',
         'filter_all_categories': 'Все категории',
@@ -194,7 +442,6 @@ const adminTranslations = {
         'filter_expired': 'Просроченные',
         'filter_upcoming': 'Предстоящие',
         'btn_reset': 'Сбросить',
-        
         'period_label': 'Период:',
         'period_week': 'Последние 7 дней',
         'period_month': 'Последние 30 дней',
@@ -216,7 +463,6 @@ const adminTranslations = {
         'chart_statuses': '📊 Статусы записей',
         'peak_hour_label': 'Часы пик:',
         'busiest_day_label': 'Самый загруженный день:',
-        
         'monday': 'Понедельник',
         'tuesday': 'Вторник',
         'wednesday': 'Среда',
@@ -224,17 +470,14 @@ const adminTranslations = {
         'friday': 'Пятница',
         'saturday': 'Суббота',
         'sunday': 'Воскресенье',
-        
         'search_by_name_text': 'Поиск по имени или тексту...',
         'search_by_service': 'Поиск по услуге...',
         'search_by_name': 'Поиск по названию...',
-        
         'discount_label': 'Скидка',
         'until_label': 'до',
         'active_discount_on_category': 'Активная скидка на категорию',
         'valid_until': 'действует до',
-
-        'action_edit': '✏️ Редакт.',
+        'action_edit': 'Редактировать',
         'action_delete': '🗑️ Удалить',
         'action_edit_small': '✏️',
         'action_delete_small': '🗑️',
@@ -244,7 +487,6 @@ const adminTranslations = {
         'action_complete': '✔️',
         'action_deactivate': '🔴 Деакт.',
         'action_activate': '🟢 Акт.',
-        
         'th_id': 'ID',
         'th_name': 'Название',
         'th_url': 'URL страницы',
@@ -269,19 +511,13 @@ const adminTranslations = {
         'th_discount_type': 'Тип',
         'th_discount_value': 'Размер',
         'th_period': 'Период действия',
-        
-        'date_placeholder': 'ДД.ММ.ГГГГ',
-        'date_format': 'ДД.ММ.ГГГГ',
-        
+        'th_break': 'Перерыв',
         'discount_percentage': 'Процентная (%)',
         'discount_fixed': 'Фиксированная',
-        
         'price_free': 'Бесплатно',
         'price_with_discount': 'со скидкой',
-        
         'detail_filled': 'Заполнена',
         'detail_empty': 'Пустая',
-        
         'modal_add_service': 'Добавить услугу',
         'modal_edit_service': 'Редактировать услугу',
         'modal_add_doctor': 'Добавить врача',
@@ -290,7 +526,6 @@ const adminTranslations = {
         'modal_edit_appointment': 'Редактировать запись',
         'modal_add_discount': 'Добавить скидку',
         'modal_edit_discount': 'Редактировать скидку',
-        
         'stat_total_services': 'Всего услуг',
         'stat_active_services': 'Активных',
         'stat_total_doctors': 'Всего врачей',
@@ -304,11 +539,13 @@ const adminTranslations = {
         'stat_services_count': 'Услуг',
         'stat_active_discounts': 'Активных скидок',
         'stat_expired_discounts': 'Просроченных',
-        'stat_upcoming_discounts': 'Предстоящие'
+        'stat_upcoming_discounts': 'Предстоящие',
+        'error_negative_discount': '❌ Размер скидки не может быть отрицательным!',
+        'error_discount_exists': '⚠️ Для этой категории уже есть скидка! Удалите или деактивируйте существующую скидку перед созданием новой.',
+        'unknown': 'Неизвестно'
     },
     en: {
-                'prices_title': 'Price List Management',
-
+        'prices_title': 'Price List Management',
         'status_active': 'Active',
         'status_inactive': 'Hidden',
         'status_active_doctor': 'Active',
@@ -322,20 +559,19 @@ const adminTranslations = {
         'status_expired': 'Expired',
         'status_not_active': 'Inactive',
         'status_day_off': 'Day off',
-        
- 'profile_last_name_placeholder': 'Ivanov',
+        'status_filled': 'Filled',
+        'status_not_filled': 'Not filled',
+        'profile_last_name_placeholder': 'Ivanov',
         'profile_first_name_placeholder': 'Ivan',
         'profile_middle_name_placeholder': 'Ivanovich',
         'profile_email_placeholder': 'ivanov@example.com',
         'profile_phone_placeholder': '+375 29 123-45-67',
         'profile_address_placeholder': 'Minsk, Prilukskaya str., 1',
         'profile_birth_date_placeholder': 'Select birth date',
-
         'th_main_text': 'Main Text',
         'th_count': 'Count',
         'th_percent': '%',
         'th_category': 'Category',
-        
         'tab_services': 'Services',
         'tab_service_details': 'Service Details',
         'tab_doctors': 'Doctors',
@@ -345,12 +581,9 @@ const adminTranslations = {
         'tab_schedule': 'Schedule',
         'tab_analytics': 'Analytics',
         'tab_discounts': 'Discounts',
-        'date_placeholder': 'YYYY-MM-DD',
-
         'back_to_site': '← Back to site',
         'services_title': 'Manage Services',
         'add_service': '+ Add Service',
-        'add_service_detail': '+ Add Service Detail',
         'service_details_title': 'Service Details Information',
         'doctors_title': 'Manage Doctors',
         'add_doctor': '+ Add Doctor',
@@ -371,19 +604,16 @@ const adminTranslations = {
         'add_price_service': '+ Add Service',
         'modal_add_category': 'Add Category',
         'modal_edit_category': 'Edit Category',
-        
         'save_btn': 'Save',
         'cancel_btn': 'Cancel',
         'close_btn': 'Close',
         'save_schedule_btn': 'Save Schedule',
-
         'service_name_label': 'Service Name *',
         'service_url_label': 'Page URL *',
         'service_url_hint': 'Path to service page file',
         'service_bg_label': 'Background Image',
         'service_title_label': 'Page Title',
         'service_active_label': 'Active (show on site)',
-
         'service_name_placeholder': 'Example: DIAGNOSTICS',
         'service_url_placeholder': 'service-menu2.html',
         'service_title_placeholder': 'DIAGNOSTICS',
@@ -391,13 +621,11 @@ const adminTranslations = {
         'price_placeholder': '0',
         'note_placeholder': 'Service description',
         'category_name_placeholder': 'Example: Diagnostics',
-
         'working_day_label': 'Working day',
         'work_start_label': 'Start time',
         'work_end_label': 'End time',
         'break_start_label': 'Break start',
         'break_end_label': 'Break end',
-
         'modal_add_service_detail': 'Add Service Details',
         'service_select_label': 'Service *',
         'main_text_label': 'Main Text',
@@ -409,7 +637,6 @@ const adminTranslations = {
         'steps_label': 'Steps (comma separated)',
         'steps_placeholder': 'Step 1, Step 2...',
         'images_label': 'Images (URL)',
-
         'last_name_label': 'Last Name *',
         'first_name_label': 'First Name *',
         'middle_name_label': 'Middle Name',
@@ -420,7 +647,6 @@ const adminTranslations = {
         'improvement_label': 'Advanced Training',
         'schedule_label': 'Schedule',
         'doctor_active_label': 'Active (show on site)',
-
         'patient_name_label': 'Patient *',
         'phone_label': 'Phone *',
         'email_label': 'Email',
@@ -434,7 +660,6 @@ const adminTranslations = {
         'select_service_option': '-- Select service --',
         'select_time_option': '-- Select time --',
         'select_category_option': '-- Select category --',
-
         'discount_name_label': 'Discount Name *',
         'discount_type_label': 'Discount Type *',
         'discount_value_label': 'Discount Amount *',
@@ -442,25 +667,21 @@ const adminTranslations = {
         'end_date_label': 'End Date',
         'description_label': 'Description',
         'discount_active_label': 'Active',
-
         'category_label': 'Category *',
         'price_label': 'Price *',
         'currency_label': 'Currency',
         'note_label': 'Note',
         'order_label': 'Sort Order',
         'active_label': 'Active',
-
         'category_name_label': 'Category Name *',
         'category_order_label': 'Sort Order',
         'category_order_hint': 'The smaller the number, the higher in the list',
         'category_active_label': 'Active (show on site)',
-
         'view_review_title': 'View Review',
         'author_label': 'Author:',
         'about_label': 'About:',
         'rating_label': 'Rating:',
         'review_text_label': 'Review Text:',
-        
         'filter_all_doctors': 'All doctors',
         'filter_all_statuses': 'All statuses',
         'filter_all_categories': 'All categories',
@@ -472,7 +693,6 @@ const adminTranslations = {
         'filter_expired': 'Expired',
         'filter_upcoming': 'Upcoming',
         'btn_reset': 'Reset',
-        
         'period_label': 'Period:',
         'period_week': 'Last 7 days',
         'period_month': 'Last 30 days',
@@ -494,7 +714,6 @@ const adminTranslations = {
         'chart_statuses': '📊 Appointment Statuses',
         'peak_hour_label': 'Peak hour:',
         'busiest_day_label': 'Busiest day:',
-        
         'monday': 'Monday',
         'tuesday': 'Tuesday',
         'wednesday': 'Wednesday',
@@ -502,16 +721,13 @@ const adminTranslations = {
         'friday': 'Friday',
         'saturday': 'Saturday',
         'sunday': 'Sunday',
-        
         'search_by_name_text': 'Search by name or text...',
         'search_by_service': 'Search by service...',
         'search_by_name': 'Search by name...',
-        
         'discount_label': 'Discount',
         'until_label': 'until',
         'active_discount_on_category': 'Active discount on category',
         'valid_until': 'valid until',
-
         'action_edit': '✏️ Edit',
         'action_delete': '🗑️ Delete',
         'action_edit_small': '✏️',
@@ -522,7 +738,6 @@ const adminTranslations = {
         'action_complete': '✔️',
         'action_deactivate': '🔴 Deact.',
         'action_activate': '🟢 Act.',
-        
         'th_id': 'ID',
         'th_name': 'Name',
         'th_url': 'Page URL',
@@ -547,19 +762,13 @@ const adminTranslations = {
         'th_discount_type': 'Type',
         'th_discount_value': 'Amount',
         'th_period': 'Period',
-        
-        'date_placeholder': 'YYYY-MM-DD',
-        'date_format': 'YYYY-MM-DD',
-        
+        'th_break': 'Break',
         'discount_percentage': 'Percentage (%)',
         'discount_fixed': 'Fixed',
-        
         'price_free': 'Free',
         'price_with_discount': 'with discount',
-        
         'detail_filled': 'Filled',
         'detail_empty': 'Empty',
-        
         'modal_add_service': 'Add Service',
         'modal_edit_service': 'Edit Service',
         'modal_add_doctor': 'Add Doctor',
@@ -568,7 +777,6 @@ const adminTranslations = {
         'modal_edit_appointment': 'Edit Appointment',
         'modal_add_discount': 'Add Discount',
         'modal_edit_discount': 'Edit Discount',
-        
         'stat_total_services': 'Total Services',
         'stat_active_services': 'Active',
         'stat_total_doctors': 'Total Doctors',
@@ -582,7 +790,10 @@ const adminTranslations = {
         'stat_services_count': 'Services',
         'stat_active_discounts': 'Active Discounts',
         'stat_expired_discounts': 'Expired',
-        'stat_upcoming_discounts': 'Upcoming'
+        'stat_upcoming_discounts': 'Upcoming',
+        'error_negative_discount': '❌ Discount amount cannot be negative!',
+        'error_discount_exists': '⚠️ There is already a discount for this category! Please delete or deactivate the existing discount before creating a new one.',
+        'unknown': 'Unknown'
     }
 };
 
@@ -594,10 +805,17 @@ function getUIText(key, defaultValue = '') {
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
     if (!toast) return;
+    
     toast.textContent = message;
     toast.className = `toast ${type} show`;
+    
     setTimeout(() => {
         toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.textContent === message) {
+                toast.textContent = '';
+            }
+        }, 300);
     }, 3000);
 }
 
@@ -627,15 +845,15 @@ function getDoctorFullName(doctor) {
     
     let name = lastName + ' ' + firstName;
     if (middleName) name += ' ' + middleName;
-    return name.trim() || 'Unknown';
+    return name.trim() || getUIText('unknown');
 }
 
 function getServiceNameById(serviceId, services) {
     const service = services.find(s => s.id === serviceId);
-    if (!service) return 'Unknown';
+    if (!service) return getUIText('unknown');
     const lang = getCurrentAdminLang();
     if (typeof service.name === 'object') {
-        return service.name[lang] || service.name.ru || 'Unknown';
+        return service.name[lang] || service.name.ru || getUIText('unknown');
     }
     return service.name;
 }
@@ -665,116 +883,902 @@ let pricesData = null;
 let scheduleData = null;
 let discounts = [];
 
-function initDateMask() {
-    const dateInput = document.getElementById('appointmentDateFilter');
-    if (!dateInput) return;
+// ========== ФУНКЦИИ ДЛЯ ПРОВЕРКИ СКИДОК ==========
+
+function hasAnyDiscountForCategory(categoryId, excludeDiscountId = null) {
+    if (!discounts || discounts.length === 0) return false;
     
-    const updatePlaceholder = () => {
-        const lang = getCurrentAdminLang();
-        const placeholder = lang === 'ru' ? 'ДД.ММ.ГГГГ' : 'YYYY-MM-DD';
-        dateInput.placeholder = placeholder;
-        
-        if (dateInput.hasAttribute('placeholder')) {
-            dateInput.setAttribute('placeholder', placeholder);
-        }
-    };
-    
-    dateInput.addEventListener('input', function(e) {
-        const lang = getCurrentAdminLang();
-        
-        if (lang === 'en') {
-            return;
-        }
-        
-        let value = this.value.replace(/[^\d]/g, '');
-        
-        if (value.length >= 2 && value.length < 4) {
-            value = value.substring(0, 2) + '.' + value.substring(2);
-        } else if (value.length >= 4 && value.length < 6) {
-            value = value.substring(0, 2) + '.' + value.substring(2, 4) + '.' + value.substring(4);
-        } else if (value.length >= 6) {
-            value = value.substring(0, 2) + '.' + value.substring(2, 4) + '.' + value.substring(4, 8);
-        }
-        
-        this.value = value;
+    return discounts.some(discount => {
+        if (discount.discountCategoryId !== categoryId) return false;
+        if (excludeDiscountId && discount.id === excludeDiscountId) return false;
+        return true;
     });
-    
-    updatePlaceholder();
-    document.addEventListener('languageChanged', updatePlaceholder);
 }
 
-async function loadAllData() {
+function hasActiveDiscountForCategory(categoryId, excludeDiscountId = null) {
+    if (!discounts || discounts.length === 0) return false;
+    
+    const today = new Date().toISOString().split('T')[0];
+    
+    return discounts.some(discount => {
+        if (discount.discountCategoryId !== categoryId) return false;
+        if (excludeDiscountId && discount.id === excludeDiscountId) return false;
+        if (!discount.active) return false;
+        if (discount.endDate && discount.endDate < today) return false;
+        return true;
+    });
+}
+
+function validateDiscountForCategory(categoryId, excludeDiscountId = null) {
+    if (hasAnyDiscountForCategory(categoryId, excludeDiscountId)) {
+        return {
+            valid: false,
+            message: getUIText('error_discount_exists')
+        };
+    }
+    return { valid: true, message: '' };
+}
+
+function validateDiscountValue(value, type) {
+    const numValue = parseFloat(value);
+    
+    if (isNaN(numValue)) {
+        return { valid: false, message: 'Введите корректное число' };
+    }
+    
+    if (numValue < 0) {
+        return { valid: false, message: getUIText('error_negative_discount') };
+    }
+    
+    if (type === 'percentage' && numValue > 100) {
+        return { valid: false, message: 'Процентная скидка не может превышать 100%' };
+    }
+    
+    return { valid: true, message: '' };
+}
+
+
+function saveActiveTab(tabId) {
+    if (tabId) {
+        localStorage.setItem('admin_active_tab', tabId);
+        console.log('💾 Сохранена вкладка:', tabId);
+    }
+}
+
+function loadActiveTab() {
+    const savedTab = localStorage.getItem('admin_active_tab');
+    if (savedTab && document.querySelector(`.nav-tab[data-tab="${savedTab}"]`)) {
+        console.log('📂 Загружена сохраненная вкладка:', savedTab);
+        return savedTab;
+    }
+    return 'services';
+}
+
+function activateTab(tabId) {
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    const tabButton = document.querySelector(`.nav-tab[data-tab="${tabId}"]`);
+    if (tabButton) {
+        tabButton.classList.add('active');
+    }
+    
+    const tabContent = document.getElementById(`tab-${tabId}`);
+    if (tabContent) {
+        tabContent.classList.add('active');
+    }
+    
+    console.log('✅ Активирована вкладка:', tabId);
+}
+
+async function renderAppointments() {
+    const tbody = document.getElementById('appointmentsList');
+    if (!tbody) return;
+    
+    const doctorFilter = document.getElementById('appointmentDoctorFilter')?.value || '';
+    let dateFilter = document.getElementById('appointmentDateFilter')?.value || '';
+    const statusFilter = document.getElementById('appointmentStatusFilter')?.value || '';
+    
+    let filtered = [...appointments];
+    
+    if (dateFilter) {
+        filtered = filtered.filter(a => a.date === dateFilter);
+    }
+    
+    if (doctorFilter) {
+        filtered = filtered.filter(a => a.doctorId == doctorFilter);
+    }
+    
+    if (statusFilter) {
+        filtered = filtered.filter(a => a.status === statusFilter);
+    }
+    
+    filtered.sort((a, b) => {
+        if (a.date !== b.date) return a.date.localeCompare(b.date);
+        return a.time.localeCompare(b.time);
+    });
+    
+    const today = new Date().toISOString().split('T')[0];
+    const weekLater = new Date();
+    weekLater.setDate(weekLater.getDate() + 7);
+    const weekLaterStr = weekLater.toISOString().split('T')[0];
+    
+    const appointmentsCount = document.getElementById('appointmentsCount');
+    const appointmentsTodayCount = document.getElementById('appointmentsTodayCount');
+    const appointmentsWeekCount = document.getElementById('appointmentsWeekCount');
+    
+    if (appointmentsCount) appointmentsCount.textContent = appointments.length;
+    if (appointmentsTodayCount) appointmentsTodayCount.textContent = appointments.filter(a => a.date === today).length;
+    if (appointmentsWeekCount) appointmentsWeekCount.textContent = appointments.filter(a => a.date >= today && a.date <= weekLaterStr).length;
+    
+    tbody.innerHTML = '';
+    
+    if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 40px;">📅 ' + (getCurrentAdminLang() === 'ru' ? 'Нет записей для отображения' : 'No appointments to display') + '</td></tr>';
+        return;
+    }
+    
+    const lang = getCurrentAdminLang();
+    
+    for (const app of filtered) {
+        const doctor = doctors.find(d => d.id === app.doctorId);
+        let doctorName = getUIText('unknown');
+        
+        if (doctor) {
+            if (lang === 'en') {
+                const lastName = doctor.lastName?.en || doctor.lastName?.ru || doctor.lastName || '';
+                const firstName = doctor.firstName?.en || doctor.firstName?.ru || doctor.firstName || '';
+                doctorName = `${lastName} ${firstName}`.trim();
+                if (!doctorName) doctorName = getUIText('unknown');
+            } else {
+                doctorName = getDoctorFullName(doctor);
+            }
+        }
+        
+        const service = services.find(s => s.id === app.serviceId);
+        let serviceName = getUIText('unknown');
+        if (service) {
+            if (typeof service.name === 'object') {
+                serviceName = service.name[lang] || service.name.ru || service.name.en || getUIText('unknown');
+            } else {
+                serviceName = service.name;
+            }
+        }
+        
+        const statusMap = {
+            pending: getUIText('status_pending'),
+            confirmed: getUIText('status_confirmed'),
+            completed: getUIText('status_completed'),
+            cancelled: getUIText('status_cancelled')
+        };
+        const statusText = statusMap[app.status] || app.status;
+        
+        let displayDate = formatDateForDisplay(app.date);
+        
+        let patientName = app.patientName;
+        if (typeof patientName === 'object') {
+            patientName = patientName[lang] || patientName.ru || patientName.en || JSON.stringify(patientName);
+        }
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${app.id}</td>
+            <td><strong>${escapeHtml(patientName)}</strong></td>
+            <td>${escapeHtml(app.phone)}</td>
+            <td>${escapeHtml(doctorName)}</td>
+            <td>${escapeHtml(serviceName)}</td>
+            <td>${displayDate}</td>
+            <td>${app.time}</td>
+            <td><span class="status-badge status-${app.status}">${statusText}</span></td>
+            <td class="action-buttons">
+                <button class="btn-edit-appointment" data-id="${app.id}" title="Редактировать">✏️</button>
+                <button class="btn-delete-appointment" data-id="${app.id}" title="Удалить">🗑️</button>
+                ${app.status === 'pending' ? `<button class="btn-confirm-appointment" data-id="${app.id}" title="Подтвердить">✅</button>` : ''}
+                ${app.status === 'confirmed' ? `<button class="btn-complete-appointment" data-id="${app.id}" title="Завершить">✔️</button>` : ''}
+            </td>
+        `;
+        tbody.appendChild(row);
+    }
+    
+    document.querySelectorAll('.btn-edit-appointment').forEach(btn => {
+        btn.addEventListener('click', () => editAppointment(parseInt(btn.dataset.id)));
+    });
+    document.querySelectorAll('.btn-delete-appointment').forEach(btn => {
+        btn.addEventListener('click', () => deleteAppointment(parseInt(btn.dataset.id)));
+    });
+    document.querySelectorAll('.btn-confirm-appointment').forEach(btn => {
+        btn.addEventListener('click', () => updateAppointmentStatus(parseInt(btn.dataset.id), 'confirmed'));
+    });
+    document.querySelectorAll('.btn-complete-appointment').forEach(btn => {
+        btn.addEventListener('click', () => updateAppointmentStatus(parseInt(btn.dataset.id), 'completed'));
+    });
+}
+
+function resetAppointmentFilters() {
+    const doctorFilter = document.getElementById('appointmentDoctorFilter');
+    const dateFilter = document.getElementById('appointmentDateFilter');
+    const statusFilter = document.getElementById('appointmentStatusFilter');
+    
+    if (doctorFilter) doctorFilter.value = '';
+    if (dateFilter) dateFilter.value = '';
+    if (statusFilter) statusFilter.value = '';
+    
+    renderAppointments();
+}
+
+// ========== ФУНКЦИИ ДЛЯ ОБНОВЛЕНИЯ ДАННЫХ ==========
+
+async function refreshPricesData() {
     try {
-        const [servicesRes, serviceDetailsRes, doctorsRes, appointmentsRes, reviewsRes, pricesRes, scheduleRes, discountsRes] = await Promise.all([
-            fetch(`${API_BASE_URL}/services`),
-            fetch(`${API_BASE_URL}/serviceDetails`),
-            fetch(`${API_BASE_URL}/doctors`),
-            fetch(`${API_BASE_URL}/appointments`),
-            fetch(`${API_BASE_URL}/reviews`),
-            fetch(`${API_BASE_URL}/prices`),
-            fetch(`${API_BASE_URL}/schedule`),
-            fetch(`${API_BASE_URL}/discounts`)
-        ]);
-        
-        let servicesData = await servicesRes.json();
-        let serviceDetailsData = await serviceDetailsRes.json();
-        let doctorsData = await doctorsRes.json();
-        let reviewsData = await reviewsRes.json();
-        let pricesDataRaw = await pricesRes.json();
-        let scheduleDataRaw = await scheduleRes.json();
-        
-        servicesData = localizeArray(servicesData, ['name', 'title']);
-        serviceDetailsData = localizeArray(serviceDetailsData, ['mainText', 'secondaryText', 'features', 'steps']);
-        doctorsData = localizeArray(doctorsData, ['lastName', 'firstName', 'middleName', 'specialization', 'education', 'experience', 'improvement']);
-        reviewsData = localizeArray(reviewsData, ['author', 'userInfo', 'text']);
-        
-        if (pricesDataRaw && pricesDataRaw.categories) {
-            pricesDataRaw.categories = localizeArray(pricesDataRaw.categories, ['name']);
+        const response = await fetch(`${API_BASE_URL}/prices`);
+        if (response.ok) {
+            const freshData = await response.json();
+            if (freshData) {
+                pricesData = freshData;
+                
+                if (pricesData.categories) {
+                    pricesData.categories = localizeArray(pricesData.categories, ['name']);
+                }
+                if (pricesData.services) {
+                    pricesData.services = localizeArray(pricesData.services, ['name', 'description']);
+                }
+                
+                console.log('🔄 Данные прайс-листа обновлены, категорий:', pricesData.categories?.length || 0);
+                return true;
+            }
         }
-        if (pricesDataRaw && pricesDataRaw.services) {
-            pricesDataRaw.services = localizeArray(pricesDataRaw.services, ['name', 'description']);
+    } catch (error) {
+        console.error('❌ Ошибка обновления данных прайс-листа:', error);
+    }
+    return false;
+}
+
+// ========== ФУНКЦИИ ДЛЯ РАБОТЫ С КАТЕГОРИЯМИ ==========
+
+async function openAddCategoryModal() {
+    await refreshPricesData();
+    
+    if (!pricesData) {
+        pricesData = { version: '2.0', categories: [], services: [] };
+    }
+    if (!pricesData.categories) pricesData.categories = [];
+    
+    document.getElementById('categoryId').value = '';
+    document.getElementById('categoryName').value = '';
+    const maxOrder = Math.max(...pricesData.categories.map(c => c.order || 0), 0);
+    document.getElementById('categoryOrder').value = maxOrder + 1;
+    document.getElementById('categoryActive').checked = true;
+    
+    document.getElementById('categoryModalTitle').textContent = getUIText('modal_add_category');
+    document.getElementById('categoryModal').style.display = 'flex';
+}
+
+async function editCategory(categoryId) {
+    await refreshPricesData();
+    
+    const category = pricesData?.categories?.find(c => c.id === categoryId);
+    if (!category) return;
+    
+    document.getElementById('categoryId').value = category.id;
+    document.getElementById('categoryName').value = typeof category.name === 'object' ? (category.name.ru || category.name) : category.name;
+    document.getElementById('categoryOrder').value = category.order || 0;
+    document.getElementById('categoryActive').checked = category.active !== false;
+    
+    document.getElementById('categoryModalTitle').textContent = getUIText('modal_edit_category');
+    document.getElementById('categoryModal').style.display = 'flex';
+}
+
+async function deleteCategory(categoryId) {
+    await refreshPricesData();
+    
+    const category = pricesData?.categories?.find(c => c.id === categoryId);
+    if (!category) return;
+    
+    const categoryName = typeof category.name === 'object' ? (category.name.ru || category.name) : category.name;
+    const servicesInCategory = pricesData?.services?.filter(s => s.categoryId === categoryId) || [];
+    
+    let confirmMessage = `Удалить категорию "${categoryName}"?`;
+    if (servicesInCategory.length > 0) {
+        confirmMessage += `\n\n⚠️ ВНИМАНИЕ: В этой категории ${servicesInCategory.length} услуг(а). Они также будут удалены!`;
+    }
+    
+    if (confirm(confirmMessage)) {
+        if (servicesInCategory.length > 0) {
+            pricesData.services = pricesData.services.filter(s => s.categoryId !== categoryId);
         }
         
-        if (scheduleDataRaw && scheduleDataRaw.doctors) {
-            scheduleDataRaw.doctors = localizeArray(scheduleDataRaw.doctors, ['name', 'specialization']);
+        pricesData.categories = pricesData.categories.filter(c => c.id !== categoryId);
+        
+        pricesData.categories.forEach((cat, index) => {
+            cat.order = index + 1;
+        });
+        
+        const saved = await savePricesData();
+        if (saved) {
+            await refreshPricesData();
+            await renderAdminPrices();
+            await updateCategoryFilters();
+            showToast(`Категория "${categoryName}" удалена`, 'success');
         }
-        if (scheduleDataRaw && scheduleDataRaw.schedule) {
-            scheduleDataRaw.schedule = localizeArray(scheduleDataRaw.schedule, ['dayName']);
+    }
+}
+
+async function saveCategory(event) {
+    event.preventDefault();
+    
+    const id = parseInt(document.getElementById('categoryId').value);
+    let name = document.getElementById('categoryName').value.trim();
+    const order = parseInt(document.getElementById('categoryOrder').value) || 999;
+    const active = document.getElementById('categoryActive').checked;
+    
+    if (!name) {
+        showToast('Введите название категории', 'error');
+        return;
+    }
+    
+    await refreshPricesData();
+    
+    if (!pricesData) {
+        pricesData = { version: '2.0', categories: [], services: [] };
+    }
+    if (!pricesData.categories) pricesData.categories = [];
+    
+    if (typeof name === 'string') {
+        name = { ru: name, en: name };
+    }
+    
+    if (id && id > 0) {
+        const index = pricesData.categories.findIndex(c => c.id === id);
+        if (index !== -1) {
+            pricesData.categories[index] = {
+                ...pricesData.categories[index],
+                name: name,
+                order: order,
+                active: active
+            };
+        }
+        showToast(`Категория обновлена`, 'success');
+    } else {
+        const newId = getNextPriceCategoryId(pricesData);
+        pricesData.categories.push({
+            id: newId,
+            name: name,
+            order: order,
+            active: active
+        });
+        showToast(`Категория добавлена`, 'success');
+    }
+    
+    pricesData.categories.sort((a, b) => (a.order || 0) - (b.order || 0));
+    
+    const saved = await savePricesData();
+    
+    if (saved) {
+        await refreshPricesData();
+        await updateCategoryFilters();
+        await renderAdminPrices();
+        
+        const discountCategoryFilter = document.getElementById('discountCategoryFilter');
+        if (discountCategoryFilter && pricesData?.categories) {
+            const currentValue = discountCategoryFilter.value;
+            discountCategoryFilter.innerHTML = '<option value="all">Все категории</option>';
+            pricesData.categories.filter(c => c.active !== false).forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                let categoryName = cat.name;
+                if (typeof categoryName === 'object') {
+                    const lang = getCurrentAdminLang();
+                    categoryName = categoryName[lang] || categoryName.ru || cat.name;
+                }
+                option.textContent = categoryName;
+                discountCategoryFilter.appendChild(option);
+            });
+            if (currentValue && discountCategoryFilter.querySelector(`option[value="${currentValue}"]`)) {
+                discountCategoryFilter.value = currentValue;
+            }
         }
         
-        discounts = localizeArray(await discountsRes.json(), ['name', 'description']);
+        const totalCategories = document.getElementById('totalCategories');
+        if (totalCategories) {
+            totalCategories.textContent = pricesData.categories.length;
+        }
+    }
+    
+    document.getElementById('categoryModal').style.display = 'none';
+    document.getElementById('categoryForm').reset();
+}
+
+async function savePricesData() {
+    try {
+        if (!pricesData) {
+            pricesData = { version: '2.0', categories: [], services: [] };
+        }
+        if (!pricesData.categories) pricesData.categories = [];
+        if (!pricesData.services) pricesData.services = [];
+        if (!pricesData.version) pricesData.version = '2.0';
         
-        services = servicesData;
-        serviceDetails = serviceDetailsData;
-        doctors = doctorsData;
-        appointments = await appointmentsRes.json();
-        reviews = reviewsData;
-        pricesData = pricesDataRaw;
-        scheduleData = scheduleDataRaw;
+        const response = await fetch(`${API_BASE_URL}/prices`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pricesData)
+        });
         
-        console.log('✅ Все данные загружены с локализацией, язык:', getCurrentAdminLang());
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        console.log('✅ Данные прайс-листа сохранены в JSON Server');
         return true;
     } catch (error) {
-        console.error('❌ Ошибка загрузки данных:', error);
-        showToast('Ошибка подключения к серверу. Запустите json-server --watch db.json --port 3000', 'error');
+        console.error('❌ Ошибка сохранения прайс-листа:', error);
+        showToast('Ошибка сохранения', 'error');
         return false;
     }
 }
 
-function getDiscountByCategoryId(categoryId) {
-    const today = new Date().toISOString().split('T')[0];
-    return discounts.find(d => {
-        if (d.discountCategoryId !== categoryId) return false;
-        if (!d.active) return false;
-        if (d.startDate && d.endDate) {
-            return today >= d.startDate && today <= d.endDate;
+async function updateCategoryFilters() {
+    const lang = getCurrentAdminLang();
+    
+    const categoryFilter = document.getElementById('priceCategoryFilter');
+    if (categoryFilter && pricesData?.categories) {
+        const currentValue = categoryFilter.value;
+        categoryFilter.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
+        
+        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        sortedCategories.filter(c => c.active !== false).forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
+            categoryFilter.appendChild(option);
+        });
+        
+        if (currentValue && categoryFilter.querySelector(`option[value="${currentValue}"]`)) {
+            categoryFilter.value = currentValue;
         }
-        return true;
+    }
+    
+    const discountCategoryFilter = document.getElementById('discountCategoryFilter');
+    if (discountCategoryFilter && pricesData?.categories) {
+        const currentValue = discountCategoryFilter.value;
+        discountCategoryFilter.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
+        
+        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        sortedCategories.filter(c => c.active !== false).forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
+            discountCategoryFilter.appendChild(option);
+        });
+        
+        if (currentValue && discountCategoryFilter.querySelector(`option[value="${currentValue}"]`)) {
+            discountCategoryFilter.value = currentValue;
+        }
+    }
+    
+    const priceServiceCategory = document.getElementById('priceServiceCategoryId');
+    if (priceServiceCategory && pricesData?.categories) {
+        const currentValue = priceServiceCategory.value;
+        priceServiceCategory.innerHTML = '<option value="" data-translate="select_category_option">-- Выберите категорию --</option>';
+        
+        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        sortedCategories.filter(c => c.active !== false).forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
+            priceServiceCategory.appendChild(option);
+        });
+        
+        const firstOption = priceServiceCategory.options[0];
+        if (firstOption) firstOption.textContent = getUIText('select_category_option');
+        if (currentValue && priceServiceCategory.querySelector(`option[value="${currentValue}"]`)) {
+            priceServiceCategory.value = currentValue;
+        }
+    }
+    
+    const discountServiceId = document.getElementById('discountServiceId');
+    if (discountServiceId && pricesData?.categories) {
+        const currentValue = discountServiceId.value;
+        discountServiceId.innerHTML = '<option value="" data-translate="select_category_option">-- Выберите категорию --</option>';
+        
+        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        sortedCategories.filter(c => c.active !== false).forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
+            discountServiceId.appendChild(option);
+        });
+        
+        const firstOption = discountServiceId.options[0];
+        if (firstOption) firstOption.textContent = getUIText('select_category_option');
+        if (currentValue && discountServiceId.querySelector(`option[value="${currentValue}"]`)) {
+            discountServiceId.value = currentValue;
+        }
+    }
+    
+    console.log('✅ Фильтры категорий обновлены, категорий:', pricesData?.categories?.length || 0);
+}
+
+// ========== ОТОБРАЖЕНИЕ ПРАЙС-ЛИСТА В АДМИНКЕ ==========
+
+async function renderAdminPrices() {
+    const container = document.getElementById('pricesAdminContainer');
+    if (!container) return;
+    
+    await refreshPricesData();
+    
+    const lang = getCurrentAdminLang();
+    const categoryFilter = document.getElementById('priceCategoryFilter')?.value || 'all';
+    const searchFilter = document.getElementById('priceSearchFilter')?.value.toLowerCase() || '';
+    
+    let categories = pricesData?.categories?.filter(c => c.active) || [];
+    let servicesList = pricesData?.services?.filter(s => s.active) || [];
+    
+    categories = categories.map(cat => ({
+        ...cat,
+        localizedName: getLocalizedText(cat.name)
+    }));
+    
+    if (categoryFilter !== 'all') {
+        servicesList = servicesList.filter(s => s.categoryId == categoryFilter);
+        categories = categories.filter(c => c.id == categoryFilter);
+    }
+    
+    if (searchFilter) {
+        servicesList = servicesList.filter(s => s.name.toLowerCase().includes(searchFilter));
+        const categoryIds = [...new Set(servicesList.map(s => s.categoryId))];
+        categories = categories.filter(c => categoryIds.includes(c.id));
+    }
+    
+    const totalCategories = document.getElementById('totalCategories');
+    const totalPriceServices = document.getElementById('totalPriceServices');
+    if (totalCategories) totalCategories.textContent = categories.length;
+    if (totalPriceServices) totalPriceServices.textContent = servicesList.length;
+    
+    const categorySelect = document.getElementById('priceCategoryFilter');
+    if (categorySelect && categorySelect.options.length <= 1 && pricesData?.categories) {
+        await updateCategoryFilters();
+    }
+    
+    if (categories.length === 0) {
+        container.innerHTML = '<div class="empty-prices" style="text-align: center; padding: 40px; color: #6B7280;">Нет категорий для отображения</div>';
+        return;
+    }
+    
+    let html = '';
+    for (const category of categories) {
+        const categoryServices = servicesList.filter(s => s.categoryId === category.id);
+        
+        const categoryDiscount = getDiscountByCategoryId(category.id);
+        
+        const discountLabel = getUIText('discount_label');
+        const untilLabel = getUIText('until_label');
+        
+        let discountHtml = '';
+        if (categoryDiscount) {
+            const discountValue = categoryDiscount.type === 'percentage' 
+                ? categoryDiscount.value + '%' 
+                : categoryDiscount.value + ' BYN';
+            const dateText = categoryDiscount.endDate ? ` ${untilLabel} ${categoryDiscount.endDate}` : '';
+            discountHtml = `
+                <span style="background: #EF4444; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-left: 12px;">
+                    ${discountLabel}: ${discountValue}${dateText}
+                </span>
+            `;
+        }
+        
+        html += `
+            <div class="price-category-card" style="background: white; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" data-category-id="${category.id}">
+                <div class="price-category-header" style="cursor: pointer; background: #2F353B; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; flex-wrap: wrap;">
+                        <h3 style="color: white; margin: 0;">${escapeHtml(category.localizedName)}</h3>
+                        ${discountHtml}
+                    </div>
+                    <div>
+                        <span style="background: #A5C33C; color: #1a1e22; padding: 4px 10px; border-radius: 20px; font-size: 12px; margin-right: 15px;">${categoryServices.length} ${getUIText('stat_services_count')}</span>
+                        <button class="btn-edit-category" data-id="${category.id}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;" title="Редактировать категорию">✏️</button>
+                        <button class="btn-delete-category" data-id="${category.id}" style="background: #FEE2E2; color: #DC2626; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;" title="Удалить категорию">🗑️</button>
+                        <span class="price-category-toggle" style="color: white; font-size: 20px; margin-left: 10px;">▼</span>
+                    </div>
+                </div>
+                <div class="category-content" style="display: block; padding: 20px; background: white; overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <colgroup>
+                            <col style="width: 35%;">
+                            <col style="width: 20%;">
+                            <col style="width: 15%;">
+                            <col style="width: 20%;">
+                            <col style="width: 10%;">
+                        </colgroup>
+                        <thead>
+                            <tr style="background: #F3F4F6;">
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_name')}</th>
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_price')}</th>
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_currency')}</th>
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_note')}</th>
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600; width: 100px;">${getUIText('th_actions')}</th>
+                              </tr>
+                        </thead>
+                        <tbody>
+        `;
+        
+        if (categoryServices.length === 0) {
+            html += `
+                <tr style="border-bottom: 1px solid #E5E7EB;">
+                    <td colspan="5" style="padding: 30px; text-align: center; color: #9CA3AF;">
+                        Нет услуг в этой категории
+                      </td>
+                  </tr>
+            `;
+        } else {
+            for (const service of categoryServices) {
+                let priceDisplay = '';
+                const originalPrice = parseFloat(service.price);
+                
+                let serviceName = service.name;
+                if (typeof serviceName === 'object') {
+                    serviceName = serviceName[lang] || serviceName.ru || service.name;
+                }
+                
+                let serviceDescription = service.description || '—';
+                if (typeof serviceDescription === 'object') {
+                    serviceDescription = serviceDescription[lang] || serviceDescription.ru || '—';
+                }
+                
+                if (service.price === '0') {
+                    priceDisplay = getUIText('price_free');
+                } else if (categoryDiscount) {
+                    let discountedPrice = originalPrice;
+                    if (categoryDiscount.type === 'percentage') {
+                        discountedPrice = originalPrice * (1 - categoryDiscount.value / 100);
+                        priceDisplay = `
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <span style="text-decoration: line-through; color: #9CA3AF; font-size: 12px;">${originalPrice}</span>
+                                <span style="color: #EF4444; font-weight: 700; font-size: 15px;">${discountedPrice.toFixed(0)} <span style="font-size: 11px;">${getUIText('price_with_discount')}</span></span>
+                            </div>
+                        `;
+                    } else {
+                        discountedPrice = Math.max(0, originalPrice - categoryDiscount.value);
+                        priceDisplay = `
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <span style="text-decoration: line-through; color: #9CA3AF; font-size: 12px;">${originalPrice}</span>
+                                <span style="color: #EF4444; font-weight: 700; font-size: 15px;">${discountedPrice.toFixed(0)} <span style="font-size: 11px;">${getUIText('price_with_discount')}</span></span>
+                            </div>
+                        `;
+                    }
+                } else {
+                    priceDisplay = `<span style="font-size: 15px;">${originalPrice}</span>`;
+                }
+                
+                html += `
+                    <tr style="border-bottom: 1px solid #E5E7EB;">
+                        <td style="padding: 12px 15px; word-break: break-word;"><strong>${escapeHtml(serviceName)}</strong></td>
+                        <td style="padding: 12px 15px; vertical-align: top;">${priceDisplay}</td>
+                        <td style="padding: 12px 15px; vertical-align: top;">${getCurrencyHtml(service.unit)}</td>
+                        <td style="padding: 12px 15px; vertical-align: top; word-break: break-word;">${escapeHtml(serviceDescription)}</td>
+                        <td style="padding: 12px 15px; vertical-align: top; white-space: nowrap;">
+                            <button class="btn-edit-price-service" data-id="${service.id}" data-category-id="${category.id}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;">✏️</button>
+                            <button class="btn-delete-price-service" data-id="${service.id}" style="background: #FEE2E2; color: #DC2626; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">🗑️</button>
+                          </td>
+                       </tr>
+                `;
+            }
+        }
+        
+        html += `
+                        </tbody>
+                     </table>
+                </div>
+            </div>
+        `;
+    }
+    
+    container.innerHTML = html;
+    
+    document.querySelectorAll('.price-category-header').forEach(header => {
+        const newHeader = header.cloneNode(true);
+        header.parentNode.replaceChild(newHeader, header);
+        
+        newHeader.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') return;
+            const card = this.closest('.price-category-card');
+            const content = card.querySelector('.category-content');
+            const toggle = this.querySelector('.price-category-toggle');
+            
+            if (content) {
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                    if (toggle) toggle.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.display = 'none';
+                    if (toggle) toggle.style.transform = 'rotate(180deg)';
+                }
+            }
+        });
+    });
+    
+    document.querySelectorAll('.btn-edit-category').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            editCategory(parseInt(newBtn.dataset.id));
+        });
+    });
+    
+    document.querySelectorAll('.btn-delete-category').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteCategory(parseInt(newBtn.dataset.id));
+        });
+    });
+    
+    document.querySelectorAll('.btn-edit-price-service').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const serviceId = parseInt(newBtn.dataset.id);
+            const categoryId = parseInt(newBtn.dataset.categoryId);
+            editPriceService(serviceId, categoryId);
+        });
+    });
+    
+    document.querySelectorAll('.btn-delete-price-service').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            deletePriceService(parseInt(newBtn.dataset.id));
+        });
     });
 }
 
+async function editPriceService(id, categoryId) {
+    await refreshPricesData();
+    
+    const service = pricesData?.services?.find(s => s.id === id);
+    if (!service) return;
+    
+    const categorySelect = document.getElementById('priceServiceCategoryId');
+    categorySelect.innerHTML = '<option value="">-- Выберите категорию --</option>';
+    pricesData?.categories?.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.id;
+        let categoryName = cat.name;
+        if (typeof categoryName === 'object') {
+            const lang = getCurrentAdminLang();
+            categoryName = categoryName[lang] || categoryName.ru || cat.name;
+        }
+        option.textContent = categoryName;
+        categorySelect.appendChild(option);
+    });
+    
+    const currentDiscount = getDiscountByCategoryId(categoryId || service.categoryId);
+    
+    document.getElementById('priceServiceId').value = service.id;
+    document.getElementById('priceServiceCategoryId').value = service.categoryId;
+    document.getElementById('priceServiceName').value = service.name;
+    document.getElementById('priceServicePrice').value = service.price;
+    document.getElementById('priceServiceUnit').value = service.unit;
+    document.getElementById('priceServiceDescription').value = service.description || '';
+    document.getElementById('priceServiceOrder').value = service.order || '';
+    document.getElementById('priceServiceActive').checked = service.active;
+    
+    const discountInfoContainer = document.getElementById('priceServiceDiscountInfo');
+    if (discountInfoContainer) {
+        if (currentDiscount) {
+            const activeDiscountText = getUIText('active_discount_on_category');
+            const validUntilText = getUIText('valid_until');
+            discountInfoContainer.innerHTML = `
+                <div style="background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 12px; margin-top: 10px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 20px;">🏷️</span>
+                        <div>
+                            <strong style="color: #D97706;">${activeDiscountText}</strong><br>
+                            <span style="font-size: 13px;">${escapeHtml(currentDiscount.name)}: ${currentDiscount.type === 'percentage' ? currentDiscount.value + '%' : currentDiscount.value + ' BYN'}</span>
+                            ${currentDiscount.endDate ? `<span style="font-size: 12px; color: #6B7280;"> (${validUntilText} ${currentDiscount.endDate})</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            discountInfoContainer.style.display = 'block';
+        } else {
+            discountInfoContainer.innerHTML = '';
+            discountInfoContainer.style.display = 'none';
+        }
+    }
+    
+    document.getElementById('priceServiceModalTitle').textContent = 'Редактировать услугу';
+    document.getElementById('priceServiceModal').style.display = 'flex';
+}
+
+async function deletePriceService(id) {
+    if (confirm('Удалить эту услугу из прайс-листа?')) {
+        pricesData.services = pricesData.services.filter(s => s.id !== id);
+        await savePricesData();
+        await refreshPricesData();
+        await renderAdminPrices();
+        showToast('Услуга удалена', 'success');
+    }
+}
+
+async function savePriceService(event) {
+    event.preventDefault();
+    const id = parseInt(document.getElementById('priceServiceId').value);
+    const categoryId = parseInt(document.getElementById('priceServiceCategoryId').value);
+    const name = document.getElementById('priceServiceName').value.trim();
+    const price = document.getElementById('priceServicePrice').value.trim();
+    const unit = document.getElementById('priceServiceUnit').value;
+    const description = document.getElementById('priceServiceDescription').value.trim();
+    const order = parseInt(document.getElementById('priceServiceOrder').value) || 999;
+    const active = document.getElementById('priceServiceActive').checked;
+    
+    if (!categoryId || !name) {
+        showToast('Заполните обязательные поля', 'error');
+        return;
+    }
+    
+    if (id) {
+        const index = pricesData.services.findIndex(s => s.id === id);
+        if (index !== -1) {
+            pricesData.services[index] = { ...pricesData.services[index], categoryId, name, price, unit, description, order, active };
+        }
+    } else {
+        const newId = getNextPriceServiceId(pricesData);
+        pricesData.services.push({ id: newId, categoryId, name, price, unit, description, order, active });
+    }
+    
+    try {
+        await savePricesData();
+        await refreshPricesData();
+        await renderAdminPrices();
+        showToast('Услуга сохранена', 'success');
+        document.getElementById('priceServiceModal').style.display = 'none';
+        document.getElementById('priceServiceForm').reset();
+    } catch (error) {
+        showToast('Ошибка сохранения', 'error');
+    }
+}
+
+// ========== ОБНОВЛЕНИЕ ПЕРЕВОДОВ ==========
+
 function updateAdminUITranslations() {
     const currentLang = getCurrentAdminLang();
+    
+    const dateFilterInput = document.getElementById('appointmentDateFilter');
+    if (dateFilterInput) {
+        dateFilterInput.placeholder = getDatePlaceholder();
+    }
     
     document.querySelectorAll('[data-admin-translate]').forEach(el => {
         const key = el.getAttribute('data-admin-translate');
@@ -786,6 +1790,23 @@ function updateAdminUITranslations() {
         }
     });
     
+    const doctorFilter = document.getElementById('appointmentDoctorFilter');
+    if (doctorFilter && doctorFilter.options.length > 0) {
+        const firstOption = doctorFilter.options[0];
+        if (firstOption) {
+            firstOption.textContent = getUIText('filter_all_doctors');
+        }
+    }
+    
+    const statusFilter = document.getElementById('appointmentStatusFilter');
+    if (statusFilter && statusFilter.options.length > 1) {
+        const statusOptions = ['filter_all_statuses', 'status_pending', 'status_confirmed', 'status_completed', 'status_cancelled'];
+        statusFilter.querySelectorAll('option').forEach((opt, idx) => {
+            if (statusOptions[idx]) {
+                opt.textContent = getUIText(statusOptions[idx]);
+            }
+        });
+    }
     
     const serviceNameInput = document.getElementById('serviceName');
     if (serviceNameInput && serviceNameInput.hasAttribute('placeholder')) {
@@ -822,16 +1843,6 @@ function updateAdminUITranslations() {
         categoryNameInput.placeholder = getUIText('category_name_placeholder');
     }
     
-    const appointmentDateInput = document.getElementById('appointmentDate');
-    if (appointmentDateInput && appointmentDateInput.hasAttribute('placeholder')) {
-        appointmentDateInput.placeholder = getUIText('date_placeholder');
-    }
-    
-    const dateFilterInput = document.getElementById('appointmentDateFilter');
-    if (dateFilterInput && dateFilterInput.hasAttribute('placeholder')) {
-        dateFilterInput.placeholder = getUIText('date_placeholder');
-    }
-
     const detailServiceSelect = document.getElementById('detailServiceId');
     if (detailServiceSelect && detailServiceSelect.options.length > 0) {
         const firstOption = detailServiceSelect.options[0];
@@ -1031,7 +2042,6 @@ function updateAdminUITranslations() {
     const resetDiscountBtn = document.getElementById('resetDiscountFilters');
     if (resetDiscountBtn) resetDiscountBtn.textContent = getUIText('btn_reset');
     
-    // ========== ПЕРЕВОД СТАТИСТИКИ ==========
     const statLabels = document.querySelectorAll('.stat-label');
     const statKeys = [
         'stat_total_services', 'stat_active_services',
@@ -1046,21 +2056,6 @@ function updateAdminUITranslations() {
         if (statKeys[idx]) label.textContent = getUIText(statKeys[idx]);
     });
     
-    const doctorFilter = document.getElementById('appointmentDoctorFilter');
-    if (doctorFilter && doctorFilter.options.length > 1) {
-        const oldValue = doctorFilter.value;
-        doctorFilter.options[0].textContent = getUIText('filter_all_doctors');
-        doctorFilter.value = oldValue;
-    }
-    
-    const statusFilter = document.getElementById('appointmentStatusFilter');
-    if (statusFilter && statusFilter.options.length > 1) {
-        const statusOptions = ['filter_all_statuses', 'status_pending', 'status_confirmed', 'status_completed', 'status_cancelled'];
-        statusFilter.querySelectorAll('option').forEach((opt, idx) => {
-            if (statusOptions[idx]) opt.textContent = getUIText(statusOptions[idx]);
-        });
-    }
-    
     const reviewSearch = document.getElementById('reviewSearchFilter');
     if (reviewSearch) reviewSearch.placeholder = getUIText('search_by_name_text');
     
@@ -1074,7 +2069,14 @@ function updateAdminUITranslations() {
     if (patientHeader) {
         patientHeader.textContent = getUIText('th_patient');
     }
+    
+    const adminLangToggle = document.getElementById('adminLangToggle');
+    if (adminLangToggle) {
+        adminLangToggle.innerHTML = currentLang === 'ru' ? '🌐 RUS / ENG' : '🌐 ENG / RUS';
+    }
 }
+
+// ========== УПРАВЛЕНИЕ УСЛУГАМИ ==========
 
 async function renderServices() {
     const tbody = document.getElementById('servicesList');
@@ -1090,17 +2092,18 @@ async function renderServices() {
     services.forEach(service => {
         const statusText = service.active ? getUIText('status_active') : getUIText('status_inactive');
         const statusClass = service.active ? 'status-active' : 'status-inactive';
+        const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
         
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${service.id}</td>
-            <td><strong>${escapeHtml(service.name)}</strong></td>
+            <td><strong>${escapeHtml(serviceName)}</strong></td>
             <td><code>${escapeHtml(service.page)}</code></td>
             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
             <td class="action-buttons">
-                <button class="btn-edit-service" data-id="${service.id}">${getUIText('action_edit')}</button>
-                <button class="btn-delete-service" data-id="${service.id}">${getUIText('action_delete')}</button>
-              </td>
+                <button class="btn-edit-service" data-id="${service.id}">✏️ ${getUIText('action_edit')}</button>
+                <button class="btn-delete-service" data-id="${service.id}">🗑️ ${getUIText('action_delete')}</button>
+             </span>
         `;
         tbody.appendChild(row);
     });
@@ -1116,14 +2119,17 @@ async function renderServices() {
 async function deleteService(id) {
     const service = services.find(s => s.id === id);
     if (!service) return;
-    if (confirm(`Удалить услугу "${service.name}"?`)) {
+    
+    const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
+    
+    if (confirm(`Удалить услугу "${serviceName}"?`)) {
         try {
             await fetch(`${API_BASE_URL}/services/${id}`, { method: 'DELETE' });
             await loadAllData();
             await renderServices();
             await updateServiceDetailsFilter();
             await updateAppointmentFilters();
-            showToast(`Услуга "${service.name}" удалена`);
+            showToast(`Услуга "${serviceName}" удалена`);
         } catch (error) {
             showToast('Ошибка удаления', 'error');
         }
@@ -1153,7 +2159,7 @@ async function saveService(event) {
             });
             showToast(`Услуга "${name}" обновлена`);
         } else {
-            const newId = Date.now();
+            const newId = await getNextServiceId();
             await fetch(`${API_BASE_URL}/services`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1178,10 +2184,10 @@ function openServiceModal(editMode = false, serviceData = null) {
     document.getElementById('serviceModalTitle').textContent = editMode ? getUIText('modal_edit_service') : getUIText('modal_add_service');
     if (serviceData) {
         document.getElementById('serviceId').value = serviceData.id;
-        document.getElementById('serviceName').value = serviceData.name;
+        document.getElementById('serviceName').value = typeof serviceData.name === 'object' ? (serviceData.name.ru || serviceData.name.en) : serviceData.name;
         document.getElementById('servicePage').value = serviceData.page;
         document.getElementById('serviceBgImage').value = serviceData.bgImage || '';
-        document.getElementById('serviceTitle').value = serviceData.title || '';
+        document.getElementById('serviceTitle').value = typeof serviceData.title === 'object' ? (serviceData.title.ru || serviceData.title.en) : (serviceData.title || '');
         document.getElementById('serviceActive').checked = serviceData.active;
     } else {
         document.getElementById('serviceForm').reset();
@@ -1198,75 +2204,174 @@ function editService(id) {
     }
 }
 
+// ========== ДЕТАЛЬНАЯ ИНФОРМАЦИЯ УСЛУГ ==========
+
 async function renderServiceDetails() {
     const tbody = document.getElementById('serviceDetailsList');
     const filterValue = document.getElementById('detailServiceFilter')?.value || '';
     if (!tbody) return;
     
-    let filtered = [...serviceDetails];
+    let filteredServices = [...services];
+    
     if (filterValue) {
-        filtered = filtered.filter(d => d.serviceId == filterValue);
+        filteredServices = filteredServices.filter(s => s.id == filterValue);
     }
     
     tbody.innerHTML = '';
-    for (const detail of filtered) {
-        const service = services.find(s => s.id === detail.serviceId);
-        const serviceName = service ? service.name : 'Неизвестно';
-        const hasContent = detail.mainText || detail.features || detail.steps;
-        const statusText = hasContent ? getUIText('detail_filled') : getUIText('detail_empty');
+    
+    const lang = getCurrentAdminLang();
+    const filledText = getUIText('status_filled');
+    const notFilledText = getUIText('status_not_filled');
+    
+    for (const service of filteredServices) {
+        const detail = serviceDetails.find(d => d.serviceId === service.id);
+        
+        const serviceName = typeof service.name === 'object' ? (service.name[lang] || service.name.ru || service.name.en || service.name) : service.name;
+        const hasContent = detail && (detail.mainText || detail.features || detail.steps);
+        const statusText = hasContent ? filledText : notFilledText;
         const statusClass = hasContent ? 'status-active' : 'status-inactive';
+        
+        let mainTextPreview = '—';
+        if (detail && detail.mainText) {
+            const mainText = typeof detail.mainText === 'object' ? (detail.mainText[lang] || detail.mainText.ru || detail.mainText.en) : detail.mainText;
+            mainTextPreview = mainText ? mainText.substring(0, 50) + (mainText.length > 50 ? '...' : '') : '—';
+        }
         
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${detail.id}</td>
+            <td>${service.id}</td>
             <td><strong>${escapeHtml(serviceName)}</strong></td>
-            <td>${detail.mainText ? detail.mainText.substring(0, 50) + '...' : '—'}</td>
-            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            <td>${escapeHtml(mainTextPreview)}</span>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></span>
             <td class="action-buttons">
-                <button class="btn-edit-detail" data-id="${detail.id}">${getUIText('action_edit')}</button>
-                <button class="btn-delete-detail" data-id="${detail.id}">${getUIText('action_delete')}</button>
-              </td>
+                <button class="btn-edit-detail" data-service-id="${service.id}" title="Редактировать">✏️ ${getUIText('action_edit')}</button>
+                ${hasContent ? '<span style="margin-left: 10px; font-size: 12px; color: #10B981;">✅</span>' : '<span style="margin-left: 10px; font-size: 12px; color: #F59E0B;">⚠️</span>'}
+             </span>
         `;
         tbody.appendChild(row);
     }
     
     document.querySelectorAll('.btn-edit-detail').forEach(btn => {
-        btn.addEventListener('click', () => editServiceDetail(parseInt(btn.dataset.id)));
+        btn.removeEventListener('click', handleEditDetail);
+        btn.addEventListener('click', handleEditDetail);
     });
-    document.querySelectorAll('.btn-delete-detail').forEach(btn => {
-        btn.addEventListener('click', () => deleteServiceDetail(parseInt(btn.dataset.id)));
-    });
+}
+
+function handleEditDetail(e) {
+    const serviceId = parseInt(e.currentTarget.dataset.serviceId);
+    editServiceDetailByServiceId(serviceId);
+}
+
+async function editServiceDetailByServiceId(serviceId) {
+    const service = services.find(s => s.id === serviceId);
+    if (!service) {
+        showToast('Услуга не найдена', 'error');
+        return;
+    }
+    
+    let detail = serviceDetails.find(d => d.serviceId === serviceId);
+    
+    if (!detail) {
+        const newId = await getNextServiceDetailId();
+        const newDetail = {
+            id: newId,
+            serviceId: serviceId,
+            mainText: '',
+            secondaryText: '',
+            features: '',
+            steps: '',
+            images: ''
+        };
+        
+        try {
+            const response = await fetch(`${API_BASE_URL}/serviceDetails`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newDetail)
+            });
+            
+            if (response.ok) {
+                await loadAllData();
+                detail = serviceDetails.find(d => d.serviceId === serviceId);
+                showToast(`Создана новая запись для "${getLocalizedText(service.name)}"`, 'success');
+            }
+        } catch (error) {
+            console.error('Ошибка создания:', error);
+            showToast('Ошибка создания детальной информации', 'error');
+            return;
+        }
+    }
+    
+    openDetailModal(true, detail);
 }
 
 async function updateServiceDetailsFilter() {
     const filter = document.getElementById('detailServiceFilter');
     if (!filter) return;
+    
+    const currentValue = filter.value;
     filter.innerHTML = `<option value="">${getUIText('filter_all_services')}</option>`;
-    services.forEach(service => {
+    
+    const sortedServices = [...services].sort((a, b) => (a.order || a.id) - (b.order || b.id));
+    
+    sortedServices.forEach(service => {
         const option = document.createElement('option');
         option.value = service.id;
-        option.textContent = service.name;
+        const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
+        option.textContent = serviceName;
         filter.appendChild(option);
     });
+    
+    if (currentValue && filter.querySelector(`option[value="${currentValue}"]`)) {
+        filter.value = currentValue;
+    }
 }
 
-async function deleteServiceDetail(id) {
-    const detail = serviceDetails.find(d => d.id === id);
-    if (!detail) return;
-    if (confirm(`Удалить детальную информацию?`)) {
-        try {
-            await fetch(`${API_BASE_URL}/serviceDetails/${id}`, { method: 'DELETE' });
-            await loadAllData();
-            await renderServiceDetails();
-            showToast('Детальная информация удалена');
-        } catch (error) {
-            showToast('Ошибка удаления', 'error');
-        }
+function openDetailModal(editMode = false, detailData = null) {
+    const modalTitle = document.getElementById('detailModalTitle');
+    if (modalTitle) {
+        modalTitle.textContent = editMode ? 'Редактировать детальную информацию' : 'Добавить детальную информацию';
     }
+    
+    const serviceSelect = document.getElementById('detailServiceId');
+    if (serviceSelect) {
+        serviceSelect.innerHTML = '<option value="">-- Выберите услугу --</option>';
+        const sortedServices = [...services].sort((a, b) => (a.order || a.id) - (b.order || b.id));
+        sortedServices.forEach(service => {
+            const option = document.createElement('option');
+            option.value = service.id;
+            const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
+            option.textContent = serviceName;
+            serviceSelect.appendChild(option);
+        });
+    }
+    
+    if (detailData) {
+        document.getElementById('detailId').value = detailData.id || '';
+        document.getElementById('detailServiceId').value = detailData.serviceId || '';
+        document.getElementById('detailMainText').value = detailData.mainText || '';
+        document.getElementById('detailSecondaryText').value = detailData.secondaryText || '';
+        document.getElementById('detailFeatures').value = detailData.features || '';
+        document.getElementById('detailSteps').value = detailData.steps || '';
+        document.getElementById('detailImages').value = detailData.images || '';
+    } else {
+        document.getElementById('detailForm').reset();
+        document.getElementById('detailId').value = '';
+    }
+    
+    if (serviceSelect && editMode && detailData) {
+        serviceSelect.disabled = true;
+    } else if (serviceSelect) {
+        serviceSelect.disabled = false;
+    }
+    
+    const modal = document.getElementById('detailModal');
+    if (modal) modal.style.display = 'flex';
 }
 
 async function saveServiceDetail(event) {
     event.preventDefault();
+    
     const id = parseInt(document.getElementById('detailId').value);
     const serviceId = parseInt(document.getElementById('detailServiceId').value);
     const mainText = document.getElementById('detailMainText').value;
@@ -1280,67 +2385,52 @@ async function saveServiceDetail(event) {
         return;
     }
     
+    const detailData = {
+        id: id,
+        serviceId: serviceId,
+        mainText: mainText,
+        secondaryText: secondaryText,
+        features: features,
+        steps: steps,
+        images: images
+    };
+    
     try {
+        let response;
         if (id) {
-            await fetch(`${API_BASE_URL}/serviceDetails/${id}`, {
+            response = await fetch(`${API_BASE_URL}/serviceDetails/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, serviceId, mainText, secondaryText, features, steps, images })
+                body: JSON.stringify(detailData)
             });
-            showToast('Детальная информация обновлена');
+            showToast('Детальная информация обновлена', 'success');
         } else {
-            const newId = Date.now();
-            await fetch(`${API_BASE_URL}/serviceDetails`, {
+            const newId = await getNextServiceDetailId();
+            detailData.id = newId;
+            response = await fetch(`${API_BASE_URL}/serviceDetails`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: newId, serviceId, mainText, secondaryText, features, steps, images })
+                body: JSON.stringify(detailData)
             });
-            showToast('Детальная информация добавлена');
+            showToast('Детальная информация добавлена', 'success');
         }
+        
+        if (!response.ok) throw new Error('Ошибка сохранения');
         
         await loadAllData();
         await renderServiceDetails();
+        await updateServiceDetailsFilter();
         
         document.getElementById('detailModal').style.display = 'none';
         document.getElementById('detailForm').reset();
+        
     } catch (error) {
+        console.error('Ошибка сохранения:', error);
         showToast('Ошибка сохранения', 'error');
     }
 }
 
-function openDetailModal(editMode = false, detailData = null) {
-    document.getElementById('detailModalTitle').textContent = editMode ? 'Редактировать детальную информацию' : 'Добавить детальную информацию';
-    
-    const serviceSelect = document.getElementById('detailServiceId');
-    serviceSelect.innerHTML = '<option value="">-- Выберите услугу --</option>';
-    services.forEach(service => {
-        const option = document.createElement('option');
-        option.value = service.id;
-        option.textContent = service.name;
-        serviceSelect.appendChild(option);
-    });
-    
-    if (detailData) {
-        document.getElementById('detailId').value = detailData.id;
-        document.getElementById('detailServiceId').value = detailData.serviceId;
-        document.getElementById('detailMainText').value = detailData.mainText || '';
-        document.getElementById('detailSecondaryText').value = detailData.secondaryText || '';
-        document.getElementById('detailFeatures').value = detailData.features || '';
-        document.getElementById('detailSteps').value = detailData.steps || '';
-        document.getElementById('detailImages').value = detailData.images || '';
-    } else {
-        document.getElementById('detailForm').reset();
-        document.getElementById('detailId').value = '';
-    }
-    document.getElementById('detailModal').style.display = 'flex';
-}
-
-function editServiceDetail(id) {
-    const detail = serviceDetails.find(d => d.id === id);
-    if (detail) {
-        openDetailModal(true, detail);
-    }
-}
+// ========== ВРАЧИ ==========
 
 async function renderDoctors() {
     const tbody = document.getElementById('doctorsList');
@@ -1355,17 +2445,22 @@ async function renderDoctors() {
         const statusText = doctor.active ? getUIText('status_active_doctor') : getUIText('status_inactive_doctor');
         const statusClass = doctor.active ? 'status-active' : 'status-inactive';
         
+        let photoHtml = '—';
+        if (doctor.photo && doctor.photo.trim() !== '') {
+            photoHtml = `<img src="${doctor.photo}" class="doctor-photo-cell" alt="Фото" onerror="this.onerror=null; this.src='../assets/images/placeholder.jpg';">`;
+        }
+        
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${doctor.id}</td>
-            <td>${doctor.photo ? `<img src="${doctor.photo}" class="doctor-photo-cell" onerror="this.src='../assets/images/placeholder.jpg'">` : '—'}</td>
+            <td>${photoHtml}</td>
             <td><strong>${escapeHtml(fullName)}</strong></td>
-            <td>${escapeHtml(doctor.specialization)}</span></td>
-            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+            <td>${escapeHtml(doctor.specialization)}</span>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></span>
             <td class="action-buttons">
-                <button class="btn-edit-doctor" data-id="${doctor.id}">${getUIText('action_edit')}</button>
-                <button class="btn-delete-doctor" data-id="${doctor.id}">${getUIText('action_delete')}</button>
-              </td>
+                <button class="btn-edit-doctor" data-id="${doctor.id}">✏️ ${getUIText('action_edit')}</button>
+                <button class="btn-delete-doctor" data-id="${doctor.id}">🗑️ ${getUIText('action_delete')}</button>
+             </span>
         `;
         tbody.appendChild(row);
     });
@@ -1378,90 +2473,264 @@ async function renderDoctors() {
     });
 }
 
-async function deleteDoctor(id) {
-    const doctor = doctors.find(d => d.id === id);
-    if (!doctor) return;
-    if (confirm(`Удалить врача "${getDoctorFullName(doctor)}"?`)) {
-        try {
-            await fetch(`${API_BASE_URL}/doctors/${id}`, { method: 'DELETE' });
-            await loadAllData();
-            await renderDoctors();
-            await updateAppointmentFilters();
-            showToast(`Врач ${getDoctorFullName(doctor)} удален`);
-        } catch (error) {
-            showToast('Ошибка удаления', 'error');
+async function cleanOrphanedDoctorsFromSchedule() {
+    console.log('🧹 Начинаем чистку расписания от удалённых врачей...');
+    
+    const [scheduleRes, doctorsRes] = await Promise.all([
+        fetch('http://localhost:3000/schedule'),
+        fetch('http://localhost:3000/doctors')
+    ]);
+    
+    let scheduleData = await scheduleRes.json();
+    const doctors = await doctorsRes.json();
+    
+    if (!scheduleData) {
+        console.log('Расписание не найдено');
+        return;
+    }
+    
+    const existingDoctorIds = doctors.map(d => d.id);
+    
+    let changed = false;
+    
+    const beforeDoctorsCount = scheduleData.doctors?.length || 0;
+    if (scheduleData.doctors) {
+        scheduleData.doctors = scheduleData.doctors.filter(d => existingDoctorIds.includes(d.id));
+        if (beforeDoctorsCount !== scheduleData.doctors.length) {
+            changed = true;
+            console.log(`🗑️ Удалено ${beforeDoctorsCount - scheduleData.doctors.length} врачей из schedule.doctors`);
         }
     }
+    
+    const beforeScheduleCount = scheduleData.schedule?.length || 0;
+    if (scheduleData.schedule) {
+        scheduleData.schedule = scheduleData.schedule.filter(s => existingDoctorIds.includes(s.doctorId));
+        if (beforeScheduleCount !== scheduleData.schedule.length) {
+            changed = true;
+            console.log(`🗑️ Удалено ${beforeScheduleCount - scheduleData.schedule.length} записей расписания`);
+        }
+    }
+    
+    if (changed) {
+        const saveResponse = await fetch('http://localhost:3000/schedule', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(scheduleData)
+        });
+        
+        if (saveResponse.ok) {
+            console.log('✅ Чистка расписания завершена!');
+            alert('Расписание очищено от удалённых врачей. Страница будет обновлена.');
+            location.reload();
+        } else {
+            console.error('❌ Ошибка сохранения');
+        }
+    } else {
+        console.log('✅ В расписании нет удалённых врачей');
+    }
 }
+
+cleanOrphanedDoctorsFromSchedule();
 
 async function saveDoctor(event) {
     event.preventDefault();
     const id = parseInt(document.getElementById('doctorId').value);
-    const lastName = document.getElementById('doctorLastName').value.trim();
-    const firstName = document.getElementById('doctorFirstName').value.trim();
-    const middleName = document.getElementById('doctorMiddleName').value.trim();
-    const specialization = document.getElementById('doctorSpecialization').value.trim();
-    const photo = document.getElementById('doctorPhoto').value.trim();
-    const education = document.getElementById('doctorEducation').value;
-    const experience = document.getElementById('doctorExperience').value.trim();
-    const improvement = document.getElementById('doctorImprovement').value;
-    const schedule = document.getElementById('doctorSchedule').value.trim();
-    const active = document.getElementById('doctorActive').checked;
+    let lastName = document.getElementById('doctorLastName').value.trim();
+    let firstName = document.getElementById('doctorFirstName').value.trim();
+    let middleName = document.getElementById('doctorMiddleName').value.trim();
+    let specialization = document.getElementById('doctorSpecialization').value.trim();
+    let photo = document.getElementById('doctorPhoto').value.trim();
+    let education = document.getElementById('doctorEducation').value;
+    let experience = document.getElementById('doctorExperience').value.trim();
+    let improvement = document.getElementById('doctorImprovement').value;
+    let active = document.getElementById('doctorActive').checked;
     
     if (!lastName || !firstName || !specialization) {
         showToast('Заполните обязательные поля (Фамилия, Имя, Специализация)', 'error');
         return;
     }
     
+    let newId = id;
+    if (!newId) {
+        newId = await getNextDoctorId();
+    }
+    
+    if (!photo || photo === '') {
+        photo = `../assets/images/team/team-menu/photo-${newId}.jpg`;
+    }
+    
+    const doctorData = {
+        id: id || newId,
+        lastName: { ru: lastName, en: lastName },
+        firstName: { ru: firstName, en: firstName },
+        middleName: { ru: middleName || '', en: middleName || '' },
+        specialization: { ru: specialization, en: specialization },
+        photo: photo,
+        education: { ru: education || '', en: education || '' },
+        experience: { ru: experience || '', en: experience || '' },
+        improvement: { ru: improvement || '', en: improvement || '' },
+        active: active
+    };
+    
     try {
         if (id) {
             await fetch(`${API_BASE_URL}/doctors/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, lastName, firstName, middleName, specialization, photo, education, experience, improvement, schedule, active })
+                body: JSON.stringify(doctorData)
             });
-            showToast(`Врач ${lastName} ${firstName} обновлен`);
+            showToast(`Врач ${lastName} ${firstName} обновлён`);
         } else {
-            const newId = Date.now();
             await fetch(`${API_BASE_URL}/doctors`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: newId, lastName, firstName, middleName, specialization, photo, education, experience, improvement, schedule, active })
+                body: JSON.stringify(doctorData)
             });
             showToast(`Врач ${lastName} ${firstName} добавлен`);
         }
         
+        try {
+            const scheduleRes = await fetch(`${API_BASE_URL}/schedule`);
+            let scheduleData = await scheduleRes.json();
+            
+            if (!scheduleData) {
+                scheduleData = { version: '2.0', doctors: [], schedule: [] };
+            }
+            if (!scheduleData.doctors) scheduleData.doctors = [];
+            if (!scheduleData.schedule) scheduleData.schedule = [];
+            
+            const fullName = `${lastName} ${firstName} ${middleName || ''}`.trim();
+            const doctorId = id || newId;
+            
+            const existingDoctorIndex = scheduleData.doctors.findIndex(d => d.id === doctorId);
+            
+            const doctorForSchedule = {
+                id: doctorId,
+                name: { ru: fullName, en: fullName },
+                specialization: { ru: specialization, en: specialization },
+                photo: photo
+            };
+            
+            if (existingDoctorIndex !== -1) {
+                scheduleData.doctors[existingDoctorIndex] = doctorForSchedule;
+            } else {
+                scheduleData.doctors.push(doctorForSchedule);
+            }
+            
+            const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+            const dayNamesRu = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+            const dayNamesEn = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            const currentLang = getCurrentAdminLang();
+            
+            const existingSchedules = scheduleData.schedule.filter(s => s.doctorId === doctorId);
+            
+            for (let i = 0; i < days.length; i++) {
+                const day = days[i];
+                const existing = existingSchedules.find(s => s.day === day);
+                
+                if (!existing) {
+                    const isWorking = (i < 5); 
+                    const newScheduleId = getNextScheduleId(scheduleData);
+                    
+                    scheduleData.schedule.push({
+                        id: newScheduleId,
+                        doctorId: doctorId,
+                        day: day,
+                        dayName: { ru: dayNamesRu[i], en: dayNamesEn[i] },
+                        timeStart: isWorking ? '09:00' : '',
+                        timeEnd: isWorking ? '18:00' : '',
+                        breakStart: isWorking ? '13:00' : '',
+                        breakEnd: isWorking ? '14:00' : '',
+                        isWorking: isWorking
+                    });
+                    console.log(`📅 Создано расписание для ${fullName}, день: ${dayNamesRu[i]}, рабочий: ${isWorking}`);
+                }
+            }
+            
+            const saveScheduleResponse = await fetch(`${API_BASE_URL}/schedule`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(scheduleData)
+            });
+            
+            if (!saveScheduleResponse.ok) {
+                throw new Error('Ошибка сохранения расписания');
+            }
+            
+            console.log('✅ Расписание успешно обновлено');
+            
+        } catch (scheduleError) {
+            console.error('❌ Ошибка синхронизации с расписанием:', scheduleError);
+        }
+        
         await loadAllData();
+        
         await renderDoctors();
         await updateAppointmentFilters();
+        await renderAppointments();
+        await renderAdminSchedule(); 
+        await updateCategoryFilters();
         
         document.getElementById('doctorModal').style.display = 'none';
         document.getElementById('doctorForm').reset();
+        
+        showToast(`Врач "${lastName} ${firstName}" успешно сохранён`, 'success');
+        
     } catch (error) {
-        showToast('Ошибка сохранения', 'error');
+        console.error('❌ Ошибка сохранения врача:', error);
+        showToast('Ошибка сохранения. Проверьте консоль.', 'error');
     }
 }
 
 function openDoctorModal(editMode = false, doctorData = null) {
-    document.getElementById('doctorModalTitle').textContent = editMode ? getUIText('modal_edit_doctor') : getUIText('modal_add_doctor');
+    const modalTitle = document.getElementById('doctorModalTitle');
+    if (modalTitle) {
+        modalTitle.textContent = editMode ? getUIText('modal_edit_doctor') : getUIText('modal_add_doctor');
+    }
+    
     if (doctorData) {
         document.getElementById('doctorId').value = doctorData.id;
-        document.getElementById('doctorLastName').value = doctorData.lastName || '';
-        document.getElementById('doctorFirstName').value = doctorData.firstName || '';
-        document.getElementById('doctorMiddleName').value = doctorData.middleName || '';
-        document.getElementById('doctorSpecialization').value = doctorData.specialization || '';
+        
+        let lastName = doctorData.lastName;
+        let firstName = doctorData.firstName;
+        let middleName = doctorData.middleName || '';
+        let specialization = doctorData.specialization;
+        let education = doctorData.education || '';
+        let experience = doctorData.experience || '';
+        let improvement = doctorData.improvement || '';
+        
+        if (typeof lastName === 'object') lastName = lastName.ru || lastName.en || '';
+        if (typeof firstName === 'object') firstName = firstName.ru || firstName.en || '';
+        if (typeof middleName === 'object') middleName = middleName.ru || middleName.en || '';
+        if (typeof specialization === 'object') specialization = specialization.ru || specialization.en || '';
+        if (typeof education === 'object') education = education.ru || education.en || '';
+        if (typeof experience === 'object') experience = experience.ru || experience.en || '';
+        if (typeof improvement === 'object') improvement = improvement.ru || improvement.en || '';
+        
+        document.getElementById('doctorLastName').value = lastName;
+        document.getElementById('doctorFirstName').value = firstName;
+        document.getElementById('doctorMiddleName').value = middleName;
+        document.getElementById('doctorSpecialization').value = specialization;
         document.getElementById('doctorPhoto').value = doctorData.photo || '';
-        document.getElementById('doctorEducation').value = doctorData.education || '';
-        document.getElementById('doctorExperience').value = doctorData.experience || '';
-        document.getElementById('doctorImprovement').value = doctorData.improvement || '';
-        document.getElementById('doctorSchedule').value = doctorData.schedule || '';
-        document.getElementById('doctorActive').checked = doctorData.active;
+        document.getElementById('doctorEducation').value = education;
+        document.getElementById('doctorExperience').value = experience;
+        document.getElementById('doctorImprovement').value = improvement;
+        document.getElementById('doctorActive').checked = doctorData.active !== false;
+        
     } else {
         document.getElementById('doctorForm').reset();
         document.getElementById('doctorId').value = '';
         document.getElementById('doctorActive').checked = true;
+        document.getElementById('doctorPhoto').value = '';
+        document.getElementById('doctorEducation').value = '';
+        document.getElementById('doctorExperience').value = '';
+        document.getElementById('doctorImprovement').value = '';
     }
-    document.getElementById('doctorModal').style.display = 'flex';
+    
+    const modal = document.getElementById('doctorModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
 }
 
 function editDoctor(id) {
@@ -1471,133 +2740,163 @@ function editDoctor(id) {
     }
 }
 
-async function renderAppointments() {
-    const tbody = document.getElementById('appointmentsList');
-    if (!tbody) return;
+// ========== ЗАПИСЬ НА ПРИЕМ ==========
+
+function updateAvailableTimeSlotsForAdmin() {
+    const dateInput = document.getElementById('appointmentDate');
+    const timeSelect = document.getElementById('appointmentTime');
     
-    const doctorFilter = document.getElementById('appointmentDoctorFilter')?.value || '';
-    let dateFilter = document.getElementById('appointmentDateFilter')?.value || '';
-    const statusFilter = document.getElementById('appointmentStatusFilter')?.value || '';
+    if (!dateInput || !timeSelect) return;
     
-    let filtered = [...appointments];
+    const selectedDate = dateInput.value;
+    if (!selectedDate) return;
     
-    const lang = getCurrentAdminLang();
-    if (dateFilter && lang === 'ru' && dateFilter.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
-        const parts = dateFilter.split('.');
-        dateFilter = `${parts[2]}-${parts[1]}-${parts[0]}`;
-    }
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+    const isToday = selectedDate === todayStr;
     
-    if (doctorFilter) {
-        filtered = filtered.filter(a => a.doctorId == doctorFilter);
-    }
-    if (dateFilter) {
-        filtered = filtered.filter(a => a.date === dateFilter);
-    }
-    if (statusFilter) {
-        filtered = filtered.filter(a => a.status === statusFilter);
-    }
+    const currentHour = today.getHours();
+    const currentMinute = today.getMinutes();
     
-    filtered.sort((a, b) => {
-        if (a.date !== b.date) return a.date.localeCompare(b.date);
-        return a.time.localeCompare(b.time);
-    });
+    const timeOptions = timeSelect.querySelectorAll('option');
     
-    const today = new Date().toISOString().split('T')[0];
-    const weekLater = new Date();
-    weekLater.setDate(weekLater.getDate() + 7);
-    const weekLaterStr = weekLater.toISOString().split('T')[0];
+    let anyAvailable = false;
     
-    const appointmentsCount = document.getElementById('appointmentsCount');
-    const appointmentsTodayCount = document.getElementById('appointmentsTodayCount');
-    const appointmentsWeekCount = document.getElementById('appointmentsWeekCount');
-    
-    if (appointmentsCount) appointmentsCount.textContent = appointments.length;
-    if (appointmentsTodayCount) appointmentsTodayCount.textContent = appointments.filter(a => a.date === today).length;
-    if (appointmentsWeekCount) appointmentsWeekCount.textContent = appointments.filter(a => a.date >= today && a.date <= weekLaterStr).length;
-    
-    tbody.innerHTML = '';
-    
-    for (const app of filtered) {
-        const doctor = doctors.find(d => d.id === app.doctorId);
-        let doctorName = 'Unknown';
-        if (doctor) {
-            if (lang === 'en') {
-                const lastName = doctor.lastName?.en || doctor.lastName?.ru || doctor.lastName || '';
-                const firstName = doctor.firstName?.en || doctor.firstName?.ru || doctor.firstName || '';
-                doctorName = `${lastName} ${firstName}`.trim();
-                if (!doctorName) doctorName = 'Unknown';
+    timeOptions.forEach(option => {
+        const timeValue = option.value;
+        if (timeValue && timeValue !== '') {
+            if (isToday) {
+                const [hours, minutes] = timeValue.split(':').map(Number);
+                const isTimePassed = (hours < currentHour) || (hours === currentHour && minutes <= currentMinute);
+                
+                if (isTimePassed) {
+                    option.disabled = true;
+                    option.style.color = '#9CA3AF';
+                    option.style.backgroundColor = '#f5f5f5';
+                    option.textContent = `${timeValue} (время прошло)`;
+                } else {
+                    option.disabled = false;
+                    option.style.color = '';
+                    option.style.backgroundColor = '';
+                    option.textContent = timeValue;
+                    anyAvailable = true;
+                }
             } else {
-                doctorName = getDoctorFullName(doctor);
+                option.disabled = false;
+                option.style.color = '';
+                option.style.backgroundColor = '';
+                if (option.textContent.includes('(время прошло)')) {
+                    option.textContent = timeValue;
+                }
             }
         }
-        
-        const serviceName = getServiceNameById(app.serviceId, services);
-        
-        const statusMap = {
-            pending: getUIText('status_pending'),
-            confirmed: getUIText('status_confirmed'),
-            completed: getUIText('status_completed'),
-            cancelled: getUIText('status_cancelled')
-        };
-        const statusText = statusMap[app.status] || app.status;
-        
-        let displayDate = app.date;
-        if (lang === 'ru' && app.date) {
-            const parts = app.date.split('-');
-            if (parts.length === 3) {
-                displayDate = `${parts[2]}.${parts[1]}.${parts[0]}`;
-            }
-        }
-        
-        let patientName = app.patientName;
-        if (typeof patientName === 'object') {
-            patientName = patientName[lang] || patientName.ru || JSON.stringify(patientName);
-        }
-        
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${app.id}</td>
-            <td><strong>${escapeHtml(patientName)}</strong></span></td>
-            <td>${escapeHtml(app.phone)}</span></td>
-            <td>${escapeHtml(doctorName)}</span></td>
-            <td>${escapeHtml(serviceName)}</span></td>
-            <td>${displayDate}</span></td>
-            <td>${app.time}</span></td>
-            <td><span class="status-badge status-${app.status}">${statusText}</span></td>
-            <td class="action-buttons">
-                <button class="btn-edit-appointment" data-id="${app.id}" title="${getUIText('action_edit')}">${getUIText('action_edit_small')}</button>
-                <button class="btn-delete-appointment" data-id="${app.id}" title="${getUIText('action_delete')}">${getUIText('action_delete_small')}</button>
-                ${app.status === 'pending' ? `<button class="btn-confirm-appointment" data-id="${app.id}" title="${getUIText('action_confirm')}">${getUIText('action_confirm')}</button>` : ''}
-                ${app.status === 'confirmed' ? `<button class="btn-complete-appointment" data-id="${app.id}" title="${getUIText('action_complete')}">${getUIText('action_complete')}</button>` : ''}
-              </td>
-        `;
-        tbody.appendChild(row);
-    }
+    });
     
-    document.querySelectorAll('.btn-edit-appointment').forEach(btn => {
-        btn.addEventListener('click', () => editAppointment(parseInt(btn.dataset.id)));
+    if (isToday && !anyAvailable) {
+        const firstOption = timeSelect.options[0];
+        if (firstOption && firstOption.value === '') {
+            firstOption.textContent = '-- Нет доступного времени (все часы прошли) --';
+        }
+    } else {
+        const firstOption = timeSelect.options[0];
+        if (firstOption && firstOption.value === '' && firstOption.textContent.includes('Нет доступного времени')) {
+            firstOption.textContent = '-- Выберите время --';
+        }
+    }
+}
+
+function initDateRestrictions() {
+    const dateInput = document.getElementById('appointmentDate');
+    if (!dateInput) return;
+    
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${year}-${month}-${day}`;
+    
+    dateInput.min = todayStr;
+    
+    dateInput.addEventListener('keydown', function(e) {
+        e.preventDefault();
+        if (this.showPicker) {
+            this.showPicker();
+        }
     });
-    document.querySelectorAll('.btn-delete-appointment').forEach(btn => {
-        btn.addEventListener('click', () => deleteAppointment(parseInt(btn.dataset.id)));
+    
+    dateInput.addEventListener('click', function() {
+        if (this.showPicker) {
+            this.showPicker();
+        }
     });
-    document.querySelectorAll('.btn-confirm-appointment').forEach(btn => {
-        btn.addEventListener('click', () => updateAppointmentStatus(parseInt(btn.dataset.id), 'confirmed'));
-    });
-    document.querySelectorAll('.btn-complete-appointment').forEach(btn => {
-        btn.addEventListener('click', () => updateAppointmentStatus(parseInt(btn.dataset.id), 'completed'));
+    
+    dateInput.addEventListener('change', function() {
+        const selectedDate = this.value;
+        
+        if (selectedDate && selectedDate < todayStr) {
+            showToast('❌ Нельзя выбрать дату в прошлом!', 'error');
+            this.value = '';
+            const timeSelect = document.getElementById('appointmentTime');
+            if (timeSelect) {
+                const options = timeSelect.querySelectorAll('option');
+                options.forEach(opt => {
+                    if (opt.value && opt.value !== '') {
+                        opt.disabled = false;
+                        opt.style.color = '';
+                        opt.style.backgroundColor = '';
+                        if (opt.textContent.includes('(время прошло)')) {
+                            opt.textContent = opt.value;
+                        }
+                    }
+                });
+            }
+        } else {
+            updateAvailableTimeSlotsForAdmin();
+        }
     });
 }
 
+function validateAppointmentDateTime(date, time) {
+    if (!date || !time) return true;
+    
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+    
+    if (date < todayStr) {
+        showToast('❌ Нельзя записать на прошедшую дату!', 'error');
+        return false;
+    }
+    
+    if (date === todayStr) {
+        const [hours, minutes] = time.split(':').map(Number);
+        const currentHour = today.getHours();
+        const currentMinute = today.getMinutes();
+        
+        if (hours < currentHour || (hours === currentHour && minutes < currentMinute)) {
+            showToast('❌ Нельзя записать на время, которое уже прошло!', 'error');
+            return false;
+        }
+    }
+    
+    return true;
+}
+
 async function updateAppointmentFilters() {
+    console.log('🔄 updateAppointmentFilters вызвана, врачей:', doctors.length);
+    
     const doctorFilter = document.getElementById('appointmentDoctorFilter');
     if (doctorFilter) {
         doctorFilter.innerHTML = `<option value="">${getUIText('filter_all_doctors')}</option>`;
-        doctors.filter(d => d.active).forEach(doctor => {
-            const option = document.createElement('option');
-            option.value = doctor.id;
-            option.textContent = getDoctorFullName(doctor);
-            doctorFilter.appendChild(option);
-        });
+        
+        if (doctors && doctors.length > 0) {
+            const activeDoctors = doctors.filter(d => d.active !== false);
+            activeDoctors.forEach(doctor => {
+                const option = document.createElement('option');
+                option.value = doctor.id;
+                option.textContent = getDoctorFullName(doctor);
+                doctorFilter.appendChild(option);
+            });
+        }
     }
     
     const statusFilter = document.getElementById('appointmentStatusFilter');
@@ -1614,30 +2913,41 @@ async function updateAppointmentFilters() {
     const serviceSelect = document.getElementById('appointmentServiceId');
     if (serviceSelect) {
         serviceSelect.innerHTML = '<option value="">-- Выберите услугу --</option>';
-        services.filter(s => s.active).forEach(service => {
-            const option = document.createElement('option');
-            option.value = service.id;
-            option.textContent = service.name;
-            serviceSelect.appendChild(option);
-        });
+        if (services && services.length > 0) {
+            services.filter(s => s.active !== false).forEach(service => {
+                const option = document.createElement('option');
+                option.value = service.id;
+                const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
+                option.textContent = serviceName;
+                serviceSelect.appendChild(option);
+            });
+        }
     }
     
     const doctorSelect = document.getElementById('appointmentDoctorId');
     if (doctorSelect) {
         doctorSelect.innerHTML = '<option value="">-- Выберите врача --</option>';
-        doctors.filter(d => d.active).forEach(doctor => {
-            const option = document.createElement('option');
-            option.value = doctor.id;
-            option.textContent = getDoctorFullName(doctor);
-            doctorSelect.appendChild(option);
-        });
+        if (doctors && doctors.length > 0) {
+            doctors.filter(d => d.active !== false).forEach(doctor => {
+                const option = document.createElement('option');
+                option.value = doctor.id;
+                option.textContent = getDoctorFullName(doctor);
+                doctorSelect.appendChild(option);
+            });
+        }
+    }
+    
+    const dateFilter = document.getElementById('appointmentDateFilter');
+    if (dateFilter) {
+        dateFilter.placeholder = getDatePlaceholder();
     }
 }
 
 async function deleteAppointment(id) {
     const appointment = appointments.find(a => a.id === id);
     if (!appointment) return;
-    if (confirm(`Удалить запись пациента "${appointment.patientName}"?`)) {
+    const patientName = typeof appointment.patientName === 'object' ? appointment.patientName.ru : appointment.patientName;
+    if (confirm(`Удалить запись пациента "${patientName}"?`)) {
         try {
             await fetch(`${API_BASE_URL}/appointments/${id}`, { method: 'DELETE' });
             await loadAllData();
@@ -1686,6 +2996,12 @@ async function saveAppointment(event) {
         return;
     }
     
+    if (!validateAppointmentDateTime(date, time)) {
+        return;
+    }
+    
+    const currentTab = document.querySelector('.nav-tab.active')?.dataset.tab || 'appointments';
+    
     try {
         if (id) {
             await fetch(`${API_BASE_URL}/appointments/${id}`, {
@@ -1695,7 +3011,7 @@ async function saveAppointment(event) {
             });
             showToast(`Запись для ${patientName} обновлена`);
         } else {
-            const newId = Date.now();
+            const newId = await getNextAppointmentId();
             await fetch(`${API_BASE_URL}/appointments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1707,15 +3023,51 @@ async function saveAppointment(event) {
         await loadAllData();
         await renderAppointments();
         
+        activateTab(currentTab);
+        
         document.getElementById('appointmentModal').style.display = 'none';
         document.getElementById('appointmentForm').reset();
     } catch (error) {
         showToast('Ошибка сохранения', 'error');
+        activateTab(currentTab);
     }
 }
 
 function openAppointmentModal(editMode = false, appointmentData = null) {
+    const lang = getCurrentAdminLang();
     document.getElementById('appointmentModalTitle').textContent = editMode ? getUIText('modal_edit_appointment') : getUIText('modal_new_appointment');
+    
+    const serviceSelect = document.getElementById('appointmentServiceId');
+    if (serviceSelect) {
+        serviceSelect.innerHTML = `<option value="">${getUIText('select_service_option')}</option>`;
+        if (services && services.length > 0) {
+            services.filter(s => s.active !== false).forEach(service => {
+                const option = document.createElement('option');
+                option.value = service.id;
+                const serviceName = typeof service.name === 'object' ? (service.name[lang] || service.name.ru || service.name.en) : service.name;
+                option.textContent = serviceName;
+                serviceSelect.appendChild(option);
+            });
+        }
+    }
+    
+    const doctorSelect = document.getElementById('appointmentDoctorId');
+    if (doctorSelect) {
+        doctorSelect.innerHTML = `<option value="">${getUIText('select_doctor_option')}</option>`;
+        if (doctors && doctors.length > 0) {
+            doctors.filter(d => d.active !== false).forEach(doctor => {
+                const option = document.createElement('option');
+                option.value = doctor.id;
+                option.textContent = getDoctorFullName(doctor);
+                doctorSelect.appendChild(option);
+            });
+        }
+    }
+    
+    const timeSelect = document.getElementById('appointmentTime');
+    if (timeSelect && timeSelect.options.length > 0) {
+        timeSelect.options[0].textContent = getUIText('select_time_option');
+    }
     
     if (appointmentData) {
         document.getElementById('appointmentId').value = appointmentData.id;
@@ -1733,6 +3085,22 @@ function openAppointmentModal(editMode = false, appointmentData = null) {
         document.getElementById('appointmentId').value = '';
         document.getElementById('appointmentStatus').value = 'pending';
     }
+    
+    const appointmentDateInput = document.getElementById('appointmentDate');
+    if (appointmentDateInput) {
+        appointmentDateInput.placeholder = getDatePlaceholder();
+    }
+    
+    setTimeout(() => {
+        initDateRestrictions();
+        if (appointmentData && appointmentData.date) {
+            const today = new Date().toISOString().split('T')[0];
+            if (appointmentData.date === today) {
+                updateAvailableTimeSlotsForAdmin();
+            }
+        }
+    }, 100);
+    
     document.getElementById('appointmentModal').style.display = 'flex';
 }
 
@@ -1743,16 +3111,7 @@ function editAppointment(id) {
     }
 }
 
-function resetAppointmentFilters() {
-    const doctorFilter = document.getElementById('appointmentDoctorFilter');
-    const dateFilter = document.getElementById('appointmentDateFilter');
-    const statusFilter = document.getElementById('appointmentStatusFilter');
-    
-    if (doctorFilter) doctorFilter.value = '';
-    if (dateFilter) dateFilter.value = '';
-    if (statusFilter) statusFilter.value = '';
-    renderAppointments();
-}
+// ========== ОТЗЫВЫ ==========
 
 async function renderAdminReviews() {
     const tbody = document.getElementById('reviewsList');
@@ -1794,39 +3153,32 @@ async function renderAdminReviews() {
         );
     }
     
-    const statusFilterSelect = document.getElementById('reviewStatusFilter');
-    if (statusFilterSelect) {
-        if (statusFilterSelect.options.length >= 3) {
-            statusFilterSelect.options[0].textContent = getUIText('filter_all_statuses');
-            statusFilterSelect.options[1].textContent = getUIText('filter_published');
-            statusFilterSelect.options[2].textContent = getUIText('filter_hidden');
-        }
-    }
-    
     tbody.innerHTML = '';
     
     if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Нет отзывов для отображения</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">' + (getCurrentAdminLang() === 'ru' ? 'Нет отзывов для отображения' : 'No reviews to display') + '</span></tr>';
         return;
     }
     
     for (const review of filtered) {
         const statusText = review.published ? getUIText('status_published') : getUIText('status_hidden');
         const statusClass = review.published ? 'status-published' : 'status-hidden';
+        const authorName = typeof review.author === 'object' ? (review.author.ru || review.author.en) : review.author;
+        const reviewText = typeof review.text === 'object' ? (review.text.ru || review.text.en) : review.text;
         
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${review.id}</td>
-            <td><strong>${escapeHtml(review.author)}</strong><br><small>${escapeHtml(review.email || '')}</small></td>
-            <td><div class="review-text-preview" title="${escapeHtml(review.text)}">${escapeHtml(review.text.substring(0, 100))}...</div></td>
+            <td><strong>${escapeHtml(authorName)}</strong><br><small>${escapeHtml(review.email || '')}</small></td>
+            <td><div class="review-text-preview" title="${escapeHtml(reviewText)}">${escapeHtml(reviewText.substring(0, 100))}...</div></td>
             <td><div class="rating-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div></td>
             <td>${review.date || review.createdAt?.split('T')[0] || ''}</td>
             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
             <td class="action-buttons">
                 <button class="btn-view-review" data-id="${review.id}">👁️</button>
                 <button class="btn-toggle-review" data-id="${review.id}">${review.published ? getUIText('action_hide') : getUIText('action_publish')}</button>
-                <button class="btn-delete-review" data-id="${review.id}">${getUIText('action_delete_small')}</button>
-              </td>
+                <button class="btn-delete-review" data-id="${review.id}">🗑️</button>
+             </span>
         `;
         tbody.appendChild(row);
     }
@@ -1846,10 +3198,14 @@ async function viewReview(id) {
     const review = reviews.find(r => r.id === id);
     if (!review) return;
     
-    document.getElementById('viewAuthor').textContent = review.author;
-    document.getElementById('viewUserInfo').textContent = review.userInfo || '';
+    const authorName = typeof review.author === 'object' ? (review.author.ru || review.author.en) : review.author;
+    const userInfo = typeof review.userInfo === 'object' ? (review.userInfo.ru || review.userInfo.en) : review.userInfo;
+    const reviewText = typeof review.text === 'object' ? (review.text.ru || review.text.en) : review.text;
+    
+    document.getElementById('viewAuthor').textContent = authorName;
+    document.getElementById('viewUserInfo').textContent = userInfo || '';
     document.getElementById('viewRating').innerHTML = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
-    document.getElementById('viewText').textContent = review.text;
+    document.getElementById('viewText').textContent = reviewText;
     document.getElementById('viewDate').textContent = review.date || review.createdAt?.split('T')[0] || '';
     
     const viewPhoto = document.getElementById('viewPhoto');
@@ -1915,529 +3271,7 @@ function initReviewFilters() {
     }
 }
 
-async function renderAdminPrices() {
-    const container = document.getElementById('pricesAdminContainer');
-    if (!container) return;
-    
-    const lang = getCurrentAdminLang();
-    const categoryFilter = document.getElementById('priceCategoryFilter')?.value || 'all';
-    const searchFilter = document.getElementById('priceSearchFilter')?.value.toLowerCase() || '';
-    
-    let categories = pricesData?.categories?.filter(c => c.active) || [];
-    let servicesList = pricesData?.services?.filter(s => s.active) || [];
-    
-    categories = categories.map(cat => ({
-        ...cat,
-        localizedName: getLocalizedText(cat.name)
-    }));
-    
-    if (categoryFilter !== 'all') {
-        servicesList = servicesList.filter(s => s.categoryId == categoryFilter);
-        categories = categories.filter(c => c.id == categoryFilter);
-    }
-    
-    if (searchFilter) {
-        servicesList = servicesList.filter(s => s.name.toLowerCase().includes(searchFilter));
-        const categoryIds = [...new Set(servicesList.map(s => s.categoryId))];
-        categories = categories.filter(c => categoryIds.includes(c.id));
-    }
-    
-    const totalCategories = document.getElementById('totalCategories');
-    const totalPriceServices = document.getElementById('totalPriceServices');
-    if (totalCategories) totalCategories.textContent = categories.length;
-    if (totalPriceServices) totalPriceServices.textContent = servicesList.length;
-    
-    const categorySelect = document.getElementById('priceCategoryFilter');
-    if (categorySelect && categorySelect.options.length <= 1 && pricesData?.categories) {
-        categorySelect.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
-        categories.forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            option.textContent = cat.localizedName;
-            categorySelect.appendChild(option);
-        });
-    }
-    
-    if (categories.length === 0) {
-        container.innerHTML = '<div class="empty-prices" style="text-align: center; padding: 40px; color: #6B7280;">Нет категорий для отображения</div>';
-        return;
-    }
-    
-    let html = '<div class="prices-admin-list">';
-    for (const category of categories) {
-        const categoryServices = servicesList.filter(s => s.categoryId === category.id);
-        if (categoryServices.length === 0) continue;
-        
-        const categoryDiscount = getDiscountByCategoryId(category.id);
-        
-        const discountLabel = getUIText('discount_label');
-        const untilLabel = getUIText('until_label');
-        
-        let discountHtml = '';
-        if (categoryDiscount) {
-            const discountValue = categoryDiscount.type === 'percentage' 
-                ? categoryDiscount.value + '%' 
-                : categoryDiscount.value + ' BYN';
-            const dateText = categoryDiscount.endDate ? ` ${untilLabel} ${categoryDiscount.endDate}` : '';
-            discountHtml = `
-                <span style="background: #EF4444; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-left: 12px;">
-                    ${discountLabel}: ${discountValue}${dateText}
-                </span>
-            `;
-        }
-        
-        html += `
-            <div class="price-category-card" style="background: white; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" data-category-id="${category.id}">
-                <div class="price-category-header" style="cursor: pointer; background: #2F353B; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center; flex-wrap: wrap;">
-                        <h3 style="color: white; margin: 0;">${escapeHtml(category.localizedName)}</h3>
-                        ${discountHtml}
-                    </div>
-                    <div>
-                        <span style="background: #A5C33C; color: #1a1e22; padding: 4px 10px; border-radius: 20px; font-size: 12px; margin-right: 15px;">${categoryServices.length} ${getUIText('stat_services_count')}</span>
-                        <button class="btn-edit-category" data-id="${category.id}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;" title="Редактировать категорию">✏️</button>
-                        <button class="btn-delete-category" data-id="${category.id}" style="background: #FEE2E2; color: #DC2626; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;" title="Удалить категорию">🗑️</button>
-                        <span class="price-category-toggle" style="color: white; font-size: 20px; margin-left: 10px;">▼</span>
-                    </div>
-                </div>
-                <div class="category-content" style="display: block; padding: 20px; background: white; overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
-                        <colgroup>
-                            <col style="width: 35%;">
-                            <col style="width: 20%;">
-                            <col style="width: 15%;">
-                            <col style="width: 20%;">
-                            <col style="width: 10%;">
-                        </colgroup>
-                        <thead>
-                            <tr style="background: #F3F4F6;">
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_name')}</th>
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_price')}</th>
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_currency')}</th>
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_note')}</th>
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600; width: 100px;">${getUIText('th_actions')}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-        `;
-        for (const service of categoryServices) {
-            let priceDisplay = '';
-            const originalPrice = parseFloat(service.price);
-            
-            let serviceName = service.name;
-            if (typeof serviceName === 'object') {
-                serviceName = serviceName[lang] || serviceName.ru || service.name;
-            }
-            
-            let serviceDescription = service.description || '—';
-            if (typeof serviceDescription === 'object') {
-                serviceDescription = serviceDescription[lang] || serviceDescription.ru || '—';
-            }
-            
-            if (service.price === '0') {
-                priceDisplay = getUIText('price_free');
-            } else if (categoryDiscount) {
-                let discountedPrice = originalPrice;
-                if (categoryDiscount.type === 'percentage') {
-                    discountedPrice = originalPrice * (1 - categoryDiscount.value / 100);
-                    priceDisplay = `
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <span style="text-decoration: line-through; color: #9CA3AF; font-size: 12px;">${originalPrice}</span>
-                            <span style="color: #EF4444; font-weight: 700; font-size: 15px;">${discountedPrice.toFixed(0)} <span style="font-size: 11px;">${getUIText('price_with_discount')}</span></span>
-                        </div>
-                    `;
-                } else {
-                    discountedPrice = Math.max(0, originalPrice - categoryDiscount.value);
-                    priceDisplay = `
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <span style="text-decoration: line-through; color: #9CA3AF; font-size: 12px;">${originalPrice}</span>
-                            <span style="color: #EF4444; font-weight: 700; font-size: 15px;">${discountedPrice.toFixed(0)} <span style="font-size: 11px;">${getUIText('price_with_discount')}</span></span>
-                        </div>
-                    `;
-                }
-            } else {
-                priceDisplay = `<span style="font-size: 15px;">${originalPrice}</span>`;
-            }
-            
-            html += `
-                <tr style="border-bottom: 1px solid #E5E7EB;">
-                    <td style="padding: 12px 15px; word-break: break-word;"><strong>${escapeHtml(serviceName)}</strong></td>
-                    <td style="padding: 12px 15px; vertical-align: top;">${priceDisplay}</td>
-                    <td style="padding: 12px 15px; vertical-align: top;">${getCurrencyHtml(service.unit)}</span></td>
-                    <td style="padding: 12px 15px; vertical-align: top; word-break: break-word;">${escapeHtml(serviceDescription)}</span></td>
-                    <td style="padding: 12px 15px; vertical-align: top; white-space: nowrap;">
-                        <button class="btn-edit-price-service" data-id="${service.id}" data-category-id="${category.id}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;">${getUIText('action_edit_small')}</button>
-                        <button class="btn-delete-price-service" data-id="${service.id}" style="background: #FEE2E2; color: #DC2626; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">${getUIText('action_delete_small')}</button>
-                    </span>
-                </tr>
-            `;
-        }
-        html += `</tbody></table></div></div>`;
-    }
-    html += '</div>';
-    
-    container.innerHTML = html;
-    
-    document.querySelectorAll('.btn-edit-category').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            editCategory(parseInt(btn.dataset.id));
-        });
-    });
-    
-    document.querySelectorAll('.btn-delete-category').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            deleteCategory(parseInt(btn.dataset.id));
-        });
-    });
-    
-    document.querySelectorAll('.btn-edit-price-service').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const serviceId = parseInt(btn.dataset.id);
-            const categoryId = parseInt(btn.dataset.categoryId);
-            editPriceService(serviceId, categoryId);
-        });
-    });
-    document.querySelectorAll('.btn-delete-price-service').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            deletePriceService(parseInt(btn.dataset.id));
-        });
-    });
-    
-    document.querySelectorAll('.price-category-header').forEach(header => {
-        header.addEventListener('click', function(e) {
-            if (e.target.tagName === 'BUTTON') return;
-            const content = this.nextElementSibling;
-            const toggle = this.querySelector('.price-category-toggle');
-            if (content.style.display === 'none') {
-                content.style.display = 'block';
-                if (toggle) toggle.style.transform = 'rotate(0deg)';
-            } else {
-                content.style.display = 'none';
-                if (toggle) toggle.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
-}
-
-async function editPriceService(id, categoryId) {
-    const service = pricesData?.services?.find(s => s.id === id);
-    if (!service) return;
-    
-    const categorySelect = document.getElementById('priceServiceCategoryId');
-    categorySelect.innerHTML = '<option value="">-- Выберите категорию --</option>';
-    pricesData?.categories?.forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat.id;
-        option.textContent = cat.name;
-        categorySelect.appendChild(option);
-    });
-    
-    const currentDiscount = getDiscountByCategoryId(categoryId || service.categoryId);
-    
-    document.getElementById('priceServiceId').value = service.id;
-    document.getElementById('priceServiceCategoryId').value = service.categoryId;
-    document.getElementById('priceServiceName').value = service.name;
-    document.getElementById('priceServicePrice').value = service.price;
-    document.getElementById('priceServiceUnit').value = service.unit;
-    document.getElementById('priceServiceDescription').value = service.description || '';
-    document.getElementById('priceServiceOrder').value = service.order || '';
-    document.getElementById('priceServiceActive').checked = service.active;
-    
-    const discountInfoContainer = document.getElementById('priceServiceDiscountInfo');
-    if (discountInfoContainer) {
-        if (currentDiscount) {
-            const activeDiscountText = getUIText('active_discount_on_category');
-            const validUntilText = getUIText('valid_until');
-            discountInfoContainer.innerHTML = `
-                <div style="background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 12px; margin-top: 10px;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 20px;">🏷️</span>
-                        <div>
-                            <strong style="color: #D97706;">${activeDiscountText}</strong><br>
-                            <span style="font-size: 13px;">${escapeHtml(currentDiscount.name)}: ${currentDiscount.type === 'percentage' ? currentDiscount.value + '%' : currentDiscount.value + ' BYN'}</span>
-                            ${currentDiscount.endDate ? `<span style="font-size: 12px; color: #6B7280;"> (${validUntilText} ${currentDiscount.endDate})</span>` : ''}
-                        </div>
-                    </div>
-                </div>
-            `;
-            discountInfoContainer.style.display = 'block';
-        } else {
-            discountInfoContainer.innerHTML = '';
-            discountInfoContainer.style.display = 'none';
-        }
-    }
-    
-    document.getElementById('priceServiceModalTitle').textContent = 'Редактировать услугу';
-    document.getElementById('priceServiceModal').style.display = 'flex';
-}
-
-async function deletePriceService(id) {
-    if (confirm('Удалить эту услугу из прайс-листа?')) {
-        pricesData.services = pricesData.services.filter(s => s.id !== id);
-        await fetch(`${API_BASE_URL}/prices`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pricesData)
-        });
-        await loadAllData();
-        await renderAdminPrices();
-        showToast('Услуга удалена', 'success');
-    }
-}
-
-async function savePriceService(event) {
-    event.preventDefault();
-    const id = parseInt(document.getElementById('priceServiceId').value);
-    const categoryId = parseInt(document.getElementById('priceServiceCategoryId').value);
-    const name = document.getElementById('priceServiceName').value.trim();
-    const price = document.getElementById('priceServicePrice').value.trim();
-    const unit = document.getElementById('priceServiceUnit').value;
-    const description = document.getElementById('priceServiceDescription').value.trim();
-    const order = parseInt(document.getElementById('priceServiceOrder').value) || 999;
-    const active = document.getElementById('priceServiceActive').checked;
-    
-    if (!categoryId || !name) {
-        showToast('Заполните обязательные поля', 'error');
-        return;
-    }
-    
-    if (id) {
-        const index = pricesData.services.findIndex(s => s.id === id);
-        if (index !== -1) {
-            pricesData.services[index] = { ...pricesData.services[index], categoryId, name, price, unit, description, order, active };
-        }
-    } else {
-        const newId = Date.now();
-        pricesData.services.push({ id: newId, categoryId, name, price, unit, description, order, active });
-    }
-    
-    try {
-        await fetch(`${API_BASE_URL}/prices`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pricesData)
-        });
-        await loadAllData();
-        await renderAdminPrices();
-        showToast('Услуга сохранена', 'success');
-        document.getElementById('priceServiceModal').style.display = 'none';
-        document.getElementById('priceServiceForm').reset();
-    } catch (error) {
-        showToast('Ошибка сохранения', 'error');
-    }
-}
-
-
-async function openAddCategoryModal() {
-    if (!pricesData) {
-        pricesData = { version: '2.0', categories: [], services: [] };
-    }
-    if (!pricesData.categories) pricesData.categories = [];
-    
-    document.getElementById('categoryId').value = '';
-    document.getElementById('categoryName').value = '';
-    document.getElementById('categoryOrder').value = pricesData.categories.length + 1;
-    document.getElementById('categoryActive').checked = true;
-    
-    document.getElementById('categoryModalTitle').textContent = getUIText('modal_add_category');
-    document.getElementById('categoryModal').style.display = 'flex';
-}
-
-async function editCategory(categoryId) {
-    const category = pricesData?.categories?.find(c => c.id === categoryId);
-    if (!category) return;
-    
-    document.getElementById('categoryId').value = category.id;
-    document.getElementById('categoryName').value = category.name;
-    document.getElementById('categoryOrder').value = category.order || 0;
-    document.getElementById('categoryActive').checked = category.active !== false;
-    
-    document.getElementById('categoryModalTitle').textContent = getUIText('modal_edit_category');
-    document.getElementById('categoryModal').style.display = 'flex';
-}
-
-async function deleteCategory(categoryId) {
-    const category = pricesData?.categories?.find(c => c.id === categoryId);
-    if (!category) return;
-    
-    const servicesInCategory = pricesData?.services?.filter(s => s.categoryId === categoryId) || [];
-    
-    let confirmMessage = `Удалить категорию "${category.name}"?`;
-    if (servicesInCategory.length > 0) {
-        confirmMessage += `\n\n⚠️ ВНИМАНИЕ: В этой категории ${servicesInCategory.length} услуг(а). Они также будут удалены!`;
-    }
-    
-    if (confirm(confirmMessage)) {
-        if (servicesInCategory.length > 0) {
-            pricesData.services = pricesData.services.filter(s => s.categoryId !== categoryId);
-        }
-        
-        pricesData.categories = pricesData.categories.filter(c => c.id !== categoryId);
-        
-        pricesData.categories.forEach((cat, index) => {
-            cat.order = index + 1;
-        });
-        
-        await savePricesData();
-        await renderAdminPrices();
-        await updateCategoryFilters();
-        showToast(`Категория "${category.name}" удалена`, 'success');
-    }
-}
-
-async function saveCategory(event) {
-    event.preventDefault();
-    
-    const id = parseInt(document.getElementById('categoryId').value);
-    const name = document.getElementById('categoryName').value.trim();
-    const order = parseInt(document.getElementById('categoryOrder').value) || 999;
-    const active = document.getElementById('categoryActive').checked;
-    
-    if (!name) {
-        showToast('Введите название категории', 'error');
-        return;
-    }
-    
-    if (!pricesData) {
-        pricesData = { version: '2.0', categories: [], services: [] };
-    }
-    if (!pricesData.categories) pricesData.categories = [];
-    
-    if (id) {
-        const index = pricesData.categories.findIndex(c => c.id === id);
-        if (index !== -1) {
-            pricesData.categories[index] = {
-                ...pricesData.categories[index],
-                name: name,
-                order: order,
-                active: active
-            };
-        }
-        showToast(`Категория "${name}" обновлена`, 'success');
-    } else {
-        const newId = Date.now();
-        pricesData.categories.push({
-            id: newId,
-            name: name,
-            order: order,
-            active: active
-        });
-        showToast(`Категория "${name}" добавлена`, 'success');
-    }
-    
-    pricesData.categories.sort((a, b) => (a.order || 0) - (b.order || 0));
-    
-    await savePricesData();
-    await renderAdminPrices();
-    await updateCategoryFilters();
-    
-    document.getElementById('categoryModal').style.display = 'none';
-    document.getElementById('categoryForm').reset();
-}
-
-async function savePricesData() {
-    try {
-        await fetch(`${API_BASE_URL}/prices`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pricesData)
-        });
-        return true;
-    } catch (error) {
-        console.error('Ошибка сохранения прайс-листа:', error);
-        showToast('Ошибка сохранения', 'error');
-        return false;
-    }
-}
-
-async function updateCategoryFilters() {
-    const lang = getCurrentAdminLang();
-    
-    const categoryFilter = document.getElementById('priceCategoryFilter');
-    if (categoryFilter && pricesData?.categories) {
-        const currentValue = categoryFilter.value;
-        categoryFilter.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
-        pricesData.categories.filter(c => c.active !== false).forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            let categoryName = cat.name;
-            if (typeof categoryName === 'object') {
-                categoryName = categoryName[lang] || categoryName.ru || cat.name;
-            }
-            option.textContent = categoryName;
-            categoryFilter.appendChild(option);
-        });
-        if (currentValue && categoryFilter.querySelector(`option[value="${currentValue}"]`)) {
-            categoryFilter.value = currentValue;
-        }
-    }
-    
-    const discountCategoryFilter = document.getElementById('discountCategoryFilter');
-    if (discountCategoryFilter && pricesData?.categories) {
-        const currentValue = discountCategoryFilter.value;
-        discountCategoryFilter.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
-        pricesData.categories.filter(c => c.active !== false).forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            let categoryName = cat.name;
-            if (typeof categoryName === 'object') {
-                categoryName = categoryName[lang] || categoryName.ru || cat.name;
-            }
-            option.textContent = categoryName;
-            discountCategoryFilter.appendChild(option);
-        });
-        if (currentValue && discountCategoryFilter.querySelector(`option[value="${currentValue}"]`)) {
-            discountCategoryFilter.value = currentValue;
-        }
-    }
-    
-    const priceServiceCategory = document.getElementById('priceServiceCategoryId');
-    if (priceServiceCategory && pricesData?.categories) {
-        const currentValue = priceServiceCategory.value;
-        priceServiceCategory.innerHTML = '<option value="" data-translate="select_category_option">-- Выберите категорию --</option>';
-        pricesData.categories.filter(c => c.active !== false).forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            let categoryName = cat.name;
-            if (typeof categoryName === 'object') {
-                categoryName = categoryName[lang] || categoryName.ru || cat.name;
-            }
-            option.textContent = categoryName;
-            priceServiceCategory.appendChild(option);
-        });
-        const firstOption = priceServiceCategory.options[0];
-        if (firstOption) firstOption.textContent = getUIText('select_category_option');
-        if (currentValue && priceServiceCategory.querySelector(`option[value="${currentValue}"]`)) {
-            priceServiceCategory.value = currentValue;
-        }
-    }
-    
-    const discountServiceId = document.getElementById('discountServiceId');
-    if (discountServiceId && pricesData?.categories) {
-        const currentValue = discountServiceId.value;
-        discountServiceId.innerHTML = '<option value="" data-translate="select_category_option">-- Выберите категорию --</option>';
-        pricesData.categories.filter(c => c.active !== false).forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            let categoryName = cat.name;
-            if (typeof categoryName === 'object') {
-                categoryName = categoryName[lang] || categoryName.ru || cat.name;
-            }
-            option.textContent = categoryName;
-            discountServiceId.appendChild(option);
-        });
-        const firstOption = discountServiceId.options[0];
-        if (firstOption) firstOption.textContent = getUIText('select_category_option');
-        if (currentValue && discountServiceId.querySelector(`option[value="${currentValue}"]`)) {
-            discountServiceId.value = currentValue;
-        }
-    }
-}
-
+// ========== РАСПИСАНИЕ ==========
 
 async function renderAdminSchedule() {
     const container = document.getElementById('scheduleAdminContainer');
@@ -2467,6 +3301,7 @@ async function renderAdminSchedule() {
         return;
     }
     
+    const lang = getCurrentAdminLang();
     const dayFullNames = { 
         monday: getUIText('monday'), 
         tuesday: getUIText('tuesday'), 
@@ -2478,47 +3313,28 @@ async function renderAdminSchedule() {
     };
     const dayOrder = { monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6, sunday: 7 };
     
-    let html = '<div class="schedule-admin-list">';
+    let html = '';
     
     for (const doctor of doctorsList) {
         const doctorSchedule = scheduleList.filter(s => s.doctorId === doctor.id);
         doctorSchedule.sort((a, b) => dayOrder[a.day] - dayOrder[b.day]);
         
-        let doctorName = '';
+        let doctorName = getUIText('unknown');
+        let doctorSpecialization = '';
+        
         if (doctor.name) {
-            if (typeof doctor.name === 'object') {
-                const lang = getCurrentAdminLang();
-                doctorName = doctor.name[lang] || doctor.name.ru || '';
-            } else {
-                doctorName = doctor.name;
-            }
+            doctorName = getLocalizedText(doctor.name);
         } else if (doctor.lastName || doctor.firstName) {
-            const lang = getCurrentAdminLang();
-            let lastName = '', firstName = '';
-            if (typeof doctor.lastName === 'object') {
-                lastName = doctor.lastName[lang] || doctor.lastName.ru || '';
-            } else {
-                lastName = doctor.lastName || '';
-            }
-            if (typeof doctor.firstName === 'object') {
-                firstName = doctor.firstName[lang] || doctor.firstName.ru || '';
-            } else {
-                firstName = doctor.firstName || '';
-            }
+            let lastName = getLocalizedText(doctor.lastName);
+            let firstName = getLocalizedText(doctor.firstName);
             doctorName = `${lastName} ${firstName}`.trim();
         }
         
-        if (!doctorName) doctorName = 'Врач';
-        
-        let doctorSpecialization = '';
         if (doctor.specialization) {
-            if (typeof doctor.specialization === 'object') {
-                const lang = getCurrentAdminLang();
-                doctorSpecialization = doctor.specialization[lang] || doctor.specialization.ru || '';
-            } else {
-                doctorSpecialization = doctor.specialization;
-            }
+            doctorSpecialization = getLocalizedText(doctor.specialization);
         }
+        
+        if (!doctorName || doctorName === '') doctorName = getUIText('unknown');
         
         html += `
             <div class="doctor-schedule-card-admin" data-doctor-id="${doctor.id}" style="background: white; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
@@ -2530,7 +3346,7 @@ async function renderAdminSchedule() {
                     <span class="doctor-schedule-toggle" style="color: white; font-size: 20px;">▼</span>
                 </div>
                 <div class="schedule-content" style="display: block; padding: 20px; overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                    <table style="width: 100%; border-collapse: collapse;">
                         <colgroup>
                             <col style="width: 25%;">
                             <col style="width: 35%;">
@@ -2541,9 +3357,9 @@ async function renderAdminSchedule() {
                             <tr style="background: #F3F4F6;">
                                 <th style="padding: 12px 15px; text-align: left;">${getUIText('th_name')}</th>
                                 <th style="padding: 12px 15px; text-align: left;">${getUIText('th_time')}</th>
-                                <th style="padding: 12px 15px; text-align: left;">${getUIText('th_note')}</th>
+                                <th style="padding: 12px 15px; text-align: left;">${getUIText('th_break')}</th>
                                 <th style="padding: 12px 15px; text-align: left; width: 80px;">${getUIText('th_actions')}</th>
-                            </tr>
+                              </tr>
                         </thead>
                         <tbody>
         `;
@@ -2553,7 +3369,7 @@ async function renderAdminSchedule() {
                 <tr>
                     <td colspan="4" style="padding: 30px; text-align: center; color: #6B7280;">
                         ${getUIText('lang') === 'ru' ? 'Расписание не настроено' : 'Schedule not configured'}
-                    </td>
+                     </td>
                 </tr>
             `;
         } else {
@@ -2581,13 +3397,13 @@ async function renderAdminSchedule() {
                                 ? `<span style="color: #10B981; font-weight: 500;">${escapeHtml(workHours)}</span>` 
                                 : `<span style="color: #EF4444;">${escapeHtml(workHours)}</span>`
                             }
-                         </span>
-                        <td style="padding: 12px 15px;">${escapeHtml(breakTime)}</span>
+                         </td>
+                        <td style="padding: 12px 15px;">${escapeHtml(breakTime)}</td>
                         <td style="padding: 12px 15px;">
                             <button class="btn-edit-schedule" data-doctor="${doctor.id}" data-day="${schedule.day}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">
-                                ${getUIText('action_edit_small')}
+                                ✏️
                             </button>
-                         </span>
+                         </td>
                     </tr>
                 `;
             }
@@ -2600,7 +3416,6 @@ async function renderAdminSchedule() {
             </div>
         `;
     }
-    html += '</div>';
     
     container.innerHTML = html;
     
@@ -2610,7 +3425,8 @@ async function renderAdminSchedule() {
         
         newHeader.addEventListener('click', function(e) {
             if (e.target.tagName === 'BUTTON') return;
-            const content = this.nextElementSibling;
+            const card = this.closest('.doctor-schedule-card-admin');
+            const content = card.querySelector('.schedule-content');
             const toggle = this.querySelector('.doctor-schedule-toggle');
             if (content && toggle) {
                 if (content.style.display === 'none') {
@@ -2639,7 +3455,8 @@ function openScheduleModal(doctorId, day) {
     const doctor = scheduleData?.doctors?.find(d => d.id === doctorId);
     if (!doctor) return;
     
-    const schedule = scheduleData?.schedule?.find(s => s.doctorId === doctorId && s.day === day);
+    const originalSchedule = scheduleData?.schedule?.find(s => s.doctorId === doctorId && s.day === day);
+    const originalData = originalSchedule ? { ...originalSchedule } : null;
     
     document.getElementById('scheduleDoctorId').value = doctorId;
     
@@ -2665,56 +3482,216 @@ function openScheduleModal(doctorId, day) {
     
     const dayNames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     const dayIndex = dayNames.indexOf(day);
-    const dayCards = document.querySelectorAll('.schedule-day-card');
     
-    if (dayCards.length === 0) {
-        const container = document.querySelector('.schedule-days-container');
-        if (container) {
-            const days = [getUIText('monday'), getUIText('tuesday'), getUIText('wednesday'), getUIText('thursday'), getUIText('friday'), getUIText('saturday'), getUIText('sunday')];
-            const dayKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-            container.innerHTML = '';
-            days.forEach((d, idx) => {
-                container.innerHTML += `
-                    <div class="schedule-day-card" style="background: #F9FAFB; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
-                        <h4 style="margin: 0 0 15px 0; color: #2F353B;">${d}</h4>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="checkbox-label"><input type="checkbox" class="schedule-working" data-day="${dayKeys[idx]}"> Рабочий день</label>
-                            </div>
-                        </div>
-                        <div class="form-row work-hours-row" style="display: flex; gap: 15px; margin-top: 10px;" data-day="${dayKeys[idx]}">
-                            <div class="form-group"><label>Начало работы</label><input type="time" class="schedule-start" data-day="${dayKeys[idx]}"></div>
-                            <div class="form-group"><label>Конец работы</label><input type="time" class="schedule-end" data-day="${dayKeys[idx]}"></div>
-                            <div class="form-group"><label>Начало перерыва</label><input type="time" class="schedule-break-start" data-day="${dayKeys[idx]}"></div>
-                            <div class="form-group"><label>Конец перерыва</label><input type="time" class="schedule-break-end" data-day="${dayKeys[idx]}"></div>
-                        </div>
-                    </div>
-                `;
-            });
+    function generateHourOptions() {
+        let options = '<option value="">--</option>';
+        for (let hour = 0; hour < 24; hour++) {
+            const hourStr = hour.toString().padStart(2, '0');
+            options += `<option value="${hourStr}">${hourStr}</option>`;
         }
+        return options;
     }
     
-    const updatedCards = document.querySelectorAll('.schedule-day-card');
-    updatedCards.forEach((card, idx) => {
-        const workingCheckbox = card.querySelector('.schedule-working');
-        const startInput = card.querySelector('.schedule-start');
-        const endInput = card.querySelector('.schedule-end');
-        const breakStartInput = card.querySelector('.schedule-break-start');
-        const breakEndInput = card.querySelector('.schedule-break-end');
-        
-        if (idx === dayIndex && schedule) {
-            workingCheckbox.checked = schedule.isWorking;
-            startInput.value = schedule.timeStart || '';
-            endInput.value = schedule.timeEnd || '';
-            breakStartInput.value = schedule.breakStart || '';
-            breakEndInput.value = schedule.breakEnd || '';
-        } else if (idx === dayIndex) {
-            workingCheckbox.checked = true;
-            startInput.value = '09:00';
-            endInput.value = '18:00';
-            breakStartInput.value = '13:00';
-            breakEndInput.value = '14:00';
+    function generateMinuteOptions() {
+        let options = '<option value="">--</option>';
+        for (let minute = 0; minute < 60; minute += 5) {
+            const minuteStr = minute.toString().padStart(2, '0');
+            options += `<option value="${minuteStr}">${minuteStr}</option>`;
         }
+        return options;
+    }
+    
+    const hourOptions = generateHourOptions();
+    const minuteOptions = generateMinuteOptions();
+    
+    const container = document.querySelector('.schedule-days-container');
+    if (!container) return;
+    
+    const days = [getUIText('monday'), getUIText('tuesday'), getUIText('wednesday'), getUIText('thursday'), getUIText('friday'), getUIText('saturday'), getUIText('sunday')];
+    const dayKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    
+    const existingScheduleForDoctor = scheduleData?.schedule?.filter(s => s.doctorId === doctorId) || [];
+    const scheduleMap = new Map();
+    existingScheduleForDoctor.forEach(s => {
+        scheduleMap.set(s.day, s);
+    });
+    
+    container.innerHTML = '';
+    
+    days.forEach((d, idx) => {
+        const currentDayKey = dayKeys[idx];
+        const existing = scheduleMap.get(currentDayKey);
+        
+        const isWorking = existing ? existing.isWorking : (idx < 5); 
+        const timeStart = existing?.timeStart || '09:00';
+        const timeEnd = existing?.timeEnd || '18:00';
+        const breakStart = existing?.breakStart || '13:00';
+        const breakEnd = existing?.breakEnd || '14:00';
+        
+        const [startHour, startMinute] = timeStart.split(':');
+        const [endHour, endMinute] = timeEnd.split(':');
+        const [breakStartHour, breakStartMinute] = breakStart.split(':');
+        const [breakEndHour, breakEndMinute] = breakEnd.split(':');
+        
+        container.innerHTML += `
+            <div class="schedule-day-card" style="background: #F9FAFB; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                <h4 style="margin: 0 0 15px 0; color: #2F353B;">${d}</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="schedule-working" data-day="${currentDayKey}" ${isWorking ? 'checked' : ''}> 
+                            <span>Рабочий день</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row work-hours-row" style="display: flex; flex-direction: column; gap: 15px; margin-top: 10px;" data-day="${currentDayKey}">
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 180px;">
+                            <label>Начало работы</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <select class="schedule-start-hour" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
+                                    ${hourOptions}
+                                </select>
+                                <span>:</span>
+                                <select class="schedule-start-minute" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
+                                    ${minuteOptions}
+                                </select>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 180px;">
+                            <label>Конец работы</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <select class="schedule-end-hour" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
+                                    ${hourOptions}
+                                </select>
+                                <span>:</span>
+                                <select class="schedule-end-minute" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
+                                    ${minuteOptions}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 180px;">
+                            <label>Начало перерыва</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <select class="schedule-break-start-hour" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
+                                    ${hourOptions}
+                                </select>
+                                <span>:</span>
+                                <select class="schedule-break-start-minute" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
+                                    ${minuteOptions}
+                                </select>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 180px;">
+                            <label>Конец перерыва</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <select class="schedule-break-end-hour" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
+                                    ${hourOptions}
+                                </select>
+                                <span>:</span>
+                                <select class="schedule-break-end-minute" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
+                                    ${minuteOptions}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    const dayCards = document.querySelectorAll('.schedule-day-card');
+    dayCards.forEach((card, idx) => {
+        const currentDayKey = dayKeys[idx];
+        const existing = scheduleMap.get(currentDayKey);
+        
+        const workingCheckbox = card.querySelector('.schedule-working');
+        const startHour = card.querySelector('.schedule-start-hour');
+        const startMinute = card.querySelector('.schedule-start-minute');
+        const endHour = card.querySelector('.schedule-end-hour');
+        const endMinute = card.querySelector('.schedule-end-minute');
+        const breakStartHour = card.querySelector('.schedule-break-start-hour');
+        const breakStartMinute = card.querySelector('.schedule-break-start-minute');
+        const breakEndHour = card.querySelector('.schedule-break-end-hour');
+        const breakEndMinute = card.querySelector('.schedule-break-end-minute');
+        
+        if (existing) {
+            workingCheckbox.checked = existing.isWorking;
+            
+            if (existing.timeStart) {
+                const [hour, minute] = existing.timeStart.split(':');
+                if (startHour) startHour.value = hour || '09';
+                if (startMinute) startMinute.value = minute || '00';
+            } else {
+                if (startHour) startHour.value = '09';
+                if (startMinute) startMinute.value = '00';
+            }
+            
+            if (existing.timeEnd) {
+                const [hour, minute] = existing.timeEnd.split(':');
+                if (endHour) endHour.value = hour || '18';
+                if (endMinute) endMinute.value = minute || '00';
+            } else {
+                if (endHour) endHour.value = '18';
+                if (endMinute) endMinute.value = '00';
+            }
+            
+            if (existing.breakStart) {
+                const [hour, minute] = existing.breakStart.split(':');
+                if (breakStartHour) breakStartHour.value = hour || '13';
+                if (breakStartMinute) breakStartMinute.value = minute || '00';
+            } else {
+                if (breakStartHour) breakStartHour.value = '13';
+                if (breakStartMinute) breakStartMinute.value = '00';
+            }
+            
+            if (existing.breakEnd) {
+                const [hour, minute] = existing.breakEnd.split(':');
+                if (breakEndHour) breakEndHour.value = hour || '14';
+                if (breakEndMinute) breakEndMinute.value = minute || '00';
+            } else {
+                if (breakEndHour) breakEndHour.value = '14';
+                if (breakEndMinute) breakEndMinute.value = '00';
+            }
+            
+            const selects = card.querySelectorAll('select');
+            selects.forEach(select => {
+                select.disabled = !existing.isWorking;
+            });
+        } else {
+            if (startHour) startHour.value = '09';
+            if (startMinute) startMinute.value = '00';
+            if (endHour) endHour.value = '18';
+            if (endMinute) endMinute.value = '00';
+            if (breakStartHour) breakStartHour.value = '13';
+            if (breakStartMinute) breakStartMinute.value = '00';
+            if (breakEndHour) breakEndHour.value = '14';
+            if (breakEndMinute) breakEndMinute.value = '00';
+            
+            const isDefaultWorking = idx < 5; 
+            workingCheckbox.checked = isDefaultWorking;
+            
+            const selects = card.querySelectorAll('select');
+            selects.forEach(select => {
+                select.disabled = !isDefaultWorking;
+            });
+        }
+    });
+    
+    const workingCheckboxes = document.querySelectorAll('.schedule-working');
+    workingCheckboxes.forEach(checkbox => {
+        const newCheckbox = checkbox.cloneNode(true);
+        checkbox.parentNode.replaceChild(newCheckbox, checkbox);
+        
+        newCheckbox.addEventListener('change', function(e) {
+            const card = this.closest('.schedule-day-card');
+            const selects = card.querySelectorAll('select');
+            selects.forEach(select => {
+                select.disabled = !this.checked;
+            });
+        });
     });
     
     let doctorName = doctor.name;
@@ -2726,6 +3703,13 @@ function openScheduleModal(doctorId, day) {
     const dayNameRu = getDayNameRussian(day);
     document.getElementById('scheduleModalTitle').textContent = `Настройка расписания - ${doctorName} (${dayNameRu})`;
     document.getElementById('scheduleModal').style.display = 'flex';
+    
+    const modal = document.getElementById('scheduleModal');
+    if (originalData) {
+        modal.setAttribute('data-original-schedule', JSON.stringify(originalData));
+    } else {
+        modal.setAttribute('data-original-schedule', 'null');
+    }
 }
 
 function getDayNameRussian(day) {
@@ -2734,13 +3718,20 @@ function getDayNameRussian(day) {
 }
 
 async function saveSchedule(event) {
-    event.preventDefault();
+    if (event && event.preventDefault) {
+        event.preventDefault();
+    }
+    
+    console.log('🟢 saveSchedule вызвана');
+    
     const doctorId = parseInt(document.getElementById('scheduleDoctorId').value);
     
     if (!doctorId) {
         showToast('Выберите врача', 'error');
         return;
     }
+    
+    const currentTab = document.querySelector('.nav-tab.active')?.dataset.tab || 'schedule';
     
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     const dayNames = [getUIText('monday'), getUIText('tuesday'), getUIText('wednesday'), getUIText('thursday'), getUIText('friday'), getUIText('saturday'), getUIText('sunday')];
@@ -2750,14 +3741,24 @@ async function saveSchedule(event) {
     
     for (let i = 0; i < days.length; i++) {
         const card = dayCards[i];
-        const isWorking = card.querySelector('.schedule-working').checked;
-        const startTime = card.querySelector('.schedule-start').value;
-        const endTime = card.querySelector('.schedule-end').value;
-        const breakStart = card.querySelector('.schedule-break-start').value;
-        const breakEnd = card.querySelector('.schedule-break-end').value;
+        const isWorking = card.querySelector('.schedule-working')?.checked || false;
+        
+        const startHour = card.querySelector('.schedule-start-hour')?.value || '';
+        const startMinute = card.querySelector('.schedule-start-minute')?.value || '';
+        const endHour = card.querySelector('.schedule-end-hour')?.value || '';
+        const endMinute = card.querySelector('.schedule-end-minute')?.value || '';
+        const breakStartHour = card.querySelector('.schedule-break-start-hour')?.value || '';
+        const breakStartMinute = card.querySelector('.schedule-break-start-minute')?.value || '';
+        const breakEndHour = card.querySelector('.schedule-break-end-hour')?.value || '';
+        const breakEndMinute = card.querySelector('.schedule-break-end-minute')?.value || '';
+        
+        const startTime = (startHour && startMinute) ? `${startHour}:${startMinute}` : '';
+        const endTime = (endHour && endMinute) ? `${endHour}:${endMinute}` : '';
+        const breakStart = (breakStartHour && breakStartMinute) ? `${breakStartHour}:${breakStartMinute}` : '';
+        const breakEnd = (breakEndHour && breakEndMinute) ? `${breakEndHour}:${breakEndMinute}` : '';
         
         const existingSchedule = scheduleData.schedule.find(s => s.doctorId === doctorId && s.day === days[i]);
-        const id = existingSchedule ? existingSchedule.id : Date.now() + i;
+        let id = existingSchedule ? existingSchedule.id : getNextScheduleId(scheduleData);
         
         newSchedule.push({
             id: id,
@@ -2776,19 +3777,31 @@ async function saveSchedule(event) {
     scheduleData.schedule = [...otherSchedules, ...newSchedule];
     
     try {
-        await fetch(`${API_BASE_URL}/schedule`, {
+        const response = await fetch(`${API_BASE_URL}/schedule`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(scheduleData)
         });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        console.log('✅ Расписание сохранено в JSON');
         await loadAllData();
         await renderAdminSchedule();
         showToast('Расписание сохранено', 'success');
         document.getElementById('scheduleModal').style.display = 'none';
+        
+        activateTab(currentTab);
     } catch (error) {
-        showToast('Ошибка сохранения', 'error');
+        console.error('❌ Ошибка сохранения:', error);
+        showToast('Ошибка сохранения расписания', 'error');
+        activateTab(currentTab);
     }
 }
+
+// ========== СКИДКИ ==========
 
 async function renderAdminDiscounts() {
     const tbody = document.getElementById('discountsList');
@@ -2830,12 +3843,17 @@ async function renderAdminDiscounts() {
     
     const categoryFilterSelect = document.getElementById('discountCategoryFilter');
     if (categoryFilterSelect && categoryFilterSelect.options.length <= 1 && pricesData?.categories) {
+        const lang = getCurrentAdminLang();
         categoryFilterSelect.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
         pricesData.categories.forEach(cat => {
             if (cat.active) {
                 const option = document.createElement('option');
                 option.value = cat.id;
-                option.textContent = cat.name;
+                let categoryName = cat.name;
+                if (typeof categoryName === 'object') {
+                    categoryName = categoryName[lang] || categoryName.ru || cat.name;
+                }
+                option.textContent = categoryName;
                 categoryFilterSelect.appendChild(option);
             }
         });
@@ -2877,29 +3895,27 @@ async function renderAdminDiscounts() {
             ? `${discount.startDate} — ${discount.endDate}` 
             : (discount.startDate || discount.endDate || '—');
         
+        let categoryName = category ? getLocalizedText(category.name) : getUIText('unknown');
+        
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${discount.id}</td>
-            <td>${category ? escapeHtml(category.name) : '—'}</td>
+            <td>${category ? escapeHtml(categoryName) : getUIText('unknown')}</td>
             <td><strong>${escapeHtml(discount.name)}</strong></td>
             <td>${discountType}</td>
             <td>${discountValue}</td>
             <td>${periodText}</td>
             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
             <td class="action-buttons">
-                <button class="btn-edit-discount" data-id="${discount.id}">${getUIText('action_edit_small')}</button>
-                <button class="btn-delete-discount" data-id="${discount.id}">${getUIText('action_delete_small')}</button>
-                <button class="btn-toggle-discount" data-id="${discount.id}">${discount.active ? getUIText('action_deactivate') : getUIText('action_activate')}</button>
-              </td>
+                <button class="btn-edit-discount" data-id="${discount.id}" title="Редактировать">✏️${getUIText('action_edit')}</button>
+                <button class="btn-toggle-discount" data-id="${discount.id}" title="${discount.active ? 'Деактивировать' : 'Активировать'}">${discount.active ? getUIText('action_deactivate') : getUIText('action_activate')}</button>
+             </span>
         `;
         tbody.appendChild(row);
     }
     
     document.querySelectorAll('.btn-edit-discount').forEach(btn => {
         btn.addEventListener('click', () => editDiscount(parseInt(btn.dataset.id)));
-    });
-    document.querySelectorAll('.btn-delete-discount').forEach(btn => {
-        btn.addEventListener('click', () => deleteDiscount(parseInt(btn.dataset.id)));
     });
     document.querySelectorAll('.btn-toggle-discount').forEach(btn => {
         btn.addEventListener('click', () => toggleDiscountStatus(parseInt(btn.dataset.id)));
@@ -2911,12 +3927,17 @@ async function editDiscount(id) {
     if (!discount) return;
     
     const categorySelect = document.getElementById('discountServiceId');
-    categorySelect.innerHTML = '<option value="">-- Выберите категорию --</option>';
+    const lang = getCurrentAdminLang();
+    categorySelect.innerHTML = `<option value="">${getUIText('select_category_option')}</option>`;
     if (pricesData?.categories) {
         pricesData.categories.forEach(cat => {
             const option = document.createElement('option');
             option.value = cat.id;
-            option.textContent = cat.name;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
             categorySelect.appendChild(option);
         });
     }
@@ -2932,19 +3953,6 @@ async function editDiscount(id) {
     document.getElementById('discountActive').checked = discount.active;
     document.getElementById('discountModalTitle').textContent = getUIText('modal_edit_discount');
     document.getElementById('discountModal').style.display = 'flex';
-}
-
-async function deleteDiscount(id) {
-    if (confirm('Удалить эту скидку?')) {
-        try {
-            await fetch(`${API_BASE_URL}/discounts/${id}`, { method: 'DELETE' });
-            await loadAllData();
-            await renderAdminDiscounts();
-            showToast('Скидка удалена', 'success');
-        } catch (error) {
-            showToast('Ошибка при удалении', 'error');
-        }
-    }
 }
 
 async function toggleDiscountStatus(id) {
@@ -2972,20 +3980,48 @@ async function saveDiscount(event) {
     event.preventDefault();
     const id = parseInt(document.getElementById('discountId').value);
     const discountCategoryId = parseInt(document.getElementById('discountServiceId').value);
-    const name = document.getElementById('discountName').value.trim();
+    let name = document.getElementById('discountName').value.trim();
     const type = document.getElementById('discountType').value;
-    const value = parseFloat(document.getElementById('discountValue').value);
+    const valueRaw = document.getElementById('discountValue').value;
     const startDate = document.getElementById('discountStartDate').value;
     const endDate = document.getElementById('discountEndDate').value;
-    const description = document.getElementById('discountDescription').value;
+    let description = document.getElementById('discountDescription').value;
     const active = document.getElementById('discountActive').checked;
     
-    if (!discountCategoryId || !name || !value) {
-        showToast('Заполните обязательные поля', 'error');
+    if (!discountCategoryId) {
+        showToast('Выберите категорию', 'error');
         return;
     }
     
+    if (!name) {
+        showToast('Введите название скидки', 'error');
+        return;
+    }
+    
+    const valueValidation = validateDiscountValue(valueRaw, type);
+    if (!valueValidation.valid) {
+        showToast(valueValidation.message, 'error');
+        return;
+    }
+    const value = parseFloat(valueRaw);
+    
+    const categoryValidation = validateDiscountForCategory(discountCategoryId, id || null);
+    if (!categoryValidation.valid) {
+        showToast(categoryValidation.message, 'error');
+        return;
+    }
+    
+    if (typeof name === 'string') {
+        name = { ru: name, en: name };
+    }
+    
+    if (typeof description === 'string' && description) {
+        description = { ru: description, en: description };
+    }
+    
     const discountData = { id, discountCategoryId, name, type, value, startDate, endDate, description, active, createdAt: new Date().toISOString() };
+    
+    const currentTab = document.querySelector('.nav-tab.active')?.dataset.tab || 'discounts';
     
     try {
         if (id) {
@@ -2996,7 +4032,8 @@ async function saveDiscount(event) {
             });
             showToast('Скидка обновлена', 'success');
         } else {
-            discountData.id = Date.now();
+            const newId = await getNextDiscountId();
+            discountData.id = newId;
             await fetch(`${API_BASE_URL}/discounts`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -3007,10 +4044,15 @@ async function saveDiscount(event) {
         
         await loadAllData();
         await renderAdminDiscounts();
+        
+        activateTab(currentTab);
+        
         document.getElementById('discountModal').style.display = 'none';
         document.getElementById('discountForm').reset();
     } catch (error) {
+        console.error('Ошибка сохранения:', error);
         showToast('Ошибка сохранения', 'error');
+        activateTab(currentTab);
     }
 }
 
@@ -3042,16 +4084,14 @@ function closeModals() {
 
 function initTabs() {
     const tabs = document.querySelectorAll('.nav-tab');
+    
     tabs.forEach(tab => {
         tab.addEventListener('click', async () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
             const tabId = tab.dataset.tab;
-            const tabContent = document.getElementById(`tab-${tabId}`);
-            if (tabContent) tabContent.classList.add('active');
+            
+            saveActiveTab(tabId);
+            
+            activateTab(tabId);
             
             if (tabId === 'reviews') {
                 await renderAdminReviews();
@@ -3066,6 +4106,9 @@ function initTabs() {
             }
         });
     });
+    
+    const savedTab = loadActiveTab();
+    activateTab(savedTab);
 }
 
 function initMobileMenu() {
@@ -3108,6 +4151,7 @@ function initMobileMenu() {
                 const tabContent = document.getElementById(`tab-${tab.dataset.tab}`);
                 if (tabContent) tabContent.classList.add('active');
                 closeMobileMenu();
+                saveActiveTab(tab.dataset.tab);
             });
             nav.appendChild(clonedTab);
         });
@@ -3145,13 +4189,133 @@ function initMobileMenu() {
     menuOverlay?.addEventListener('click', closeMobileMenu);
 }
 
+async function loadAllData() {
+    const currentTab = document.querySelector('.nav-tab.active')?.dataset.tab;
+    if (currentTab) {
+        saveActiveTab(currentTab);
+    }
+    
+    try {
+        const [servicesRes, serviceDetailsRes, doctorsRes, appointmentsRes, reviewsRes, pricesRes, scheduleRes, discountsRes] = await Promise.all([
+            fetch(`${API_BASE_URL}/services`),
+            fetch(`${API_BASE_URL}/serviceDetails`),
+            fetch(`${API_BASE_URL}/doctors`),
+            fetch(`${API_BASE_URL}/appointments`),
+            fetch(`${API_BASE_URL}/reviews`),
+            fetch(`${API_BASE_URL}/prices`),
+            fetch(`${API_BASE_URL}/schedule`),
+            fetch(`${API_BASE_URL}/discounts`)
+        ]);
+        
+        let servicesData = await servicesRes.json();
+        let serviceDetailsData = await serviceDetailsRes.json();
+        let doctorsData = await doctorsRes.json();
+        let reviewsData = await reviewsRes.json();
+        let pricesDataRaw = await pricesRes.json();
+        let scheduleDataRaw = await scheduleRes.json();
+        
+        servicesData = localizeArray(servicesData, ['name', 'title']);
+        serviceDetailsData = localizeArray(serviceDetailsData, ['mainText', 'secondaryText', 'features', 'steps']);
+        doctorsData = localizeArray(doctorsData, ['lastName', 'firstName', 'middleName', 'specialization', 'education', 'experience', 'improvement']);
+        reviewsData = localizeArray(reviewsData, ['author', 'userInfo', 'text']);
+        
+        if (pricesDataRaw && pricesDataRaw.categories) {
+            pricesDataRaw.categories = localizeArray(pricesDataRaw.categories, ['name']);
+        }
+        if (pricesDataRaw && pricesDataRaw.services) {
+            pricesDataRaw.services = localizeArray(pricesDataRaw.services, ['name', 'description']);
+        }
+        
+        if (scheduleDataRaw && scheduleDataRaw.doctors) {
+            scheduleDataRaw.doctors = localizeArray(scheduleDataRaw.doctors, ['name', 'specialization']);
+        }
+        if (scheduleDataRaw && scheduleDataRaw.schedule) {
+            scheduleDataRaw.schedule = localizeArray(scheduleDataRaw.schedule, ['dayName']);
+        }
+        
+        const discountsData = await discountsRes.json();
+        discounts = localizeArray(discountsData, ['name', 'description']);
+        
+        services = servicesData;
+        serviceDetails = serviceDetailsData;
+        doctors = doctorsData;
+        appointments = await appointmentsRes.json();
+        reviews = reviewsData;
+        pricesData = pricesDataRaw;
+        scheduleData = scheduleDataRaw;
+        
+        console.log('✅ Все данные загружены');
+        console.log('📋 Услуг:', services.length);
+        console.log('👨‍⚕️ Врачей:', doctors.length);
+        console.log('📅 Записей:', appointments.length);
+        console.log('📂 Категорий прайс-листа:', pricesData?.categories?.length || 0);
+        console.log('🏷️ Скидок:', discounts.length);
+        
+        if (currentTab) {
+            activateTab(currentTab);
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('❌ Ошибка загрузки данных:', error);
+        showToast('Ошибка подключения к серверу. Запустите json-server --watch db.json --port 3000', 'error');
+        return false;
+    }
+}
+
+function getDiscountByCategoryId(categoryId) {
+    const today = new Date().toISOString().split('T')[0];
+    return discounts.find(d => {
+        if (d.discountCategoryId !== categoryId) return false;
+        if (!d.active) return false;
+        if (d.startDate && d.endDate) {
+            return today >= d.startDate && today <= d.endDate;
+        }
+        return true;
+    });
+}
+
+function exportPricesToJSON() {
+    if (!pricesData) {
+        showToast('Нет данных для экспорта', 'error');
+        return;
+    }
+    
+    const exportData = {
+        version: pricesData.version || '2.0',
+        categories: pricesData.categories || [],
+        services: pricesData.services || [],
+        exportDate: new Date().toISOString()
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `prices_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    showToast('Прайс-лист экспортирован', 'success');
+}
+
 async function init() {
+    console.log('🚀 Инициализация админ-панели...');
+    
+    initDiscountDatePickers();
+    
     const loaded = await loadAllData();
     
     if (!loaded) {
-        console.error('Не удалось загрузить данные');
+        console.error('❌ Не удалось загрузить данные');
         return;
     }
+    
+    initDateFilterWithCalendar();
+    
+    await updateAppointmentFilters();
+    await updateCategoryFilters();
     
     await renderServices();
     await updateServiceDetailsFilter();
@@ -3169,7 +4333,6 @@ async function init() {
     initMobileMenu();
     initReviewFilters();
     initDiscountFilters();
-    initDateMask();
     
     const addServiceBtn = document.getElementById('addServiceBtn');
     const serviceForm = document.getElementById('serviceForm');
@@ -3188,11 +4351,20 @@ async function init() {
     const addPriceCategoryBtn = document.getElementById('addPriceCategoryBtn');
     const addPriceServiceBtn = document.getElementById('addPriceServiceBtn');
     const priceServiceForm = document.getElementById('priceServiceForm');
-    const addScheduleBtn = document.getElementById('addScheduleBtn');
     const scheduleForm = document.getElementById('scheduleForm');
     const addDiscountBtn = document.getElementById('addDiscountBtn');
     const discountForm = document.getElementById('discountForm');
     const categoryForm = document.getElementById('categoryForm');
+    
+    const priceCategoryFilter = document.getElementById('priceCategoryFilter');
+    const priceSearchFilter = document.getElementById('priceSearchFilter');
+    
+    const exportPricesBtn = document.getElementById('exportPricesBtn');
+    if (exportPricesBtn) {
+        exportPricesBtn.addEventListener('click', () => {
+            exportPricesToJSON();
+        });
+    }
     
     if (addServiceBtn) addServiceBtn.addEventListener('click', () => openServiceModal(false));
     if (serviceForm) serviceForm.addEventListener('submit', saveService);
@@ -3209,6 +4381,18 @@ async function init() {
     if (resetAppointmentFiltersBtn) resetAppointmentFiltersBtn.addEventListener('click', resetAppointmentFilters);
     if (addPriceCategoryBtn) addPriceCategoryBtn.addEventListener('click', () => openAddCategoryModal());
     if (categoryForm) categoryForm.addEventListener('submit', saveCategory);
+    
+    if (priceCategoryFilter) {
+        priceCategoryFilter.addEventListener('change', () => {
+            renderAdminPrices();
+        });
+    }
+    
+    if (priceSearchFilter) {
+        priceSearchFilter.addEventListener('input', () => {
+            renderAdminPrices();
+        });
+    }
     
     if (exportReviewsBtn) {
         exportReviewsBtn.addEventListener('click', () => {
@@ -3237,13 +4421,12 @@ async function init() {
     
     if (priceServiceForm) priceServiceForm.addEventListener('submit', savePriceService);
     
-    if (addScheduleBtn) {
-        addScheduleBtn.addEventListener('click', () => {
-            openScheduleModal(scheduleData?.doctors?.[0]?.id || 1, 'monday');
-        });
+    if (scheduleForm) {
+        const newScheduleForm = scheduleForm.cloneNode(true);
+        scheduleForm.parentNode.replaceChild(newScheduleForm, scheduleForm);
+        newScheduleForm.addEventListener('submit', saveSchedule);
+        console.log('✅ Обработчик формы расписания добавлен');
     }
-    
-    if (scheduleForm) scheduleForm.addEventListener('submit', saveSchedule);
     
     if (addDiscountBtn) {
         addDiscountBtn.addEventListener('click', () => {
@@ -3267,7 +4450,11 @@ async function init() {
     });
     
     document.addEventListener('languageChanged', async () => {
+        const currentTab = document.querySelector('.nav-tab.active')?.dataset.tab || 'services';
+        
         await loadAllData();
+        await updateAppointmentFilters();
+        await updateCategoryFilters();
         await renderServices();
         await updateServiceDetailsFilter();
         await renderServiceDetails();
@@ -3281,8 +4468,13 @@ async function init() {
         if (typeof updateAnalyticsTranslations === 'function') {
             updateAnalyticsTranslations();
         }
+        
+        activateTab(currentTab);
+        
         showToast(`Язык изменён на ${getCurrentAdminLang() === 'ru' ? 'русский' : 'английский'}`, 'success');
     });
+    
+    console.log('✅ Админ-панель инициализирована');
 }
 
 document.addEventListener('DOMContentLoaded', init);

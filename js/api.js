@@ -430,7 +430,7 @@ function getLocalizedUnit(unit) {
     if (typeof unit === 'string') {
         if (unit === 'BYN') {
             const lang = getCurrentLang();
-            return lang === 'ru' ? 'BYN' : 'BYN'; 
+            return lang === 'ru' ? 'BYN' : 'BYN';
         }
         return unit;
     }

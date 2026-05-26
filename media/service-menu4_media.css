@@ -991,7 +991,7 @@
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 310px) {
     .container {
         padding: 0 5px;
     }
@@ -1520,7 +1520,7 @@
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 310px) {
     .header-container {
         padding: 8px 10px;
     }
@@ -1626,7 +1626,7 @@
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 310px) {
     .close-menu-btn {
         top: 8px;
         right: 8px;

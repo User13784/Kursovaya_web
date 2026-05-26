@@ -12,6 +12,42 @@
     <link rel="stylesheet" href="../css/modal-profile.css">
     <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/special-version.css">
+    
+    <style>
+        .hero-diagnostics .btn-white {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+            cursor: pointer !important;
+        }
+        
+        .hero-diagnostics .btn-white:hover {
+            transform: scale(1.02) !important;
+            background: #A5C33C !important;
+            color: #1a1e22 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .hero-diagnostics .btn-white:active {
+            transform: scale(0.98) !important;
+            transition: all 0.05s ease !important;
+        }
+        
+        .btn-outline, .first-btn, .diagnost-btn, .steps-btn, .last-step-btn {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
+            cursor: pointer !important;
+        }
+        
+        .btn-outline:hover, .first-btn:hover, .diagnost-btn:hover, .steps-btn:hover, .last-step-btn:hover {
+            transform: scale(1.02) !important;
+            background: rgba(165, 195, 60, 0.2) !important;
+            border-color: #A5C33C !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .btn-outline:active, .first-btn:active, .diagnost-btn:active, .steps-btn:active, .last-step-btn:active {
+            transform: scale(0.98) !important;
+            transition: all 0.05s ease !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -37,7 +73,7 @@
             
             <a href="#" id="mobileSpecialButton" class="mobile-special-button">👁️ Режим для слабовидящих</a>
             
-<a href="../index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="../index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
             <a href="../pages/service-detail.html" class="mobile-link" data-translate="services">УСЛУГИ</a>
             <a href="../pages/team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
             <a href="../pages/reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
@@ -45,7 +81,6 @@
             <a href="../pages/prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
             <a href="../pages/schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
             <a href="../pages/faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
-        </nav>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -357,7 +392,9 @@
         
         appointmentBtns.forEach(btn => {
             if (btn) {
-                btn.addEventListener('click', function(e) {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                newBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     openAppointment();
                 });

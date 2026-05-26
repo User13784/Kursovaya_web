@@ -26,12 +26,24 @@
     }
     
     function setupPasswordToggles() {
-        document.querySelectorAll('.signup-toggle-password').forEach(btn => {
-            btn.addEventListener('click', function() {
+        const toggleButtons = document.querySelectorAll('.signup-toggle-password');
+        
+        toggleButtons.forEach(btn => {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            
+            newBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 const targetId = this.getAttribute('data-target');
                 const input = document.getElementById(targetId);
                 if (input) {
-                    input.type = input.type === 'password' ? 'text' : 'password';
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                    } else {
+                        input.type = 'password';
+                    }
                 }
             });
         });
@@ -42,6 +54,7 @@
         if (errorEl) {
             errorEl.textContent = message;
             errorEl.classList.add('visible');
+            errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
     
@@ -94,9 +107,13 @@
         return digits.length >= 10 && digits.length <= 12;
     }
     
+    function normalizePhone(phone) {
+        return phone.replace(/\D/g, '');
+    }
+    
     async function checkUserExists(email, phone) {
         try {
-            const cleanPhone = phone.replace(/\D/g, '');
+            const cleanPhone = normalizePhone(phone);
             
             const [emailRes, phoneRes] = await Promise.all([
                 fetch(`${API_BASE_URL}/users?email=${encodeURIComponent(email)}`),
@@ -121,11 +138,48 @@
         }
     }
     
+    async function checkPhoneUniqueness(phone) {
+        if (!phone || phone.length < 10) return true;
+        
+        try {
+            const cleanPhone = normalizePhone(phone);
+            const phoneRes = await fetch(`${API_BASE_URL}/users?phone=${cleanPhone}`);
+            const phoneUsers = await phoneRes.json();
+            
+            if (phoneUsers.length > 0) {
+                showError('phoneError', 'Этот номер телефона уже зарегистрирован');
+                document.getElementById('phone').classList.add('error');
+                return false;
+            } else {
+                const phoneError = document.getElementById('phoneError');
+                if (phoneError && phoneError.textContent === 'Этот номер телефона уже зарегистрирован') {
+                    phoneError.classList.remove('visible');
+                    phoneError.textContent = '';
+                }
+                document.getElementById('phone').classList.remove('error');
+                return true;
+            }
+        } catch (error) {
+            console.error('Ошибка проверки телефона:', error);
+            return true;
+        }
+    }
+    
     async function saveUserToAPI(userData) {
-        const cleanPhone = userData.phone.replace(/\D/g, '');
+        const cleanPhone = normalizePhone(userData.phone);
+        
+        const usersResponse = await fetch(`${API_BASE_URL}/users`);
+        const existingUsers = await usersResponse.json();
+        
+        let maxId = 0;
+        existingUsers.forEach(user => {
+            if (user.id > maxId) maxId = user.id;
+        });
+        
+        const nextId = maxId + 1;
         
         const newUser = {
-            id: Date.now(),
+            id: nextId,
             firstName: userData.firstName,
             lastName: userData.lastName,
             middleName: userData.middleName || '',
@@ -137,6 +191,8 @@
             address: '',
             createdAt: new Date().toISOString()
         };
+        
+        console.log('📤 Отправка данных на сервер:', newUser);
         
         const response = await fetch(`${API_BASE_URL}/users`, {
             method: 'POST',
@@ -169,16 +225,44 @@
     
     function initSignup() {
         const form = document.getElementById('signupForm');
-        if (!form) return;
+        if (!form) {
+            console.error('❌ Форма регистрации не найдена');
+            return;
+        }
+        
+        console.log('✅ Форма регистрации найдена');
         
         const phoneInput = document.getElementById('phone');
         if (phoneInput) {
-            phoneInput.addEventListener('input', function() { formatPhoneNumber(this); });
+            phoneInput.addEventListener('input', function() { 
+                formatPhoneNumber(this);
+            });
+            
+            phoneInput.addEventListener('blur', async function() {
+                const phone = this.value.trim();
+                if (phone && validatePhone(phone)) {
+                    await checkPhoneUniqueness(phone);
+                }
+            });
+        }
+        
+        const agreeTermsCheckbox = document.getElementById('agreeTerms');
+        if (agreeTermsCheckbox) {
+            agreeTermsCheckbox.addEventListener('change', function() {
+                const termsError = document.getElementById('termsError');
+                if (this.checked && termsError) {
+                    termsError.classList.remove('visible');
+                    termsError.textContent = '';
+                }
+            });
         }
         
         setupPasswordToggles();
         
-        form.addEventListener('submit', async function(e) {
+        const newForm = form.cloneNode(true);
+        form.parentNode.replaceChild(newForm, form);
+        
+        newForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             clearErrors();
             
@@ -226,6 +310,11 @@
                 showError('phoneError', 'Введите корректный номер телефона');
                 document.getElementById('phone').classList.add('error');
                 isValid = false;
+            } else {
+                const isPhoneUnique = await checkPhoneUniqueness(phone);
+                if (!isPhoneUnique) {
+                    isValid = false;
+                }
             }
             
             const password = document.getElementById('password').value;
@@ -246,13 +335,15 @@
                 isValid = false;
             }
             
-            if (!document.getElementById('agreeTerms').checked) {
-                showError('termsError', 'Необходимо согласиться с условиями использования');
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            if (!agreeTerms) {
+                showError('termsError', '⚠️ Необходимо согласиться с условиями использования и политикой конфиденциальности');
+                document.getElementById('agreeTerms').scrollIntoView({ behavior: 'smooth', block: 'center' });
                 isValid = false;
             }
             
             if (isValid) {
-                const submitBtn = form.querySelector('button[type="submit"]');
+                const submitBtn = newForm.querySelector('button[type="submit"]');
                 const originalText = submitBtn?.textContent || 'ЗАРЕГИСТРИРОВАТЬСЯ';
                 if (submitBtn) {
                     submitBtn.textContent = 'Регистрация...';
@@ -267,10 +358,16 @@
                 }
                 
                 if (result.success) {
+                    console.log('✅ Регистрация успешна!');
+                    
                     showNotification('✅ Регистрация успешна! Перенаправление на страницу входа...');
                     
                     setTimeout(() => {
-                        window.location.href = 'login.html';
+                        const isInPages = window.location.pathname.includes('/pages/');
+                        const redirectUrl = isInPages ? 'login.html' : 'pages/login.html';
+                        
+                        console.log('🔄 Перенаправление на страницу входа:', redirectUrl);
+                        window.location.href = redirectUrl;
                     }, 2000);
                 } else {
                     if (result.field === 'email') {
@@ -286,6 +383,10 @@
                 }
             }
         });
+        
+        setTimeout(() => {
+            setupPasswordToggles();
+        }, 100);
     }
     
     if (!document.querySelector('#signup-styles')) {

@@ -1,4 +1,3 @@
-
 let currentUserData = null;
 
 function showToast(message, type = 'success') {
@@ -18,12 +17,18 @@ function showToast(message, type = 'success') {
             transform: translateX(400px);
             transition: transform 0.3s ease;
             z-index: 10010;
+            max-width: 350px;
+            word-wrap: break-word;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: 'Mulish', sans-serif;
         `;
         document.body.appendChild(toast);
     }
+    
     toast.textContent = message;
     toast.style.background = type === 'error' ? '#EF4444' : '#10B981';
     toast.style.transform = 'translateX(0)';
+    
     setTimeout(() => {
         toast.style.transform = 'translateX(400px)';
     }, 3000);
@@ -84,14 +89,12 @@ function updateProfileModalTranslations() {
     
     modal.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.getAttribute('data-translate');
-        if (el.classList && (
-            el.classList.contains('profile-tab-btn') ||
+        if (el.classList && (el.classList.contains('profile-tab-btn') ||
             el.classList.contains('visits-filter-btn') ||
             el.classList.contains('reviews-filter-btn') ||
             el.id === 'profileEditBtn' ||
             el.id === 'profileLogoutBtn' ||
-            el.id === 'goToAdminPanelBtn'
-        )) {
+            el.id === 'goToAdminPanelBtn')) {
             return;
         }
         
@@ -115,7 +118,7 @@ function updateProfileModalTranslations() {
         { id: 'profileMiddleName', ru: 'Иванович', en: 'Ivanovich' },
         { id: 'profileEmail', ru: 'ivanov@example.com', en: 'ivanov@example.com' },
         { id: 'profilePhone', ru: '+375 29 123-45-67', en: '+375 29 123-45-67' },
-        { id: 'profileAddress', ru: 'г. Минск, ул. Примерная, д. 1', en: 'Minsk, Prilukskaya str., 1' }
+        { id: 'profileAddress', ru: 'г. Могилёв, ул. Ленинская, д. 5', en: 'Mogilev, Leninskaya str., 5' }
     ];
     
     placeholderMappings.forEach(mapping => {
@@ -257,6 +260,48 @@ function updateProfileModalTranslations() {
     });
 }
 
+async function checkEmailUniqueness(email, currentUserId) {
+    if (!email) return true;
+    
+    try {
+        const response = await fetch(`http://localhost:3000/users?email=${encodeURIComponent(email)}`);
+        const users = await response.json();
+        
+        const existingUser = users.find(u => u.email === email && u.id !== currentUserId);
+        
+        if (existingUser) {
+            showToast('❌ Пользователь с таким email уже существует!', 'error');
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Ошибка проверки email:', error);
+        return true;
+    }
+}
+
+async function checkPhoneUniqueness(phone, currentUserId) {
+    if (!phone) return true;
+    
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    try {
+        const response = await fetch(`http://localhost:3000/users?phone=${cleanPhone}`);
+        const users = await response.json();
+        
+        const existingUser = users.find(u => u.phone === cleanPhone && u.id !== currentUserId);
+        
+        if (existingUser) {
+            showToast('❌ Пользователь с таким номером телефона уже существует!', 'error');
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Ошибка проверки телефона:', error);
+        return true;
+    }
+}
+
 async function openProfileModal() {
     console.log('🔵 openProfileModal вызвана');
     
@@ -278,7 +323,7 @@ async function openProfileModal() {
     }
     
     try {
-        const response = await fetch(`${API_BASE_URL}/users/${user.userId}`);
+        const response = await fetch(`http://localhost:3000/users/${user.userId}`);
         if (!response.ok) throw new Error('Пользователь не найден');
         const userData = await response.json();
         currentUserData = userData;
@@ -380,7 +425,6 @@ function createProfileModal() {
                                 <button type="button" class="profile-edit-btn" id="profileEditBtn" data-translate="profile_edit_btn">✏️ Редактировать</button>
                             </div>
                             
-                            <!-- Кнопка админ-панели (только для админов) -->
                             <div id="adminPanelBtn" class="admin-panel-btn-container" style="display: none;">
                                 <button type="button" class="admin-panel-btn" id="goToAdminPanelBtn" data-translate="profile_admin_panel">
                                     ⚙️ Перейти в админ-панель
@@ -528,7 +572,7 @@ function initReviewsFilters() {
 
 async function loadUserData(userId) {
     try {
-        const response = await fetch(`${API_BASE_URL}/users/${userId}`);
+        const response = await fetch(`http://localhost:3000/users/${userId}`);
         if (!response.ok) throw new Error('Пользователь не найден');
         const user = await response.json();
         currentUserData = user;
@@ -643,8 +687,14 @@ async function saveProfileChanges() {
         return;
     }
     
+    const isEmailUnique = await checkEmailUniqueness(email, sessionUser.userId);
+    if (!isEmailUnique) return;
+    
+    const isPhoneUnique = await checkPhoneUniqueness(phone, sessionUser.userId);
+    if (!isPhoneUnique) return;
+    
     try {
-        const response = await fetch(`${API_BASE_URL}/users/${sessionUser.userId}`);
+        const response = await fetch(`http://localhost:3000/users/${sessionUser.userId}`);
         const userData = await response.json();
         
         const updatedUser = {
@@ -653,7 +703,7 @@ async function saveProfileChanges() {
             updatedAt: new Date().toISOString()
         };
         
-        const updateResponse = await fetch(`${API_BASE_URL}/users/${sessionUser.userId}`, {
+        const updateResponse = await fetch(`http://localhost:3000/users/${sessionUser.userId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedUser)
@@ -683,6 +733,16 @@ async function saveProfileChanges() {
     }
 }
 
+function getPatientNameString(patientName) {
+    if (!patientName) return '';
+    if (typeof patientName === 'string') return patientName;
+    if (typeof patientName === 'object') {
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        return patientName[currentLang] || patientName.ru || patientName.en || '';
+    }
+    return String(patientName);
+}
+
 async function loadUserVisits(filter = 'all') {
     const visitsContainer = document.getElementById('visitsList');
     const sessionUser = window.getCurrentUser ? window.getCurrentUser() : null;
@@ -700,20 +760,41 @@ async function loadUserVisits(filter = 'all') {
     
     try {
         const [appointmentsRes, doctorsRes, servicesRes] = await Promise.all([
-            fetch(`${API_BASE_URL}/appointments`),
-            fetch(`${API_BASE_URL}/doctors`),
-            fetch(`${API_BASE_URL}/services`)
+            fetch('http://localhost:3000/appointments'),
+            fetch('http://localhost:3000/doctors'),
+            fetch('http://localhost:3000/services')
         ]);
+        
+        if (!appointmentsRes.ok || !doctorsRes.ok || !servicesRes.ok) {
+            throw new Error('Ошибка загрузки данных с сервера');
+        }
         
         let appointments = await appointmentsRes.json();
         let doctors = await doctorsRes.json();
         let services = await servicesRes.json();
         
-        let userVisits = appointments.filter(apt => 
-            apt.phone === sessionUser.phone || 
-            apt.email === sessionUser.email ||
-            (apt.patientName && apt.patientName.toLowerCase().includes(sessionUser.lastName?.toLowerCase() || ''))
-        );
+        if (!appointments || appointments.length === 0) {
+            const emptyVisitsText = getProfileTranslation('profile_empty_visits', 'У вас пока нет записей');
+            visitsContainer.innerHTML = `<div class="empty-visits"><div class="empty-visits-icon">📅</div><div class="empty-visits-text">${emptyVisitsText}</div></div>`;
+            return;
+        }
+        
+        const userPhone = sessionUser.phone ? String(sessionUser.phone).replace(/\D/g, '') : '';
+        const userEmail = sessionUser.email ? String(sessionUser.email).toLowerCase() : '';
+        const userLastName = sessionUser.lastName ? String(sessionUser.lastName).toLowerCase() : '';
+        
+        let userVisits = appointments.filter(apt => {
+            const aptPhone = apt.phone ? String(apt.phone).replace(/\D/g, '') : '';
+            if (userPhone && aptPhone === userPhone) return true;
+            
+            const aptEmail = apt.email ? String(apt.email).toLowerCase() : '';
+            if (userEmail && aptEmail === userEmail) return true;
+            
+            const patientNameStr = getPatientNameString(apt.patientName).toLowerCase();
+            if (userLastName && patientNameStr.includes(userLastName)) return true;
+            
+            return false;
+        });
         
         if (filter !== 'all') {
             userVisits = userVisits.filter(apt => apt.status === filter);
@@ -751,13 +832,12 @@ async function loadUserVisits(filter = 'all') {
         }
     } catch(e) {
         console.error('Ошибка загрузки визитов:', e);
-        visitsContainer.innerHTML = `<div class="empty-visits"><div class="empty-visits-icon">⚠️</div><div class="empty-visits-text">Ошибка загрузки</div></div>`;
+        visitsContainer.innerHTML = `<div class="empty-visits"><div class="empty-visits-icon">⚠️</div><div class="empty-visits-text">Ошибка подключения к серверу. Убедитесь, что JSON Server запущен (json-server --watch db.json --port 3000)</div></div>`;
     }
 }
 
 function createVisitElement(visit, doctors, services) {
     const doctor = doctors.find(d => d.id === visit.doctorId);
-    const service = services.find(s => s.id === visit.serviceId);
     const date = new Date(visit.date);
     const formattedDate = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
     
@@ -769,17 +849,26 @@ function createVisitElement(visit, doctors, services) {
     };
     const status = statusMap[visit.status] || statusMap.pending;
     
+    let doctorName = 'Врач не указан';
+    if (doctor) {
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        const lastName = typeof doctor.lastName === 'object' ? (doctor.lastName[currentLang] || doctor.lastName.ru) : doctor.lastName;
+        const firstName = typeof doctor.firstName === 'object' ? (doctor.firstName[currentLang] || doctor.firstName.ru) : doctor.firstName;
+        doctorName = `${lastName} ${firstName}`.trim();
+    }
+    
+    const patientName = getPatientNameString(visit.patientName);
+    
     const div = document.createElement('div');
     div.className = `visit-item ${status.class}`;
     div.innerHTML = `
         <div class="visit-header">
             <span class="visit-date">${formattedDate}</span>
-            <span class="visit-time">🕐 ${visit.time}</span>
+            <span class="visit-time">${visit.time}</span>
         </div>
-        <div class="visit-doctor">${doctor ? `${doctor.lastName} ${doctor.firstName}` : 'Врач не указан'}</div>
-        <div class="visit-service">${service ? service.name : 'Услуга не указана'}</div>
+        <div class="visit-doctor">${escapeHtml(doctorName)}</div>
         ${visit.comment ? `<div class="visit-comment">${escapeHtml(visit.comment)}</div>` : ''}
-        <span class="visit-status ${status.class}">${status.text}</span>
+        <div class="visit-status ${status.class}">${status.text}</div>
     `;
     return div;
 }
@@ -800,14 +889,35 @@ async function loadUserReviews(filter = 'all') {
     reviewsContainer.innerHTML = `<div class="empty-reviews"><div class="empty-reviews-icon">⏳</div><div class="empty-reviews-text">${loadingText}</div></div>`;
     
     try {
-        const response = await fetch(`${API_BASE_URL}/reviews`);
+        const response = await fetch('http://localhost:3000/reviews');
+        
+        if (!response.ok) {
+            throw new Error('Ошибка загрузки отзывов');
+        }
+        
         let reviews = await response.json();
         
-        let userReviews = reviews.filter(review => 
-            review.email === sessionUser.email || 
-            review.phone === sessionUser.phone ||
-            (review.author && review.author.toLowerCase().includes(sessionUser.lastName?.toLowerCase() || ''))
-        );
+        const userEmail = sessionUser.email ? String(sessionUser.email).toLowerCase() : '';
+        const userPhone = sessionUser.phone ? String(sessionUser.phone).replace(/\D/g, '') : '';
+        const userLastName = sessionUser.lastName ? String(sessionUser.lastName).toLowerCase() : '';
+        
+        let userReviews = reviews.filter(review => {
+            if (userEmail && review.email && String(review.email).toLowerCase() === userEmail) return true;
+            
+            const reviewPhone = review.phone ? String(review.phone).replace(/\D/g, '') : '';
+            if (userPhone && reviewPhone === userPhone) return true;
+            
+            let authorName = '';
+            if (typeof review.author === 'object') {
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                authorName = review.author[currentLang] || review.author.ru || '';
+            } else {
+                authorName = review.author || '';
+            }
+            if (userLastName && authorName.toLowerCase().includes(userLastName)) return true;
+            
+            return false;
+        });
         
         userReviews.sort((a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date));
         
@@ -836,13 +946,29 @@ async function loadUserReviews(filter = 'all') {
         
     } catch(e) {
         console.error('Ошибка загрузки отзывов:', e);
-        reviewsContainer.innerHTML = `<div class="empty-reviews"><div class="empty-reviews-icon">⚠️</div><div class="empty-reviews-text">Ошибка загрузки</div></div>`;
+        reviewsContainer.innerHTML = `<div class="empty-reviews"><div class="empty-reviews-icon">⚠️</div><div class="empty-reviews-text">Ошибка подключения к серверу. Убедитесь, что JSON Server запущен (json-server --watch db.json --port 3000)</div></div>`;
     }
 }
 
 function createReviewElement(review) {
     const date = new Date(review.createdAt || review.date);
     const formattedDate = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    
+    let authorName = '';
+    if (typeof review.author === 'object') {
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        authorName = review.author[currentLang] || review.author.ru || '';
+    } else {
+        authorName = review.author || '';
+    }
+    
+    let reviewText = '';
+    if (typeof review.text === 'object') {
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        reviewText = review.text[currentLang] || review.text.ru || '';
+    } else {
+        reviewText = review.text || '';
+    }
     
     const statusText = review.published 
         ? getProfileTranslation('profile_review_status_published', '✅ Опубликован')
@@ -854,13 +980,14 @@ function createReviewElement(review) {
     div.className = `review-item ${statusClass}`;
     div.innerHTML = `
         <div class="review-header">
-            <span class="review-date">📅 ${formattedDate}</span>
+            <span class="review-date">${formattedDate}</span>
             <span class="review-status ${statusClass}">${statusText}</span>
         </div>
         <div class="review-rating">
             ${'★'.repeat(review.rating || 5)}${'☆'.repeat(5 - (review.rating || 5))}
         </div>
-        <div class="review-text">${escapeHtml(review.text)}</div>
+        <div class="review-author"><strong>${escapeHtml(authorName)}</strong></div>
+        <div class="review-text">${escapeHtml(reviewText)}</div>
         ${review.photo ? `<div class="review-photo"><img src="${review.photo}" alt="Фото к отзыву" onerror="this.style.display='none'"></div>` : ''}
         ${!review.published ? `<div class="review-note">${noteText}</div>` : ''}
     `;

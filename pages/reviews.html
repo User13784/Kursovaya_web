@@ -14,11 +14,44 @@
     <link rel="stylesheet" href="../css/special-version.css">
     <style>
         .header-container {
-    padding-top: 25px !important; 
-}
+            padding-top: 25px !important; 
+        }
+        
+        .star-rating-selector {
+            display: flex;
+            gap: 8px;
+            font-size: 32px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .star-rating-selector .star {
+            color: #ddd;
+            transition: color 0.2s ease;
+        }
+        .star-rating-selector .star.active {
+            color: #F59E0B;
+        }
+        .star-rating-selector .star:hover {
+            transform: scale(1.1);
+        }
+        
+        .review-rating-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 10px;
+        }
+        .review-rating-stars .star-filled {
+            color: #F59E0B;
+            font-size: 16px;
+        }
+        .review-rating-stars .star-empty {
+            color: #ddd;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
+
     <div id="header-placeholder"></div>
 
     <div class="mobile-menu" id="mobileMenu">
@@ -41,7 +74,7 @@
             
             <a href="#" id="mobileSpecialButton" class="mobile-special-button">👁️ Режим для слабовидящих</a>
             
-<a href="../index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="../index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
             <a href="../pages/service-detail.html" class="mobile-link" data-translate="services">УСЛУГИ</a>
             <a href="../pages/team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
             <a href="../pages/reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
@@ -49,7 +82,6 @@
             <a href="../pages/prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
             <a href="../pages/schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
             <a href="../pages/faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
-        </nav>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -147,6 +179,20 @@
                 <input type="text" data-translate="review_name" placeholder="Ваше имя" id="reviewName" required>
                 <input type="email" data-translate="review_email" placeholder="Email" id="reviewEmail" required>
                 <input type="tel" data-translate="review_phone" placeholder="+7 (___) ___ __ __" id="reviewPhone" required>
+                
+
+<div class="rating-input-container" style="margin-bottom: 15px;">
+    <label style="display: block; margin-bottom: 8px; font-weight: 500;" data-translate="review_rating">Ваша оценка:</label>
+    <div class="star-rating-selector" id="starRatingSelector">
+        <span data-value="1" class="star">☆</span>
+        <span data-value="2" class="star">☆</span>
+        <span data-value="3" class="star">☆</span>
+        <span data-value="4" class="star">☆</span>
+        <span data-value="5" class="star">☆</span>
+    </div>
+    <input type="hidden" id="reviewRating" value="5">
+</div>
+                
                 <textarea data-translate="review_text" placeholder="Ваш отзыв" rows="5" id="reviewText" required></textarea>
                 <button type="submit" class="modal-submit-btn" data-translate="submit_review">ОТПРАВИТЬ ОТЗЫВ</button>
             </form>
@@ -174,6 +220,30 @@
                 pagination: { el: '.swiper-pagination', clickable: true },
                 navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
                 breakpoints: { 640: { slidesPerView: 2, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 30 } }
+            });
+        }
+
+        function initStarRating() {
+            const stars = document.querySelectorAll('#starRatingSelector .star');
+            const ratingInput = document.getElementById('reviewRating');
+            
+            if (!stars.length || !ratingInput) return;
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = parseInt(this.dataset.value);
+                    ratingInput.value = value;
+                    
+                    stars.forEach((s, index) => {
+                        if (index < value) {
+                            s.textContent = '★';
+                            s.classList.add('active');
+                        } else {
+                            s.textContent = '☆';
+                            s.classList.remove('active');
+                        }
+                    });
+                });
             });
         }
 
@@ -381,6 +451,7 @@
             openReviewModalBtn.addEventListener('click', function() {
                 reviewModal.style.display = 'block';
                 document.body.classList.add('modal-open');
+                initStarRating();
             });
         }
 

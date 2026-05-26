@@ -2,39 +2,12 @@ let servicesData = [];
 let serviceDetailsData = [];
 let currentService = null;
 
-
-const serviceUrlMap = {
-    'diagnostics': 1,
-    'prevention': 2,
-    'therapy': 3,
-    'digital-prosthetics': 4,
-    'digital-implantation': 5,
-    'complex-implantation': 6,
-    'orthodontics': 7,
-    'veneers': 8
-};
-
-const serviceIdToParam = {
-    1: 'diagnostics',
-    2: 'prevention',
-    3: 'therapy',
-    4: 'digital-prosthetics',
-    5: 'digital-implantation',
-    6: 'complex-implantation',
-    7: 'orthodontics',
-    8: 'veneers'
-};
-
-const serviceDetailPageMap = {
-    1: 'service-menu2.html',
-    2: 'service-menu3.html',
-    3: 'service-menu4.html',
-    4: 'service-menu5.html',
-    5: 'service-menu6.html',
-    6: 'service-menu7.html',
-    7: 'service-menu8.html',
-    8: 'service-menu9.html'
-};
+function getLocalizedText(obj, defaultValue = '') {
+    if (!obj) return defaultValue;
+    if (typeof obj === 'string') return obj;
+    const lang = localStorage.getItem('dental_language') || 'ru';
+    return obj[lang] || obj.ru || defaultValue;
+}
 
 function showErrorToast(message) {
     let toast = document.querySelector('.error-toast');
@@ -67,10 +40,23 @@ function showErrorToast(message) {
     }, 3000);
 }
 
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
 async function loadServicesFromAPI() {
     try {
-        servicesData = await getServices({ active: true });
-        console.log('✅ Услуги загружены из API через getServices():', servicesData.length);
+        const response = await fetch('http://localhost:3000/services');
+        if (!response.ok) throw new Error('Ошибка загрузки услуг');
+        let servicesDataRaw = await response.json();
+        servicesData = servicesDataRaw.filter(s => s.active === true);
+        console.log('✅ Услуги загружены из API:', servicesData.length);
         return servicesData;
     } catch (error) {
         console.error('❌ Ошибка загрузки услуг:', error);
@@ -81,8 +67,10 @@ async function loadServicesFromAPI() {
 
 async function loadServiceDetailsFromAPI() {
     try {
-        serviceDetailsData = await getServiceDetails();
-        console.log('✅ Детали услуг загружены из API через getServiceDetails():', serviceDetailsData.length);
+        const response = await fetch('http://localhost:3000/serviceDetails');
+        if (!response.ok) throw new Error('Ошибка загрузки деталей услуг');
+        serviceDetailsData = await response.json();
+        console.log('✅ Детали услуг загружены из API:', serviceDetailsData.length);
         return serviceDetailsData;
     } catch (error) {
         console.error('❌ Ошибка загрузки деталей услуг:', error);
@@ -92,35 +80,39 @@ async function loadServiceDetailsFromAPI() {
 
 function getCurrentServiceParam() {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('service') || 'diagnostics';
+    return urlParams.get('service');
 }
 
 async function updatePageContent() {
     const serviceParam = getCurrentServiceParam();
-    const serviceId = serviceUrlMap[serviceParam];
-    
-    if (!serviceId) {
-        console.error('Неизвестный параметр услуги:', serviceParam);
-        const titleElement = document.getElementById('serviceTitle');
-        if (titleElement) titleElement.textContent = 'Услуга не найдена';
-        return;
-    }
     
     if (servicesData.length === 0) {
         await loadServicesFromAPI();
     }
     
-    currentService = servicesData.find(s => s.id === serviceId);
+    let currentService = null;
+    
+    if (serviceParam && !isNaN(serviceParam)) {
+        currentService = servicesData.find(s => s.id == serviceParam);
+    } else if (serviceParam) {
+        currentService = servicesData.find(s => s.page === `service-detail.html?service=${serviceParam}` || 
+                                                   s.page === serviceParam);
+    }
+    
+    if (!currentService && servicesData.length > 0) {
+        currentService = servicesData[0];
+        console.log('🔄 Услуга не найдена, показываем первую:', currentService.id);
+    }
     
     if (!currentService) {
-        console.error('Услуга не найдена:', serviceId);
+        console.error('❌ Услуга не найдена');
         const titleElement = document.getElementById('serviceTitle');
         if (titleElement) titleElement.textContent = 'Услуга не найдена';
         return;
     }
     
-    const serviceName = currentService.name;
-    const serviceTitle = currentService.title;
+    const serviceName = getLocalizedText(currentService.name);
+    const serviceTitle = getLocalizedText(currentService.title || currentService.name);
     
     document.title = `${serviceName} | Dental Club`;
     
@@ -138,7 +130,7 @@ async function updatePageContent() {
     
     sessionStorage.setItem('selectedService', JSON.stringify(currentService));
     
-    console.log('✅ Текущая услуга:', serviceName);
+    console.log('✅ Текущая услуга:', serviceName, '(ID:', currentService.id, ')');
 }
 
 async function loadSideMenu() {
@@ -159,24 +151,21 @@ async function loadSideMenu() {
     
     const sortedServices = [...servicesData].sort((a, b) => (a.order || a.id) - (b.order || b.id));
     
-    sortedServices.forEach(service => {
-        const param = serviceIdToParam[service.id];
-        if (!param) return;
-        const isActive = currentParam === param;
+    for (const service of sortedServices) {
+        const isActive = (currentParam == service.id) || 
+                         (currentParam && service.page && service.page.includes(currentParam));
         const activeClass = isActive ? 'active' : '';
-        const serviceName = service.name || 'Услуга';
-        const safeName = serviceName.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
+        const serviceName = getLocalizedText(service.name) || 'Услуга';
+        const safeName = escapeHtml(serviceName);
+        
+        const linkUrl = `?service=${service.id}`;
+        
         html += `
             <li>
-                <a href="?service=${param}" class="${activeClass}" data-service-id="${service.id}">${safeName}</a>
+                <a href="${linkUrl}" class="${activeClass}" data-service-id="${service.id}">${safeName}</a>
             </li>
         `;
-    });
+    }
     
     menuContainer.innerHTML = html;
     
@@ -203,7 +192,8 @@ function updateActiveMenu() {
     const currentParam = getCurrentServiceParam();
     document.querySelectorAll('.menu-list a').forEach(link => {
         const href = link.getAttribute('href');
-        if (href && href.includes(currentParam)) {
+        if (href && (href.includes(`?service=${currentParam}`) || 
+                     (currentParam && href.includes(currentParam)))) {
             link.classList.add('active');
         } else {
             link.classList.remove('active');
@@ -220,15 +210,42 @@ function initMoreButton() {
         newMoreBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
+            let currentService = null;
             const serviceParam = getCurrentServiceParam();
-            const serviceId = serviceUrlMap[serviceParam];
             
-            if (!serviceId) {
+            if (serviceParam && !isNaN(serviceParam)) {
+                currentService = servicesData.find(s => s.id == serviceParam);
+            }
+            
+            if (!currentService && sessionStorage.getItem('selectedService')) {
+                currentService = JSON.parse(sessionStorage.getItem('selectedService'));
+            }
+            
+            if (!currentService && servicesData.length > 0) {
+                currentService = servicesData[0];
+            }
+            
+            if (!currentService) {
                 showErrorToast('Услуга не найдена');
                 return;
             }
             
-            const detailPage = serviceDetailPageMap[serviceId];
+            const pageMap = {
+                1: 'service-menu2.html',
+                2: 'service-menu3.html',
+                3: 'service-menu4.html',
+                4: 'service-menu5.html',
+                5: 'service-menu6.html',
+                6: 'service-menu7.html',
+                7: 'service-menu8.html',
+                8: 'service-menu9.html'
+            };
+            
+            let detailPage = pageMap[currentService.id];
+            
+            if (!detailPage && currentService.page) {
+                detailPage = currentService.page;
+            }
             
             if (detailPage) {
                 console.log(`🔍 Переход на страницу: ${detailPage}`);
@@ -255,13 +272,12 @@ function initCloseButton() {
 
 async function init() {
     console.log('🚀 Инициализация страницы услуг...');
-    console.log('📍 Текущий путь:', window.location.pathname);
     
     const titleElement = document.getElementById('serviceTitle');
     if (titleElement) titleElement.textContent = 'Загрузка...';
     
     try {
-        const testResponse = await fetch(`${API_BASE_URL}/services`);
+        const testResponse = await fetch('http://localhost:3000/services');
         console.log('📡 Проверка подключения к серверу:', testResponse.ok ? '✅ OK' : '❌ Ошибка');
         if (!testResponse.ok) {
             showErrorToast('Сервер не отвечает. Запустите json-server --watch db.json --port 3000');

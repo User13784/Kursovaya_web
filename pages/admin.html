@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="../media/admin_media.css">
     <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/admin-analytics.css">
-<link rel="stylesheet" href="../css/special-version.css">
-
-<script src="../js/special-version.js"></script>
+    <link rel="stylesheet" href="../css/special-version.css">
+    <script src="../js/special-version.js"></script>
 </head>
 <body>
     <div class="admin-wrapper">
@@ -68,7 +67,7 @@
             <div class="tab-content" id="tab-services">
                 <div class="content-header">
                     <h1 data-admin-translate="services_title">Управление услугами</h1>
-                    <button class="btn-add" id="addServiceBtn" data-admin-translate="add_service">+ Добавить услугу</button>
+                    <button class="btn-add" id="addServiceBtn" data-admin-translate="add_service">➕ Добавить услугу</button>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
@@ -100,7 +99,6 @@
             <div class="tab-content" id="tab-service-details">
                 <div class="content-header">
                     <h1 data-admin-translate="service_details_title">Детальная информация услуг</h1>
-                    <button class="btn-add" id="addDetailBtn" data-admin-translate="add_service_detail">+ Добавить детальную услугу</button>
                 </div>
                 <div class="filter-row">
                     <select id="detailServiceFilter" class="filter-select">
@@ -127,7 +125,7 @@
             <div class="tab-content" id="tab-doctors">
                 <div class="content-header">
                     <h1 data-admin-translate="doctors_title">Управление врачами</h1>
-                    <button class="btn-add" id="addDoctorBtn" data-admin-translate="add_doctor">+ Добавить врача</button>
+                    <button class="btn-add" id="addDoctorBtn" data-admin-translate="add_doctor">➕ Добавить врача</button>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
@@ -156,7 +154,7 @@
             <div class="tab-content" id="tab-appointments">
                 <div class="content-header">
                     <h1 data-admin-translate="appointments_title">Запись на прием</h1>
-                    <button class="btn-add" id="addAppointmentBtn" data-admin-translate="new_appointment">+ Новая запись</button>
+                    <button class="btn-add" id="addAppointmentBtn" data-admin-translate="new_appointment">➕ Новая запись</button>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card">
@@ -260,8 +258,8 @@
                 <div class="content-header">
                     <h1 data-admin-translate="prices_title">Управление прайс-листом</h1>
                     <div class="header-buttons">
-                        <button class="btn-add" id="addPriceCategoryBtn" data-admin-translate="add_category">+ Добавить категорию</button>
-                        <button class="btn-add" id="addPriceServiceBtn" data-admin-translate="add_price_service">+ Добавить услугу</button>
+                        <button class="btn-add" id="addPriceCategoryBtn" data-admin-translate="add_category">➕ Добавить категорию</button>
+                        <button class="btn-add" id="addPriceServiceBtn" data-admin-translate="add_price_service">➕ Добавить услугу</button>
                         <button class="btn-export" id="exportPricesBtn" data-admin-translate="export_prices">📥 Экспорт</button>
                     </div>
                 </div>
@@ -289,7 +287,6 @@
                 <div class="content-header">
                     <h1 data-admin-translate="schedule_title">Управление расписанием врачей</h1>
                     <div class="header-buttons">
-                        <button class="btn-add" id="addScheduleBtn" data-admin-translate="configure_schedule">+ Настроить расписание</button>
                         <button class="btn-export" id="exportScheduleBtn" data-admin-translate="export_schedule">📥 Экспорт</button>
                     </div>
                 </div>
@@ -372,7 +369,7 @@
                 <div class="analytics-grid">
                     <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_dynamics">📈 Динамика записей</h3></div><div class="card-body"><canvas id="appointmentsChart" width="400" height="200"></canvas></div></div>
                     <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_doctors">👨‍⚕️ Востребованность врачей</h3></div><div class="card-body"><canvas id="doctorsChart" width="400" height="200"></canvas></div><div class="card-footer"><table id="doctorsStatsTable"><thead><tr><th data-admin-translate="th_fullname">Врач</th><th data-admin-translate="th_count">Кол-во записей</th><th data-admin-translate="th_percent">%</th></tr></thead><tbody></tbody></table></div></div>
-                    <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_services">🦷 Популярные услуги</h3></div><div class="card-body"><canvas id="servicesChart" width="400" height="200"></canvas></div><div class="card-footer"><table id="servicesStatsTable"><thead><tr><th data-admin-translate="th_name">Услуга</th><th data-admin-translate="th_count">Кол-во записей</th><th data-admin-translate="th_percent">%</th><tr></thead><tbody></tbody></table></div></div>
+                    <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_services">🦷 Популярные услуги</h3></div><div class="card-body"><canvas id="servicesChart" width="400" height="200"></canvas></div><div class="card-footer"><table id="servicesStatsTable"><thead><tr><th data-admin-translate="th_name">Услуга</th><th data-admin-translate="th_count">Кол-во записей</th><th data-admin-translate="th_percent">%</th></tr></thead><tbody></tbody></table></div></div>
                     <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_peak_hours">⏰ Часы пик</h3></div><div class="card-body"><canvas id="hoursChart" width="400" height="200"></canvas></div><div class="card-footer"><div class="peak-hours-info"><span data-admin-translate="peak_hour_label">Часы пик:</span> <span id="peakHour">—</span></div></div></div>
                     <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_weekdays">📅 Загрузка по дням недели</h3></div><div class="card-body"><canvas id="weekdaysChart" width="400" height="200"></canvas></div><div class="card-footer"><div class="busiest-day-info"><span data-admin-translate="busiest_day_label">Самый загруженный день:</span> <span id="busiestDay">—</span></div></div></div>
                     <div class="analytics-card"><div class="card-header"><h3 data-admin-translate="chart_statuses">📊 Статусы записей</h3></div><div class="card-body"><canvas id="statusChart" width="400" height="200"></canvas></div></div>
@@ -383,7 +380,7 @@
             <div class="tab-content" id="tab-discounts">
                 <div class="content-header">
                     <h1 data-admin-translate="discounts_title">Управление скидками</h1>
-                    <button class="btn-add" id="addDiscountBtn" data-admin-translate="add_discount">+ Добавить скидку</button>
+                    <button class="btn-add" id="addDiscountBtn" data-admin-translate="add_discount">➕ Добавить скидку</button>
                 </div>
                 <div class="stats-row">
                     <div class="stat-card"><span class="stat-value" id="activeDiscounts">0</span><span class="stat-label" data-admin-translate="stat_active_discounts">Активных скидок</span></div>
@@ -456,8 +453,8 @@
                     </label>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
-                    <button type="button" class="btn-cancel" data-modal="serviceModal" data-admin-translate="cancel_btn">Отмена</button>
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">💾 Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="serviceModal" data-admin-translate="cancel_btn">❌ Отмена</button>
                 </div>
             </form>
         </div>
@@ -466,7 +463,7 @@
     <div id="detailModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
-                <h2 id="detailModalTitle">Добавить детальную информацию</h2>
+                <h2 id="detailModalTitle">Редактировать детальную информацию</h2>
                 <span class="modal-close" data-modal="detailModal">&times;</span>
             </div>
             <form id="detailForm">
@@ -498,8 +495,8 @@
                     <input type="text" id="detailImages" placeholder="../assets/images/...">
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
-                    <button type="button" class="btn-cancel" data-modal="detailModal" data-admin-translate="cancel_btn">Отмена</button>
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">💾 Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="detailModal" data-admin-translate="cancel_btn">❌ Отмена</button>
                 </div>
             </form>
         </div>
@@ -547,18 +544,15 @@
                     <label data-admin-translate="improvement_label">Повышение квалификации</label>
                     <textarea id="doctorImprovement" rows="2"></textarea>
                 </div>
-                <div class="form-group">
-                    <label data-admin-translate="schedule_label">Расписание</label>
-                    <input type="text" id="doctorSchedule" placeholder="Пн-Пт, 10:00 - 18:00">
-                </div>
+              
                 <div class="form-group">
                     <label class="checkbox-label">
                         <input type="checkbox" id="doctorActive" checked> <span data-admin-translate="doctor_active_label">Активен (показывать на сайте)</span>
                     </label>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
-                    <button type="button" class="btn-cancel" data-modal="doctorModal" data-admin-translate="cancel_btn">Отмена</button>
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">💾 Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="doctorModal" data-admin-translate="cancel_btn">❌ Отмена</button>
                 </div>
             </form>
         </div>
@@ -634,8 +628,8 @@
                     <textarea id="appointmentComment" rows="2"></textarea>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
-                    <button type="button" class="btn-cancel" data-modal="appointmentModal" data-admin-translate="cancel_btn">Отмена</button>
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">💾 Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="appointmentModal" data-admin-translate="cancel_btn">❌ Отмена</button>
                 </div>
             </form>
         </div>
@@ -672,16 +666,16 @@
                         <input type="number" id="discountValue" required step="1">
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label data-admin-translate="start_date_label">Дата начала</label>
-                        <input type="date" id="discountStartDate">
-                    </div>
-                    <div class="form-group">
-                        <label data-admin-translate="end_date_label">Дата окончания</label>
-                        <input type="date" id="discountEndDate">
-                    </div>
-                </div>
+<div class="form-row">
+    <div class="form-group">
+        <label data-admin-translate="start_date_label">Дата начала</label>
+        <input type="text" id="discountStartDate" class="discount-date-input" placeholder="ДД.ММ.ГГГГ" autocomplete="off">
+    </div>
+    <div class="form-group">
+        <label data-admin-translate="end_date_label">Дата окончания</label>
+        <input type="text" id="discountEndDate" class="discount-date-input" placeholder="ДД.ММ.ГГГГ" autocomplete="off">
+    </div>
+</div>
                 <div class="form-group">
                     <label data-admin-translate="description_label">Описание</label>
                     <textarea id="discountDescription" rows="2"></textarea>
@@ -692,8 +686,8 @@
                     </label>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
-                    <button type="button" class="btn-cancel" data-modal="discountModal" data-admin-translate="cancel_btn">Отмена</button>
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">💾 Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="discountModal" data-admin-translate="cancel_btn">❌ Отмена</button>
                 </div>
             </form>
         </div>
@@ -746,8 +740,8 @@
                 </div>
                 <div id="priceServiceDiscountInfo" class="discount-info" style="display: none;"></div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
-                    <button type="button" class="btn-cancel" data-modal="priceServiceModal" data-admin-translate="cancel_btn">Отмена</button>
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">💾 Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="priceServiceModal" data-admin-translate="cancel_btn">❌ Отмена</button>
                 </div>
             </form>
         </div>
@@ -770,8 +764,8 @@
                 <div class="schedule-days-container" id="scheduleDaysContainer">
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-save" data-admin-translate="save_schedule_btn">Сохранить расписание</button>
-                    <button type="button" class="btn-cancel" data-modal="scheduleModal" data-admin-translate="cancel_btn">Отмена</button>
+                    <button type="submit" class="btn-save" data-admin-translate="save_schedule_btn">💾 Сохранить расписание</button>
+                    <button type="button" class="btn-cancel" data-modal="scheduleModal" data-admin-translate="cancel_btn">❌ Отмена</button>
                 </div>
             </form>
         </div>
@@ -803,7 +797,7 @@
                 <div id="viewPhoto" class="review-view-photo"></div>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn-cancel" data-modal="viewReviewModal" data-admin-translate="close_btn">Закрыть</button>
+                <button type="button" class="btn-cancel" data-modal="viewReviewModal" data-admin-translate="close_btn">❌ Закрыть</button>
             </div>
         </div>
     </div>
@@ -831,8 +825,8 @@
                     </label>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-save" data-admin-translate="save_btn">Сохранить</button>
-                    <button type="button" class="btn-cancel" data-modal="categoryModal" data-admin-translate="cancel_btn">Отмена</button>
+                    <button type="submit" class="btn-save" data-admin-translate="save_btn">💾 Сохранить</button>
+                    <button type="button" class="btn-cancel" data-modal="categoryModal" data-admin-translate="cancel_btn">❌ Отмена</button>
                 </div>
             </form>
         </div>
@@ -840,7 +834,7 @@
 
     <div id="toast" class="toast"></div>
 
-   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="../js/translations.js"></script>
     <script src="../js/personalization.js"></script>
     <script src="../js/admin.js"></script>

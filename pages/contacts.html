@@ -13,6 +13,22 @@
     <link rel="stylesheet" href="../css/special-version.css">
     
     <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_ключ&lang=ru_RU" type="text/javascript"></script>
+    
+    <style>
+        .validation-error {
+            display: block;
+            font-size: 12px;
+            color: #EF4444;
+            margin-top: 5px;
+                padding-left: 200px;  
+
+        }
+        ы
+        .feedback-form input.error,
+        .feedback-form textarea.error {
+            border-bottom-color: #9F9F9F !important;
+        }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -37,7 +53,7 @@
             
             <a href="#" id="mobileSpecialButton" class="mobile-special-button">👁️ Режим для слабовидящих</a>
             
-<a href="../index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+            <a href="../index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
             <a href="../pages/service-detail.html" class="mobile-link" data-translate="services">УСЛУГИ</a>
             <a href="../pages/team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
             <a href="../pages/reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
@@ -45,7 +61,6 @@
             <a href="../pages/prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
             <a href="../pages/schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
             <a href="../pages/faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
-        </nav>
         </nav>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>
@@ -98,19 +113,19 @@
         </section>
 
         <section class="feedback-section">
-            <div class="container feedback-flex">
-                <div class="feedback-title">
-                    <h2 data-translate="feedback_title">ОБРАТНАЯ <br>СВЯЗЬ</h2>
-                </div>
-                <form class="feedback-form" id="feedbackForm">
-                    <input type="text" data-translate="name_placeholder" placeholder="Ваше имя" id="feedbackName" required>
-                    <input type="email" data-translate="email_placeholder" placeholder="Email" id="feedbackEmail" required>
-                    <input type="tel" data-translate="phone_placeholder" placeholder="+375 (29) 123-45-67" id="feedbackPhone" required>
-                    <textarea data-translate="question_placeholder" placeholder="Введите ваш вопрос" id="feedbackQuestion" required></textarea>
-                    <button type="submit" class="btn-submit" data-translate="send_request">ОТПРАВИТЬ ЗАЯВКУ</button>
-                </form>
-            </div>
-        </section>
+    <div class="container feedback-flex">
+        <div class="feedback-title">
+            <h2 data-translate="feedback_title">ОБРАТНАЯ <br>СВЯЗЬ</h2>
+        </div>
+        <form class="feedback-form" id="feedbackForm">
+            <input type="text" data-translate="name_placeholder" placeholder="Ваше имя" id="feedbackName">
+            <input type="email" data-translate="email_placeholder" placeholder="Email" id="feedbackEmail">
+            <input type="tel" data-translate="phone_placeholder" placeholder="+375 (29) 123-45-67" id="feedbackPhone">
+            <textarea data-translate="question_placeholder" placeholder="Введите ваш вопрос" id="feedbackQuestion"></textarea>
+            <button type="submit" class="btn-submit" data-translate="send_request">ОТПРАВИТЬ ЗАЯВКУ</button>
+        </form>
+    </div>
+</section>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -125,6 +140,224 @@
     <script src="../js/preloader.js"></script>
 
     <script>
+        function isValidEmail(email) {
+            if (!email) return false;
+            const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function isValidPhone(phone) {
+            if (!phone) return false;
+            const digits = phone.replace(/\D/g, '');
+            return digits.length >= 10 && digits.length <= 12;
+        }
+
+        function cleanPhone(phone) {
+            return phone.replace(/\D/g, '');
+        }
+
+        function getValidationMessage(key, defaultValue = '') {
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
+            const messages = {
+                ru: {
+                    'required_name': 'Пожалуйста, введите ваше имя',
+                    'name_min': 'Имя должно содержать минимум 2 символа',
+                    'required_email': 'Пожалуйста, введите email',
+                    'email_invalid': 'Введите корректный email (например: name@domain.com)',
+                    'required_phone': 'Пожалуйста, введите номер телефона',
+                    'phone_invalid': 'Введите корректный номер телефона (10-12 цифр)',
+                    'required_question': 'Пожалуйста, введите ваш вопрос',
+                    'question_min': 'Вопрос должен содержать минимум 5 символов'
+                },
+                en: {
+                    'required_name': 'Please enter your name',
+                    'name_min': 'Name must contain at least 2 characters',
+                    'required_email': 'Please enter your email',
+                    'email_invalid': 'Please enter a valid email (e.g., name@domain.com)',
+                    'required_phone': 'Please enter your phone number',
+                    'phone_invalid': 'Please enter a valid phone number (10-12 digits)',
+                    'required_question': 'Please enter your question',
+                    'question_min': 'Question must contain at least 5 characters'
+                }
+            };
+            return messages[currentLang]?.[key] || messages.ru[key] || defaultValue;
+        }
+
+        function updatePlaceholders() {
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
+            
+            const nameInput = document.getElementById('feedbackName');
+            const emailInput = document.getElementById('feedbackEmail');
+            const phoneInput = document.getElementById('feedbackPhone');
+            const questionTextarea = document.getElementById('feedbackQuestion');
+            const submitBtn = document.querySelector('#feedbackForm .btn-submit');
+            
+            if (nameInput) {
+                nameInput.placeholder = currentLang === 'ru' ? 'Ваше имя' : 'Your name';
+            }
+            if (emailInput) {
+                emailInput.placeholder = currentLang === 'ru' ? 'Email' : 'Email';
+            }
+            if (phoneInput) {
+                phoneInput.placeholder = currentLang === 'ru' ? '+375 (29) 123-45-67' : '+375 (29) 123-45-67';
+            }
+            if (questionTextarea) {
+                questionTextarea.placeholder = currentLang === 'ru' ? 'Введите ваш вопрос' : 'Enter your question';
+            }
+            if (submitBtn) {
+                submitBtn.textContent = currentLang === 'ru' ? 'ОТПРАВИТЬ ЗАЯВКУ' : 'SEND REQUEST';
+            }
+        }
+
+        function showValidationMessage(elementId, message) {
+            let errorSpan = document.getElementById(elementId + 'Error');
+            if (!errorSpan) {
+                errorSpan = document.createElement('span');
+                errorSpan.id = elementId + 'Error';
+                errorSpan.className = 'validation-error';
+                errorSpan.style.cssText = 'display: block; font-size: 12px; color: #EF4444; margin-top: 5px;';
+                const input = document.getElementById(elementId);
+                if (input && input.parentNode) {
+                    input.parentNode.appendChild(errorSpan);
+                }
+            }
+            errorSpan.textContent = message;
+            errorSpan.style.display = message ? 'block' : 'none';
+            
+            const input = document.getElementById(elementId);
+            if (input) {
+                input.classList.remove('error');
+                input.style.borderColor = '';
+            }
+        }
+
+        function clearValidationMessages() {
+            const errorSpans = document.querySelectorAll('.validation-error');
+            errorSpans.forEach(span => span.remove());
+            
+            const inputs = document.querySelectorAll('#feedbackName, #feedbackEmail, #feedbackPhone, #feedbackQuestion');
+            inputs.forEach(input => {
+                input.classList.remove('error');
+                input.style.borderColor = '';
+            });
+        }
+
+        async function submitContactFeedback(event) {
+            event.preventDefault();
+            
+            clearValidationMessages();
+            
+            const name = document.getElementById('feedbackName')?.value?.trim() || '';
+            const email = document.getElementById('feedbackEmail')?.value?.trim() || '';
+            const phone = document.getElementById('feedbackPhone')?.value?.trim() || '';
+            const question = document.getElementById('feedbackQuestion')?.value?.trim() || '';
+            
+            let isValid = true;
+            
+            if (!name) {
+                showValidationMessage('feedbackName', getValidationMessage('required_name'));
+                isValid = false;
+            } else if (name.length < 2) {
+                showValidationMessage('feedbackName', getValidationMessage('name_min'));
+                isValid = false;
+            } else {
+                showValidationMessage('feedbackName', '');
+            }
+            
+            if (!email) {
+                showValidationMessage('feedbackEmail', getValidationMessage('required_email'));
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                showValidationMessage('feedbackEmail', getValidationMessage('email_invalid'));
+                isValid = false;
+            } else {
+                showValidationMessage('feedbackEmail', '');
+            }
+            
+            if (!phone) {
+                showValidationMessage('feedbackPhone', getValidationMessage('required_phone'));
+                isValid = false;
+            } else if (!isValidPhone(phone)) {
+                showValidationMessage('feedbackPhone', getValidationMessage('phone_invalid'));
+                isValid = false;
+            } else {
+                showValidationMessage('feedbackPhone', '');
+            }
+            
+            if (!question) {
+                showValidationMessage('feedbackQuestion', getValidationMessage('required_question'));
+                isValid = false;
+            } else if (question.length < 5) {
+                showValidationMessage('feedbackQuestion', getValidationMessage('question_min'));
+                isValid = false;
+            } else {
+                showValidationMessage('feedbackQuestion', '');
+            }
+            
+            if (!isValid) {
+                return;
+            }
+            
+            const cleanPhoneNumber = cleanPhone(phone);
+            
+            const feedbackData = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                phone: cleanPhoneNumber,
+                message: question,
+                date: new Date().toISOString().split('T')[0],
+                createdAt: new Date().toISOString()
+            };
+            
+            const submitBtn = document.querySelector('#feedbackForm button[type="submit"]');
+            const originalText = submitBtn?.textContent || 'ОТПРАВИТЬ ЗАЯВКУ';
+            if (submitBtn) {
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                submitBtn.textContent = currentLang === 'ru' ? 'Отправка...' : 'Sending...';
+                submitBtn.disabled = true;
+            }
+            
+            try {
+                const response = await fetch('http://localhost:3000/feedbacks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(feedbackData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const savedFeedback = await response.json();
+                console.log('✅ Сообщение сохранено в JSON Server:', savedFeedback);
+                
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                const successMessage = currentLang === 'ru' 
+                    ? '✅ Ваше сообщение отправлено! Наш администратор свяжется с вами в ближайшее время.'
+                    : '✅ Your message has been sent! Our administrator will contact you shortly.';
+                
+                alert(successMessage);
+                document.getElementById('feedbackForm').reset();
+                clearValidationMessages();
+                
+            } catch (error) {
+                console.error('❌ Ошибка при отправке сообщения:', error);
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                const errorMessage = currentLang === 'ru'
+                    ? '❌ Ошибка подключения к серверу. Убедитесь, что JSON Server запущен: json-server --watch db.json --port 3000 --cors'
+                    : '❌ Server connection error. Please make sure JSON Server is running: json-server --watch db.json --port 3000 --cors';
+                alert(errorMessage);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }
+        }
+
         function initMobileMenu() {
             setTimeout(function() {
                 const burgerIcon = document.getElementById('burgerIcon');
@@ -234,6 +467,8 @@
                         desktopLangText.textContent = newLang === 'ru' ? 'ENG' : 'RUS';
                     }
                     
+                    updatePlaceholders();
+                    
                     const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
                     document.dispatchEvent(event);
                     
@@ -341,15 +576,6 @@
             });
         }
 
-        const feedbackForm = document.getElementById('feedbackForm');
-        if (feedbackForm) {
-            feedbackForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert(window.currentLanguage && window.currentLanguage() === 'ru' ? '✅ Ваше сообщение отправлено!' : '✅ Your message has been sent!');
-                feedbackForm.reset();
-            });
-        }
-
         const openAppointmentBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2');
         openAppointmentBtns.forEach(btn => {
             if (btn && typeof openVisitorAppointmentModal === 'function') {
@@ -360,6 +586,13 @@
             }
         });
 
+        const feedbackForm = document.getElementById('feedbackForm');
+        if (feedbackForm) {
+            const newFeedbackForm = feedbackForm.cloneNode(true);
+            feedbackForm.parentNode.replaceChild(newFeedbackForm, feedbackForm);
+            newFeedbackForm.addEventListener('submit', submitContactFeedback);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             initMobileMenu();
             syncMobileThemeWithDesktop();
@@ -367,10 +600,12 @@
             initMobileSpecialButton();
             updateMobileLangButton();
             initMobileLangSwitcher();
+            updatePlaceholders();
         });
 
         document.addEventListener('languageChanged', function() {
             updateMobileLangButton();
+            updatePlaceholders();
         });
 
         setTimeout(function() {
@@ -381,6 +616,7 @@
                 window.applyTranslations();
             }
             syncMobileThemeWithDesktop();
+            updatePlaceholders();
         }, 200);
 
         const themeObserver = new MutationObserver(function() {

@@ -2890,3 +2890,19 @@ td .currency-icon {
         font-size: 13px;
     }
 }
+
+.btn-delete-doctor {
+    display: none !important;
+}
+
+.btn-delete-appointment {
+    display: none !important;
+}
+
+.btn-delete-review {
+    display: none !important;
+}
+
+.btn-delete-service {
+    display: none !important;
+}

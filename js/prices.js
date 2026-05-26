@@ -139,8 +139,15 @@ async function displayPrices() {
     const categoryFilter = document.getElementById('priceCategoryFilter')?.value || 'all';
     const searchQuery = document.getElementById('priceSearchInput')?.value.toLowerCase() || '';
     
-    let categories = priceData.categories?.filter(c => c.active) || [];
-    let services = priceData.services?.filter(s => s.active) || [];
+    let categories = priceData.categories?.filter(c => c.active === true) || [];
+    let services = priceData.services?.filter(s => s.active === true) || [];
+    
+    // Локализация названий категорий
+    const currentLang = getCurrentLangForPrices();
+    categories = categories.map(cat => ({
+        ...cat,
+        localizedName: typeof cat.name === 'object' ? (cat.name[currentLang] || cat.name.ru) : cat.name
+    }));
     
     if (categoryFilter !== 'all') {
         services = services.filter(s => s.categoryId == categoryFilter);
@@ -183,7 +190,7 @@ async function displayPrices() {
             <div class="price-category" data-category-id="${category.id}">
                 <div class="category-header" onclick="toggleCategory(this)">
                     <h3 class="category-title">
-                        ${escapeHtmlForPrices(category.name)}
+                        ${escapeHtmlForPrices(category.localizedName)}
                         ${categoryDiscount ? `<span class="category-discount-badge" style="background: #EF4444; color: white; padding: 2px 10px; border-radius: 20px; font-size: 12px; margin-left: 10px;">-${categoryDiscount.value}%</span>` : ''}
                     </h3>
                     <span class="category-toggle">▼</span>
@@ -201,12 +208,18 @@ async function displayPrices() {
         `;
         
         for (const service of categoryServices) {
+            if (service.active === false) continue;
+            
             const priceDisplay = formatPriceWithDiscount(service, categoryDiscount);
+            
+            let serviceName = service.name;
+            if (typeof serviceName === 'object') {
+                serviceName = serviceName[currentLang] || serviceName.ru || service.name;
+            }
             
             let description = '';
             if (service.description) {
                 if (typeof service.description === 'object') {
-                    const currentLang = getCurrentLangForPrices();
                     description = service.description[currentLang] || service.description.ru || '';
                 } else {
                     description = service.description;
@@ -216,9 +229,9 @@ async function displayPrices() {
             
             html += `
                 <tr>
-                    <td class="service-name">${escapeHtmlForPrices(service.name)}</td>
-                    <td class="service-price">${priceDisplay}</td>
-                    <td class="service-unit">${escapeHtmlForPrices(description)}</td>
+                    <td class="service-name">${escapeHtmlForPrices(serviceName)}</span>
+                    <td class="service-price">${priceDisplay}</span>
+                    <td class="service-unit">${escapeHtmlForPrices(description)}</span>
                 </tr>
             `;
         }
@@ -252,7 +265,14 @@ async function populateCategoryFilter() {
     if (!filter) return;
     
     const data = await loadPriceData();
-    const categories = data.categories?.filter(c => c.active) || [];
+    const currentLang = getCurrentLangForPrices();
+    let categories = data.categories?.filter(c => c.active === true) || [];
+    
+    categories = categories.map(cat => ({
+        ...cat,
+        localizedName: typeof cat.name === 'object' ? (cat.name[currentLang] || cat.name.ru) : cat.name
+    }));
+    
     categories.sort((a, b) => (a.order || 0) - (b.order || 0));
     
     const allServicesText = getAllServicesText();
@@ -261,7 +281,7 @@ async function populateCategoryFilter() {
     categories.forEach(category => {
         const option = document.createElement('option');
         option.value = category.id;
-        option.textContent = category.name;
+        option.textContent = category.localizedName;
         filter.appendChild(option);
     });
 }
@@ -298,6 +318,7 @@ function escapeHtmlForPrices(str) {
         return m;
     });
 }
+
 
 document.addEventListener('DOMContentLoaded', async function() {
     if (!document.querySelector('#currency-styles')) {

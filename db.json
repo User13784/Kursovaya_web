@@ -119,6 +119,21 @@
       },
       "active": true,
       "order": 8
+    },
+    {
+      "id": 10,
+      "name": {
+        "ru": "123",
+        "en": "123"
+      },
+      "page": "team.html",
+      "bgImage": "",
+      "title": {
+        "ru": "123",
+        "en": "123"
+      },
+      "active": true,
+      "order": 10
     }
   ],
   "serviceDetails": [
@@ -289,6 +304,33 @@
         "en": "1. Diagnostics\n2. Wax-up\n3. Mock-up\n4. Fixation"
       },
       "images": ""
+    },
+    {
+      "id": 9,
+      "serviceId": 9,
+      "mainText": {
+        "ru": "Обычная проверка",
+        "en": "Regular check"
+      },
+      "secondaryText": {
+        "ru": "Просто так",
+        "en": "Just for test"
+      },
+      "features": {
+        "ru": "Ничего интересного, просто, 123",
+        "en": "Nothing interesting, just 123"
+      },
+      "steps": "",
+      "images": "../assets/images/main-page/main1"
+    },
+    {
+      "id": 10,
+      "serviceId": 10,
+      "mainText": "",
+      "secondaryText": "",
+      "features": "",
+      "steps": "",
+      "images": ""
     }
   ],
   "doctors": [
@@ -323,10 +365,6 @@
         "ru": "Регулярно повышает квалификацию в области детской стоматологии и эндодонтии.",
         "en": "Regularly improves skills in pediatric dentistry and endodontics."
       },
-      "schedule": {
-        "ru": "Пн-Сб, 09:00 - 18:00",
-        "en": "Mon-Sat, 09:00 - 18:00"
-      },
       "active": true
     },
     {
@@ -359,10 +397,6 @@
       "improvement": {
         "ru": "Прошел курсы по лазерной пародонтологии в Германии.",
         "en": "Completed courses in laser periodontology in Germany."
-      },
-      "schedule": {
-        "ru": "Пн-Пт, 10:00 - 19:00",
-        "en": "Mon-Fri, 10:00 - 19:00"
       },
       "active": true
     },
@@ -397,10 +431,6 @@
         "ru": "Сертифицированный специалист по AirFlow и Vector-терапии.",
         "en": "Certified specialist in AirFlow and Vector therapy."
       },
-      "schedule": {
-        "ru": "Вт-Сб, 10:00 - 20:00",
-        "en": "Tue-Sat, 10:00 - 20:00"
-      },
       "active": true
     },
     {
@@ -433,10 +463,6 @@
       "improvement": {
         "ru": "Прошла обучение по работе с дентальным микроскопом в Швейцарии.",
         "en": "Completed training on working with a dental microscope in Switzerland."
-      },
-      "schedule": {
-        "ru": "Пн-Пт, 09:00 - 18:00",
-        "en": "Mon-Fri, 09:00 - 18:00"
       },
       "active": true
     },
@@ -471,46 +497,38 @@
         "ru": "Неоднократно проходил курсы повышения квалификации, мастер-классы от профессоров мирового уровня.",
         "en": "Repeatedly took advanced training courses and master classes from world-class professors."
       },
-      "schedule": {
-        "ru": "Пн-Пт, 10:00 - 19:00",
-        "en": "Mon-Fri, 10:00 - 19:00"
-      },
       "active": true
     },
     {
       "id": 6,
       "lastName": {
         "ru": "Ковальчук",
-        "en": "Kovalchuk"
+        "en": "Ковальчук"
       },
       "firstName": {
         "ru": "Анастасия",
-        "en": "Anastasia"
+        "en": "Анастасия"
       },
       "middleName": {
         "ru": "Дмитриевна",
-        "en": "Dmitrievna"
+        "en": "Дмитриевна"
       },
       "specialization": {
         "ru": "Стоматолог-хирург, имплантолог",
-        "en": "Oral Surgeon, Implantologist"
+        "en": "Стоматолог-хирург, имплантолог"
       },
       "photo": "../assets/images/team/team-menu7.jpg",
       "education": {
         "ru": "Белорусский государственный медицинский университет (2009 г)",
-        "en": "Belarusian State Medical University (2009)"
+        "en": "Белорусский государственный медицинский университет (2009 г)"
       },
       "experience": {
         "ru": "более 13 лет",
-        "en": "more than 13 years"
+        "en": "более 13 лет"
       },
       "improvement": {
         "ru": "Прошла обучение у ведущих имплантологов Европы.",
-        "en": "Trained with leading implantologists in Europe."
-      },
-      "schedule": {
-        "ru": "Пн-Ср-Пт, 10:00 - 19:00",
-        "en": "Mon-Wed-Fri, 10:00 - 19:00"
+        "en": "Прошла обучение у ведущих имплантологов Европы."
       },
       "active": true
     }
@@ -518,9 +536,18 @@
   "reviews": [
     {
       "id": 1,
-      "author": "Айгуль Ахметова",
-      "userInfo": "Президент АО «RAIMBEK GROUP»",
-      "text": "С удовольствием хотела бы поделиться своим отношением к стоматологической клинике Dental Club. Я являюсь клиентом этой клиники на протяжении многих лет, поэтому очень рада ее обновлению и росту! Приятно осознавать, что в Dental Club технологичность сочетается с совершенным сервисом, красивыми и уютными кабинетами, максимальным комфортом для пациентов, а самое главное постоянным ростом профессионализма моего доктора, Дмитрия Щеголева, основавшего и практикующего в этой клинике. Я знаю Дмитрия как лечащего врача вот уже 30 лет и не поменяю его на другого врача-дантиста!",
+      "author": {
+        "ru": "Айгуль Ахметова",
+        "en": "Aigul Akhmetova"
+      },
+      "userInfo": {
+        "ru": "Президент АО «RAIMBEK GROUP»",
+        "en": "President of RAIMBEK GROUP"
+      },
+      "text": {
+        "ru": "С удовольствием хотела бы поделиться своим отношением к стоматолошической клинике Dental Club<br>Я являюсь клиентом этой клиники на протяжении многих лет, поэтому очень рада ее обновлению и росту! Приятно осозновать, что в Dental Club технологичность сочетается с совершенным сервисом, красивыми и уютными кабинетами, максимальным комфортом для пациентов, а самое главное постоянным ростом профессионализма моего доктора, Дмитрия Щеголева, основавшего и практикующего в этой клинике. Я знаю Дмитрия как лечащего врача вот уже 30 лет и не поменяю его на другого врача-дантиста!",
+        "en": "I would like to share my attitude towards the Dental Club dental clinic..."
+      },
       "rating": 5,
       "photo": "../assets/images/reviews/reviews2.jpg",
       "date": "2025-05-01",
@@ -528,9 +555,18 @@
     },
     {
       "id": 2,
-      "author": "Лариса Мухамеджанова",
-      "userInfo": "MBA, PH.D, Академик КАМ",
-      "text": "Я лечусь у Дмитрия Щеголева уже 20 лет. За это время выросла дочь, подросла внучка. И, разумеется мы все – пациенты данной клиники. Очень коротко объясняю, почему: здесь - сверхстандарты безопасности, при которых исключены всякие воспаления, флюсы, заражения и прочее; абсолютная надежность и доверие, что лечение пройдет без боли и без всяких ошибок, без лишних трат с понятным ценообразованием; уверенность в том, что тебя лечит профи, умный, талантливый и любящий свое дело врач на новейшем оборудовании с использованием не допотопных, а нормальных технологий 21 века.",
+      "author": {
+        "ru": "Лариса Мухамеджанова",
+        "en": "Larisa Mukhamedzhanova"
+      },
+      "userInfo": {
+        "ru": "MBA, PH.D, Академик КАМ",
+        "en": "MBA, Ph.D, Academician of CAM"
+      },
+      "text": {
+        "ru": "Я лечусь у Дмитрия Щеголева уже 20 лет...",
+        "en": "I have been treated by Dmitry Shchegolev for 20 years..."
+      },
       "rating": 5,
       "photo": "../assets/images/reviews/reviews3.jpg",
       "date": "2025-05-02",
@@ -538,13 +574,54 @@
     },
     {
       "id": 3,
-      "author": "Эленора Тен",
-      "userInfo": "",
-      "text": "Хотелось бы поблагодарить команду Dental Club за профессионализм, квалифицированный подход в лечении. Благодаря прекрасному, чуткому врачу Дмитрию Щёголева в клинике витает атмосфера добра, уверенности, защищённости и спокойствия. К такому специалисту всегда приятно идти на приём. Я всем и всегда рекомендую Dental Club!",
+      "author": {
+        "ru": "Эленора Тен",
+        "en": "Eleonora Ten"
+      },
+      "userInfo": {
+        "ru": "",
+        "en": ""
+      },
+      "text": {
+        "ru": "Хотелось бы поблагодарить команду Dental Club за профессионализм...",
+        "en": "I would like to thank the Dental Club team for their professionalism..."
+      },
       "rating": 5,
       "photo": "../assets/images/logo/logo4.png",
       "date": "2025-05-03",
       "published": true
+    },
+    {
+      "id": 4,
+      "author": "Тестовый Пользователь",
+      "email": "test@example.com",
+      "phone": "375291234567",
+      "text": "Отличная клиника! Всё понравилось.",
+      "rating": 4,
+      "photo": "",
+      "userInfo": "",
+      "published": true,
+      "date": "2026-05-23",
+      "createdAt": "2026-05-23T10:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "author": {
+        "ru": "New",
+        "en": "New"
+      },
+      "email": "12131@gmail.com",
+      "phone": "375123456789",
+      "text": {
+        "ru": "парапрапр3242 34 п ва",
+        "en": "парапрапр3242 34 п ва"
+      },
+      "rating": 5,
+      "photo": "",
+      "userInfo": "",
+      "published": false,
+      "date": "2026-05-22",
+      "createdAt": "2026-05-22T22:25:25.777Z"
     }
   ],
   "prices": {
@@ -552,73 +629,49 @@
     "categories": [
       {
         "id": 1,
-        "name": {
-          "ru": "Диагностика",
-          "en": "Diagnostics"
-        },
+        "name": "Диагностика",
         "order": 1,
         "active": true
       },
       {
         "id": 2,
-        "name": {
-          "ru": "Профилактика и гигиена",
-          "en": "Prevention and Hygiene"
-        },
+        "name": "Профилактика и гигиена",
         "order": 2,
         "active": true
       },
       {
         "id": 3,
-        "name": {
-          "ru": "Терапевтическая стоматология",
-          "en": "Therapeutic Dentistry"
-        },
+        "name": "Терапевтическая стоматология",
         "order": 3,
         "active": true
       },
       {
         "id": 4,
-        "name": {
-          "ru": "Хирургическая стоматология",
-          "en": "Surgical Dentistry"
-        },
+        "name": "Хирургическая стоматология",
         "order": 4,
         "active": true
       },
       {
         "id": 5,
-        "name": {
-          "ru": "Ортопедия (протезирование)",
-          "en": "Orthopedics (Prosthetics)"
-        },
+        "name": "Ортопедия (протезирование)",
         "order": 5,
         "active": true
       },
       {
         "id": 6,
-        "name": {
-          "ru": "Имплантация",
-          "en": "Implantation"
-        },
+        "name": "Имплантация",
         "order": 6,
         "active": true
       },
       {
         "id": 7,
-        "name": {
-          "ru": "Ортодонтия",
-          "en": "Orthodontics"
-        },
+        "name": "Ортодонтия",
         "order": 7,
         "active": true
       },
       {
         "id": 8,
-        "name": {
-          "ru": "Эстетическая стоматология",
-          "en": "Aesthetic Dentistry"
-        },
+        "name": "Эстетическая стоматология",
         "order": 8,
         "active": true
       }
@@ -627,26 +680,17 @@
       {
         "id": 1,
         "categoryId": 1,
-        "name": {
-          "ru": "Первичная консультация",
-          "en": "Initial Consultation"
-        },
+        "name": "Первичная консультация",
         "price": "0",
         "unit": "BYN",
-        "description": {
-          "ru": "бесплатно",
-          "en": "free"
-        },
+        "description": "бесплатно",
         "order": 1,
         "active": true
       },
       {
         "id": 2,
         "categoryId": 1,
-        "name": {
-          "ru": "Осмотр и составление плана лечения",
-          "en": "Examination and treatment plan"
-        },
+        "name": "Осмотр и составление плана лечения",
         "price": "25",
         "unit": "BYN",
         "description": "",
@@ -656,26 +700,17 @@
       {
         "id": 3,
         "categoryId": 1,
-        "name": {
-          "ru": "Компьютерная томография (3D)",
-          "en": "Computed tomography (3D)"
-        },
+        "name": "Компьютерная томография (3D)",
         "price": "80",
         "unit": "BYN",
-        "description": {
-          "ru": "Одна челюсть",
-          "en": "One jaw"
-        },
+        "description": "Одна челюсть",
         "order": 3,
         "active": true
       },
       {
         "id": 4,
         "categoryId": 1,
-        "name": {
-          "ru": "Панорамный снимок (ОПТГ)",
-          "en": "Panoramic X-ray (OPTG)"
-        },
+        "name": "Панорамный снимок (ОПТГ)",
         "price": "40",
         "unit": "BYN",
         "description": "",
@@ -685,26 +720,17 @@
       {
         "id": 5,
         "categoryId": 1,
-        "name": {
-          "ru": "Прицельный снимок",
-          "en": "Targeted X-ray"
-        },
+        "name": "Прицельный снимок",
         "price": "15",
         "unit": "BYN",
-        "description": {
-          "ru": "Один зуб",
-          "en": "One tooth"
-        },
+        "description": "Один зуб",
         "order": 5,
         "active": true
       },
       {
         "id": 6,
         "categoryId": 2,
-        "name": {
-          "ru": "Профессиональная гигиена (AirFlow)",
-          "en": "Professional hygiene (AirFlow)"
-        },
+        "name": "Профессиональная гигиена (AirFlow)",
         "price": "60",
         "unit": "BYN",
         "description": "",
@@ -714,58 +740,37 @@
       {
         "id": 7,
         "categoryId": 2,
-        "name": {
-          "ru": "Ультразвуковая чистка",
-          "en": "Ultrasonic cleaning"
-        },
+        "name": "Ультразвуковая чистка",
         "price": "40",
         "unit": "BYN",
-        "description": {
-          "ru": "Одна челюсть",
-          "en": "One jaw"
-        },
+        "description": "Одна челюсть",
         "order": 2,
         "active": true
       },
       {
         "id": 8,
         "categoryId": 3,
-        "name": {
-          "ru": "Лечение кариеса",
-          "en": "Caries treatment"
-        },
+        "name": "Лечение кариеса",
         "price": "70",
         "unit": "BYN",
-        "description": {
-          "ru": "Один зуб",
-          "en": "One tooth"
-        },
+        "description": "Один зуб",
         "order": 1,
         "active": true
       },
       {
         "id": 9,
         "categoryId": 3,
-        "name": {
-          "ru": "Лечение пульпита",
-          "en": "Pulpitis treatment"
-        },
+        "name": "Лечение пульпита",
         "price": "120",
         "unit": "BYN",
-        "description": {
-          "ru": "Один канал",
-          "en": "One canal"
-        },
+        "description": "Один канал",
         "order": 2,
         "active": true
       },
       {
         "id": 10,
         "categoryId": 4,
-        "name": {
-          "ru": "Удаление зуба (простое)",
-          "en": "Tooth extraction (simple)"
-        },
+        "name": "Удаление зуба (простое)",
         "price": "50",
         "unit": "BYN",
         "description": "",
@@ -775,10 +780,7 @@
       {
         "id": 11,
         "categoryId": 4,
-        "name": {
-          "ru": "Удаление зуба (сложное)",
-          "en": "Tooth extraction (complicated)"
-        },
+        "name": "Удаление зуба (сложное)",
         "price": "100",
         "unit": "BYN",
         "description": "",
@@ -788,144 +790,90 @@
       {
         "id": 12,
         "categoryId": 5,
-        "name": {
-          "ru": "Коронка металлокерамическая",
-          "en": "Metal-ceramic crown"
-        },
+        "name": "Коронка металлокерамическая",
         "price": "250",
         "unit": "BYN",
-        "description": {
-          "ru": "Один зуб",
-          "en": "One tooth"
-        },
+        "description": "Один зуб",
         "order": 1,
         "active": true
       },
       {
         "id": 13,
         "categoryId": 5,
-        "name": {
-          "ru": "Коронка циркониевая",
-          "en": "Zirconium crown"
-        },
+        "name": "Коронка циркониевая",
         "price": "450",
         "unit": "BYN",
-        "description": {
-          "ru": "Один зуб",
-          "en": "One tooth"
-        },
+        "description": "Один зуб",
         "order": 2,
         "active": true
       },
       {
         "id": 14,
         "categoryId": 6,
-        "name": {
-          "ru": "Имплантат (установка)",
-          "en": "Implant (placement)"
-        },
+        "name": "Имплантат (установка)",
         "price": "800",
         "unit": "BYN",
-        "description": {
-          "ru": "Под ключ",
-          "en": "Turnkey"
-        },
+        "description": "Под ключ",
         "order": 1,
         "active": true
       },
       {
         "id": 15,
         "categoryId": 6,
-        "name": {
-          "ru": "Имплантация All-on-4",
-          "en": "All-on-4 implantation"
-        },
+        "name": "Имплантация All-on-4",
         "price": "4000",
         "unit": "BYN",
-        "description": {
-          "ru": "Полный комплекс",
-          "en": "Full complex"
-        },
+        "description": "Полный комплекс",
         "order": 2,
         "active": true
       },
       {
         "id": 16,
         "categoryId": 7,
-        "name": {
-          "ru": "Брекет-система (металл)",
-          "en": "Bracket system (metal)"
-        },
+        "name": "Брекет-система (металл)",
         "price": "1000",
         "unit": "BYN",
-        "description": {
-          "ru": "На челюсть",
-          "en": "Per jaw"
-        },
+        "description": "На челюсть",
         "order": 1,
         "active": true
       },
       {
         "id": 17,
         "categoryId": 7,
-        "name": {
-          "ru": "Брекет-система (керамика)",
-          "en": "Bracket system (ceramic)"
-        },
+        "name": "Брекет-система (керамика)",
         "price": "1500",
         "unit": "BYN",
-        "description": {
-          "ru": "На челюсть",
-          "en": "Per jaw"
-        },
+        "description": "На челюсть",
         "order": 2,
         "active": true
       },
       {
         "id": 18,
         "categoryId": 7,
-        "name": {
-          "ru": "Элайнеры Invisalign",
-          "en": "Invisalign aligners"
-        },
+        "name": "Элайнеры Invisalign",
         "price": "3000",
         "unit": "BYN",
-        "description": {
-          "ru": "Полный курс",
-          "en": "Full course"
-        },
+        "description": "Полный курс",
         "order": 3,
         "active": true
       },
       {
         "id": 19,
         "categoryId": 8,
-        "name": {
-          "ru": "Отбеливание ZOOM",
-          "en": "ZOOM whitening"
-        },
+        "name": "Отбеливание ZOOM",
         "price": "300",
         "unit": "BYN",
-        "description": {
-          "ru": "Одна процедура",
-          "en": "One procedure"
-        },
+        "description": "Одна процедура",
         "order": 1,
         "active": true
       },
       {
         "id": 20,
         "categoryId": 8,
-        "name": {
-          "ru": "Виниры керамические",
-          "en": "Ceramic veneers"
-        },
+        "name": "Виниры керамические",
         "price": "350",
         "unit": "BYN",
-        "description": {
-          "ru": "Один зуб",
-          "en": "One tooth"
-        },
+        "description": "Один зуб",
         "order": 2,
         "active": true
       }
@@ -938,11 +886,11 @@
         "id": 1,
         "name": {
           "ru": "Волкова Екатерина Андреевна",
-          "en": "Ekaterina Volkova"
+          "en": "Волкова Екатерина Андреевна"
         },
         "specialization": {
           "ru": "Стоматолог-терапевт, детский стоматолог",
-          "en": "General Dentist, Pediatric Dentist"
+          "en": "Стоматолог-терапевт, детский стоматолог"
         },
         "photo": "../assets/images/team/team-menu2.jpg"
       },
@@ -950,11 +898,11 @@
         "id": 2,
         "name": {
           "ru": "Кузнецов Андрей Владимирович",
-          "en": "Andrey Kuznetsov"
+          "en": "Кузнецов Андрей Владимирович"
         },
         "specialization": {
           "ru": "Стоматолог-пародонтолог",
-          "en": "Periodontist"
+          "en": "Стоматолог-пародонтолог"
         },
         "photo": "../assets/images/team/team-menu3.jpg"
       },
@@ -962,11 +910,11 @@
         "id": 3,
         "name": {
           "ru": "Соколова Мария Александровна",
-          "en": "Maria Sokolova"
+          "en": "Соколова Мария Александровна"
         },
         "specialization": {
           "ru": "Стоматолог-пародонтолог, гигиенист",
-          "en": "Periodontist, Hygienist"
+          "en": "Стоматолог-пародонтолог, гигиенист"
         },
         "photo": "../assets/images/team/team-menu4.jpg"
       },
@@ -974,11 +922,11 @@
         "id": 4,
         "name": {
           "ru": "Новикова Валентина Сергеевна",
-          "en": "Valentina Novikova"
+          "en": "Новикова Валентина Сергеевна"
         },
         "specialization": {
           "ru": "Стоматолог-терапевт, эндодонтист",
-          "en": "General Dentist, Endodontist"
+          "en": "Стоматолог-терапевт, эндодонтист"
         },
         "photo": "../assets/images/team/team-menu5.jpg"
       },
@@ -986,11 +934,11 @@
         "id": 5,
         "name": {
           "ru": "Щеголев Дмитрий Владиславович",
-          "en": "Dmitry Shchegolev"
+          "en": "Щеголев Дмитрий Владиславович"
         },
         "specialization": {
           "ru": "Стоматолог-имплантолог, ортопед",
-          "en": "Implantologist, Orthopedist"
+          "en": "Стоматолог-имплантолог, ортопед"
         },
         "photo": "../assets/images/team/team-menu6.jpg"
       },
@@ -998,122 +946,21 @@
         "id": 6,
         "name": {
           "ru": "Ковальчук Анастасия Дмитриевна",
-          "en": "Anastasia Kovalchuk"
+          "en": "Ковальчук Анастасия Дмитриевна"
         },
         "specialization": {
           "ru": "Стоматолог-хирург, имплантолог",
-          "en": "Oral Surgeon, Implantologist"
+          "en": "Стоматолог-хирург, имплантолог"
         },
         "photo": "../assets/images/team/team-menu7.jpg"
       }
     ],
     "schedule": [
       {
-        "id": 1,
-        "doctorId": 1,
-        "day": "monday",
-        "dayName": {
-          "ru": "Понедельник",
-          "en": "Monday"
-        },
-        "timeStart": "10:00",
-        "timeEnd": "18:00",
-        "breakStart": "13:00",
-        "breakEnd": "14:00",
-        "isWorking": true
-      },
-      {
-        "id": 2,
-        "doctorId": 1,
-        "day": "tuesday",
-        "dayName": {
-          "ru": "Вторник",
-          "en": "Tuesday"
-        },
-        "timeStart": "10:00",
-        "timeEnd": "18:00",
-        "breakStart": "13:00",
-        "breakEnd": "14:00",
-        "isWorking": true
-      },
-      {
-        "id": 3,
-        "doctorId": 1,
-        "day": "wednesday",
-        "dayName": {
-          "ru": "Среда",
-          "en": "Wednesday"
-        },
-        "timeStart": "10:00",
-        "timeEnd": "18:00",
-        "breakStart": "13:00",
-        "breakEnd": "14:00",
-        "isWorking": true
-      },
-      {
-        "id": 4,
-        "doctorId": 1,
-        "day": "thursday",
-        "dayName": {
-          "ru": "Четверг",
-          "en": "Thursday"
-        },
-        "timeStart": "10:00",
-        "timeEnd": "18:00",
-        "breakStart": "13:00",
-        "breakEnd": "14:00",
-        "isWorking": true
-      },
-      {
-        "id": 5,
-        "doctorId": 1,
-        "day": "friday",
-        "dayName": {
-          "ru": "Пятница",
-          "en": "Friday"
-        },
-        "timeStart": "10:00",
-        "timeEnd": "18:00",
-        "breakStart": "13:00",
-        "breakEnd": "14:00",
-        "isWorking": true
-      },
-      {
-        "id": 6,
-        "doctorId": 1,
-        "day": "saturday",
-        "dayName": {
-          "ru": "Суббота",
-          "en": "Saturday"
-        },
-        "timeStart": "10:00",
-        "timeEnd": "15:00",
-        "breakStart": "",
-        "breakEnd": "",
-        "isWorking": true
-      },
-      {
-        "id": 7,
-        "doctorId": 1,
-        "day": "sunday",
-        "dayName": {
-          "ru": "Воскресенье",
-          "en": "Sunday"
-        },
-        "timeStart": "",
-        "timeEnd": "",
-        "breakStart": "",
-        "breakEnd": "",
-        "isWorking": false
-      },
-      {
         "id": 8,
         "doctorId": 2,
         "day": "monday",
-        "dayName": {
-          "ru": "Понедельник",
-          "en": "Monday"
-        },
+        "dayName": "Понедельник",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1124,10 +971,7 @@
         "id": 9,
         "doctorId": 2,
         "day": "tuesday",
-        "dayName": {
-          "ru": "Вторник",
-          "en": "Tuesday"
-        },
+        "dayName": "Вторник",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1138,10 +982,7 @@
         "id": 10,
         "doctorId": 2,
         "day": "wednesday",
-        "dayName": {
-          "ru": "Среда",
-          "en": "Wednesday"
-        },
+        "dayName": "Среда",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1152,10 +993,7 @@
         "id": 11,
         "doctorId": 2,
         "day": "thursday",
-        "dayName": {
-          "ru": "Четверг",
-          "en": "Thursday"
-        },
+        "dayName": "Четверг",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1166,10 +1004,7 @@
         "id": 12,
         "doctorId": 2,
         "day": "friday",
-        "dayName": {
-          "ru": "Пятница",
-          "en": "Friday"
-        },
+        "dayName": "Пятница",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1180,10 +1015,7 @@
         "id": 13,
         "doctorId": 2,
         "day": "saturday",
-        "dayName": {
-          "ru": "Суббота",
-          "en": "Saturday"
-        },
+        "dayName": "Суббота",
         "timeStart": "09:00",
         "timeEnd": "14:00",
         "breakStart": "",
@@ -1194,10 +1026,7 @@
         "id": 14,
         "doctorId": 2,
         "day": "sunday",
-        "dayName": {
-          "ru": "Воскресенье",
-          "en": "Sunday"
-        },
+        "dayName": "Воскресенье",
         "timeStart": "",
         "timeEnd": "",
         "breakStart": "",
@@ -1208,10 +1037,7 @@
         "id": 15,
         "doctorId": 3,
         "day": "monday",
-        "dayName": {
-          "ru": "Понедельник",
-          "en": "Monday"
-        },
+        "dayName": "Понедельник",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1222,10 +1048,7 @@
         "id": 16,
         "doctorId": 3,
         "day": "tuesday",
-        "dayName": {
-          "ru": "Вторник",
-          "en": "Tuesday"
-        },
+        "dayName": "Вторник",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1236,10 +1059,7 @@
         "id": 17,
         "doctorId": 3,
         "day": "wednesday",
-        "dayName": {
-          "ru": "Среда",
-          "en": "Wednesday"
-        },
+        "dayName": "Среда",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1250,10 +1070,7 @@
         "id": 18,
         "doctorId": 3,
         "day": "thursday",
-        "dayName": {
-          "ru": "Четверг",
-          "en": "Thursday"
-        },
+        "dayName": "Четверг",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1264,10 +1081,7 @@
         "id": 19,
         "doctorId": 3,
         "day": "friday",
-        "dayName": {
-          "ru": "Пятница",
-          "en": "Friday"
-        },
+        "dayName": "Пятница",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1278,10 +1092,7 @@
         "id": 20,
         "doctorId": 3,
         "day": "saturday",
-        "dayName": {
-          "ru": "Суббота",
-          "en": "Saturday"
-        },
+        "dayName": "Суббота",
         "timeStart": "10:00",
         "timeEnd": "16:00",
         "breakStart": "",
@@ -1292,10 +1103,7 @@
         "id": 21,
         "doctorId": 3,
         "day": "sunday",
-        "dayName": {
-          "ru": "Воскресенье",
-          "en": "Sunday"
-        },
+        "dayName": "Воскресенье",
         "timeStart": "",
         "timeEnd": "",
         "breakStart": "",
@@ -1306,10 +1114,7 @@
         "id": 22,
         "doctorId": 4,
         "day": "monday",
-        "dayName": {
-          "ru": "Понедельник",
-          "en": "Monday"
-        },
+        "dayName": "Понедельник",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1320,10 +1125,7 @@
         "id": 23,
         "doctorId": 4,
         "day": "tuesday",
-        "dayName": {
-          "ru": "Вторник",
-          "en": "Tuesday"
-        },
+        "dayName": "Вторник",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1334,10 +1136,7 @@
         "id": 24,
         "doctorId": 4,
         "day": "wednesday",
-        "dayName": {
-          "ru": "Среда",
-          "en": "Wednesday"
-        },
+        "dayName": "Среда",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1348,10 +1147,7 @@
         "id": 25,
         "doctorId": 4,
         "day": "thursday",
-        "dayName": {
-          "ru": "Четверг",
-          "en": "Thursday"
-        },
+        "dayName": "Четверг",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1362,10 +1158,7 @@
         "id": 26,
         "doctorId": 4,
         "day": "friday",
-        "dayName": {
-          "ru": "Пятница",
-          "en": "Friday"
-        },
+        "dayName": "Пятница",
         "timeStart": "09:00",
         "timeEnd": "17:00",
         "breakStart": "13:00",
@@ -1376,10 +1169,7 @@
         "id": 27,
         "doctorId": 4,
         "day": "saturday",
-        "dayName": {
-          "ru": "Суббота",
-          "en": "Saturday"
-        },
+        "dayName": "Суббота",
         "timeStart": "09:00",
         "timeEnd": "14:00",
         "breakStart": "",
@@ -1390,10 +1180,7 @@
         "id": 28,
         "doctorId": 4,
         "day": "sunday",
-        "dayName": {
-          "ru": "Воскресенье",
-          "en": "Sunday"
-        },
+        "dayName": "Воскресенье",
         "timeStart": "",
         "timeEnd": "",
         "breakStart": "",
@@ -1404,10 +1191,7 @@
         "id": 29,
         "doctorId": 5,
         "day": "monday",
-        "dayName": {
-          "ru": "Понедельник",
-          "en": "Monday"
-        },
+        "dayName": "Понедельник",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1418,10 +1202,7 @@
         "id": 30,
         "doctorId": 5,
         "day": "tuesday",
-        "dayName": {
-          "ru": "Вторник",
-          "en": "Tuesday"
-        },
+        "dayName": "Вторник",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1432,10 +1213,7 @@
         "id": 31,
         "doctorId": 5,
         "day": "wednesday",
-        "dayName": {
-          "ru": "Среда",
-          "en": "Wednesday"
-        },
+        "dayName": "Среда",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1446,10 +1224,7 @@
         "id": 32,
         "doctorId": 5,
         "day": "thursday",
-        "dayName": {
-          "ru": "Четверг",
-          "en": "Thursday"
-        },
+        "dayName": "Четверг",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1460,10 +1235,7 @@
         "id": 33,
         "doctorId": 5,
         "day": "friday",
-        "dayName": {
-          "ru": "Пятница",
-          "en": "Friday"
-        },
+        "dayName": "Пятница",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1474,10 +1246,7 @@
         "id": 34,
         "doctorId": 5,
         "day": "saturday",
-        "dayName": {
-          "ru": "Суббота",
-          "en": "Saturday"
-        },
+        "dayName": "Суббота",
         "timeStart": "10:00",
         "timeEnd": "15:00",
         "breakStart": "",
@@ -1488,10 +1257,7 @@
         "id": 35,
         "doctorId": 5,
         "day": "sunday",
-        "dayName": {
-          "ru": "Воскресенье",
-          "en": "Sunday"
-        },
+        "dayName": "Воскресенье",
         "timeStart": "",
         "timeEnd": "",
         "breakStart": "",
@@ -1502,10 +1268,7 @@
         "id": 36,
         "doctorId": 6,
         "day": "monday",
-        "dayName": {
-          "ru": "Понедельник",
-          "en": "Monday"
-        },
+        "dayName": "Понедельник",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1516,10 +1279,7 @@
         "id": 37,
         "doctorId": 6,
         "day": "tuesday",
-        "dayName": {
-          "ru": "Вторник",
-          "en": "Tuesday"
-        },
+        "dayName": "Вторник",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1530,10 +1290,7 @@
         "id": 38,
         "doctorId": 6,
         "day": "wednesday",
-        "dayName": {
-          "ru": "Среда",
-          "en": "Wednesday"
-        },
+        "dayName": "Среда",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1544,10 +1301,7 @@
         "id": 39,
         "doctorId": 6,
         "day": "thursday",
-        "dayName": {
-          "ru": "Четверг",
-          "en": "Thursday"
-        },
+        "dayName": "Четверг",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1558,10 +1312,7 @@
         "id": 40,
         "doctorId": 6,
         "day": "friday",
-        "dayName": {
-          "ru": "Пятница",
-          "en": "Friday"
-        },
+        "dayName": "Пятница",
         "timeStart": "10:00",
         "timeEnd": "19:00",
         "breakStart": "14:00",
@@ -1572,10 +1323,7 @@
         "id": 41,
         "doctorId": 6,
         "day": "saturday",
-        "dayName": {
-          "ru": "Суббота",
-          "en": "Saturday"
-        },
+        "dayName": "Суббота",
         "timeStart": "10:00",
         "timeEnd": "16:00",
         "breakStart": "",
@@ -1586,10 +1334,84 @@
         "id": 42,
         "doctorId": 6,
         "day": "sunday",
-        "dayName": {
-          "ru": "Воскресенье",
-          "en": "Sunday"
-        },
+        "dayName": "Воскресенье",
+        "timeStart": "",
+        "timeEnd": "",
+        "breakStart": "",
+        "breakEnd": "",
+        "isWorking": false
+      },
+      {
+        "id": 1,
+        "doctorId": 1,
+        "day": "monday",
+        "dayName": "Понедельник",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 2,
+        "doctorId": 1,
+        "day": "tuesday",
+        "dayName": "Вторник",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 3,
+        "doctorId": 1,
+        "day": "wednesday",
+        "dayName": "Среда",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 4,
+        "doctorId": 1,
+        "day": "thursday",
+        "dayName": "Четверг",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 5,
+        "doctorId": 1,
+        "day": "friday",
+        "dayName": "Пятница",
+        "timeStart": "09:00",
+        "timeEnd": "18:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 6,
+        "doctorId": 1,
+        "day": "saturday",
+        "dayName": "Суббота",
+        "timeStart": "09:00",
+        "timeEnd": "14:00",
+        "breakStart": "13:00",
+        "breakEnd": "14:00",
+        "isWorking": true
+      },
+      {
+        "id": 7,
+        "doctorId": 1,
+        "day": "sunday",
+        "dayName": "Воскресенье",
         "timeStart": "",
         "timeEnd": "",
         "breakStart": "",
@@ -1934,6 +1756,20 @@
       "address": "",
       "role": "admin",
       "createdAt": "2025-01-01T10:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "firstName": "123",
+      "lastName": "13",
+      "middleName": "",
+      "email": "u1ser@example.com",
+      "phone": "375291234567",
+      "password": "123456",
+      "role": "user",
+      "birthDate": "",
+      "address": "",
+      "createdAt": "2026-05-20T19:47:49.373Z",
+      "updatedAt": "2026-05-20T19:54:17.264Z"
     }
   ],
   "appointments": [
@@ -1949,7 +1785,7 @@
       "serviceId": 1,
       "date": "2025-05-15",
       "time": "10:00",
-      "comment": "Первичная консультация",
+      "comment": "",
       "status": "confirmed",
       "userId": 1,
       "createdAt": "2025-05-01T10:00:00.000Z"
@@ -1967,7 +1803,7 @@
       "date": "2025-05-16",
       "time": "14:00",
       "comment": "",
-      "status": "pending",
+      "status": "completed",
       "userId": null,
       "createdAt": "2025-05-02T10:00:00.000Z"
     },
@@ -2004,23 +1840,6 @@
       "status": "pending",
       "userId": null,
       "createdAt": "2025-05-03T10:00:00.000Z"
-    },
-    {
-      "id": 5,
-      "patientName": {
-        "ru": "Морозов Денис Андреевич",
-        "en": "Morozov Denis Andreevich"
-      },
-      "phone": "375291112233",
-      "email": "morozov@mail.ru",
-      "doctorId": 5,
-      "serviceId": 14,
-      "date": "2025-05-18",
-      "time": "15:00",
-      "comment": "Консультация по имплантации",
-      "status": "confirmed",
-      "userId": null,
-      "createdAt": "2025-05-04T10:00:00.000Z"
     }
   ],
   "discounts": [
@@ -2038,24 +1857,6 @@
       "description": {
         "ru": "Скидка 20% на все услуги диагностики",
         "en": "20% discount on all diagnostic services"
-      },
-      "active": true,
-      "createdAt": "2025-05-01T10:00:00.000Z"
-    },
-    {
-      "id": 2,
-      "discountCategoryId": 2,
-      "name": {
-        "ru": "Акция на гигиену",
-        "en": "Hygiene promotion"
-      },
-      "type": "percentage",
-      "value": 15,
-      "startDate": "2025-05-01",
-      "endDate": "2025-06-30",
-      "description": {
-        "ru": "Скидка 15% на все услуги профилактики и гигиены",
-        "en": "15% discount on all prevention and hygiene services"
       },
       "active": true,
       "createdAt": "2025-05-01T10:00:00.000Z"
@@ -2080,57 +1881,15 @@
     },
     {
       "id": 4,
-      "discountCategoryId": 5,
-      "name": {
-        "ru": "Акция на протезирование",
-        "en": "Prosthetics promotion"
-      },
+      "discountCategoryId": 8,
+      "name": "Акция",
       "type": "percentage",
-      "value": 15,
-      "startDate": "2025-05-15",
-      "endDate": "2025-07-15",
-      "description": {
-        "ru": "Скидка 15% на протезирование",
-        "en": "15% discount on prosthetics"
-      },
+      "value": 13,
+      "startDate": "2026-05-01",
+      "endDate": "2026-05-22",
+      "description": "тест",
       "active": true,
-      "createdAt": "2025-05-10T10:00:00.000Z"
-    },
-    {
-      "id": 5,
-      "discountCategoryId": 6,
-      "name": {
-        "ru": "Акция на имплантацию",
-        "en": "Implantation promotion"
-      },
-      "type": "percentage",
-      "value": 10,
-      "startDate": "2025-05-15",
-      "endDate": "2025-06-15",
-      "description": {
-        "ru": "Скидка 10% на все услуги имплантации",
-        "en": "10% discount on all implantation services"
-      },
-      "active": true,
-      "createdAt": "2025-05-10T10:00:00.000Z"
-    },
-    {
-      "id": 6,
-      "discountCategoryId": 7,
-      "name": {
-        "ru": "Акция на ортодонтию",
-        "en": "Orthodontics promotion"
-      },
-      "type": "fixed",
-      "value": 200,
-      "startDate": "2025-06-01",
-      "endDate": "2025-08-31",
-      "description": {
-        "ru": "Фиксированная скидка 200 BYN на брекет-системы",
-        "en": "Fixed discount of 200 BYN on bracket systems"
-      },
-      "active": true,
-      "createdAt": "2025-05-15T10:00:00.000Z"
+      "createdAt": "2026-05-21T20:07:13.177Z"
     }
   ],
   "menuConfig": {
@@ -2208,5 +1967,25 @@
         "order": 3
       }
     ]
-  }
+  },
+  "feedbacks": [
+    {
+      "id": 1779313749676,
+      "name": "Петр",
+      "email": "123@gmail.com",
+      "phone": "375291234567",
+      "message": "добрый день",
+      "date": "2026-05-20",
+      "createdAt": "2026-05-20T21:49:09.676Z"
+    },
+    {
+      "id": 1779314240471,
+      "name": "Петр",
+      "email": "123@gmail.com",
+      "phone": "375291234567",
+      "message": "rfrrfrf",
+      "date": "2026-05-20",
+      "createdAt": "2026-05-20T21:57:20.471Z"
+    }
+  ]
 }

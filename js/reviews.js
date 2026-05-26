@@ -1,9 +1,10 @@
 async function loadReviews() {
     try {
-        const reviews = await getReviews({ published: true });
+        const response = await fetch('http://localhost:3000/reviews');
+        const reviews = await response.json();
         
         if (reviews && reviews.length > 0) {
-            console.log(`✅ Загружено ${reviews.length} отзывов через getReviews()`);
+            console.log(`✅ Загружено ${reviews.length} отзывов`);
             return reviews;
         } else {
             console.log('ℹ️ В JSON Server нет отзывов');
@@ -23,6 +24,19 @@ function escapeHtml(str) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
+}
+
+function getRatingStarsHtml(rating) {
+    let starsHtml = '<div class="review-rating-stars">';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            starsHtml += '<span class="star-filled">★</span>';
+        } else {
+            starsHtml += '<span class="star-empty">☆</span>';
+        }
+    }
+    starsHtml += '</div>';
+    return starsHtml;
 }
 
 function formatReviewText(text, author) {
@@ -96,22 +110,36 @@ const STEP = 3;
 
 function createFullReviewCard(review) {
     let photo = review.photo || '';
-    const isLogoReview = review.author === 'Эленора Тен' || review.author === 'Eleonora Ten' || photo.includes('logo');
+    const currentLang = localStorage.getItem('dental_language') || 'ru';
+    let authorName = review.author;
+    let userInfo = review.userInfo;
+    let reviewText = review.text;
+    let rating = review.rating || 5;
     
-    if (!photo || photo === '') {
-        photo = '../assets/images/logo/logo4.png';
+    if (typeof review.author === 'object') {
+        authorName = review.author[currentLang] || review.author.ru;
+    }
+    if (typeof review.userInfo === 'object') {
+        userInfo = review.userInfo[currentLang] || review.userInfo.ru;
+    }
+    if (typeof review.text === 'object') {
+        reviewText = review.text[currentLang] || review.text.ru;
     }
     
-    const reviewHtml = formatReviewText(review.text, review.author);
+    const useLogoPlaceholder = !photo || photo === '' || photo.includes('logo');
+    
+    const reviewHtml = formatReviewText(reviewText, authorName);
+    const starsHtml = getRatingStarsHtml(rating);
     
     return `
         <div class="review-card">
-            <div class="review-img ${isLogoReview ? 'logo-placeholder' : ''}">
-                <img src="${photo}" alt="${escapeHtml(review.author)}" onerror="this.src='../assets/images/logo/logo4.png'">
+            <div class="review-img ${useLogoPlaceholder ? 'logo-placeholder' : ''}">
+                <img src="${useLogoPlaceholder ? '../assets/images/logo/logo4.png' : photo}" alt="${escapeHtml(authorName)}" onerror="this.src='../assets/images/logo/logo4.png'">
             </div>
             <div class="review-content">
-                <h3>${escapeHtml(review.author)}</h3>
-                ${review.userInfo ? `<p class="user-info">${escapeHtml(review.userInfo)}</p>` : ''}
+                <h3>${escapeHtml(authorName)}</h3>
+                ${userInfo ? `<p class="user-info">${escapeHtml(userInfo)}</p>` : ''}
+                ${starsHtml}
                 ${reviewHtml}
             </div>
         </div>
@@ -122,9 +150,21 @@ function renderReviews() {
     const reviewsContainer = document.getElementById('reviewsListContainer');
     if (!reviewsContainer) return;
     
+    if (!allReviews || !Array.isArray(allReviews)) {
+        console.error('allReviews не является массивом:', allReviews);
+        reviewsContainer.innerHTML = '<div class="error">Ошибка загрузки отзывов</div>';
+        return;
+    }
+    
+    console.log('Всего отзывов:', allReviews.length);
+    console.log('Показываем отзывов:', currentVisibleCount);
+    
     const visibleReviews = allReviews.slice(0, currentVisibleCount);
     const hasMore = currentVisibleCount < allReviews.length;
     const hasExtra = currentVisibleCount > 3;
+    
+    console.log('hasMore (показать ещё):', hasMore);
+    console.log('hasExtra (скрыть):', hasExtra);
     
     let html = '';
     
@@ -134,15 +174,15 @@ function renderReviews() {
     
     if (allReviews.length > 3) {
         html += `
-            <div class="reviews-control-buttons">
+            <div class="reviews-control-buttons" style="text-align: center; margin-top: 30px;">
                 ${hasMore ? `
-                    <button class="reviews-control-btn show-more-btn" id="showMoreReviewsBtn">
-                        Показать еще 3 отзыва
+                    <button class="reviews-control-btn show-more-btn" id="showMoreReviewsBtn" style="background: #A5C33C; color: #1a1e22; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: 600; margin-right: 15px;">
+                        📖 Показать еще 3 отзыва
                     </button>
                 ` : ''}
                 ${hasExtra ? `
-                    <button class="reviews-control-btn show-less-btn" id="showLessReviewsBtn">
-                        Скрыть все, кроме первых 
+                    <button class="reviews-control-btn show-less-btn" id="showLessReviewsBtn" style="background: transparent; border: 2px solid #A5C33C; color: #A5C33C; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: 600;">
+                        📖 Скрыть лишние
                     </button>
                 ` : ''}
             </div>
@@ -159,6 +199,7 @@ function renderReviews() {
         showMoreBtn.parentNode.replaceChild(newBtn, showMoreBtn);
         newBtn.addEventListener('click', () => {
             currentVisibleCount = Math.min(currentVisibleCount + STEP, allReviews.length);
+            console.log('Показываем ещё, теперь видно:', currentVisibleCount);
             renderReviews();
         });
     }
@@ -168,6 +209,7 @@ function renderReviews() {
         showLessBtn.parentNode.replaceChild(newBtn, showLessBtn);
         newBtn.addEventListener('click', () => {
             currentVisibleCount = 3;
+            console.log('Скрываем, теперь видно:', currentVisibleCount);
             renderReviews();
             const reviewsSection = document.getElementById('reviewsSection');
             if (reviewsSection) {
@@ -202,6 +244,106 @@ async function displayReviews() {
     renderReviews();
 }
 
+function isValidEmail(email) {
+    if (!email) return false;
+    const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function isValidPhone(phone) {
+    if (!phone) return false;
+    const digits = phone.replace(/\D/g, '');
+    return digits.length >= 10 && digits.length <= 12;
+}
+
+function cleanPhone(phone) {
+    return phone.replace(/\D/g, '');
+}
+
+function getValidationMessage(key, defaultValue = '') {
+    const currentLang = localStorage.getItem('dental_language') || 'ru';
+    const messages = {
+        ru: {
+            'required_name': 'Пожалуйста, введите ваше имя',
+            'name_min': 'Имя должно содержать минимум 2 символа',
+            'required_email': 'Пожалуйста, введите email',
+            'email_invalid': 'Введите корректный email (например: name@domain.com)',
+            'required_phone': 'Пожалуйста, введите номер телефона',
+            'phone_invalid': 'Введите корректный номер телефона (10-12 цифр)',
+            'required_question': 'Пожалуйста, введите ваш вопрос',
+            'question_min': 'Вопрос должен содержать минимум 5 символов'
+        },
+        en: {
+            'required_name': 'Please enter your name',
+            'name_min': 'Name must contain at least 2 characters',
+            'required_email': 'Please enter your email',
+            'email_invalid': 'Please enter a valid email (e.g., name@domain.com)',
+            'required_phone': 'Please enter your phone number',
+            'phone_invalid': 'Please enter a valid phone number (10-12 digits)',
+            'required_question': 'Please enter your question',
+            'question_min': 'Question must contain at least 5 characters'
+        }
+    };
+    return messages[currentLang]?.[key] || messages.ru[key] || defaultValue;
+}
+
+function showValidationMessage(elementId, message, isError = true) {
+    let errorSpan = document.getElementById(elementId + 'Error');
+    if (!errorSpan) {
+        errorSpan = document.createElement('span');
+        errorSpan.id = elementId + 'Error';
+        errorSpan.className = 'validation-error';
+        errorSpan.style.cssText = 'display: block; font-size: 12px; color: #EF4444; margin-top: 5px;';
+        const input = document.getElementById(elementId);
+        if (input && input.parentNode) {
+            input.parentNode.appendChild(errorSpan);
+        }
+    }
+    errorSpan.textContent = message;
+    errorSpan.style.display = message ? 'block' : 'none';
+    
+    const input = document.getElementById(elementId);
+    if (input) {
+        input.classList.remove('error');
+        input.style.borderColor = '';
+    }
+}
+
+function clearValidationMessages() {
+    const errorSpans = document.querySelectorAll('.validation-error');
+    errorSpans.forEach(span => span.remove());
+    
+    const inputs = document.querySelectorAll('#feedbackName, #feedbackEmail, #feedbackPhone, #feedbackQuestion');
+    inputs.forEach(input => {
+        input.classList.remove('error');
+        input.style.borderColor = '';
+    });
+}
+
+function getSelectedRating() {
+    const ratingInput = document.getElementById('reviewRating');
+    if (ratingInput && ratingInput.value) {
+        return parseInt(ratingInput.value);
+    }
+    return 5;
+}
+
+async function getNextReviewId() {
+    try {
+        const response = await fetch('http://localhost:3000/reviews');
+        const reviews = await response.json();
+        
+        if (reviews && reviews.length > 0) {
+            const maxId = Math.max(...reviews.map(r => r.id));
+            return maxId + 1;
+        }
+        return 1;
+    } catch (error) {
+        console.error('Ошибка получения следующего ID:', error);
+        return Date.now(); 
+    }
+}
+
 async function submitReview(event) {
     event.preventDefault();
     
@@ -209,39 +351,60 @@ async function submitReview(event) {
     const email = document.getElementById('reviewEmail')?.value?.trim() || '';
     const phone = document.getElementById('reviewPhone')?.value?.trim() || '';
     const reviewText = document.getElementById('reviewText')?.value?.trim() || '';
+    const rating = getSelectedRating();
+    
+    const currentLang = localStorage.getItem('dental_language') || 'ru';
+    const requiredNameMsg = getValidationMessage('required_name');
+    const requiredEmailMsg = getValidationMessage('required_email');
+    const emailInvalidMsg = getValidationMessage('email_invalid');
+    const requiredPhoneMsg = getValidationMessage('required_phone');
+    const phoneInvalidMsg = getValidationMessage('phone_invalid');
+    const requiredTextMsg = getValidationMessage('required_question');
     
     if (!name) {
-        alert('Пожалуйста, введите ваше имя!');
+        alert(requiredNameMsg);
         return;
     }
     
     if (!email) {
-        alert('Пожалуйста, введите email!');
+        alert(requiredEmailMsg);
         return;
     }
     
-    if (!/^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email)) {
-        alert('Пожалуйста, введите корректный email!');
+    if (!isValidEmail(email)) {
+        alert(emailInvalidMsg);
+        return;
+    }
+    
+    if (!phone) {
+        alert(requiredPhoneMsg);
+        return;
+    }
+    
+    if (!isValidPhone(phone)) {
+        alert(phoneInvalidMsg);
         return;
     }
     
     if (!reviewText) {
-        alert('Пожалуйста, напишите ваш отзыв!');
+        alert(requiredTextMsg);
         return;
     }
     
-    const cleanPhone = phone.replace(/\D/g, '');
+    const cleanPhoneNumber = cleanPhone(phone);
+    
+    const nextId = await getNextReviewId();
     
     const reviewData = {
-        id: Date.now(),
+        id: nextId,
         author: { ru: name, en: name },
         email: email,
-        phone: cleanPhone,
+        phone: cleanPhoneNumber,
         text: { ru: reviewText, en: reviewText },
-        rating: 5,
-        photo: '',
-        userInfo: '',
-        published: false, 
+        rating: rating,
+        photo: '',  
+        userInfo: '',  
+        published: false,
         date: new Date().toISOString().split('T')[0],
         createdAt: new Date().toISOString()
     };
@@ -267,11 +430,28 @@ async function submitReview(event) {
         }
         
         const savedReview = await response.json();
-        console.log('✅ Отзыв сохранен в JSON Server:', savedReview);
+        console.log('✅ Отзыв сохранен в JSON Server с ID:', savedReview.id);
         
-        alert('✅ Спасибо за ваш отзыв! Он будет опубликован после проверки модератором.');
+        const successMsg = currentLang === 'ru' 
+            ? '✅ Спасибо за ваш отзыв! Он будет опубликован после проверки модератором.'
+            : '✅ Thank you for your review! It will be published after moderation.';
+        
+        alert(successMsg);
         
         document.getElementById('reviewForm').reset();
+        
+        const ratingInput = document.getElementById('reviewRating');
+        if (ratingInput) ratingInput.value = '5';
+        const stars = document.querySelectorAll('#starRatingSelector .star');
+        stars.forEach((star, index) => {
+            if (index < 5) {
+                star.textContent = '★';
+                star.classList.add('active');
+            } else {
+                star.textContent = '☆';
+                star.classList.remove('active');
+            }
+        });
         
         const modal = document.getElementById('reviewModal');
         if (modal) {
@@ -283,7 +463,10 @@ async function submitReview(event) {
         
     } catch (error) {
         console.error('❌ Ошибка при отправке отзыва:', error);
-        alert('❌ Ошибка подключения к серверу. Убедитесь, что JSON Server запущен: json-server --watch db.json --port 3000 --cors');
+        const errorMsg = currentLang === 'ru'
+            ? '❌ Ошибка подключения к серверу. Убедитесь, что JSON Server запущен: json-server --watch db.json --port 3000 --cors'
+            : '❌ Server connection error. Please make sure JSON Server is running: json-server --watch db.json --port 3000 --cors';
+        alert(errorMsg);
     } finally {
         if (submitBtn) {
             submitBtn.textContent = originalText;
@@ -295,18 +478,116 @@ async function submitReview(event) {
 async function submitFeedback(event) {
     event.preventDefault();
     
+    clearValidationMessages();
+    
     const name = document.getElementById('feedbackName')?.value?.trim() || '';
     const email = document.getElementById('feedbackEmail')?.value?.trim() || '';
     const phone = document.getElementById('feedbackPhone')?.value?.trim() || '';
     const question = document.getElementById('feedbackQuestion')?.value?.trim() || '';
     
-    if (!name || !email || !question) {
-        alert('Пожалуйста, заполните имя, email и вопрос!');
+    let isValid = true;
+    
+    if (!name) {
+        showValidationMessage('feedbackName', getValidationMessage('required_name'));
+        isValid = false;
+    } else if (name.length < 2) {
+        showValidationMessage('feedbackName', getValidationMessage('name_min'));
+        isValid = false;
+    } else {
+        showValidationMessage('feedbackName', '', false);
+    }
+    
+    if (!email) {
+        showValidationMessage('feedbackEmail', getValidationMessage('required_email'));
+        isValid = false;
+    } else if (!isValidEmail(email)) {
+        showValidationMessage('feedbackEmail', getValidationMessage('email_invalid'));
+        isValid = false;
+    } else {
+        showValidationMessage('feedbackEmail', '', false);
+    }
+    
+    if (!phone) {
+        showValidationMessage('feedbackPhone', getValidationMessage('required_phone'));
+        isValid = false;
+    } else if (!isValidPhone(phone)) {
+        showValidationMessage('feedbackPhone', getValidationMessage('phone_invalid'));
+        isValid = false;
+    } else {
+        showValidationMessage('feedbackPhone', '', false);
+    }
+    
+    if (!question) {
+        showValidationMessage('feedbackQuestion', getValidationMessage('required_question'));
+        isValid = false;
+    } else if (question.length < 5) {
+        showValidationMessage('feedbackQuestion', getValidationMessage('question_min'));
+        isValid = false;
+    } else {
+        showValidationMessage('feedbackQuestion', '', false);
+    }
+    
+    if (!isValid) {
         return;
     }
     
-    alert('✅ Ваше сообщение отправлено! Наш администратор свяжется с вами в ближайшее время.');
-    document.getElementById('feedbackForm').reset();
+    const cleanPhoneNumber = cleanPhone(phone);
+    
+    const feedbackData = {
+        id: Date.now(),
+        name: name,
+        email: email,
+        phone: cleanPhoneNumber,
+        message: question,
+        date: new Date().toISOString().split('T')[0],
+        createdAt: new Date().toISOString()
+    };
+    
+    const submitBtn = document.querySelector('#feedbackForm button[type="submit"]');
+    const originalText = submitBtn?.textContent || 'ОТПРАВИТЬ ЗАЯВКУ';
+    if (submitBtn) {
+        submitBtn.textContent = 'Отправка...';
+        submitBtn.disabled = true;
+    }
+    
+    try {
+        const response = await fetch('http://localhost:3000/feedbacks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(feedbackData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const savedFeedback = await response.json();
+        console.log('✅ Сообщение сохранено в JSON Server:', savedFeedback);
+        
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        const successMessage = currentLang === 'ru' 
+            ? '✅ Ваше сообщение отправлено! Наш администратор свяжется с вами в ближайшее время.'
+            : '✅ Your message has been sent! Our administrator will contact you shortly.';
+        
+        alert(successMessage);
+        document.getElementById('feedbackForm').reset();
+        clearValidationMessages();
+        
+    } catch (error) {
+        console.error('❌ Ошибка при отправке сообщения:', error);
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        const errorMessage = currentLang === 'ru'
+            ? '❌ Ошибка подключения к серверу. Убедитесь, что JSON Server запущен: json-server --watch db.json --port 3000 --cors'
+            : '❌ Server connection error. Please make sure JSON Server is running: json-server --watch db.json --port 3000 --cors';
+        alert(errorMessage);
+    } finally {
+        if (submitBtn) {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    }
 }
 
 function initReviewModal() {
@@ -320,6 +601,23 @@ function initReviewModal() {
         modal.style.display = 'block';
         document.body.classList.add('modal-open');
         document.body.style.overflow = 'hidden';
+        
+        setTimeout(() => {
+            const stars = document.querySelectorAll('#starRatingSelector .star');
+            const ratingInput = document.getElementById('reviewRating');
+            if (ratingInput && ratingInput.value && stars.length) {
+                const currentRating = parseInt(ratingInput.value);
+                stars.forEach((star, index) => {
+                    if (index < currentRating) {
+                        star.textContent = '★';
+                        star.classList.add('active');
+                    } else {
+                        star.textContent = '☆';
+                        star.classList.remove('active');
+                    }
+                });
+            }
+        }, 100);
     }
     
     function closeModal() {
@@ -351,6 +649,27 @@ function initReviewModal() {
         const newForm = reviewForm.cloneNode(true);
         reviewForm.parentNode.replaceChild(newForm, reviewForm);
         newForm.addEventListener('submit', submitReview);
+        
+        const stars = newForm.querySelectorAll('#starRatingSelector .star');
+        const ratingInput = newForm.querySelector('#reviewRating');
+        if (stars.length && ratingInput) {
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = parseInt(this.dataset.value);
+                    ratingInput.value = value;
+                    
+                    stars.forEach((s, index) => {
+                        if (index < value) {
+                            s.textContent = '★';
+                            s.classList.add('active');
+                        } else {
+                            s.textContent = '☆';
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        }
     }
 }
 
@@ -384,12 +703,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     await displayReviews();
     
     initReviewModal();
-    
     initSwiper();
     
     const feedbackForm = document.getElementById('feedbackForm');
     if (feedbackForm) {
-        feedbackForm.addEventListener('submit', submitFeedback);
+        const newFeedbackForm = feedbackForm.cloneNode(true);
+        feedbackForm.parentNode.replaceChild(newFeedbackForm, feedbackForm);
+        newFeedbackForm.addEventListener('submit', submitFeedback);
     }
     
     setTimeout(function() {

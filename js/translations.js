@@ -7,6 +7,7 @@ const translations = {
         'logout': 'ВЫЙТИ',
         'lang': 'АНГЛ',
         
+         'review_rating': 'Ваша оценка:',
          'profile_title': 'Личный кабинет',
         'profile_personal_data': '📋 Личные данные',
         'profile_visits': '📅 Мои визиты',
@@ -378,6 +379,7 @@ const translations = {
         'logout': 'LOGOUT',
         'lang': 'RUS',
         
+        'review_rating': 'Your rating:',
         'profile_title': 'Profile',
         'profile_personal_data': '📋 Personal Data',
         'profile_visits': '📅 My Visits',

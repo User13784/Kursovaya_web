@@ -2096,3 +2096,8 @@ html[data-theme="system"] #footer-placeholder {
         padding: 8px 10px !important;
     }
 }
+
+.hero-prices {
+    background: #2F353B !important;
+    background-image: none !important;
+}

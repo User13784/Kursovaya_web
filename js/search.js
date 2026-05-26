@@ -87,7 +87,7 @@ async function performSearch(query) {
                 type: 'price_service',
                 title: getLocalizedText(service.name),
                 description: getLocalizedText(service.description) || `${service.price} ${service.unit}`,
-                url: 'prices.html',
+                url: '../pages/prices.html',
                 icon: '💰',
                 category: currentLang === 'ru' ? 'Услуга (прайс)' : 'Service (price)'
             });
@@ -108,7 +108,7 @@ async function performSearch(query) {
                 type: 'doctor',
                 title: `${getLocalizedText(doctor.lastName)} ${getLocalizedText(doctor.firstName)} ${getLocalizedText(doctor.middleName || '')}`.trim(),
                 description: getLocalizedText(doctor.specialization),
-                url: 'team-details.html',
+                url: '../pages/team-details.html',
                 icon: '👨‍⚕️',
                 category: currentLang === 'ru' ? 'Врач' : 'Doctor',
                 doctorId: doctor.id
@@ -126,7 +126,7 @@ async function performSearch(query) {
                 type: 'faq',
                 title: getLocalizedText(item.question).length > 60 ? getLocalizedText(item.question).substring(0, 60) + '...' : getLocalizedText(item.question),
                 description: getLocalizedText(item.answer).substring(0, 80) + (getLocalizedText(item.answer).length > 80 ? '...' : ''),
-                url: 'faq.html',
+                url: '../pages/faq.html',
                 icon: '❓',
                 category: currentLang === 'ru' ? 'FAQ' : 'FAQ'
             });

@@ -1021,8 +1021,8 @@ body.menu-open {
 .btn:active::after,
 .btn-primary:active::after,
 #openAppointmentBtn:active::after {
-    width: 300px;
-    height: 300px;
+    width: 150px;
+    height: 150px;
 }
 
 .btn-outline:active::after,
