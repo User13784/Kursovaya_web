@@ -1,2 +1,3 @@
-# Kursovaya_web
-Course project
+# DENTAL CLUB
+
+[![Figma](https://img.shields.io/badge/FIGMA%20DESIGN-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/U83V4yPn7WWgSTSqHOAwYq/DENTAL-CLUB) [![Live](https://img.shields.io/badge/LIVE%20DEMO-4CAF50?style=for-the-badge&logo=vercel&logoColor=white)](https://user13784.github.io/Kursovaya_web/)
