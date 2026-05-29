@@ -773,28 +773,30 @@ async function loadUserVisits(filter = 'all') {
         let doctors = await doctorsRes.json();
         let services = await servicesRes.json();
         
-        if (!appointments || appointments.length === 0) {
-            const emptyVisitsText = getProfileTranslation('profile_empty_visits', 'У вас пока нет записей');
-            visitsContainer.innerHTML = `<div class="empty-visits"><div class="empty-visits-icon">📅</div><div class="empty-visits-text">${emptyVisitsText}</div></div>`;
-            return;
+        // ГЛАВНОЕ ИЗМЕНЕНИЕ: сначала ищем по userId
+        let userVisits = appointments.filter(apt => apt.userId === sessionUser.userId);
+        
+        // Если по userId ничего не найдено, пробуем fallback-методы (телефон, email)
+        if (userVisits.length === 0) {
+            console.log('Записей по userId не найдено, пробуем поиск по телефону/email');
+            
+            const userPhone = sessionUser.phone ? String(sessionUser.phone).replace(/\D/g, '') : '';
+            const userEmail = sessionUser.email ? String(sessionUser.email).toLowerCase() : '';
+            const userLastName = sessionUser.lastName ? String(sessionUser.lastName).toLowerCase() : '';
+            
+            userVisits = appointments.filter(apt => {
+                const aptPhone = apt.phone ? String(apt.phone).replace(/\D/g, '') : '';
+                if (userPhone && aptPhone === userPhone) return true;
+                
+                const aptEmail = apt.email ? String(apt.email).toLowerCase() : '';
+                if (userEmail && aptEmail === userEmail) return true;
+                
+                const patientNameStr = getPatientNameString(apt.patientName).toLowerCase();
+                if (userLastName && patientNameStr.includes(userLastName)) return true;
+                
+                return false;
+            });
         }
-        
-        const userPhone = sessionUser.phone ? String(sessionUser.phone).replace(/\D/g, '') : '';
-        const userEmail = sessionUser.email ? String(sessionUser.email).toLowerCase() : '';
-        const userLastName = sessionUser.lastName ? String(sessionUser.lastName).toLowerCase() : '';
-        
-        let userVisits = appointments.filter(apt => {
-            const aptPhone = apt.phone ? String(apt.phone).replace(/\D/g, '') : '';
-            if (userPhone && aptPhone === userPhone) return true;
-            
-            const aptEmail = apt.email ? String(apt.email).toLowerCase() : '';
-            if (userEmail && aptEmail === userEmail) return true;
-            
-            const patientNameStr = getPatientNameString(apt.patientName).toLowerCase();
-            if (userLastName && patientNameStr.includes(userLastName)) return true;
-            
-            return false;
-        });
         
         if (filter !== 'all') {
             userVisits = userVisits.filter(apt => apt.status === filter);
@@ -856,8 +858,6 @@ function createVisitElement(visit, doctors, services) {
         const firstName = typeof doctor.firstName === 'object' ? (doctor.firstName[currentLang] || doctor.firstName.ru) : doctor.firstName;
         doctorName = `${lastName} ${firstName}`.trim();
     }
-    
-    const patientName = getPatientNameString(visit.patientName);
     
     const div = document.createElement('div');
     div.className = `visit-item ${status.class}`;

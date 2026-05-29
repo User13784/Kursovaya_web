@@ -1770,15 +1770,25 @@
       "address": "",
       "createdAt": "2026-05-20T19:47:49.373Z",
       "updatedAt": "2026-05-20T19:54:17.264Z"
+    },
+    {
+      "id": 4,
+      "firstName": "Петр",
+      "lastName": "Петров",
+      "middleName": "",
+      "email": "user1@example.com",
+      "phone": "375291234597",
+      "password": "123456",
+      "role": "user",
+      "birthDate": "",
+      "address": "",
+      "createdAt": "2026-05-27T21:03:52.456Z"
     }
   ],
   "appointments": [
     {
       "id": 1,
-      "patientName": {
-        "ru": "Иванов Иван Иванович",
-        "en": "Ivanov Ivan Ivanovich"
-      },
+      "patientName": "Иванов Иван Иванович",
       "phone": "375291234567",
       "email": "ivanov@mail.ru",
       "doctorId": 1,
@@ -1792,10 +1802,7 @@
     },
     {
       "id": 2,
-      "patientName": {
-        "ru": "Петрова Анна Сергеевна",
-        "en": "Petrova Anna Sergeevna"
-      },
+      "patientName": "Петрова Анна Сергеевна",
       "phone": "375334567890",
       "email": "petrova@mail.ru",
       "doctorId": 2,
@@ -1804,15 +1811,12 @@
       "time": "14:00",
       "comment": "",
       "status": "completed",
-      "userId": null,
+      "userId": 3,
       "createdAt": "2025-05-02T10:00:00.000Z"
     },
     {
       "id": 3,
-      "patientName": {
-        "ru": "Сидоров Алексей Владимирович",
-        "en": "Sidorov Alexey Vladimirovich"
-      },
+      "patientName": "Сидоров Алексей Владимирович",
       "phone": "375445678901",
       "email": "sidorov@mail.ru",
       "doctorId": 3,
@@ -1821,15 +1825,12 @@
       "time": "11:00",
       "comment": "Боль в зубе",
       "status": "completed",
-      "userId": null,
+      "userId": 1,
       "createdAt": "2025-05-01T10:00:00.000Z"
     },
     {
       "id": 4,
-      "patientName": {
-        "ru": "Козлова Елена Дмитриевна",
-        "en": "Kozlova Elena Dmitrievna"
-      },
+      "patientName": "Козлова Елена Дмитриевна",
       "phone": "375447890123",
       "email": "kozlova@mail.ru",
       "doctorId": 4,
