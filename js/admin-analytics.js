@@ -147,12 +147,10 @@ async function loadAnalyticsData() {
         
         if (analyticsData.appointments.length === 0) {
             console.warn('Нет данных о записях. Добавьте записи через админ-панель или в db.json');
-            showToastForAnalytics('Нет данных для отображения. Добавьте записи через админ-панель.', 'info');
         }
         
     } catch (error) {
         console.error('Ошибка загрузки из API:', error);
-        showToastForAnalytics('Ошибка подключения к серверу. Запустите json-server --watch db.json --port 3000', 'error');
         
         analyticsData.appointments = [];
         analyticsData.doctors = [];
@@ -160,7 +158,6 @@ async function loadAnalyticsData() {
     }
 }
 
-// Фильтр по периоду
 function filterByPeriod(period, startDate = null, endDate = null) {
     let filtered = [...analyticsData.appointments];
     
@@ -351,7 +348,7 @@ function prepareServicesChartData(filteredAppointments) {
     if (tbody) {
         tbody.innerHTML = '';
         if (sorted.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3">' + getAnalyticsText('no_data') + '</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="3">' + getAnalyticsText('no_data') + '<td></tr>';
         } else {
             sorted.forEach(([name, count]) => {
                 const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
@@ -693,6 +690,25 @@ function createCharts(filteredAppointments) {
     }
 }
 
+let toastTimeout = null;
+
+function showToastForAnalytics(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    
+    if (toastTimeout) {
+        clearTimeout(toastTimeout);
+    }
+    
+    toast.textContent = message;
+    toast.className = `toast ${type} show`;
+    
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+        toastTimeout = null;
+    }, 5000);
+}
+
 async function updateAnalytics() {
     await loadAnalyticsData();
     
@@ -711,8 +727,7 @@ async function updateAnalytics() {
     createCharts(filteredAppointments);
     updateAnalyticsTablesTranslations();
     
-    const message = filteredAppointments.length > 0 ? `Данные обновлены (${filteredAppointments.length} записей)` : 'Нет данных для отображения';
-    showToastForAnalytics(message, filteredAppointments.length > 0 ? 'success' : 'info');
+
 }
 
 function exportAnalytics() {
@@ -825,16 +840,6 @@ function escapeHtmlForAnalytics(str) {
         if (m === '>') return '&gt;';
         return m;
     });
-}
-
-function showToastForAnalytics(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    if (!toast) return;
-    toast.textContent = message;
-    toast.className = `toast ${type} show`;
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3000);
 }
 
 function initDefaultDates() {

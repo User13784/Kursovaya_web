@@ -47,25 +47,25 @@
                     <div class="signup-form-row">
                         <div class="signup-form-group">
                             <label for="firstName" data-translate="signup_first_name">Имя</label>
-                            <input type="text" id="firstName" name="firstName" data-translate="signup_first_name_placeholder" placeholder="Введите ваше имя" required>
+                            <input type="text" id="firstName" name="firstName" data-translate-placeholder="signup_first_name_placeholder" placeholder="Введите ваше имя" required>
                             <span class="signup-error-message" id="firstNameError"></span>
                         </div>
                         <div class="signup-form-group">
                             <label for="lastName" data-translate="signup_last_name">Фамилия</label>
-                            <input type="text" id="lastName" name="lastName" data-translate="signup_last_name_placeholder" placeholder="Введите вашу фамилию" required>
+                            <input type="text" id="lastName" name="lastName" data-translate-placeholder="signup_last_name_placeholder" placeholder="Введите вашу фамилию" required>
                             <span class="signup-error-message" id="lastNameError"></span>
                         </div>
                     </div>
 
                     <div class="signup-form-group">
                         <label for="email" data-translate="signup_email">Email</label>
-                        <input type="email" id="email" name="email" data-translate="signup_email_placeholder" placeholder="example@mail.com" required>
+                        <input type="email" id="email" name="email" data-translate-placeholder="signup_email_placeholder" placeholder="example@mail.com" required>
                         <span class="signup-error-message" id="emailError"></span>
                     </div>
 
                     <div class="signup-form-group">
                         <label for="phone" data-translate="signup_phone">Телефон</label>
-                        <input type="tel" id="phone" name="phone" data-translate="signup_phone_placeholder" placeholder="+375 (29) 123-45-67" required>
+                        <input type="tel" id="phone" name="phone" data-translate-placeholder="signup_phone_placeholder" placeholder="+375 (29) 123-45-67" required>
                         <span class="signup-error-message" id="phoneError"></span>
                     </div>
 
@@ -73,7 +73,7 @@
                         <div class="signup-form-group">
                             <label for="password" data-translate="signup_password">Пароль</label>
                             <div class="signup-password-wrapper">
-                                <input type="password" id="password" name="password" data-translate="signup_password_placeholder" placeholder="Минимум 6 символов" required>
+                                <input type="password" id="password" name="password" data-translate-placeholder="signup_password_placeholder" placeholder="Минимум 6 символов" required>
                                 <button type="button" class="signup-toggle-password" data-target="password">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -86,7 +86,7 @@
                         <div class="signup-form-group">
                             <label for="confirmPassword" data-translate="signup_confirm_password">Подтверждение пароля</label>
                             <div class="signup-password-wrapper">
-                                <input type="password" id="confirmPassword" name="confirmPassword" data-translate="signup_confirm_password_placeholder" placeholder="Повторите пароль" required>
+                                <input type="password" id="confirmPassword" name="confirmPassword" data-translate-placeholder="signup_confirm_password_placeholder" placeholder="Повторите пароль" required>
                                 <button type="button" class="signup-toggle-password" data-target="confirmPassword">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -109,7 +109,7 @@
                                 <a href="#" data-translate="signup_privacy_link" target="_blank">политикой конфиденциальности</a>
                             </span>
                         </label>
-                        <span class="signup-error-message" id="termsError"></span>
+                        <span class="signup-error-message" id="termsError" data-translate="signup_terms_error"></span>
                     </div>
 
                     <button type="submit" class="signup-btn signup-btn-primary" data-translate="signup_button">ЗАРЕГИСТРИРОВАТЬСЯ</button>

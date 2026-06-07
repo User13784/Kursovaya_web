@@ -1493,3 +1493,8 @@ html[data-theme="system"] input::placeholder,
 html[data-theme="system"] textarea::placeholder {
     color: #9ca3af !important;
 }
+
+[data-theme="light"] .review-points li,
+[data-theme="light"] .reviews-list li {
+    color: #51585d !important;
+}

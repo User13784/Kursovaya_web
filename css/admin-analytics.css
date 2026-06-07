@@ -233,7 +233,6 @@
     }
 }
 
-/* Тёмная тема */
 [data-theme="dark"] .analytics-card,
 [data-theme="dark"] .conversion-card {
     background: #2F353B;
@@ -287,3 +286,12 @@
     background: #1a1e22;
     color: #A5C33C;
 }
+
+#appointmentsChart {
+    display: none !important;
+}
+
+.analytics-card:first-child {
+    display: none !important;
+}
+

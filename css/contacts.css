@@ -775,3 +775,6 @@ a[href^="tel"]:hover {
     transform: translate(-130px, 117px) scale(0.97);
 }
 
+#openAppointmentBtn2 {
+    display: none !important;
+}

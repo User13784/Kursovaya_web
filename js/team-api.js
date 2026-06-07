@@ -62,7 +62,7 @@ async function loadDoctorsForTeam() {
             
             doctorCard.innerHTML = `
                 <div class="team-image">
-                    <img src="${photoUrl}" alt="${lastName} ${firstName}" onerror="this.src='../assets/images/logo/logo1.png'">
+                    <img src="${photoUrl}" alt="${lastName} ${firstName}" onerror="this.src='../assets/images/team/photo.jpg'">
                 </div>
                 <div class="team-info">
                     <h3>${fullNameHtml}</h3>

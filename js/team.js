@@ -73,7 +73,7 @@ async function loadDoctorsForTeam() {
                 <div class="team-image ${logoPlaceholderClass}">
                     <img src="${photoUrl}" 
                          alt="${lastName} ${firstName}" 
-                         onerror="this.src='../assets/images/logo/logo4.png'">
+                         onerror="this.src='../assets/images/team/photo.jpg'">
                 </div>
                 <div class="team-info">
                     <h3>${fullNameHtml}</h3>

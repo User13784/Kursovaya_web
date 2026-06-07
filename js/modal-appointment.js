@@ -370,15 +370,25 @@ async function loadServicesAndDoctors() {
         const serviceSelect = document.getElementById('visitorServiceId');
         const doctorSelect = document.getElementById('visitorDoctorId');
         
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        
         if (serviceSelect) {
             const selectOptionText = getModalTranslation('modal_appointment_select_service', '-- Выберите услугу --');
             serviceSelect.innerHTML = `<option value="">${selectOptionText}</option>`;
-            services.filter(s => s.active).forEach(service => {
+            
+            const activeServices = services.filter(s => s.active === true && (!s.page || !s.page.includes('service-template.html')));
+            
+            activeServices.forEach(service => {
                 const option = document.createElement('option');
                 option.value = service.id;
-                const serviceName = typeof service.name === 'object' 
-                    ? (service.name.ru || service.name.en || 'Unknown')
-                    : service.name;
+                
+                let serviceName = '';
+                if (typeof service.name === 'object') {
+                    serviceName = service.name[currentLang] || service.name.ru || service.name.en || 'Unknown';
+                } else {
+                    serviceName = service.name;
+                }
+                
                 option.textContent = serviceName;
                 serviceSelect.appendChild(option);
             });
@@ -387,28 +397,57 @@ async function loadServicesAndDoctors() {
         if (doctorSelect) {
             const selectOptionText = getModalTranslation('modal_appointment_select_doctor', '-- Выберите врача --');
             doctorSelect.innerHTML = `<option value="">${selectOptionText}</option>`;
-            doctors.filter(d => d.active).forEach(doctor => {
+            
+            const activeDoctors = doctors.filter(d => d.active !== false);
+            
+            activeDoctors.forEach(doctor => {
                 const option = document.createElement('option');
                 option.value = doctor.id;
-                let lastName = '', firstName = '';
+                
+                let lastName = '', firstName = '', middleName = '';
+                
                 if (typeof doctor.lastName === 'object') {
-                    lastName = doctor.lastName.ru || doctor.lastName.en || '';
+                    lastName = doctor.lastName[currentLang] || doctor.lastName.ru || '';
                 } else {
                     lastName = doctor.lastName || '';
                 }
+                
                 if (typeof doctor.firstName === 'object') {
-                    firstName = doctor.firstName.ru || doctor.firstName.en || '';
+                    firstName = doctor.firstName[currentLang] || doctor.firstName.ru || '';
                 } else {
                     firstName = doctor.firstName || '';
                 }
-                option.textContent = `${lastName} ${firstName}`.trim();
+                
+                if (typeof doctor.middleName === 'object') {
+                    middleName = doctor.middleName[currentLang] || doctor.middleName.ru || '';
+                } else {
+                    middleName = doctor.middleName || '';
+                }
+                
+                let specialization = '';
+                if (typeof doctor.specialization === 'object') {
+                    specialization = doctor.specialization[currentLang] || doctor.specialization.ru || '';
+                } else {
+                    specialization = doctor.specialization || '';
+                }
+                
+                let fullName = `${lastName} ${firstName}`;
+                if (middleName && middleName.trim() !== '') {
+                    fullName += ` ${middleName}`;
+                }
+                
+                if (specialization && specialization.trim() !== '') {
+                    option.textContent = `${fullName.trim()} (${specialization})`;
+                } else {
+                    option.textContent = fullName.trim();
+                }
+                
                 doctorSelect.appendChild(option);
             });
         }
         
         setupDatePicker();
         updateAvailableTimeSlots();
-        
         fillFormWithUserData();
         
         setInterval(function() {
@@ -464,6 +503,22 @@ function closeAppointmentModal() {
     }
 }
 
+async function getNextAppointmentId() {
+    try {
+        const response = await fetch('http://localhost:3000/appointments');
+        const appointments = await response.json();
+        
+        if (appointments && appointments.length > 0) {
+            const maxId = Math.max(...appointments.map(a => a.id));
+            return maxId + 1;
+        }
+        return 1;
+    } catch (error) {
+        console.error('Ошибка получения следующего ID:', error);
+        return Date.now();
+    }
+}
+
 async function submitAppointment(event) {
     event.preventDefault();
     
@@ -515,7 +570,10 @@ async function submitAppointment(event) {
     const userData = getCurrentUserData();
     const userId = userData ? userData.userId : null;
     
+    const nextId = await getNextAppointmentId();
+    
     const appointmentData = {
+        id: nextId, 
         patientName: name,
         phone: phone.replace(/\D/g, ''),
         email: email || '',
@@ -540,7 +598,7 @@ async function submitAppointment(event) {
         const response = await fetch('http://localhost:3000/appointments', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...appointmentData, id: Date.now() })
+            body: JSON.stringify(appointmentData)
         });
         
         if (response.ok) {

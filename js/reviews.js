@@ -1,13 +1,13 @@
 async function loadReviews() {
     try {
-        const response = await fetch('http://localhost:3000/reviews');
+        const response = await fetch('http://localhost:3000/reviews?published=true');
         const reviews = await response.json();
         
         if (reviews && reviews.length > 0) {
-            console.log(`✅ Загружено ${reviews.length} отзывов`);
+            console.log(`✅ Загружено ${reviews.length} опубликованных отзывов`);
             return reviews;
         } else {
-            console.log('ℹ️ В JSON Server нет отзывов');
+            console.log('ℹ️ Нет опубликованных отзывов');
             return [];
         }
     } catch (error) {
@@ -166,6 +166,11 @@ function renderReviews() {
     console.log('hasMore (показать ещё):', hasMore);
     console.log('hasExtra (скрыть):', hasExtra);
     
+    const currentLang = localStorage.getItem('dental_language') || 'ru';
+    
+    const showMoreText = currentLang === 'ru' ? '📖 Показать еще 3 отзыва' : '📖 Show 3 more reviews';
+    const showLessText = currentLang === 'ru' ? '📖 Скрыть лишние' : '📖 Hide extra';
+    
     let html = '';
     
     visibleReviews.forEach(review => {
@@ -176,13 +181,13 @@ function renderReviews() {
         html += `
             <div class="reviews-control-buttons" style="text-align: center; margin-top: 30px;">
                 ${hasMore ? `
-                    <button class="reviews-control-btn show-more-btn" id="showMoreReviewsBtn" style="background: #A5C33C; color: #1a1e22; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: 600; margin-right: 15px;">
-                        📖 Показать еще 3 отзыва
+                    <button class="reviews-control-btn show-more-btn" id="showMoreReviewsBtn" data-translate="show_more_reviews" style="background: #A5C33C; color: #1a1e22; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: 600; margin-right: 15px;">
+                        ${showMoreText}
                     </button>
                 ` : ''}
                 ${hasExtra ? `
-                    <button class="reviews-control-btn show-less-btn" id="showLessReviewsBtn" style="background: transparent; border: 2px solid #A5C33C; color: #A5C33C; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: 600;">
-                        📖 Скрыть лишние
+                    <button class="reviews-control-btn show-less-btn" id="showLessReviewsBtn" data-translate="show_less_reviews" style="background: transparent; border: 2px solid #A5C33C; color: #A5C33C; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: 600;">
+                        ${showLessText}
                     </button>
                 ` : ''}
             </div>

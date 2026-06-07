@@ -5,8 +5,7 @@
         return localStorage.getItem('dental_language') || 'ru';
     }
     
-    function translateLoginText(key, defaultValue = '') {
-        const lang = getCurrentLang();
+    function getTranslation(key, defaultValue = '') {
         const translations = {
             ru: {
                 'login_title': 'ВХОД В АККАУНТ',
@@ -19,7 +18,7 @@
                 'login_button': 'ВОЙТИ',
                 'login_no_account': 'Нет аккаунта?',
                 'login_register_link': 'Зарегистрироваться',
-                'login_error_required': 'Введите email или номер телефона',
+                'login_error_required': 'Введите email/телефон',
                 'login_error_password_required': 'Введите пароль',
                 'login_error_invalid': 'Неверный email/телефон или пароль',
                 'login_success': 'Вход выполнен успешно! Перенаправление...',
@@ -37,13 +36,18 @@
                 'login_no_account': "Don't have an account?",
                 'login_register_link': 'Sign up',
                 'login_error_required': 'Enter email or phone number',
-                'login_error_password_required': 'Enter password',
+                'login_error_password_required': 'Enter your password',
                 'login_error_invalid': 'Invalid email/phone or password',
                 'login_success': 'Login successful! Redirecting...',
                 'login_server_error': 'Server connection error. Please start json-server'
             }
         };
-        return translations[lang]?.[key] || translations['ru'][key] || defaultValue;
+        const lang = getCurrentLang();
+        return translations[lang]?.[key] || defaultValue;
+    }
+    
+    function translateLoginText(key, defaultValue = '') {
+        return getTranslation(key, defaultValue);
     }
     
     function updateLoginPageTranslations() {
@@ -61,6 +65,16 @@
                 }
             }
         });
+        
+        const emailInput = document.getElementById('loginEmail');
+        const passwordInput = document.getElementById('loginPassword');
+        
+        if (emailInput) {
+            emailInput.placeholder = translateLoginText('login_email_phone_placeholder');
+        }
+        if (passwordInput) {
+            passwordInput.placeholder = translateLoginText('login_password_placeholder');
+        }
         
         const titleEl = document.querySelector('title');
         if (titleEl) {
@@ -254,6 +268,22 @@
         });
     }
     
+    document.addEventListener('languageChanged', function() {
+        console.log('🌐 Смена языка на странице входа');
+        updateLoginPageTranslations();
+        
+        const submitBtn = document.querySelector('#loginForm button[type="submit"]');
+        if (submitBtn && !submitBtn.disabled) {
+            submitBtn.textContent = translateLoginText('login_button');
+        }
+        
+        // Обновляем плейсхолдеры
+        const emailInput = document.getElementById('loginEmail');
+        const passwordInput = document.getElementById('loginPassword');
+        if (emailInput) emailInput.placeholder = translateLoginText('login_email_phone_placeholder');
+        if (passwordInput) passwordInput.placeholder = translateLoginText('login_password_placeholder');
+    });
+    
     if (!document.querySelector('#login-animation-styles')) {
         const style = document.createElement('style');
         style.id = 'login-animation-styles';
@@ -273,10 +303,5 @@
     document.addEventListener('languageChanged', function() {
         console.log('🌐 Смена языка на странице входа');
         updateLoginPageTranslations();
-        
-        const submitBtn = document.querySelector('#loginForm button[type="submit"]');
-        if (submitBtn && !submitBtn.disabled) {
-            submitBtn.textContent = translateLoginText('login_button');
-        }
     });
 })();

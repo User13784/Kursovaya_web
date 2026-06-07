@@ -1,6 +1,87 @@
 (function() {
     const API_BASE_URL = 'http://localhost:3000';
     
+    function getCurrentLang() {
+        return localStorage.getItem('dental_language') || 'ru';
+    }
+    
+    function getTranslation(key, defaultValue = '') {
+        const translations = {
+            ru: {
+                'first_name_placeholder': 'Введите ваше имя',
+                'last_name_placeholder': 'Введите вашу фамилию',
+                'email_placeholder': 'example@mail.com',
+                'phone_placeholder': '+375 (29) 123-45-67',
+                'password_placeholder': 'Минимум 6 символов',
+                'confirm_password_placeholder': 'Повторите пароль',
+                'terms_error': '⚠️ Необходимо согласиться с условиями использования и политикой конфиденциальности',
+                'first_name_error': 'Введите имя',
+                'first_name_min_error': 'Имя должно содержать минимум 2 символа',
+                'last_name_error': 'Введите фамилию',
+                'last_name_min_error': 'Фамилия должна содержать минимум 2 символа',
+                'email_error': 'Введите email',
+                'email_invalid_error': 'Введите корректный email',
+                'phone_error': 'Введите номер телефона',
+                'phone_invalid_error': 'Введите корректный номер телефона',
+                'phone_exists_error': 'Этот номер телефона уже зарегистрирован',
+                'password_error': 'Введите пароль',
+                'password_min_error': 'Пароль должен содержать минимум 6 символов',
+                'confirm_password_error': 'Пароли не совпадают',
+                'email_exists_error': 'Пользователь с таким email уже существует',
+                'phone_exists_error': 'Пользователь с таким номером телефона уже существует',
+                'register_error': 'Ошибка при регистрации. Попробуйте позже.',
+                'register_success': '✅ Регистрация успешна! Перенаправление на страницу входа...'
+            },
+            en: {
+                'first_name_placeholder': 'Enter your first name',
+                'last_name_placeholder': 'Enter your last name',
+                'email_placeholder': 'example@mail.com',
+                'phone_placeholder': '+375 (29) 123-45-67',
+                'password_placeholder': 'Minimum 6 characters',
+                'confirm_password_placeholder': 'Repeat password',
+                'terms_error': '⚠️ You must agree to the Terms of Use and Privacy Policy',
+                'first_name_error': 'Enter your first name',
+                'first_name_min_error': 'First name must be at least 2 characters',
+                'last_name_error': 'Enter your last name',
+                'last_name_min_error': 'Last name must be at least 2 characters',
+                'email_error': 'Enter email',
+                'email_invalid_error': 'Enter a valid email',
+                'phone_error': 'Enter phone number',
+                'phone_invalid_error': 'Enter a valid phone number',
+                'phone_exists_error': 'This phone number is already registered',
+                'password_error': 'Enter password',
+                'password_min_error': 'Password must be at least 6 characters',
+                'confirm_password_error': 'Passwords do not match',
+                'email_exists_error': 'User with this email already exists',
+                'phone_exists_error': 'User with this phone number already exists',
+                'register_error': 'Registration error. Please try again later.',
+                'register_success': '✅ Registration successful! Redirecting to login page...'
+            }
+        };
+        const lang = getCurrentLang();
+        return translations[lang]?.[key] || defaultValue;
+    }
+    
+    function updateAllPlaceholders() {
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const termsError = document.getElementById('termsError');
+        
+        if (firstNameInput) firstNameInput.placeholder = getTranslation('first_name_placeholder');
+        if (lastNameInput) lastNameInput.placeholder = getTranslation('last_name_placeholder');
+        if (emailInput) emailInput.placeholder = getTranslation('email_placeholder');
+        if (phoneInput) phoneInput.placeholder = getTranslation('phone_placeholder');
+        if (passwordInput) passwordInput.placeholder = getTranslation('password_placeholder');
+        if (confirmPasswordInput) confirmPasswordInput.placeholder = getTranslation('confirm_password_placeholder');
+        if (termsError) termsError.textContent = getTranslation('terms_error');
+        
+        console.log('🌐 Плейсхолдеры обновлены, язык:', getCurrentLang());
+    }
+    
     function formatPhoneNumber(input) {
         let value = input.value.replace(/\D/g, '');
         
@@ -124,11 +205,11 @@
             const phoneUsers = await phoneRes.json();
             
             if (emailUsers.length > 0) {
-                return { exists: true, field: 'email', message: 'Пользователь с таким email уже существует' };
+                return { exists: true, field: 'email', message: getTranslation('email_exists_error') };
             }
             
             if (phoneUsers.length > 0) {
-                return { exists: true, field: 'phone', message: 'Пользователь с таким номером телефона уже существует' };
+                return { exists: true, field: 'phone', message: getTranslation('phone_exists_error') };
             }
             
             return { exists: false };
@@ -147,12 +228,12 @@
             const phoneUsers = await phoneRes.json();
             
             if (phoneUsers.length > 0) {
-                showError('phoneError', 'Этот номер телефона уже зарегистрирован');
+                showError('phoneError', getTranslation('phone_exists_error'));
                 document.getElementById('phone').classList.add('error');
                 return false;
             } else {
                 const phoneError = document.getElementById('phoneError');
-                if (phoneError && phoneError.textContent === 'Этот номер телефона уже зарегистрирован') {
+                if (phoneError && phoneError.textContent === getTranslation('phone_exists_error')) {
                     phoneError.classList.remove('visible');
                     phoneError.textContent = '';
                 }
@@ -219,7 +300,7 @@
             return { success: true, user: savedUser };
         } catch (apiError) {
             console.error('Ошибка сохранения пользователя:', apiError);
-            return { success: false, error: 'Ошибка при регистрации. Попробуйте позже.' };
+            return { success: false, error: getTranslation('register_error') };
         }
     }
     
@@ -231,6 +312,8 @@
         }
         
         console.log('✅ Форма регистрации найдена');
+        
+        updateAllPlaceholders();
         
         const phoneInput = document.getElementById('phone');
         if (phoneInput) {
@@ -270,44 +353,44 @@
             
             const firstName = document.getElementById('firstName').value.trim();
             if (!firstName) {
-                showError('firstNameError', 'Введите имя');
+                showError('firstNameError', getTranslation('first_name_error'));
                 document.getElementById('firstName').classList.add('error');
                 isValid = false;
             } else if (firstName.length < 2) {
-                showError('firstNameError', 'Имя должно содержать минимум 2 символа');
+                showError('firstNameError', getTranslation('first_name_min_error'));
                 document.getElementById('firstName').classList.add('error');
                 isValid = false;
             }
             
             const lastName = document.getElementById('lastName').value.trim();
             if (!lastName) {
-                showError('lastNameError', 'Введите фамилию');
+                showError('lastNameError', getTranslation('last_name_error'));
                 document.getElementById('lastName').classList.add('error');
                 isValid = false;
             } else if (lastName.length < 2) {
-                showError('lastNameError', 'Фамилия должна содержать минимум 2 символа');
+                showError('lastNameError', getTranslation('last_name_min_error'));
                 document.getElementById('lastName').classList.add('error');
                 isValid = false;
             }
             
             const email = document.getElementById('email').value.trim();
             if (!email) {
-                showError('emailError', 'Введите email');
+                showError('emailError', getTranslation('email_error'));
                 document.getElementById('email').classList.add('error');
                 isValid = false;
             } else if (!validateEmail(email)) {
-                showError('emailError', 'Введите корректный email');
+                showError('emailError', getTranslation('email_invalid_error'));
                 document.getElementById('email').classList.add('error');
                 isValid = false;
             }
             
             const phone = document.getElementById('phone').value.trim();
             if (!phone) {
-                showError('phoneError', 'Введите номер телефона');
+                showError('phoneError', getTranslation('phone_error'));
                 document.getElementById('phone').classList.add('error');
                 isValid = false;
             } else if (!validatePhone(phone)) {
-                showError('phoneError', 'Введите корректный номер телефона');
+                showError('phoneError', getTranslation('phone_invalid_error'));
                 document.getElementById('phone').classList.add('error');
                 isValid = false;
             } else {
@@ -319,34 +402,34 @@
             
             const password = document.getElementById('password').value;
             if (!password) {
-                showError('passwordError', 'Введите пароль');
+                showError('passwordError', getTranslation('password_error'));
                 document.getElementById('password').classList.add('error');
                 isValid = false;
             } else if (password.length < 6) {
-                showError('passwordError', 'Пароль должен содержать минимум 6 символов');
+                showError('passwordError', getTranslation('password_min_error'));
                 document.getElementById('password').classList.add('error');
                 isValid = false;
             }
             
             const confirmPassword = document.getElementById('confirmPassword').value;
             if (password !== confirmPassword) {
-                showError('confirmPasswordError', 'Пароли не совпадают');
+                showError('confirmPasswordError', getTranslation('confirm_password_error'));
                 document.getElementById('confirmPassword').classList.add('error');
                 isValid = false;
             }
             
             const agreeTerms = document.getElementById('agreeTerms').checked;
             if (!agreeTerms) {
-                showError('termsError', '⚠️ Необходимо согласиться с условиями использования и политикой конфиденциальности');
+                showError('termsError', getTranslation('terms_error'));
                 document.getElementById('agreeTerms').scrollIntoView({ behavior: 'smooth', block: 'center' });
                 isValid = false;
             }
             
             if (isValid) {
                 const submitBtn = newForm.querySelector('button[type="submit"]');
-                const originalText = submitBtn?.textContent || 'ЗАРЕГИСТРИРОВАТЬСЯ';
+                const originalText = submitBtn?.textContent || (getCurrentLang() === 'ru' ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : 'SIGN UP');
                 if (submitBtn) {
-                    submitBtn.textContent = 'Регистрация...';
+                    submitBtn.textContent = getCurrentLang() === 'ru' ? 'Регистрация...' : 'Registering...';
                     submitBtn.disabled = true;
                 }
                 
@@ -360,7 +443,7 @@
                 if (result.success) {
                     console.log('✅ Регистрация успешна!');
                     
-                    showNotification('✅ Регистрация успешна! Перенаправление на страницу входа...');
+                    showNotification(getTranslation('register_success'));
                     
                     setTimeout(() => {
                         const isInPages = window.location.pathname.includes('/pages/');
@@ -388,6 +471,16 @@
             setupPasswordToggles();
         }, 100);
     }
+    
+    document.addEventListener('languageChanged', function() {
+        console.log('🌐 Смена языка на странице регистрации');
+        updateAllPlaceholders();
+        
+        const submitBtn = document.querySelector('#signupForm button[type="submit"]');
+        if (submitBtn && !submitBtn.disabled) {
+            submitBtn.textContent = getCurrentLang() === 'ru' ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : 'SIGN UP';
+        }
+    });
     
     if (!document.querySelector('#signup-styles')) {
         const style = document.createElement('style');

@@ -6,7 +6,6 @@
     <title>Админ-панель | Dental Club</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../media/admin_media.css">
     <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/admin-analytics.css">
     <link rel="stylesheet" href="../css/special-version.css">
@@ -303,6 +302,7 @@
             <div class="tab-content" id="tab-analytics">
                 <div class="content-header">
                     <h1 data-admin-translate="analytics_title">Аналитика посещений</h1>
+                    <h2 class="visually-hidden">Статистика и графики</h2>
                     <div class="header-buttons">
                         <button class="btn-export" id="exportAnalyticsBtn" data-admin-translate="export_report">📥 Экспорт отчета</button>
                         <button class="btn-add" id="refreshAnalyticsBtn" data-admin-translate="refresh">🔄 Обновить</button>
@@ -421,7 +421,7 @@
         </div>
     </div>
 
-
+    <!-- Модальное окно: Услуги -->
     <div id="serviceModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -460,6 +460,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Детали услуг -->
     <div id="detailModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
@@ -491,9 +492,20 @@
                     <textarea id="detailSteps" rows="3" data-admin-translate="steps_placeholder" placeholder="Этап 1, Этап 2..."></textarea>
                 </div>
                 <div class="form-group">
-                    <label data-admin-translate="images_label">Изображения (URL)</label>
-                    <input type="text" id="detailImages" placeholder="../assets/images/...">
-                </div>
+    <label data-admin-translate="main_image_label">Главное изображение (URL)</label>
+    <input type="text" id="detailImages" placeholder="../assets/images/...">
+    <small data-admin-translate="main_image_small">Основное фото услуги</small>
+</div>
+<div class="form-group">
+    <label data-admin-translate="features_image_label">📷 Фото для секции "Особенности"</label>
+    <input type="text" id="detailImages2" placeholder="../assets/images/features-image.jpg">
+    <small data-admin-translate="features_image_small">Изображение будет отображаться справа от списка особенностей</small>
+</div>
+<div class="form-group">
+    <label data-admin-translate="steps_image_label">📷 Фото для секции "Этапы"</label>
+    <input type="text" id="detailImages3" placeholder="../assets/images/steps-image.jpg">
+    <small data-admin-translate="steps_image_small">Изображение будет отображаться справа от списка этапов</small>
+</div>
                 <div class="form-actions">
                     <button type="submit" class="btn-save" data-admin-translate="save_btn">💾 Сохранить</button>
                     <button type="button" class="btn-cancel" data-modal="detailModal" data-admin-translate="cancel_btn">❌ Отмена</button>
@@ -502,6 +514,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Врачи -->
     <div id="doctorModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
@@ -544,7 +557,6 @@
                     <label data-admin-translate="improvement_label">Повышение квалификации</label>
                     <textarea id="doctorImprovement" rows="2"></textarea>
                 </div>
-              
                 <div class="form-group">
                     <label class="checkbox-label">
                         <input type="checkbox" id="doctorActive" checked> <span data-admin-translate="doctor_active_label">Активен (показывать на сайте)</span>
@@ -558,6 +570,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Запись на прием -->
     <div id="appointmentModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -635,6 +648,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Скидки -->
     <div id="discountModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -656,24 +670,27 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label data-admin-translate="discount_type_label">Тип скидки *</label>
-                        <select id="discountType" required>
-                            <option value="percentage" data-admin-translate="discount_percentage">Процентная (%)</option>
-                            <option value="fixed" data-admin-translate="discount_fixed">Фиксированная (BYN)</option>
-                        </select>
+                       <select id="discountType" required>
+    <option value="" disabled selected data-admin-translate="select_discount_type">-- Выберите тип скидки --</option>
+    <option value="percentage" data-admin-translate="discount_percentage">Процентная (%)</option>
+    <option value="fixed" data-admin-translate="discount_fixed">Фиксированная (BYN)</option>
+</select>
                     </div>
                     <div class="form-group">
                         <label data-admin-translate="discount_value_label">Размер скидки *</label>
                         <input type="number" id="discountValue" required step="1">
                     </div>
                 </div>
-<div class="form-row">
+                <div class="form-row">
     <div class="form-group">
         <label data-admin-translate="start_date_label">Дата начала</label>
-        <input type="text" id="discountStartDate" class="discount-date-input" placeholder="ДД.ММ.ГГГГ" autocomplete="off">
+        <input type="date" id="discountStartDate" class="discount-date-input">
+        <small data-admin-translate="date_placeholder_hint">Формат: ДД.ММ.ГГГГ</small>
     </div>
     <div class="form-group">
         <label data-admin-translate="end_date_label">Дата окончания</label>
-        <input type="text" id="discountEndDate" class="discount-date-input" placeholder="ДД.ММ.ГГГГ" autocomplete="off">
+        <input type="date" id="discountEndDate" class="discount-date-input">
+        <small data-admin-translate="date_placeholder_hint">Формат: ДД.ММ.ГГГГ</small>
     </div>
 </div>
                 <div class="form-group">
@@ -693,6 +710,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Услуги прайс-листа -->
     <div id="priceServiceModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -747,6 +765,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Расписание -->
     <div id="scheduleModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
@@ -761,8 +780,7 @@
                         <option value="" data-admin-translate="select_doctor_option">-- Выберите врача --</option>
                     </select>
                 </div>
-                <div class="schedule-days-container" id="scheduleDaysContainer">
-                </div>
+                <div class="schedule-days-container" id="scheduleDaysContainer"></div>
                 <div class="form-actions">
                     <button type="submit" class="btn-save" data-admin-translate="save_schedule_btn">💾 Сохранить расписание</button>
                     <button type="button" class="btn-cancel" data-modal="scheduleModal" data-admin-translate="cancel_btn">❌ Отмена</button>
@@ -771,6 +789,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Просмотр отзыва -->
     <div id="viewReviewModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -802,6 +821,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Категории прайс-листа -->
     <div id="categoryModal" class="modal">
         <div class="modal-content modal-medium">
             <div class="modal-header">
@@ -836,7 +856,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="../js/translations.js"></script>
-    <script src="../js/personalization.js"></script>
     <script src="../js/admin.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/admin-analytics.js"></script>

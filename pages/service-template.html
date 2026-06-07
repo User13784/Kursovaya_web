@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title id="pageTitle">Услуга | Dental Club</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/modal-appointment.css">
+    <link rel="stylesheet" href="../css/modal-profile.css">
+    <link rel="stylesheet" href="../css/special-version.css">
+    <link rel="stylesheet" href="../css/animations_h_f.css">
+    <link rel="stylesheet" href="../css/service-template.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<div class="mobile-menu" id="mobileMenu">
+    <div class="close-menu-btn" id="closeMenuBtn">
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="mobile-nav">
+        <div class="mobile-login-container" id="mobileLoginContainer">
+            <a href="#" class="mobile-login-link" data-translate="login">ВОЙТИ</a>
+        </div>
+        <a href="#" class="mobile-lang-selector" id="mobileLangSelector">ENG</a>
+        <div class="mobile-theme-switcher">
+            <span class="mobile-theme-icon" data-theme="dark">🌙 Тёмная</span>
+            <span class="mobile-theme-icon" data-theme="light">☀️ Светлая</span>
+            <span class="mobile-theme-icon" data-theme="system">💻 Системная</span>
+        </div>
+        <a href="#" id="mobileSpecialButton" class="mobile-special-button">👁️ Режим для слабовидящих</a>
+        <a href="../index.html" class="mobile-link" data-translate="home">ГЛАВНАЯ</a>
+        <a href="../pages/service-detail.html" class="mobile-link" data-translate="services">УСЛУГИ</a>
+        <a href="../pages/team.html" class="mobile-link" data-translate="team">КОМАНДА</a>
+        <a href="../pages/reviews.html" class="mobile-link" data-translate="reviews">ОТЗЫВЫ</a>
+        <a href="../pages/contacts.html" class="mobile-link" data-translate="contacts">КОНТАКТЫ</a>
+        <a href="../pages/prices.html" class="mobile-link" data-translate="prices">ПРАЙС-ЛИСТ</a>
+        <a href="../pages/schedule.html" class="mobile-link" data-translate="schedule">РАСПИСАНИЕ</a>
+        <a href="../pages/faq.html" class="mobile-link" data-translate="faq">ВОПРОС-ОТВЕТ</a>
+    </nav>
+</div>
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<main>
+    <section class="hero-section" id="heroSection">
+        <div class="hero-content">
+            <h1 id="heroTitle">Загрузка...</h1>
+<button class="btn-white" id="openAppointmentBtn" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
+        </div>
+        <div class="scroll-down"></div>
+    </section>
+
+    <section class="service-content" id="serviceContent">
+        <div class="container">
+            <div class="two-columns" id="twoColumns">
+                <div class="image-column" id="imageColumn">
+                    <img id="mainImage" class="service-main-image" src="../assets/images/placeholder.jpg" alt="Услуга">
+                </div>
+                <div class="text-column" id="textColumn">
+                    <div id="mainText" class="main-text">Загрузка...</div>
+                    <div id="secondaryText" class="secondary-text"></div>
+                </div>
+            </div>
+
+<h2 class="section-title" id="featuresTitle" data-translate="features_title">Особенности</h2>
+            <div class="features-with-image">
+                <div class="features-content">
+                    <ul id="featuresList" class="features-list">
+                        <li>Загрузка...</li>
+                    </ul>
+                </div>
+                <div class="features-image" id="featuresImageContainer">
+                    <img id="featuresImage" class="features-side-image" src="../assets/images/placeholder.jpg" alt="Дополнительное фото">
+                </div>
+            </div>
+
+<h2 class="section-title" id="stepsTitle" data-translate="steps_title">Этапы</h2>
+            <div class="steps-with-image">
+                <div class="steps-content">
+                    <ul id="stepsList" class="steps-list">
+                        <li>Загрузка...</li>
+                    </ul>
+                </div>
+                <div class="steps-image" id="stepsImageContainer">
+                    <img id="stepsImage" class="steps-side-image" src="../assets/images/placeholder.jpg" alt="Фото этапов">
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="../js/localstorage.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/translations.js"></script>
+<script src="../js/components.js"></script>
+<script src="../js/modal-appointment.js"></script>
+<script src="../js/modal-profile.js"></script>
+<script src="../js/preloader.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/special-version.js"></script>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let SERVICE_ID = urlParams.get('service');
+    
+    if (!SERVICE_ID) {
+        const savedService = sessionStorage.getItem('selectedService');
+        if (savedService) {
+            try {
+                const service = JSON.parse(savedService);
+                SERVICE_ID = service.id;
+                console.log('📦 ID услуги получен из sessionStorage:', SERVICE_ID);
+            } catch(e) {}
+        }
+    }
+    
+    let currentLang = localStorage.getItem('dental_language') || 'ru';
+    let serviceData = null;
+    let detailData = null;
+    
+    function getLocalizedText(obj) {
+        if (!obj) return '';
+        if (typeof obj === 'string') return obj;
+        if (typeof obj === 'object') {
+            return obj[currentLang] || obj.ru || obj.en || '';
+        }
+        return '';
+    }
+    
+    function formatListFromString(str) {
+        if (!str) return [];
+        if (typeof str === 'object') {
+            str = getLocalizedText(str);
+        }
+        if (typeof str !== 'string') return [];
+        
+        const lines = str.split(/[,\n;]/).map(s => s.trim()).filter(s => s);
+        return lines;
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    function showToast(message, type = 'success') {
+        let toast = document.querySelector('.refresh-toast');
+        if (toast) toast.remove();
+        toast = document.createElement('div');
+        toast.className = 'refresh-toast';
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed; bottom: 30px; right: 30px;
+            background: ${type === 'error' ? '#EF4444' : '#10B981'};
+            color: white; padding: 12px 24px; border-radius: 12px;
+            z-index: 10000; font-family: 'Mulish', sans-serif;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+    
+    function showLoading() {
+        document.getElementById('heroTitle').innerHTML = 'Загрузка...';
+        document.getElementById('mainText').innerHTML = 'Загрузка данных...';
+        document.getElementById('secondaryText').innerHTML = '';
+        document.getElementById('featuresList').innerHTML = '<li>Загрузка...</li>';
+        document.getElementById('stepsList').innerHTML = '<li>Загрузка...</li>';
+    }
+    
+    function showErrorPage() {
+        const heroSection = document.getElementById('heroSection');
+        const serviceContent = document.getElementById('serviceContent');
+        
+        if (heroSection) {
+            heroSection.style.minHeight = '40vh';
+            document.getElementById('heroTitle').innerHTML = '❌ Услуга не найдена';
+        }
+        
+        if (serviceContent) {
+            serviceContent.innerHTML = `
+                <div class="container">
+                    <div class="error-container">
+                        <h2>⚠️ Услуга не найдена</h2>
+                        <p>Пожалуйста, вернитесь на главную страницу и выберите услугу из меню.</p>
+                        <a href="../index.html" style="display: inline-block; background: #A5C33C; color: #1a1e22; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: 600;">← На главную</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        showToast('❌ Ошибка: ID услуги не указан или услуга не найдена', 'error');
+    }
+    
+    async function loadPageData() {
+        if (!SERVICE_ID) {
+            console.error('❌ SERVICE_ID не определён');
+            showErrorPage();
+            return;
+        }
+        
+        console.log('🔄 Загрузка услуги с ID:', SERVICE_ID);
+        showLoading();
+        
+        try {
+            const [servicesRes, detailsRes] = await Promise.all([
+                fetch(`http://localhost:3000/services/${SERVICE_ID}`),
+                fetch(`http://localhost:3000/serviceDetails`)
+            ]);
+            
+            if (!servicesRes.ok) {
+                throw new Error(`Услуга с ID ${SERVICE_ID} не найдена (HTTP ${servicesRes.status})`);
+            }
+            
+            serviceData = await servicesRes.json();
+            const allDetails = await detailsRes.json();
+            detailData = allDetails.find(d => d.serviceId == SERVICE_ID);
+            
+            console.log('✅ Данные загружены:', { serviceData, detailData });
+            
+            const serviceName = getLocalizedText(serviceData.name);
+            const serviceTitle = getLocalizedText(serviceData.title || serviceData.name);
+            
+            document.title = `${serviceName} | Dental Club`;
+            document.getElementById('heroTitle').textContent = serviceTitle || serviceName;
+            
+            if (serviceData.bgImage && serviceData.bgImage !== '') {
+                document.getElementById('heroSection').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${serviceData.bgImage}')`;
+            } else {
+                document.getElementById('heroSection').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../assets/images/default-service-bg.jpg')`;
+            }
+            
+            if (detailData && detailData.images && detailData.images !== '') {
+                const firstImage = detailData.images.split(',')[0].trim();
+                if (firstImage) {
+                    document.getElementById('mainImage').src = firstImage;
+                    document.getElementById('mainImage').alt = serviceName;
+                }
+            }
+            
+            if (detailData && detailData.images2 && detailData.images2 !== '') {
+                const secondImage = detailData.images2.trim();
+                if (secondImage) {
+                    const featuresImg = document.getElementById('featuresImage');
+                    if (featuresImg) {
+                        featuresImg.src = secondImage;
+                        featuresImg.alt = serviceName + ' - дополнительное фото';
+                    }
+                }
+            }
+            
+            if (detailData && detailData.images3 && detailData.images3 !== '') {
+                const thirdImage = detailData.images3.trim();
+                if (thirdImage) {
+                    const stepsImg = document.getElementById('stepsImage');
+                    if (stepsImg) {
+                        stepsImg.src = thirdImage;
+                        stepsImg.alt = serviceName + ' - фото этапов';
+                    }
+                }
+            } else if (detailData && detailData.images2 && detailData.images2 !== '') {
+                const stepsImg = document.getElementById('stepsImage');
+                if (stepsImg) {
+                    stepsImg.src = detailData.images2.trim();
+                }
+            }
+            
+            if (detailData && detailData.mainText) {
+                const mainText = getLocalizedText(detailData.mainText);
+                document.getElementById('mainText').innerHTML = mainText || 'Информация об услуге временно отсутствует.';
+            } else {
+                document.getElementById('mainText').innerHTML = 'Информация об услуге временно отсутствует. Пожалуйста, заполните детали в админ-панели.';
+            }
+            
+            if (detailData && detailData.secondaryText) {
+                const secondaryText = getLocalizedText(detailData.secondaryText);
+                document.getElementById('secondaryText').innerHTML = secondaryText || '';
+                document.getElementById('secondaryText').style.display = secondaryText ? 'block' : 'none';
+            } else {
+                document.getElementById('secondaryText').style.display = 'none';
+            }
+            
+            // Особенности
+            if (detailData && detailData.features) {
+                let featuresText = detailData.features;
+                if (typeof featuresText === 'object') {
+                    featuresText = featuresText[currentLang] || featuresText.ru || featuresText.en || '';
+                }
+                const features = formatListFromString(featuresText);
+                const featuresList = document.getElementById('featuresList');
+                if (features.length > 0 && featuresText && featuresText !== '') {
+                    featuresList.innerHTML = features.map(f => `<li>${escapeHtml(f)}</li>`).join('');
+                    document.getElementById('featuresImageContainer').style.display = 'block';
+                } else {
+                    featuresList.innerHTML = '<li>Информация об особенностях временно отсутствует.</li>';
+                    document.getElementById('featuresImageContainer').style.display = 'none';
+                }
+            } else {
+                document.getElementById('featuresList').innerHTML = '<li>Информация об особенностях временно отсутствует.</li>';
+                document.getElementById('featuresImageContainer').style.display = 'none';
+            }
+            
+            if (detailData && detailData.steps) {
+                let stepsText = detailData.steps;
+                if (typeof stepsText === 'object') {
+                    stepsText = stepsText[currentLang] || stepsText.ru || stepsText.en || '';
+                }
+                const steps = formatListFromString(stepsText);
+                const stepsList = document.getElementById('stepsList');
+                if (steps.length > 0 && stepsText && stepsText !== '') {
+                    stepsList.innerHTML = steps.map(s => `<li>${escapeHtml(s)}</li>`).join('');
+                    document.getElementById('stepsImageContainer').style.display = 'block';
+                } else {
+                    stepsList.innerHTML = '<li>Информация об этапах временно отсутствует.</li>';
+                    document.getElementById('stepsImageContainer').style.display = 'none';
+                }
+            } else {
+                document.getElementById('stepsList').innerHTML = '<li>Информация об этапах временно отсутствует.</li>';
+                document.getElementById('stepsImageContainer').style.display = 'none';
+            }
+            
+            if (typeof window.syncMobileThemeWithDesktop === 'function') {
+                window.syncMobileThemeWithDesktop();
+            }
+            
+            console.log('✅ Страница загружена для услуги ID:', SERVICE_ID);
+            
+        } catch (error) {
+            console.error('❌ Ошибка загрузки:', error);
+            showErrorPage();
+        }
+    }
+    
+    async function refreshPageData() {
+        console.log('🔄 Обновление данных страницы...');
+        await loadPageData();
+        showToast('✅ Данные обновлены');
+    }
+    
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'dental_data_updated' || e.key === 'admin_data_saved') {
+            console.log('📡 Обнаружено изменение в localStorage');
+            refreshPageData();
+        }
+    });
+    
+    document.addEventListener('adminDataSaved', function() {
+        console.log('📡 Получено событие adminDataSaved');
+        refreshPageData();
+    });
+    
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            console.log('👁️ Страница стала видимой');
+            refreshPageData();
+        }
+    });
+    
+    
+    
+    function openAppointment() {
+        if (typeof openVisitorAppointmentModal === 'function') {
+            openVisitorAppointmentModal();
+        } else {
+            console.warn('openVisitorAppointmentModal не определена');
+            showToast('Форма записи временно недоступна', 'error');
+        }
+    }
+    
+    const appointmentBtn = document.getElementById('openAppointmentBtn');
+    if (appointmentBtn) {
+        appointmentBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openAppointment();
+        });
+    }
+    
+    function initMobileMenu() {
+        const burgerIcon = document.getElementById('burgerIcon');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const body = document.body;
+        if (!burgerIcon || !mobileMenu) return;
+        let scrollPosition = 0;
+        function openMenu() {
+            scrollPosition = window.pageYOffset;
+            burgerIcon.classList.add('active');
+            mobileMenu.classList.add('active');
+            if (menuOverlay) menuOverlay.classList.add('active');
+            body.classList.add('menu-open');
+            body.style.top = `-${scrollPosition}px`;
+        }
+        function closeMenu() {
+            burgerIcon.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            if (menuOverlay) menuOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            body.style.top = '';
+            window.scrollTo(0, scrollPosition);
+        }
+        burgerIcon.onclick = (e) => { e.preventDefault(); if (mobileMenu.classList.contains('active')) closeMenu(); else openMenu(); };
+        if (closeMenuBtn) closeMenuBtn.onclick = (e) => { e.preventDefault(); closeMenu(); };
+        if (menuOverlay) menuOverlay.onclick = () => closeMenu();
+        window.addEventListener('resize', () => { if (window.innerWidth > 1200 && mobileMenu.classList.contains('active')) closeMenu(); });
+    }
+    
+    function syncMobileThemeWithDesktop() {
+        const theme = localStorage.getItem('dental_theme') || 'system';
+        document.querySelectorAll('.mobile-theme-icon').forEach(icon => {
+            if (icon.dataset.theme === theme) icon.classList.add('active');
+            else icon.classList.remove('active');
+        });
+        if (typeof window.updateFooterTheme === 'function') {
+            window.updateFooterTheme();
+        }
+    }
+    
+    function initMobileThemeSwitcher() {
+        document.querySelectorAll('.mobile-theme-icon').forEach(icon => {
+            icon.addEventListener('click', () => {
+                const theme = icon.dataset.theme;
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('dental_theme', theme);
+                syncMobileThemeWithDesktop();
+                if (typeof window.updateFooterTheme === 'function') {
+                    window.updateFooterTheme();
+                }
+            });
+        });
+    }
+    
+    function updateMobileLangButton() {
+        const selector = document.getElementById('mobileLangSelector');
+        if (selector) selector.textContent = currentLang === 'ru' ? 'ENG' : 'RUS';
+    }
+    
+    function initMobileLangSwitcher() {
+        const selector = document.getElementById('mobileLangSelector');
+        if (selector) {
+            const newBtn = selector.cloneNode(true);
+            selector.parentNode.replaceChild(newBtn, selector);
+            newBtn.addEventListener('click', () => {
+                currentLang = currentLang === 'ru' ? 'en' : 'ru';
+                localStorage.setItem('dental_language', currentLang);
+                updateMobileLangButton();
+                loadPageData();
+                if (typeof applyTranslations === 'function') applyTranslations();
+                if (typeof window.updateFooterLanguage === 'function') {
+                    window.updateFooterLanguage();
+                }
+                document.dispatchEvent(new CustomEvent('languageChanged'));
+            });
+        }
+    }
+    
+    function initMobileSpecialButton() {
+        const btn = document.getElementById('mobileSpecialButton');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const panel = document.getElementById('specialPanel');
+                if (panel) panel.classList.toggle('active');
+            });
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('🚀 Загрузка service-template.html, SERVICE_ID:', SERVICE_ID);
+        initMobileMenu();
+        syncMobileThemeWithDesktop();
+        initMobileThemeSwitcher();
+        initMobileSpecialButton();
+        updateMobileLangButton();
+        initMobileLangSwitcher();
+        loadPageData();
+        
+        setTimeout(() => {
+            if (typeof window.updateFooterTheme === 'function') {
+                window.updateFooterTheme();
+            }
+        }, 300);
+    });
+    
+    document.addEventListener('languageChanged', () => {
+        currentLang = localStorage.getItem('dental_language') || 'ru';
+        loadPageData();
+        updateMobileLangButton();
+    });
+    
+    setTimeout(() => {
+        if (typeof window.updateAuthUI === 'function') window.updateAuthUI();
+        if (typeof window.applyTranslations === 'function') window.applyTranslations();
+        if (typeof window.updateFooterTheme === 'function') window.updateFooterTheme();
+    }, 200);
+</script>
+
+</body>
+</html>

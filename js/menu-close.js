@@ -16,7 +16,7 @@
         }
         
         console.log('🏠 Возврат на главную');
-        return '../index.html';
+        return 'index.html';
     }
     
     function closeMenuAndGoBack() {

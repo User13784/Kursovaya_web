@@ -1,5 +1,68 @@
 const API_BASE_URL = 'http://localhost:3000';
 
+const LOCKED_PAGES = [
+    'service-menu2.html',
+    'service-menu3.html', 
+    'service-menu4.html',
+    'service-menu5.html',
+    'service-menu6.html',
+    'service-menu7.html',
+    'service-menu8.html',
+    'service-menu9.html'
+];
+const TEMPLATE_PAGE = 'service-template.html';  
+
+
+function isLockedPage(page) {
+    if (!page || page === 'undefined' || page === 'null') {
+        console.warn('isLockedPage: страница не указана, блокируем');
+        return true;
+    }
+    
+    try {
+        const basePage = getBasePageName(page);
+        
+        if (!basePage) {
+            console.warn('isLockedPage: basePage пустая, блокируем');
+            return true;
+        }
+        
+        if (basePage === TEMPLATE_PAGE) {
+            console.log(`✅ Разрешено редактирование (точное совпадение): ${page}`);
+            return false;
+        }
+        
+        if (basePage.endsWith(TEMPLATE_PAGE)) {
+            console.log(`✅ Разрешено редактирование (заканчивается на): ${page}`);
+            return false;
+        }
+        
+        if (basePage.includes(TEMPLATE_PAGE)) {
+            console.log(`✅ Разрешено редактирование (содержит): ${page}`);
+            return false;
+        }
+        
+        if (page.startsWith(TEMPLATE_PAGE)) {
+            console.log(`✅ Разрешено редактирование (начинается с): ${page}`);
+            return false;
+        }
+        
+        console.log(`❌ Заблокировано редактирование: ${page} (basePage: ${basePage})`);
+        return true;
+        
+    } catch (error) {
+        console.error('Ошибка в isLockedPage:', error);
+        return true;
+    }
+}
+
+function getBasePageName(page) {
+    if (!page) return '';
+    if (page.includes('?')) {
+        return page.split('?')[0];
+    }
+    return page;
+}
 
 function getNextId(items) {
     if (!items || items.length === 0) return 1;
@@ -26,9 +89,19 @@ async function getNextDoctorId() {
 }
 
 async function getNextAppointmentId() {
-    const response = await fetch(`${API_BASE_URL}/appointments`);
-    const appointments = await response.json();
-    return getNextId(appointments);
+    try {
+        const response = await fetch(`${API_BASE_URL}/appointments`);
+        const appointments = await response.json();
+        
+        if (appointments && appointments.length > 0) {
+            const maxId = Math.max(...appointments.map(a => a.id));
+            return maxId + 1;
+        }
+        return 1;
+    } catch (error) {
+        console.error('Ошибка получения следующего ID:', error);
+        return Date.now();
+    }
 }
 
 async function getNextDiscountId() {
@@ -79,7 +152,6 @@ function localizeArray(items, fields = []) {
     return items.map(item => localizeObject(item, fields));
 }
 
-
 function formatDateForDisplay(dateStr, lang = null) {
     if (!dateStr) return '';
     const currentLang = lang || getCurrentAdminLang();
@@ -115,7 +187,6 @@ function parseDisplayDateToISO(displayDate) {
     }
     return displayDate;
 }
-
 
 function initDiscountDatePickers() {
     const startDateInput = document.getElementById('discountStartDate');
@@ -201,28 +272,8 @@ function initDiscountDatePickers() {
                 this.showPicker();
             }
         });
-        
-        startDateInput.addEventListener('change', function() {
-            console.log('📅 Дата начала изменена:', this.value);
-        });
-        
-        endDateInput.addEventListener('change', function() {
-            console.log('📅 Дата окончания изменена:', this.value);
-        });
     } else {
         updateDatePlaceholders();
-        
-        startDateInput.addEventListener('click', function() {
-            if (this.showPicker) {
-                this.showPicker();
-            }
-        });
-        
-        endDateInput.addEventListener('click', function() {
-            if (this.showPicker) {
-                this.showPicker();
-            }
-        });
     }
     
     document.addEventListener('languageChanged', function() {
@@ -231,7 +282,6 @@ function initDiscountDatePickers() {
         }
     });
 }
-
 
 function initDateFilterWithCalendar() {
     const dateFilter = document.getElementById('appointmentDateFilter');
@@ -358,13 +408,12 @@ const adminTranslations = {
         'close_btn': 'Закрыть',
         'save_schedule_btn': 'Сохранить расписание',
         'service_name_label': 'Название услуги *',
-        'service_url_label': 'URL страницы *',
-        'service_url_hint': 'Путь к файлу страницы услуги',
+        'service_url_label': 'URL страницы',
+        'service_url_hint': 'Все услуги используют динамическую страницу service-detail.html',
         'service_bg_label': 'Фоновое изображение',
         'service_title_label': 'Заголовок на странице',
         'service_active_label': 'Активна (показывать на сайте)',
         'service_name_placeholder': 'Например: ДИАГНОСТИКА',
-        'service_url_placeholder': 'service-menu2.html',
         'service_title_placeholder': 'ДИАГНОСТИКА',
         'schedule_placeholder': 'Пн-Пт, 10:00 - 18:00',
         'price_placeholder': '0',
@@ -542,7 +591,22 @@ const adminTranslations = {
         'stat_upcoming_discounts': 'Предстоящие',
         'error_negative_discount': '❌ Размер скидки не может быть отрицательным!',
         'error_discount_exists': '⚠️ Для этой категории уже есть скидка! Удалите или деактивируйте существующую скидку перед созданием новой.',
-        'unknown': 'Неизвестно'
+        'unknown': 'Неизвестно',
+                'main_image_label': '📷 Основное фото услуги',
+        'main_image_small': 'Основное фото услуги',
+        'features_image_label': '📷 Фото для секции "Особенности"',
+        'features_image_small': 'Изображение будет отображаться справа от списка особенностей',
+        'steps_image_label': '📷 Фото для секции "Этапы"',
+        'steps_image_small': 'Изображение будет отображаться справа от списка этапов',
+                'locked_page': '🔒 защищённая страница',
+        'dynamic_page': '📄 динамическая страница',
+        'dynamic_template': '📄 динамический шаблон',
+                'locked_page_title': 'Эта страница защищена от редактирования',
+        'locked_delete_title': 'Защищённые страницы нельзя удалить',
+                'new_service_page_hint': 'НОВЫЙ (динамическая страница)',
+                        'select_discount_type': '-- Выберите тип скидки --',
+                'date_placeholder': 'дд.мм.гггг',
+        'date_placeholder_hint': 'Формат: дд.мм.гггг'
     },
     en: {
         'prices_title': 'Price List Management',
@@ -609,13 +673,12 @@ const adminTranslations = {
         'close_btn': 'Close',
         'save_schedule_btn': 'Save Schedule',
         'service_name_label': 'Service Name *',
-        'service_url_label': 'Page URL *',
-        'service_url_hint': 'Path to service page file',
+        'service_url_label': 'Page URL',
+        'service_url_hint': 'All services use the dynamic page service-detail.html',
         'service_bg_label': 'Background Image',
         'service_title_label': 'Page Title',
         'service_active_label': 'Active (show on site)',
         'service_name_placeholder': 'Example: DIAGNOSTICS',
-        'service_url_placeholder': 'service-menu2.html',
         'service_title_placeholder': 'DIAGNOSTICS',
         'schedule_placeholder': 'Mon-Fri, 10:00 - 18:00',
         'price_placeholder': '0',
@@ -728,7 +791,7 @@ const adminTranslations = {
         'until_label': 'until',
         'active_discount_on_category': 'Active discount on category',
         'valid_until': 'valid until',
-        'action_edit': '✏️ Edit',
+        'action_edit': 'Edit',
         'action_delete': '🗑️ Delete',
         'action_edit_small': '✏️',
         'action_delete_small': '🗑️',
@@ -793,7 +856,22 @@ const adminTranslations = {
         'stat_upcoming_discounts': 'Upcoming',
         'error_negative_discount': '❌ Discount amount cannot be negative!',
         'error_discount_exists': '⚠️ There is already a discount for this category! Please delete or deactivate the existing discount before creating a new one.',
-        'unknown': 'Unknown'
+        'unknown': 'Unknown',
+                'main_image_label': '📷 Main service photo',
+        'main_image_small': 'Main service photo',
+        'features_image_label': '📷 Photo for "Features" section',
+        'features_image_small': 'The image will be displayed to the right of the features list',
+        'steps_image_label': '📷 Photo for "Steps" section',
+        'steps_image_small': 'The image will be displayed to the right of the steps list',
+                'locked_page': '🔒 protected page',
+        'dynamic_page': '📄 dynamic page',
+        'dynamic_template': '📄 dynamic template',
+                'locked_page_title': 'This page is protected from editing',
+        'locked_delete_title': 'Protected pages cannot be deleted',
+                'new_service_page_hint': 'NEW (dynamic page)',
+                        'select_discount_type': '-- Select discount type --',
+                'date_placeholder': 'mm/dd/yyyy',
+        'date_placeholder_hint': 'Format: mm/dd/yyyy',
     }
 };
 
@@ -874,6 +952,38 @@ function getCurrencyHtml(unit) {
     return escapeHtml(unit);
 }
 
+function populateServiceSelectForDetail() {
+    const serviceSelect = document.getElementById('detailServiceId');
+    if (!serviceSelect) {
+        console.error('❌ Элемент detailServiceId не найден!');
+        return;
+    }
+    
+    const currentValue = serviceSelect.value;
+    serviceSelect.innerHTML = `<option value="">${getUIText('select_service_option')}</option>`;
+    
+    if (!services || services.length === 0) {
+        console.warn('⚠️ Нет услуг для заполнения списка!');
+        return;
+    }
+    
+    const sortedServices = [...services].sort((a, b) => (a.order || a.id) - (b.order || b.id));
+    
+    sortedServices.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.id;
+        const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
+        option.textContent = serviceName;
+        serviceSelect.appendChild(option);
+    });
+    
+    if (currentValue && serviceSelect.querySelector(`option[value="${currentValue}"]`)) {
+        serviceSelect.value = currentValue;
+    }
+    
+    console.log('📋 Список услуг для модального окна заполнен, опций:', serviceSelect.options.length);
+}
+
 let services = [];
 let serviceDetails = [];
 let doctors = [];
@@ -936,7 +1046,6 @@ function validateDiscountValue(value, type) {
     
     return { valid: true, message: '' };
 }
-
 
 function saveActiveTab(tabId) {
     if (tabId) {
@@ -1018,7 +1127,7 @@ async function renderAppointments() {
     tbody.innerHTML = '';
     
     if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 40px;">📅 ' + (getCurrentAdminLang() === 'ru' ? 'Нет записей для отображения' : 'No appointments to display') + '</td></tr>';
+        tbody.innerHTML = '<td><td colspan="9" style="text-align: center; padding: 40px;">📅 ' + (getCurrentAdminLang() === 'ru' ? 'Нет записей для отображения' : 'No appointments to display') + '</td></tr>';
         return;
     }
     
@@ -1068,18 +1177,18 @@ async function renderAppointments() {
         row.innerHTML = `
             <td>${app.id}</td>
             <td><strong>${escapeHtml(patientName)}</strong></td>
-            <td>${escapeHtml(app.phone)}</td>
-            <td>${escapeHtml(doctorName)}</td>
-            <td>${escapeHtml(serviceName)}</td>
-            <td>${displayDate}</td>
-            <td>${app.time}</td>
-            <td><span class="status-badge status-${app.status}">${statusText}</span></td>
+            <td>${escapeHtml(app.phone)}</span>
+            <td>${escapeHtml(doctorName)}</span>
+            <td>${escapeHtml(serviceName)}</span>
+            <td>${displayDate}</span>
+            <td>${app.time}</span>
+            <td><span class="status-badge status-${app.status}">${statusText}</span></span>
             <td class="action-buttons">
                 <button class="btn-edit-appointment" data-id="${app.id}" title="Редактировать">✏️</button>
                 <button class="btn-delete-appointment" data-id="${app.id}" title="Удалить">🗑️</button>
                 ${app.status === 'pending' ? `<button class="btn-confirm-appointment" data-id="${app.id}" title="Подтвердить">✅</button>` : ''}
                 ${app.status === 'confirmed' ? `<button class="btn-complete-appointment" data-id="${app.id}" title="Завершить">✔️</button>` : ''}
-            </td>
+             </span>
         `;
         tbody.appendChild(row);
     }
@@ -1110,974 +1219,6 @@ function resetAppointmentFilters() {
     renderAppointments();
 }
 
-// ========== ФУНКЦИИ ДЛЯ ОБНОВЛЕНИЯ ДАННЫХ ==========
-
-async function refreshPricesData() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/prices`);
-        if (response.ok) {
-            const freshData = await response.json();
-            if (freshData) {
-                pricesData = freshData;
-                
-                if (pricesData.categories) {
-                    pricesData.categories = localizeArray(pricesData.categories, ['name']);
-                }
-                if (pricesData.services) {
-                    pricesData.services = localizeArray(pricesData.services, ['name', 'description']);
-                }
-                
-                console.log('🔄 Данные прайс-листа обновлены, категорий:', pricesData.categories?.length || 0);
-                return true;
-            }
-        }
-    } catch (error) {
-        console.error('❌ Ошибка обновления данных прайс-листа:', error);
-    }
-    return false;
-}
-
-// ========== ФУНКЦИИ ДЛЯ РАБОТЫ С КАТЕГОРИЯМИ ==========
-
-async function openAddCategoryModal() {
-    await refreshPricesData();
-    
-    if (!pricesData) {
-        pricesData = { version: '2.0', categories: [], services: [] };
-    }
-    if (!pricesData.categories) pricesData.categories = [];
-    
-    document.getElementById('categoryId').value = '';
-    document.getElementById('categoryName').value = '';
-    const maxOrder = Math.max(...pricesData.categories.map(c => c.order || 0), 0);
-    document.getElementById('categoryOrder').value = maxOrder + 1;
-    document.getElementById('categoryActive').checked = true;
-    
-    document.getElementById('categoryModalTitle').textContent = getUIText('modal_add_category');
-    document.getElementById('categoryModal').style.display = 'flex';
-}
-
-async function editCategory(categoryId) {
-    await refreshPricesData();
-    
-    const category = pricesData?.categories?.find(c => c.id === categoryId);
-    if (!category) return;
-    
-    document.getElementById('categoryId').value = category.id;
-    document.getElementById('categoryName').value = typeof category.name === 'object' ? (category.name.ru || category.name) : category.name;
-    document.getElementById('categoryOrder').value = category.order || 0;
-    document.getElementById('categoryActive').checked = category.active !== false;
-    
-    document.getElementById('categoryModalTitle').textContent = getUIText('modal_edit_category');
-    document.getElementById('categoryModal').style.display = 'flex';
-}
-
-async function deleteCategory(categoryId) {
-    await refreshPricesData();
-    
-    const category = pricesData?.categories?.find(c => c.id === categoryId);
-    if (!category) return;
-    
-    const categoryName = typeof category.name === 'object' ? (category.name.ru || category.name) : category.name;
-    const servicesInCategory = pricesData?.services?.filter(s => s.categoryId === categoryId) || [];
-    
-    let confirmMessage = `Удалить категорию "${categoryName}"?`;
-    if (servicesInCategory.length > 0) {
-        confirmMessage += `\n\n⚠️ ВНИМАНИЕ: В этой категории ${servicesInCategory.length} услуг(а). Они также будут удалены!`;
-    }
-    
-    if (confirm(confirmMessage)) {
-        if (servicesInCategory.length > 0) {
-            pricesData.services = pricesData.services.filter(s => s.categoryId !== categoryId);
-        }
-        
-        pricesData.categories = pricesData.categories.filter(c => c.id !== categoryId);
-        
-        pricesData.categories.forEach((cat, index) => {
-            cat.order = index + 1;
-        });
-        
-        const saved = await savePricesData();
-        if (saved) {
-            await refreshPricesData();
-            await renderAdminPrices();
-            await updateCategoryFilters();
-            showToast(`Категория "${categoryName}" удалена`, 'success');
-        }
-    }
-}
-
-async function saveCategory(event) {
-    event.preventDefault();
-    
-    const id = parseInt(document.getElementById('categoryId').value);
-    let name = document.getElementById('categoryName').value.trim();
-    const order = parseInt(document.getElementById('categoryOrder').value) || 999;
-    const active = document.getElementById('categoryActive').checked;
-    
-    if (!name) {
-        showToast('Введите название категории', 'error');
-        return;
-    }
-    
-    await refreshPricesData();
-    
-    if (!pricesData) {
-        pricesData = { version: '2.0', categories: [], services: [] };
-    }
-    if (!pricesData.categories) pricesData.categories = [];
-    
-    if (typeof name === 'string') {
-        name = { ru: name, en: name };
-    }
-    
-    if (id && id > 0) {
-        const index = pricesData.categories.findIndex(c => c.id === id);
-        if (index !== -1) {
-            pricesData.categories[index] = {
-                ...pricesData.categories[index],
-                name: name,
-                order: order,
-                active: active
-            };
-        }
-        showToast(`Категория обновлена`, 'success');
-    } else {
-        const newId = getNextPriceCategoryId(pricesData);
-        pricesData.categories.push({
-            id: newId,
-            name: name,
-            order: order,
-            active: active
-        });
-        showToast(`Категория добавлена`, 'success');
-    }
-    
-    pricesData.categories.sort((a, b) => (a.order || 0) - (b.order || 0));
-    
-    const saved = await savePricesData();
-    
-    if (saved) {
-        await refreshPricesData();
-        await updateCategoryFilters();
-        await renderAdminPrices();
-        
-        const discountCategoryFilter = document.getElementById('discountCategoryFilter');
-        if (discountCategoryFilter && pricesData?.categories) {
-            const currentValue = discountCategoryFilter.value;
-            discountCategoryFilter.innerHTML = '<option value="all">Все категории</option>';
-            pricesData.categories.filter(c => c.active !== false).forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat.id;
-                let categoryName = cat.name;
-                if (typeof categoryName === 'object') {
-                    const lang = getCurrentAdminLang();
-                    categoryName = categoryName[lang] || categoryName.ru || cat.name;
-                }
-                option.textContent = categoryName;
-                discountCategoryFilter.appendChild(option);
-            });
-            if (currentValue && discountCategoryFilter.querySelector(`option[value="${currentValue}"]`)) {
-                discountCategoryFilter.value = currentValue;
-            }
-        }
-        
-        const totalCategories = document.getElementById('totalCategories');
-        if (totalCategories) {
-            totalCategories.textContent = pricesData.categories.length;
-        }
-    }
-    
-    document.getElementById('categoryModal').style.display = 'none';
-    document.getElementById('categoryForm').reset();
-}
-
-async function savePricesData() {
-    try {
-        if (!pricesData) {
-            pricesData = { version: '2.0', categories: [], services: [] };
-        }
-        if (!pricesData.categories) pricesData.categories = [];
-        if (!pricesData.services) pricesData.services = [];
-        if (!pricesData.version) pricesData.version = '2.0';
-        
-        const response = await fetch(`${API_BASE_URL}/prices`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pricesData)
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        console.log('✅ Данные прайс-листа сохранены в JSON Server');
-        return true;
-    } catch (error) {
-        console.error('❌ Ошибка сохранения прайс-листа:', error);
-        showToast('Ошибка сохранения', 'error');
-        return false;
-    }
-}
-
-async function updateCategoryFilters() {
-    const lang = getCurrentAdminLang();
-    
-    const categoryFilter = document.getElementById('priceCategoryFilter');
-    if (categoryFilter && pricesData?.categories) {
-        const currentValue = categoryFilter.value;
-        categoryFilter.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
-        
-        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
-        
-        sortedCategories.filter(c => c.active !== false).forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            let categoryName = cat.name;
-            if (typeof categoryName === 'object') {
-                categoryName = categoryName[lang] || categoryName.ru || cat.name;
-            }
-            option.textContent = categoryName;
-            categoryFilter.appendChild(option);
-        });
-        
-        if (currentValue && categoryFilter.querySelector(`option[value="${currentValue}"]`)) {
-            categoryFilter.value = currentValue;
-        }
-    }
-    
-    const discountCategoryFilter = document.getElementById('discountCategoryFilter');
-    if (discountCategoryFilter && pricesData?.categories) {
-        const currentValue = discountCategoryFilter.value;
-        discountCategoryFilter.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
-        
-        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
-        
-        sortedCategories.filter(c => c.active !== false).forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            let categoryName = cat.name;
-            if (typeof categoryName === 'object') {
-                categoryName = categoryName[lang] || categoryName.ru || cat.name;
-            }
-            option.textContent = categoryName;
-            discountCategoryFilter.appendChild(option);
-        });
-        
-        if (currentValue && discountCategoryFilter.querySelector(`option[value="${currentValue}"]`)) {
-            discountCategoryFilter.value = currentValue;
-        }
-    }
-    
-    const priceServiceCategory = document.getElementById('priceServiceCategoryId');
-    if (priceServiceCategory && pricesData?.categories) {
-        const currentValue = priceServiceCategory.value;
-        priceServiceCategory.innerHTML = '<option value="" data-translate="select_category_option">-- Выберите категорию --</option>';
-        
-        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
-        
-        sortedCategories.filter(c => c.active !== false).forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            let categoryName = cat.name;
-            if (typeof categoryName === 'object') {
-                categoryName = categoryName[lang] || categoryName.ru || cat.name;
-            }
-            option.textContent = categoryName;
-            priceServiceCategory.appendChild(option);
-        });
-        
-        const firstOption = priceServiceCategory.options[0];
-        if (firstOption) firstOption.textContent = getUIText('select_category_option');
-        if (currentValue && priceServiceCategory.querySelector(`option[value="${currentValue}"]`)) {
-            priceServiceCategory.value = currentValue;
-        }
-    }
-    
-    const discountServiceId = document.getElementById('discountServiceId');
-    if (discountServiceId && pricesData?.categories) {
-        const currentValue = discountServiceId.value;
-        discountServiceId.innerHTML = '<option value="" data-translate="select_category_option">-- Выберите категорию --</option>';
-        
-        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
-        
-        sortedCategories.filter(c => c.active !== false).forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id;
-            let categoryName = cat.name;
-            if (typeof categoryName === 'object') {
-                categoryName = categoryName[lang] || categoryName.ru || cat.name;
-            }
-            option.textContent = categoryName;
-            discountServiceId.appendChild(option);
-        });
-        
-        const firstOption = discountServiceId.options[0];
-        if (firstOption) firstOption.textContent = getUIText('select_category_option');
-        if (currentValue && discountServiceId.querySelector(`option[value="${currentValue}"]`)) {
-            discountServiceId.value = currentValue;
-        }
-    }
-    
-    console.log('✅ Фильтры категорий обновлены, категорий:', pricesData?.categories?.length || 0);
-}
-
-// ========== ОТОБРАЖЕНИЕ ПРАЙС-ЛИСТА В АДМИНКЕ ==========
-
-async function renderAdminPrices() {
-    const container = document.getElementById('pricesAdminContainer');
-    if (!container) return;
-    
-    await refreshPricesData();
-    
-    const lang = getCurrentAdminLang();
-    const categoryFilter = document.getElementById('priceCategoryFilter')?.value || 'all';
-    const searchFilter = document.getElementById('priceSearchFilter')?.value.toLowerCase() || '';
-    
-    let categories = pricesData?.categories?.filter(c => c.active) || [];
-    let servicesList = pricesData?.services?.filter(s => s.active) || [];
-    
-    categories = categories.map(cat => ({
-        ...cat,
-        localizedName: getLocalizedText(cat.name)
-    }));
-    
-    if (categoryFilter !== 'all') {
-        servicesList = servicesList.filter(s => s.categoryId == categoryFilter);
-        categories = categories.filter(c => c.id == categoryFilter);
-    }
-    
-    if (searchFilter) {
-        servicesList = servicesList.filter(s => s.name.toLowerCase().includes(searchFilter));
-        const categoryIds = [...new Set(servicesList.map(s => s.categoryId))];
-        categories = categories.filter(c => categoryIds.includes(c.id));
-    }
-    
-    const totalCategories = document.getElementById('totalCategories');
-    const totalPriceServices = document.getElementById('totalPriceServices');
-    if (totalCategories) totalCategories.textContent = categories.length;
-    if (totalPriceServices) totalPriceServices.textContent = servicesList.length;
-    
-    const categorySelect = document.getElementById('priceCategoryFilter');
-    if (categorySelect && categorySelect.options.length <= 1 && pricesData?.categories) {
-        await updateCategoryFilters();
-    }
-    
-    if (categories.length === 0) {
-        container.innerHTML = '<div class="empty-prices" style="text-align: center; padding: 40px; color: #6B7280;">Нет категорий для отображения</div>';
-        return;
-    }
-    
-    let html = '';
-    for (const category of categories) {
-        const categoryServices = servicesList.filter(s => s.categoryId === category.id);
-        
-        const categoryDiscount = getDiscountByCategoryId(category.id);
-        
-        const discountLabel = getUIText('discount_label');
-        const untilLabel = getUIText('until_label');
-        
-        let discountHtml = '';
-        if (categoryDiscount) {
-            const discountValue = categoryDiscount.type === 'percentage' 
-                ? categoryDiscount.value + '%' 
-                : categoryDiscount.value + ' BYN';
-            const dateText = categoryDiscount.endDate ? ` ${untilLabel} ${categoryDiscount.endDate}` : '';
-            discountHtml = `
-                <span style="background: #EF4444; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-left: 12px;">
-                    ${discountLabel}: ${discountValue}${dateText}
-                </span>
-            `;
-        }
-        
-        html += `
-            <div class="price-category-card" style="background: white; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" data-category-id="${category.id}">
-                <div class="price-category-header" style="cursor: pointer; background: #2F353B; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center; flex-wrap: wrap;">
-                        <h3 style="color: white; margin: 0;">${escapeHtml(category.localizedName)}</h3>
-                        ${discountHtml}
-                    </div>
-                    <div>
-                        <span style="background: #A5C33C; color: #1a1e22; padding: 4px 10px; border-radius: 20px; font-size: 12px; margin-right: 15px;">${categoryServices.length} ${getUIText('stat_services_count')}</span>
-                        <button class="btn-edit-category" data-id="${category.id}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;" title="Редактировать категорию">✏️</button>
-                        <button class="btn-delete-category" data-id="${category.id}" style="background: #FEE2E2; color: #DC2626; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;" title="Удалить категорию">🗑️</button>
-                        <span class="price-category-toggle" style="color: white; font-size: 20px; margin-left: 10px;">▼</span>
-                    </div>
-                </div>
-                <div class="category-content" style="display: block; padding: 20px; background: white; overflow-x: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <colgroup>
-                            <col style="width: 35%;">
-                            <col style="width: 20%;">
-                            <col style="width: 15%;">
-                            <col style="width: 20%;">
-                            <col style="width: 10%;">
-                        </colgroup>
-                        <thead>
-                            <tr style="background: #F3F4F6;">
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_name')}</th>
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_price')}</th>
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_currency')}</th>
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_note')}</th>
-                                <th style="padding: 12px 15px; text-align: left; font-weight: 600; width: 100px;">${getUIText('th_actions')}</th>
-                              </tr>
-                        </thead>
-                        <tbody>
-        `;
-        
-        if (categoryServices.length === 0) {
-            html += `
-                <tr style="border-bottom: 1px solid #E5E7EB;">
-                    <td colspan="5" style="padding: 30px; text-align: center; color: #9CA3AF;">
-                        Нет услуг в этой категории
-                      </td>
-                  </tr>
-            `;
-        } else {
-            for (const service of categoryServices) {
-                let priceDisplay = '';
-                const originalPrice = parseFloat(service.price);
-                
-                let serviceName = service.name;
-                if (typeof serviceName === 'object') {
-                    serviceName = serviceName[lang] || serviceName.ru || service.name;
-                }
-                
-                let serviceDescription = service.description || '—';
-                if (typeof serviceDescription === 'object') {
-                    serviceDescription = serviceDescription[lang] || serviceDescription.ru || '—';
-                }
-                
-                if (service.price === '0') {
-                    priceDisplay = getUIText('price_free');
-                } else if (categoryDiscount) {
-                    let discountedPrice = originalPrice;
-                    if (categoryDiscount.type === 'percentage') {
-                        discountedPrice = originalPrice * (1 - categoryDiscount.value / 100);
-                        priceDisplay = `
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <span style="text-decoration: line-through; color: #9CA3AF; font-size: 12px;">${originalPrice}</span>
-                                <span style="color: #EF4444; font-weight: 700; font-size: 15px;">${discountedPrice.toFixed(0)} <span style="font-size: 11px;">${getUIText('price_with_discount')}</span></span>
-                            </div>
-                        `;
-                    } else {
-                        discountedPrice = Math.max(0, originalPrice - categoryDiscount.value);
-                        priceDisplay = `
-                            <div style="display: flex; flex-direction: column; gap: 4px;">
-                                <span style="text-decoration: line-through; color: #9CA3AF; font-size: 12px;">${originalPrice}</span>
-                                <span style="color: #EF4444; font-weight: 700; font-size: 15px;">${discountedPrice.toFixed(0)} <span style="font-size: 11px;">${getUIText('price_with_discount')}</span></span>
-                            </div>
-                        `;
-                    }
-                } else {
-                    priceDisplay = `<span style="font-size: 15px;">${originalPrice}</span>`;
-                }
-                
-                html += `
-                    <tr style="border-bottom: 1px solid #E5E7EB;">
-                        <td style="padding: 12px 15px; word-break: break-word;"><strong>${escapeHtml(serviceName)}</strong></td>
-                        <td style="padding: 12px 15px; vertical-align: top;">${priceDisplay}</td>
-                        <td style="padding: 12px 15px; vertical-align: top;">${getCurrencyHtml(service.unit)}</td>
-                        <td style="padding: 12px 15px; vertical-align: top; word-break: break-word;">${escapeHtml(serviceDescription)}</td>
-                        <td style="padding: 12px 15px; vertical-align: top; white-space: nowrap;">
-                            <button class="btn-edit-price-service" data-id="${service.id}" data-category-id="${category.id}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;">✏️</button>
-                            <button class="btn-delete-price-service" data-id="${service.id}" style="background: #FEE2E2; color: #DC2626; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">🗑️</button>
-                          </td>
-                       </tr>
-                `;
-            }
-        }
-        
-        html += `
-                        </tbody>
-                     </table>
-                </div>
-            </div>
-        `;
-    }
-    
-    container.innerHTML = html;
-    
-    document.querySelectorAll('.price-category-header').forEach(header => {
-        const newHeader = header.cloneNode(true);
-        header.parentNode.replaceChild(newHeader, header);
-        
-        newHeader.addEventListener('click', function(e) {
-            if (e.target.tagName === 'BUTTON') return;
-            const card = this.closest('.price-category-card');
-            const content = card.querySelector('.category-content');
-            const toggle = this.querySelector('.price-category-toggle');
-            
-            if (content) {
-                if (content.style.display === 'none') {
-                    content.style.display = 'block';
-                    if (toggle) toggle.style.transform = 'rotate(0deg)';
-                } else {
-                    content.style.display = 'none';
-                    if (toggle) toggle.style.transform = 'rotate(180deg)';
-                }
-            }
-        });
-    });
-    
-    document.querySelectorAll('.btn-edit-category').forEach(btn => {
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        newBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            editCategory(parseInt(newBtn.dataset.id));
-        });
-    });
-    
-    document.querySelectorAll('.btn-delete-category').forEach(btn => {
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        newBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            deleteCategory(parseInt(newBtn.dataset.id));
-        });
-    });
-    
-    document.querySelectorAll('.btn-edit-price-service').forEach(btn => {
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        newBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const serviceId = parseInt(newBtn.dataset.id);
-            const categoryId = parseInt(newBtn.dataset.categoryId);
-            editPriceService(serviceId, categoryId);
-        });
-    });
-    
-    document.querySelectorAll('.btn-delete-price-service').forEach(btn => {
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        newBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            deletePriceService(parseInt(newBtn.dataset.id));
-        });
-    });
-}
-
-async function editPriceService(id, categoryId) {
-    await refreshPricesData();
-    
-    const service = pricesData?.services?.find(s => s.id === id);
-    if (!service) return;
-    
-    const categorySelect = document.getElementById('priceServiceCategoryId');
-    categorySelect.innerHTML = '<option value="">-- Выберите категорию --</option>';
-    pricesData?.categories?.forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat.id;
-        let categoryName = cat.name;
-        if (typeof categoryName === 'object') {
-            const lang = getCurrentAdminLang();
-            categoryName = categoryName[lang] || categoryName.ru || cat.name;
-        }
-        option.textContent = categoryName;
-        categorySelect.appendChild(option);
-    });
-    
-    const currentDiscount = getDiscountByCategoryId(categoryId || service.categoryId);
-    
-    document.getElementById('priceServiceId').value = service.id;
-    document.getElementById('priceServiceCategoryId').value = service.categoryId;
-    document.getElementById('priceServiceName').value = service.name;
-    document.getElementById('priceServicePrice').value = service.price;
-    document.getElementById('priceServiceUnit').value = service.unit;
-    document.getElementById('priceServiceDescription').value = service.description || '';
-    document.getElementById('priceServiceOrder').value = service.order || '';
-    document.getElementById('priceServiceActive').checked = service.active;
-    
-    const discountInfoContainer = document.getElementById('priceServiceDiscountInfo');
-    if (discountInfoContainer) {
-        if (currentDiscount) {
-            const activeDiscountText = getUIText('active_discount_on_category');
-            const validUntilText = getUIText('valid_until');
-            discountInfoContainer.innerHTML = `
-                <div style="background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 12px; margin-top: 10px;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 20px;">🏷️</span>
-                        <div>
-                            <strong style="color: #D97706;">${activeDiscountText}</strong><br>
-                            <span style="font-size: 13px;">${escapeHtml(currentDiscount.name)}: ${currentDiscount.type === 'percentage' ? currentDiscount.value + '%' : currentDiscount.value + ' BYN'}</span>
-                            ${currentDiscount.endDate ? `<span style="font-size: 12px; color: #6B7280;"> (${validUntilText} ${currentDiscount.endDate})</span>` : ''}
-                        </div>
-                    </div>
-                </div>
-            `;
-            discountInfoContainer.style.display = 'block';
-        } else {
-            discountInfoContainer.innerHTML = '';
-            discountInfoContainer.style.display = 'none';
-        }
-    }
-    
-    document.getElementById('priceServiceModalTitle').textContent = 'Редактировать услугу';
-    document.getElementById('priceServiceModal').style.display = 'flex';
-}
-
-async function deletePriceService(id) {
-    if (confirm('Удалить эту услугу из прайс-листа?')) {
-        pricesData.services = pricesData.services.filter(s => s.id !== id);
-        await savePricesData();
-        await refreshPricesData();
-        await renderAdminPrices();
-        showToast('Услуга удалена', 'success');
-    }
-}
-
-async function savePriceService(event) {
-    event.preventDefault();
-    const id = parseInt(document.getElementById('priceServiceId').value);
-    const categoryId = parseInt(document.getElementById('priceServiceCategoryId').value);
-    const name = document.getElementById('priceServiceName').value.trim();
-    const price = document.getElementById('priceServicePrice').value.trim();
-    const unit = document.getElementById('priceServiceUnit').value;
-    const description = document.getElementById('priceServiceDescription').value.trim();
-    const order = parseInt(document.getElementById('priceServiceOrder').value) || 999;
-    const active = document.getElementById('priceServiceActive').checked;
-    
-    if (!categoryId || !name) {
-        showToast('Заполните обязательные поля', 'error');
-        return;
-    }
-    
-    if (id) {
-        const index = pricesData.services.findIndex(s => s.id === id);
-        if (index !== -1) {
-            pricesData.services[index] = { ...pricesData.services[index], categoryId, name, price, unit, description, order, active };
-        }
-    } else {
-        const newId = getNextPriceServiceId(pricesData);
-        pricesData.services.push({ id: newId, categoryId, name, price, unit, description, order, active });
-    }
-    
-    try {
-        await savePricesData();
-        await refreshPricesData();
-        await renderAdminPrices();
-        showToast('Услуга сохранена', 'success');
-        document.getElementById('priceServiceModal').style.display = 'none';
-        document.getElementById('priceServiceForm').reset();
-    } catch (error) {
-        showToast('Ошибка сохранения', 'error');
-    }
-}
-
-// ========== ОБНОВЛЕНИЕ ПЕРЕВОДОВ ==========
-
-function updateAdminUITranslations() {
-    const currentLang = getCurrentAdminLang();
-    
-    const dateFilterInput = document.getElementById('appointmentDateFilter');
-    if (dateFilterInput) {
-        dateFilterInput.placeholder = getDatePlaceholder();
-    }
-    
-    document.querySelectorAll('[data-admin-translate]').forEach(el => {
-        const key = el.getAttribute('data-admin-translate');
-        if (key) {
-            const translated = getUIText(key);
-            if (translated) {
-                el.textContent = translated;
-            }
-        }
-    });
-    
-    const doctorFilter = document.getElementById('appointmentDoctorFilter');
-    if (doctorFilter && doctorFilter.options.length > 0) {
-        const firstOption = doctorFilter.options[0];
-        if (firstOption) {
-            firstOption.textContent = getUIText('filter_all_doctors');
-        }
-    }
-    
-    const statusFilter = document.getElementById('appointmentStatusFilter');
-    if (statusFilter && statusFilter.options.length > 1) {
-        const statusOptions = ['filter_all_statuses', 'status_pending', 'status_confirmed', 'status_completed', 'status_cancelled'];
-        statusFilter.querySelectorAll('option').forEach((opt, idx) => {
-            if (statusOptions[idx]) {
-                opt.textContent = getUIText(statusOptions[idx]);
-            }
-        });
-    }
-    
-    const serviceNameInput = document.getElementById('serviceName');
-    if (serviceNameInput && serviceNameInput.hasAttribute('placeholder')) {
-        serviceNameInput.placeholder = getUIText('service_name_placeholder');
-    }
-    
-    const servicePageInput = document.getElementById('servicePage');
-    if (servicePageInput && servicePageInput.hasAttribute('placeholder')) {
-        servicePageInput.placeholder = getUIText('service_url_placeholder');
-    }
-    
-    const serviceTitleInput = document.getElementById('serviceTitle');
-    if (serviceTitleInput && serviceTitleInput.hasAttribute('placeholder')) {
-        serviceTitleInput.placeholder = getUIText('service_title_placeholder');
-    }
-    
-    const doctorScheduleInput = document.getElementById('doctorSchedule');
-    if (doctorScheduleInput && doctorScheduleInput.hasAttribute('placeholder')) {
-        doctorScheduleInput.placeholder = getUIText('schedule_placeholder');
-    }
-    
-    const priceServicePriceInput = document.getElementById('priceServicePrice');
-    if (priceServicePriceInput && priceServicePriceInput.hasAttribute('placeholder')) {
-        priceServicePriceInput.placeholder = getUIText('price_placeholder');
-    }
-    
-    const priceServiceDescriptionInput = document.getElementById('priceServiceDescription');
-    if (priceServiceDescriptionInput && priceServiceDescriptionInput.hasAttribute('placeholder')) {
-        priceServiceDescriptionInput.placeholder = getUIText('note_placeholder');
-    }
-    
-    const categoryNameInput = document.getElementById('categoryName');
-    if (categoryNameInput && categoryNameInput.hasAttribute('placeholder')) {
-        categoryNameInput.placeholder = getUIText('category_name_placeholder');
-    }
-    
-    const detailServiceSelect = document.getElementById('detailServiceId');
-    if (detailServiceSelect && detailServiceSelect.options.length > 0) {
-        const firstOption = detailServiceSelect.options[0];
-        if (firstOption && firstOption.getAttribute('data-translate') === 'select_service_option') {
-            firstOption.textContent = getUIText('select_service_option');
-        }
-    }
-    
-    const appointmentDoctorSelect = document.getElementById('appointmentDoctorId');
-    if (appointmentDoctorSelect && appointmentDoctorSelect.options.length > 0) {
-        const firstOption = appointmentDoctorSelect.options[0];
-        if (firstOption && firstOption.getAttribute('data-translate') === 'select_doctor_option') {
-            firstOption.textContent = getUIText('select_doctor_option');
-        }
-    }
-    
-    const appointmentServiceSelect = document.getElementById('appointmentServiceId');
-    if (appointmentServiceSelect && appointmentServiceSelect.options.length > 0) {
-        const firstOption = appointmentServiceSelect.options[0];
-        if (firstOption && firstOption.getAttribute('data-translate') === 'select_service_option') {
-            firstOption.textContent = getUIText('select_service_option');
-        }
-    }
-    
-    const appointmentTimeSelect = document.getElementById('appointmentTime');
-    if (appointmentTimeSelect && appointmentTimeSelect.options.length > 0) {
-        const firstOption = appointmentTimeSelect.options[0];
-        if (firstOption && firstOption.getAttribute('data-translate') === 'select_time_option') {
-            firstOption.textContent = getUIText('select_time_option');
-        }
-    }
-    
-    const discountCategorySelect = document.getElementById('discountServiceId');
-    if (discountCategorySelect && discountCategorySelect.options.length > 0) {
-        const firstOption = discountCategorySelect.options[0];
-        if (firstOption && firstOption.getAttribute('data-translate') === 'select_category_option') {
-            firstOption.textContent = getUIText('select_category_option');
-        }
-    }
-    
-    const priceServiceCategorySelect = document.getElementById('priceServiceCategoryId');
-    if (priceServiceCategorySelect && priceServiceCategorySelect.options.length > 0) {
-        const firstOption = priceServiceCategorySelect.options[0];
-        if (firstOption && firstOption.getAttribute('data-translate') === 'select_category_option') {
-            firstOption.textContent = getUIText('select_category_option');
-        }
-    }
-    
-    const scheduleDoctorSelect = document.getElementById('scheduleDoctorSelect');
-    if (scheduleDoctorSelect && scheduleDoctorSelect.options.length > 0) {
-        const firstOption = scheduleDoctorSelect.options[0];
-        if (firstOption && firstOption.getAttribute('data-translate') === 'select_doctor_option') {
-            firstOption.textContent = getUIText('select_doctor_option');
-        }
-    }
-    
-    const scheduleLabels = document.querySelectorAll('#scheduleModal .schedule-day-card label, #scheduleModal .form-group label');
-    scheduleLabels.forEach(label => {
-        const text = label.textContent.trim();
-        if (text === 'Рабочий день' || text === 'Working day') {
-            label.textContent = getUIText('working_day_label');
-        } else if (text === 'Начало работы' || text === 'Start time') {
-            label.textContent = getUIText('work_start_label');
-        } else if (text === 'Конец работы' || text === 'End time') {
-            label.textContent = getUIText('work_end_label');
-        } else if (text === 'Начало перерыва' || text === 'Break start') {
-            label.textContent = getUIText('break_start_label');
-        } else if (text === 'Конец перерыва' || text === 'Break end') {
-            label.textContent = getUIText('break_end_label');
-        }
-    });
-    
-    const mainTextarea = document.getElementById('detailMainText');
-    if (mainTextarea && mainTextarea.hasAttribute('placeholder')) {
-        mainTextarea.placeholder = getUIText('main_text_placeholder');
-    }
-    
-    const secondaryTextarea = document.getElementById('detailSecondaryText');
-    if (secondaryTextarea && secondaryTextarea.hasAttribute('placeholder')) {
-        secondaryTextarea.placeholder = getUIText('secondary_text_placeholder');
-    }
-    
-    const featuresTextarea = document.getElementById('detailFeatures');
-    if (featuresTextarea && featuresTextarea.hasAttribute('placeholder')) {
-        featuresTextarea.placeholder = getUIText('features_placeholder');
-    }
-    
-    const stepsTextarea = document.getElementById('detailSteps');
-    if (stepsTextarea && stepsTextarea.hasAttribute('placeholder')) {
-        stepsTextarea.placeholder = getUIText('steps_placeholder');
-    }
-    
-    const modalTitles = {
-        'serviceModalTitle': 'modal_add_service',
-        'detailModalTitle': 'modal_add_service_detail',
-        'doctorModalTitle': 'modal_add_doctor',
-        'appointmentModalTitle': 'modal_new_appointment',
-        'discountModalTitle': 'modal_add_discount',
-        'priceServiceModalTitle': 'add_price_service',
-        'scheduleModalTitle': 'configure_schedule',
-        'categoryModalTitle': 'modal_add_category'
-    };
-    
-    for (const [id, key] of Object.entries(modalTitles)) {
-        const el = document.getElementById(id);
-        if (el) {
-            const translated = getUIText(key);
-            if (translated) el.textContent = translated;
-        }
-    }
-    
-    const viewReviewTitle = document.querySelector('#viewReviewModal .modal-header h2');
-    if (viewReviewTitle) {
-        viewReviewTitle.textContent = getUIText('view_review_title');
-    }
-    
-    const labelMappings = [
-        { selector: '#serviceForm label[for="serviceName"]', key: 'service_name_label' },
-        { selector: '#serviceForm label[for="servicePage"]', key: 'service_url_label' },
-        { selector: '#serviceForm .checkbox-label span', key: 'service_active_label' },
-        { selector: '#detailForm label[for="detailServiceId"]', key: 'service_select_label' },
-        { selector: '#detailForm label[for="detailMainText"]', key: 'main_text_label' },
-        { selector: '#detailForm label[for="detailSecondaryText"]', key: 'secondary_text_label' },
-        { selector: '#detailForm label[for="detailFeatures"]', key: 'features_label' },
-        { selector: '#detailForm label[for="detailSteps"]', key: 'steps_label' },
-        { selector: '#detailForm label[for="detailImages"]', key: 'images_label' },
-        { selector: '#doctorForm label[for="doctorLastName"]', key: 'last_name_label' },
-        { selector: '#doctorForm label[for="doctorFirstName"]', key: 'first_name_label' },
-        { selector: '#doctorForm label[for="doctorMiddleName"]', key: 'middle_name_label' },
-        { selector: '#doctorForm label[for="doctorSpecialization"]', key: 'specialization_label' },
-        { selector: '#doctorForm label[for="doctorPhoto"]', key: 'photo_label' },
-        { selector: '#doctorForm label[for="doctorEducation"]', key: 'education_label' },
-        { selector: '#doctorForm label[for="doctorExperience"]', key: 'experience_label' },
-        { selector: '#doctorForm label[for="doctorImprovement"]', key: 'improvement_label' },
-        { selector: '#doctorForm label[for="doctorSchedule"]', key: 'schedule_label' },
-        { selector: '#doctorForm .checkbox-label span', key: 'doctor_active_label' },
-        { selector: '#appointmentForm label[for="appointmentPatientName"]', key: 'patient_name_label' },
-        { selector: '#appointmentForm label[for="appointmentPhone"]', key: 'phone_label' },
-        { selector: '#appointmentForm label[for="appointmentEmail"]', key: 'email_label' },
-        { selector: '#appointmentForm label[for="appointmentDoctorId"]', key: 'doctor_label' },
-        { selector: '#appointmentForm label[for="appointmentServiceId"]', key: 'service_label' },
-        { selector: '#appointmentForm label[for="appointmentDate"]', key: 'date_label' },
-        { selector: '#appointmentForm label[for="appointmentTime"]', key: 'time_label' },
-        { selector: '#appointmentForm label[for="appointmentStatus"]', key: 'status_label' },
-        { selector: '#appointmentForm label[for="appointmentComment"]', key: 'comment_label' },
-        { selector: '#discountForm label[for="discountServiceId"]', key: 'category_label' },
-        { selector: '#discountForm label[for="discountName"]', key: 'discount_name_label' },
-        { selector: '#discountForm label[for="discountType"]', key: 'discount_type_label' },
-        { selector: '#discountForm label[for="discountValue"]', key: 'discount_value_label' },
-        { selector: '#discountForm label[for="discountStartDate"]', key: 'start_date_label' },
-        { selector: '#discountForm label[for="discountEndDate"]', key: 'end_date_label' },
-        { selector: '#discountForm label[for="discountDescription"]', key: 'description_label' },
-        { selector: '#discountForm .checkbox-label span', key: 'discount_active_label' },
-        { selector: '#priceServiceForm label[for="priceServiceCategoryId"]', key: 'category_label' },
-        { selector: '#priceServiceForm label[for="priceServiceName"]', key: 'service_name_label' },
-        { selector: '#priceServiceForm label[for="priceServicePrice"]', key: 'price_label' },
-        { selector: '#priceServiceForm label[for="priceServiceUnit"]', key: 'currency_label' },
-        { selector: '#priceServiceForm label[for="priceServiceDescription"]', key: 'note_label' },
-        { selector: '#priceServiceForm label[for="priceServiceOrder"]', key: 'order_label' },
-        { selector: '#priceServiceForm .checkbox-label span', key: 'active_label' },
-        { selector: '#categoryForm label[for="categoryName"]', key: 'category_name_label' },
-        { selector: '#categoryForm label[for="categoryOrder"]', key: 'category_order_label' },
-        { selector: '#categoryForm .checkbox-label span', key: 'category_active_label' },
-        { selector: '#viewReviewModal .review-view-author strong', key: 'author_label' },
-        { selector: '#viewReviewModal .review-view-user strong', key: 'about_label' },
-        { selector: '#viewReviewModal .review-view-rating strong', key: 'rating_label' },
-        { selector: '#viewReviewModal .review-view-text strong', key: 'review_text_label' },
-        { selector: '#viewReviewModal .review-view-date strong', key: 'date_label' }
-    ];
-    
-    labelMappings.forEach(mapping => {
-        const el = document.querySelector(mapping.selector);
-        if (el && !el.hasAttribute('data-admin-translate')) {
-            const translated = getUIText(mapping.key);
-            if (translated && translated !== mapping.key) {
-                el.textContent = translated;
-            }
-        }
-    });
-    
-    document.querySelectorAll('.modal .btn-save').forEach(btn => {
-        btn.textContent = getUIText('save_btn');
-    });
-    document.querySelectorAll('.modal .btn-cancel').forEach(btn => {
-        btn.textContent = getUIText('cancel_btn');
-    });
-    document.querySelectorAll('#viewReviewModal .btn-cancel').forEach(btn => {
-        btn.textContent = getUIText('close_btn');
-    });
-    
-    const resetBtn = document.getElementById('resetAppointmentFilters');
-    if (resetBtn) resetBtn.textContent = getUIText('btn_reset');
-    
-    const resetReviewBtn = document.getElementById('resetReviewFilters');
-    if (resetReviewBtn) resetReviewBtn.textContent = getUIText('btn_reset');
-    
-    const resetDiscountBtn = document.getElementById('resetDiscountFilters');
-    if (resetDiscountBtn) resetDiscountBtn.textContent = getUIText('btn_reset');
-    
-    const statLabels = document.querySelectorAll('.stat-label');
-    const statKeys = [
-        'stat_total_services', 'stat_active_services',
-        'stat_total_doctors', 'stat_total_appointments',
-        'stat_today_appointments', 'stat_week_appointments',
-        'stat_total_reviews', 'stat_published_reviews',
-        'stat_hidden_reviews', 'stat_categories',
-        'stat_services_count', 'stat_active_discounts',
-        'stat_expired_discounts', 'stat_upcoming_discounts'
-    ];
-    statLabels.forEach((label, idx) => {
-        if (statKeys[idx]) label.textContent = getUIText(statKeys[idx]);
-    });
-    
-    const reviewSearch = document.getElementById('reviewSearchFilter');
-    if (reviewSearch) reviewSearch.placeholder = getUIText('search_by_name_text');
-    
-    const priceSearch = document.getElementById('priceSearchFilter');
-    if (priceSearch) priceSearch.placeholder = getUIText('search_by_service');
-    
-    const discountSearch = document.getElementById('discountSearchFilter');
-    if (discountSearch) discountSearch.placeholder = getUIText('search_by_name');
-    
-    const patientHeader = document.querySelector('#tab-appointments .data-table th:nth-child(2)');
-    if (patientHeader) {
-        patientHeader.textContent = getUIText('th_patient');
-    }
-    
-    const adminLangToggle = document.getElementById('adminLangToggle');
-    if (adminLangToggle) {
-        adminLangToggle.innerHTML = currentLang === 'ru' ? '🌐 RUS / ENG' : '🌐 ENG / RUS';
-    }
-}
-
-// ========== УПРАВЛЕНИЕ УСЛУГАМИ ==========
-
 async function renderServices() {
     const tbody = document.getElementById('servicesList');
     if (!tbody) return;
@@ -2089,36 +1230,131 @@ async function renderServices() {
     if (activeServicesCount) activeServicesCount.textContent = activeCount;
     
     tbody.innerHTML = '';
-    services.forEach(service => {
+    
+    const sortedServices = [...services].sort((a, b) => (a.order || a.id) - (b.order || b.id));
+    
+    for (const service of sortedServices) {
         const statusText = service.active ? getUIText('status_active') : getUIText('status_inactive');
         const statusClass = service.active ? 'status-active' : 'status-inactive';
         const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
         
+        const basePage = getBasePageName(service.page);
+        const isLocked = isLockedPage(basePage);
+        const lockIcon = isLocked ? ' 🔒' : '';
+        const editDisabled = isLocked ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : '';
+        
+        let pageDisplay = service.page;
+        if (isLocked) {
+            pageDisplay = '🔒 ' + basePage + ` (${getUIText('locked_page')})`;
+        } else if (service.page.includes('service-detail.html')) {
+            pageDisplay = '📄 ' + service.page + ` (${getUIText('dynamic_page')})`;
+        } else if (service.page.includes('service-template.html')) {
+            pageDisplay = '📄 ' + service.page + ` (${getUIText('dynamic_template')})`;
+        }
+        
         const row = document.createElement('tr');
+        if (!service.active) {
+            row.style.opacity = '0.6';
+            row.style.backgroundColor = '#f5f5f5';
+        }
+        
         row.innerHTML = `
             <td>${service.id}</td>
-            <td><strong>${escapeHtml(serviceName)}</strong></td>
-            <td><code>${escapeHtml(service.page)}</code></td>
+            <td><strong>${escapeHtml(serviceName)}${lockIcon}</strong></td>
+            <td><code style="font-size: 12px;">${escapeHtml(pageDisplay)}</code></td>
             <td><span class="status-badge ${statusClass}">${statusText}</span></td>
             <td class="action-buttons">
-                <button class="btn-edit-service" data-id="${service.id}">✏️ ${getUIText('action_edit')}</button>
-                <button class="btn-delete-service" data-id="${service.id}">🗑️ ${getUIText('action_delete')}</button>
+                <button class="btn-edit-service" data-id="${service.id}" ${editDisabled} title="${isLocked ? getUIText('locked_page_title', 'Эта страница защищена от редактирования') : getUIText('action_edit')}">
+                    ✏️ ${getUIText('action_edit')}
+                </button>
+                <button class="btn-delete-service" data-id="${service.id}" ${editDisabled} title="${isLocked ? getUIText('locked_delete_title', 'Защищённые страницы нельзя удалить') : getUIText('action_delete')}">
+                    🗑️ ${getUIText('action_delete')}
+                </button>
+                ${!isLocked ? `
+                    <button class="btn-toggle-service" data-id="${service.id}" title="${service.active ? 'Скрыть' : 'Показать'}">
+                        ${service.active ? '🙈 Скрыть' : '👁️ Показать'}
+                    </button>
+                ` : ''}
              </span>
         `;
         tbody.appendChild(row);
-    });
+    }
     
     document.querySelectorAll('.btn-edit-service').forEach(btn => {
-        btn.addEventListener('click', () => editService(parseInt(btn.dataset.id)));
+        if (!btn.disabled) {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', () => editService(parseInt(newBtn.dataset.id)));
+        }
     });
+    
     document.querySelectorAll('.btn-delete-service').forEach(btn => {
-        btn.addEventListener('click', () => deleteService(parseInt(btn.dataset.id)));
+        if (!btn.disabled) {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', () => deleteService(parseInt(newBtn.dataset.id)));
+        }
     });
+    
+    document.querySelectorAll('.btn-toggle-service').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', () => toggleServiceVisibility(parseInt(newBtn.dataset.id)));
+    });
+}
+
+async function toggleServiceVisibility(id) {
+    const service = services.find(s => s.id === id);
+    if (!service) return;
+    
+    const basePage = getBasePageName(service.page);
+    if (isLockedPage(basePage)) {
+        showToast('❌ Нельзя скрыть защищённую страницу!', 'error');
+        return;
+    }
+    
+    service.active = !service.active;
+    
+    try {
+        await fetch(`${API_BASE_URL}/services/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(service)
+        });
+        
+        await loadAllData();
+        await renderServices();
+        showToast(`Услуга ${service.active ? 'показана' : 'скрыта'}`, 'success');
+    } catch (error) {
+        console.error('Ошибка:', error);
+        showToast('Ошибка при изменении статуса', 'error');
+    }
+}
+
+function editService(id) {
+    const service = services.find(s => s.id === id);
+    if (!service) return;
+    
+    const basePage = getBasePageName(service.page);
+    
+    if (isLockedPage(basePage)) {
+        showToast('❌ Эта страница защищена от редактирования!', 'error');
+        return;
+    }
+    
+    openServiceModal(true, service);
 }
 
 async function deleteService(id) {
     const service = services.find(s => s.id === id);
     if (!service) return;
+    
+    const basePage = getBasePageName(service.page);
+    
+    if (isLockedPage(basePage)) {
+        showToast('❌ Защищённые страницы нельзя удалить!', 'error');
+        return;
+    }
     
     const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
     
@@ -2138,33 +1374,84 @@ async function deleteService(id) {
 
 async function saveService(event) {
     event.preventDefault();
+    
     const id = parseInt(document.getElementById('serviceId').value);
-    const name = document.getElementById('serviceName').value.trim();
-    const page = document.getElementById('servicePage').value.trim();
+    let name = document.getElementById('serviceName').value.trim();
     const bgImage = document.getElementById('serviceBgImage').value.trim();
-    const title = document.getElementById('serviceTitle').value.trim();
+    let title = document.getElementById('serviceTitle').value.trim();
     const active = document.getElementById('serviceActive').checked;
     
-    if (!name || !page) {
-        showToast('Заполните обязательные поля', 'error');
+    if (!name) {
+        showToast('Заполните название услуги', 'error');
         return;
     }
+    
+    if (id) {
+        const existingService = services.find(s => s.id === id);
+        if (existingService) {
+            const basePage = getBasePageName(existingService.page);
+            if (isLockedPage(basePage)) {
+                showToast('❌ Нельзя редактировать защищённую страницу!', 'error');
+                return;
+            }
+        }
+    }
+    
+    const newId = id || await getNextServiceId();
+const page = `service-template.html?service=${newId}`;
+    
+    const currentLang = getCurrentAdminLang();
+    const existingService = services.find(s => s.id === id);
+    
+    let nameObj, titleObj;
+    if (existingService && typeof existingService.name === 'object') {
+        nameObj = { ...existingService.name, [currentLang]: name };
+        titleObj = { ...existingService.title, [currentLang]: title || name };
+    } else {
+        nameObj = { ru: name, en: name };
+        titleObj = { ru: title || name, en: title || name };
+    }
+    
+    const serviceData = { 
+        id: newId, 
+        name: nameObj, 
+        page, 
+        bgImage, 
+        title: titleObj, 
+        active, 
+        order: id || services.length + 1 
+    };
     
     try {
         if (id) {
             await fetch(`${API_BASE_URL}/services/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, name, page, bgImage, title, active, order: id })
+                body: JSON.stringify(serviceData)
             });
             showToast(`Услуга "${name}" обновлена`);
         } else {
-            const newId = await getNextServiceId();
-            await fetch(`${API_BASE_URL}/services`, {
+            const response = await fetch(`${API_BASE_URL}/services`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: newId, name, page, bgImage, title, active, order: services.length + 1 })
+                body: JSON.stringify(serviceData)
             });
+            const savedService = await response.json();
+            
+            await fetch(`${API_BASE_URL}/serviceDetails`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: await getNextServiceDetailId(),
+                    serviceId: savedService.id,
+                    mainText: { ru: '', en: '' },
+                    secondaryText: { ru: '', en: '' },
+                    features: { ru: '', en: '' },
+                    steps: { ru: '', en: '' },
+                    images: ''
+                })
+            });
+            
             showToast(`Услуга "${name}" добавлена`);
         }
         
@@ -2176,44 +1463,75 @@ async function saveService(event) {
         document.getElementById('serviceModal').style.display = 'none';
         document.getElementById('serviceForm').reset();
     } catch (error) {
+        console.error('Ошибка сохранения:', error);
         showToast('Ошибка сохранения', 'error');
     }
 }
 
 function openServiceModal(editMode = false, serviceData = null) {
-    document.getElementById('serviceModalTitle').textContent = editMode ? getUIText('modal_edit_service') : getUIText('modal_add_service');
+    const modalTitle = document.getElementById('serviceModalTitle');
+    if (modalTitle) {
+        modalTitle.textContent = editMode ? getUIText('modal_edit_service') : getUIText('modal_add_service');
+    }
+    
+    const pageField = document.getElementById('servicePage');
+    
     if (serviceData) {
         document.getElementById('serviceId').value = serviceData.id;
         document.getElementById('serviceName').value = typeof serviceData.name === 'object' ? (serviceData.name.ru || serviceData.name.en) : serviceData.name;
-        document.getElementById('servicePage').value = serviceData.page;
+        
+        pageField.value = `service-detail.html?service=${serviceData.id} (${getUIText('dynamic_page')})`;
+        pageField.disabled = true;
+        pageField.style.backgroundColor = '#f5f5f5';
+        
         document.getElementById('serviceBgImage').value = serviceData.bgImage || '';
         document.getElementById('serviceTitle').value = typeof serviceData.title === 'object' ? (serviceData.title.ru || serviceData.title.en) : (serviceData.title || '');
         document.getElementById('serviceActive').checked = serviceData.active;
+        
+        document.getElementById('serviceName').disabled = false;
+        document.getElementById('serviceBgImage').disabled = false;
+        document.getElementById('serviceTitle').disabled = false;
+        document.getElementById('serviceActive').disabled = false;
     } else {
         document.getElementById('serviceForm').reset();
         document.getElementById('serviceId').value = '';
         document.getElementById('serviceActive').checked = true;
+        
+        const newPageHint = getUIText('new_service_page_hint');
+        pageField.value = `service-detail.html?service=${newPageHint}`;
+        pageField.disabled = true;
+        pageField.style.backgroundColor = '#e8f5e9';
+        
+        document.getElementById('serviceName').disabled = false;
+        document.getElementById('serviceBgImage').disabled = false;
+        document.getElementById('serviceTitle').disabled = false;
+        document.getElementById('serviceActive').disabled = false;
     }
+    
     document.getElementById('serviceModal').style.display = 'flex';
 }
 
-function editService(id) {
-    const service = services.find(s => s.id === id);
-    if (service) {
-        openServiceModal(true, service);
-    }
-}
-
-// ========== ДЕТАЛЬНАЯ ИНФОРМАЦИЯ УСЛУГ ==========
 
 async function renderServiceDetails() {
     const tbody = document.getElementById('serviceDetailsList');
     const filterValue = document.getElementById('detailServiceFilter')?.value || '';
     if (!tbody) return;
     
+    const filterSelect = document.getElementById('detailServiceFilter');
+    if (filterSelect && filterSelect.options.length <= 1 && services.length > 0) {
+        console.log('🔄 Принудительное заполнение фильтра деталей услуг');
+        services.forEach(service => {
+            const option = document.createElement('option');
+            option.value = service.id;
+            const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
+            option.textContent = serviceName;
+            filterSelect.appendChild(option);
+        });
+    }
+    
     let filteredServices = [...services];
     
-    if (filterValue) {
+    if (filterValue && filterValue !== '') {
         filteredServices = filteredServices.filter(s => s.id == filterValue);
     }
     
@@ -2225,6 +1543,8 @@ async function renderServiceDetails() {
     
     for (const service of filteredServices) {
         const detail = serviceDetails.find(d => d.serviceId === service.id);
+        const basePage = getBasePageName(service.page);
+        const isLocked = isLockedPage(basePage);
         
         const serviceName = typeof service.name === 'object' ? (service.name[lang] || service.name.ru || service.name.en || service.name) : service.name;
         const hasContent = detail && (detail.mainText || detail.features || detail.steps);
@@ -2237,14 +1557,17 @@ async function renderServiceDetails() {
             mainTextPreview = mainText ? mainText.substring(0, 50) + (mainText.length > 50 ? '...' : '') : '—';
         }
         
+        const lockIcon = isLocked ? ' 🔒' : '';
+        const editDisabled = isLocked ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : '';
+        
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${service.id}</td>
+            <td>${service.id}${lockIcon}</td>
             <td><strong>${escapeHtml(serviceName)}</strong></td>
             <td>${escapeHtml(mainTextPreview)}</span>
-            <td><span class="status-badge ${statusClass}">${statusText}</span></span>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
             <td class="action-buttons">
-                <button class="btn-edit-detail" data-service-id="${service.id}" title="Редактировать">✏️ ${getUIText('action_edit')}</button>
+                <button class="btn-edit-detail" data-service-id="${service.id}" ${editDisabled} title="${isLocked ? 'Эта страница защищена от редактирования' : 'Редактировать'}">✏️ ${getUIText('action_edit')}</button>
                 ${hasContent ? '<span style="margin-left: 10px; font-size: 12px; color: #10B981;">✅</span>' : '<span style="margin-left: 10px; font-size: 12px; color: #F59E0B;">⚠️</span>'}
              </span>
         `;
@@ -2252,13 +1575,20 @@ async function renderServiceDetails() {
     }
     
     document.querySelectorAll('.btn-edit-detail').forEach(btn => {
-        btn.removeEventListener('click', handleEditDetail);
-        btn.addEventListener('click', handleEditDetail);
+        if (!btn.disabled) {
+            btn.removeEventListener('click', handleEditDetail);
+            btn.addEventListener('click', handleEditDetail);
+        }
     });
 }
 
 function handleEditDetail(e) {
     const serviceId = parseInt(e.currentTarget.dataset.serviceId);
+    const service = services.find(s => s.id === serviceId);
+    if (service && isLockedPage(getBasePageName(service.page))) {
+        showToast('❌ Эта страница защищена от редактирования!', 'error');
+        return;
+    }
     editServiceDetailByServiceId(serviceId);
 }
 
@@ -2266,6 +1596,11 @@ async function editServiceDetailByServiceId(serviceId) {
     const service = services.find(s => s.id === serviceId);
     if (!service) {
         showToast('Услуга не найдена', 'error');
+        return;
+    }
+    
+    if (isLockedPage(getBasePageName(service.page))) {
+        showToast('❌ Эта страница защищена от редактирования!', 'error');
         return;
     }
     
@@ -2312,6 +1647,11 @@ async function updateServiceDetailsFilter() {
     const currentValue = filter.value;
     filter.innerHTML = `<option value="">${getUIText('filter_all_services')}</option>`;
     
+    if (!services || services.length === 0) {
+        console.warn('⚠️ Нет услуг для заполнения фильтра!');
+        return;
+    }
+    
     const sortedServices = [...services].sort((a, b) => (a.order || a.id) - (b.order || b.id));
     
     sortedServices.forEach(service => {
@@ -2325,44 +1665,64 @@ async function updateServiceDetailsFilter() {
     if (currentValue && filter.querySelector(`option[value="${currentValue}"]`)) {
         filter.value = currentValue;
     }
+    
+    console.log('📋 Фильтр деталей услуг обновлён, найдено услуг:', sortedServices.length);
 }
 
 function openDetailModal(editMode = false, detailData = null) {
     const modalTitle = document.getElementById('detailModalTitle');
-    if (modalTitle) {
-        modalTitle.textContent = editMode ? 'Редактировать детальную информацию' : 'Добавить детальную информацию';
-    }
-    
     const serviceSelect = document.getElementById('detailServiceId');
-    if (serviceSelect) {
-        serviceSelect.innerHTML = '<option value="">-- Выберите услугу --</option>';
-        const sortedServices = [...services].sort((a, b) => (a.order || a.id) - (b.order || b.id));
-        sortedServices.forEach(service => {
-            const option = document.createElement('option');
-            option.value = service.id;
-            const serviceName = typeof service.name === 'object' ? (service.name.ru || service.name.en) : service.name;
-            option.textContent = serviceName;
-            serviceSelect.appendChild(option);
-        });
+    
+    if (modalTitle) {
+        modalTitle.textContent = editMode ? getUIText('edit_detail_info') : getUIText('modal_add_service_detail');
     }
     
-    if (detailData) {
+    if (editMode && detailData) {
+        serviceSelect.setAttribute('data-current-service-id', detailData.serviceId);
+        
+        const selectedService = services.find(s => s.id === detailData.serviceId);
+        
+        if (selectedService) {
+            const serviceName = typeof selectedService.name === 'object' 
+                ? (selectedService.name.ru || selectedService.name.en || 'Услуга') 
+                : selectedService.name;
+            
+            serviceSelect.innerHTML = '';
+            const option = document.createElement('option');
+            option.value = selectedService.id;
+            option.textContent = serviceName;
+            option.selected = true;
+            serviceSelect.appendChild(option);
+            
+            serviceSelect.disabled = true;
+            serviceSelect.style.backgroundColor = '#f5f5f5';
+            serviceSelect.style.opacity = '0.8';
+            serviceSelect.style.cursor = 'not-allowed';
+        } else {
+            serviceSelect.innerHTML = '<option value="">Услуга не найдена</option>';
+            serviceSelect.disabled = true;
+        }
+        
         document.getElementById('detailId').value = detailData.id || '';
-        document.getElementById('detailServiceId').value = detailData.serviceId || '';
-        document.getElementById('detailMainText').value = detailData.mainText || '';
-        document.getElementById('detailSecondaryText').value = detailData.secondaryText || '';
-        document.getElementById('detailFeatures').value = detailData.features || '';
-        document.getElementById('detailSteps').value = detailData.steps || '';
+        document.getElementById('detailMainText').value = typeof detailData.mainText === 'object' ? (detailData.mainText.ru || detailData.mainText.en || '') : (detailData.mainText || '');
+        document.getElementById('detailSecondaryText').value = typeof detailData.secondaryText === 'object' ? (detailData.secondaryText.ru || detailData.secondaryText.en || '') : (detailData.secondaryText || '');
+        document.getElementById('detailFeatures').value = typeof detailData.features === 'object' ? (detailData.features.ru || detailData.features.en || '') : (detailData.features || '');
+        document.getElementById('detailSteps').value = typeof detailData.steps === 'object' ? (detailData.steps.ru || detailData.steps.en || '') : (detailData.steps || '');
         document.getElementById('detailImages').value = detailData.images || '';
+        document.getElementById('detailImages2').value = detailData.images2 || '';
+        document.getElementById('detailImages3').value = detailData.images3 || '';
+        
     } else {
         document.getElementById('detailForm').reset();
         document.getElementById('detailId').value = '';
-    }
-    
-    if (serviceSelect && editMode && detailData) {
-        serviceSelect.disabled = true;
-    } else if (serviceSelect) {
+        
         serviceSelect.disabled = false;
+        serviceSelect.style.backgroundColor = '';
+        serviceSelect.style.opacity = '';
+        serviceSelect.style.cursor = '';
+        serviceSelect.removeAttribute('data-current-service-id');
+        
+        populateServiceSelectForDetail();
     }
     
     const modal = document.getElementById('detailModal');
@@ -2373,26 +1733,54 @@ async function saveServiceDetail(event) {
     event.preventDefault();
     
     const id = parseInt(document.getElementById('detailId').value);
-    const serviceId = parseInt(document.getElementById('detailServiceId').value);
-    const mainText = document.getElementById('detailMainText').value;
-    const secondaryText = document.getElementById('detailSecondaryText').value;
-    const features = document.getElementById('detailFeatures').value;
-    const steps = document.getElementById('detailSteps').value;
-    const images = document.getElementById('detailImages').value;
+    const serviceSelect = document.getElementById('detailServiceId');
+    
+    let serviceId = parseInt(serviceSelect.value);
+    
+    if (serviceSelect.disabled && serviceSelect.getAttribute('data-current-service-id')) {
+        serviceId = parseInt(serviceSelect.getAttribute('data-current-service-id'));
+    }
+    
+    let mainText = document.getElementById('detailMainText').value;
+    let secondaryText = document.getElementById('detailSecondaryText').value;
+    let features = document.getElementById('detailFeatures').value;
+    let steps = document.getElementById('detailSteps').value;
+    let images = document.getElementById('detailImages').value;
+    let images2 = document.getElementById('detailImages2').value;
+    let images3 = document.getElementById('detailImages3').value;
     
     if (!serviceId) {
         showToast('Выберите услугу', 'error');
         return;
     }
     
+    const currentLang = getCurrentAdminLang();
+    const existingDetail = serviceDetails.find(d => d.id === id);
+    
+    let mainTextObj, secondaryTextObj, featuresObj, stepsObj;
+    
+    if (existingDetail && typeof existingDetail.mainText === 'object') {
+        mainTextObj = { ...existingDetail.mainText, [currentLang]: mainText };
+        secondaryTextObj = { ...existingDetail.secondaryText, [currentLang]: secondaryText };
+        featuresObj = { ...existingDetail.features, [currentLang]: features };
+        stepsObj = { ...existingDetail.steps, [currentLang]: steps };
+    } else {
+        mainTextObj = { ru: mainText, en: mainText };
+        secondaryTextObj = { ru: secondaryText, en: secondaryText };
+        featuresObj = { ru: features, en: features };
+        stepsObj = { ru: steps, en: steps };
+    }
+    
     const detailData = {
         id: id,
         serviceId: serviceId,
-        mainText: mainText,
-        secondaryText: secondaryText,
-        features: features,
-        steps: steps,
-        images: images
+        mainText: mainTextObj,
+        secondaryText: secondaryTextObj,
+        features: featuresObj,
+        steps: stepsObj,
+        images: images,
+        images2: images2,
+        images3: images3
     };
     
     try {
@@ -2421,6 +1809,9 @@ async function saveServiceDetail(event) {
         await renderServiceDetails();
         await updateServiceDetailsFilter();
         
+        localStorage.setItem('dental_data_updated', Date.now().toString());
+        document.dispatchEvent(new CustomEvent('adminDataSaved'));
+        
         document.getElementById('detailModal').style.display = 'none';
         document.getElementById('detailForm').reset();
         
@@ -2429,8 +1820,6 @@ async function saveServiceDetail(event) {
         showToast('Ошибка сохранения', 'error');
     }
 }
-
-// ========== ВРАЧИ ==========
 
 async function renderDoctors() {
     const tbody = document.getElementById('doctorsList');
@@ -2447,7 +1836,7 @@ async function renderDoctors() {
         
         let photoHtml = '—';
         if (doctor.photo && doctor.photo.trim() !== '') {
-            photoHtml = `<img src="${doctor.photo}" class="doctor-photo-cell" alt="Фото" onerror="this.onerror=null; this.src='../assets/images/placeholder.jpg';">`;
+            photoHtml = `<img src="${doctor.photo}" class="doctor-photo-cell" alt="Фото" onerror="this.onerror=null; this.src='../assets/images/team/photo.jpg';">`;
         }
         
         const row = document.createElement('tr');
@@ -2456,7 +1845,7 @@ async function renderDoctors() {
             <td>${photoHtml}</td>
             <td><strong>${escapeHtml(fullName)}</strong></td>
             <td>${escapeHtml(doctor.specialization)}</span>
-            <td><span class="status-badge ${statusClass}">${statusText}</span></span>
+            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
             <td class="action-buttons">
                 <button class="btn-edit-doctor" data-id="${doctor.id}">✏️ ${getUIText('action_edit')}</button>
                 <button class="btn-delete-doctor" data-id="${doctor.id}">🗑️ ${getUIText('action_delete')}</button>
@@ -2556,7 +1945,7 @@ async function saveDoctor(event) {
     }
     
     if (!photo || photo === '') {
-        photo = `../assets/images/team/team-menu/photo-${newId}.jpg`;
+        photo = `../assets/images/team/photo.jpg`;
     }
     
     const doctorData = {
@@ -2740,7 +2129,6 @@ function editDoctor(id) {
     }
 }
 
-// ========== ЗАПИСЬ НА ПРИЕМ ==========
 
 function updateAvailableTimeSlotsForAdmin() {
     const dateInput = document.getElementById('appointmentDate');
@@ -3111,7 +2499,6 @@ function editAppointment(id) {
     }
 }
 
-// ========== ОТЗЫВЫ ==========
 
 async function renderAdminReviews() {
     const tbody = document.getElementById('reviewsList');
@@ -3271,7 +2658,6 @@ function initReviewFilters() {
     }
 }
 
-// ========== РАСПИСАНИЕ ==========
 
 async function renderAdminSchedule() {
     const container = document.getElementById('scheduleAdminContainer');
@@ -3279,6 +2665,17 @@ async function renderAdminSchedule() {
     
     let doctorsList = [];
     let scheduleList = [];
+    let allDoctorsFromAPI = [];
+    
+    try {
+        const doctorsResponse = await fetch(`${API_BASE_URL}/doctors`);
+        if (doctorsResponse.ok) {
+            allDoctorsFromAPI = await doctorsResponse.json();
+            console.log('✅ Загружены врачи из API для статуса');
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки врачей из API:', error);
+    }
     
     if (scheduleData) {
         if (scheduleData.doctors && Array.isArray(scheduleData.doctors)) {
@@ -3292,6 +2689,14 @@ async function renderAdminSchedule() {
     if (doctorsList.length === 0 && doctors && doctors.length > 0) {
         doctorsList = doctors;
     }
+    
+    doctorsList = doctorsList.map(doctor => {
+        const doctorFromAPI = allDoctorsFromAPI.find(d => d.id === doctor.id);
+        return {
+            ...doctor,
+            active: doctorFromAPI ? doctorFromAPI.active : true
+        };
+    });
     
     const totalDoctorsSchedule = document.getElementById('totalDoctorsSchedule');
     if (totalDoctorsSchedule) totalDoctorsSchedule.textContent = doctorsList.length;
@@ -3336,12 +2741,31 @@ async function renderAdminSchedule() {
         
         if (!doctorName || doctorName === '') doctorName = getUIText('unknown');
         
+        const isDoctorActive = doctor.active !== false;
+        const doctorStatusText = isDoctorActive ? getUIText('status_active_doctor') : getUIText('status_inactive_doctor');
+        const doctorStatusClass = isDoctorActive ? 'status-active' : 'status-inactive';
+        
+        const doctorCardOpacity = isDoctorActive ? '1' : '0.6';
+        const doctorCardBg = isDoctorActive ? 'white' : '#f5f5f5';
+        
+        let doctorPhoto = doctor.photo || '../assets/images/team/photo.jpg';
+        const invalidValues = ['', '123', '0', 'null', 'undefined', 'false'];
+        if (!doctorPhoto || invalidValues.includes(doctorPhoto)) {
+            doctorPhoto = '../assets/images/team/photo.jpg';
+        }
+        
         html += `
-            <div class="doctor-schedule-card-admin" data-doctor-id="${doctor.id}" style="background: white; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <div class="doctor-schedule-card-admin" data-doctor-id="${doctor.id}" style="background: ${doctorCardBg}; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); opacity: ${doctorCardOpacity};">
                 <div class="doctor-schedule-header-admin" style="cursor: pointer; background: #2F353B; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h3 style="color: white; margin: 0;">${escapeHtml(doctorName)}</h3>
-                        ${doctorSpecialization ? `<span style="color: #A5C33C; font-size: 14px;">${escapeHtml(doctorSpecialization)}</span>` : ''}
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="${doctorPhoto}" alt="Фото врача" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" onerror="this.onerror=null; this.src='../assets/images/team/photo.jpg';">
+                        <div>
+                            <h3 style="color: white; margin: 0;">${escapeHtml(doctorName)}</h3>
+                            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                ${doctorSpecialization ? `<span style="color: #A5C33C; font-size: 14px;">${escapeHtml(doctorSpecialization)}</span>` : ''}
+                                <span class="status-badge ${doctorStatusClass}" style="font-size: 11px; padding: 2px 8px;">${doctorStatusText}</span>
+                            </div>
+                        </div>
                     </div>
                     <span class="doctor-schedule-toggle" style="color: white; font-size: 20px;">▼</span>
                 </div>
@@ -3359,7 +2783,7 @@ async function renderAdminSchedule() {
                                 <th style="padding: 12px 15px; text-align: left;">${getUIText('th_time')}</th>
                                 <th style="padding: 12px 15px; text-align: left;">${getUIText('th_break')}</th>
                                 <th style="padding: 12px 15px; text-align: left; width: 80px;">${getUIText('th_actions')}</th>
-                              </tr>
+                            </tr>
                         </thead>
                         <tbody>
         `;
@@ -3369,7 +2793,7 @@ async function renderAdminSchedule() {
                 <tr>
                     <td colspan="4" style="padding: 30px; text-align: center; color: #6B7280;">
                         ${getUIText('lang') === 'ru' ? 'Расписание не настроено' : 'Schedule not configured'}
-                     </td>
+                    </td>
                 </tr>
             `;
         } else {
@@ -3397,13 +2821,13 @@ async function renderAdminSchedule() {
                                 ? `<span style="color: #10B981; font-weight: 500;">${escapeHtml(workHours)}</span>` 
                                 : `<span style="color: #EF4444;">${escapeHtml(workHours)}</span>`
                             }
-                         </td>
-                        <td style="padding: 12px 15px;">${escapeHtml(breakTime)}</td>
+                        </td>
+                        <td style="padding: 12px 15px;">${escapeHtml(breakTime)}</span>
                         <td style="padding: 12px 15px;">
-                            <button class="btn-edit-schedule" data-doctor="${doctor.id}" data-day="${schedule.day}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">
+                            <button class="btn-edit-schedule" data-doctor="${doctor.id}" data-day="${schedule.day}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;" ${!isDoctorActive ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}>
                                 ✏️
                             </button>
-                         </td>
+                        </td>
                     </tr>
                 `;
             }
@@ -3446,7 +2870,13 @@ async function renderAdminSchedule() {
         
         newBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            openScheduleModal(parseInt(newBtn.dataset.doctor), newBtn.dataset.day);
+            const doctorId = parseInt(newBtn.dataset.doctor);
+            const doctor = doctorsList.find(d => d.id === doctorId);
+            if (doctor && doctor.active === false) {
+                showToast('❌ Нельзя редактировать расписание скрытого врача', 'error');
+                return;
+            }
+            openScheduleModal(doctorId, newBtn.dataset.day);
         });
     });
 }
@@ -3507,7 +2937,15 @@ function openScheduleModal(doctorId, day) {
     const container = document.querySelector('.schedule-days-container');
     if (!container) return;
     
-    const days = [getUIText('monday'), getUIText('tuesday'), getUIText('wednesday'), getUIText('thursday'), getUIText('friday'), getUIText('saturday'), getUIText('sunday')];
+    const daysLocalized = [
+        getUIText('monday'),
+        getUIText('tuesday'),
+        getUIText('wednesday'),
+        getUIText('thursday'),
+        getUIText('friday'),
+        getUIText('saturday'),
+        getUIText('sunday')
+    ];
     const dayKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     
     const existingScheduleForDoctor = scheduleData?.schedule?.filter(s => s.doctorId === doctorId) || [];
@@ -3516,22 +2954,38 @@ function openScheduleModal(doctorId, day) {
         scheduleMap.set(s.day, s);
     });
     
+    function getScheduleLabel(key) {
+        const lang = getCurrentAdminLang();
+        const labels = {
+            ru: {
+                working_day: 'Рабочий день',
+                start_time: 'Начало работы',
+                end_time: 'Конец работы',
+                break_start: 'Начало перерыва',
+                break_end: 'Конец перерыва'
+            },
+            en: {
+                working_day: 'Working day',
+                start_time: 'Start time',
+                end_time: 'End time',
+                break_start: 'Break start',
+                break_end: 'Break end'
+            }
+        };
+        return labels[lang][key] || labels.ru[key];
+    }
+    
     container.innerHTML = '';
     
-    days.forEach((d, idx) => {
+    daysLocalized.forEach((d, idx) => {
         const currentDayKey = dayKeys[idx];
         const existing = scheduleMap.get(currentDayKey);
         
-        const isWorking = existing ? existing.isWorking : (idx < 5); 
+        const isWorking = existing ? existing.isWorking : (idx < 5);
         const timeStart = existing?.timeStart || '09:00';
         const timeEnd = existing?.timeEnd || '18:00';
         const breakStart = existing?.breakStart || '13:00';
         const breakEnd = existing?.breakEnd || '14:00';
-        
-        const [startHour, startMinute] = timeStart.split(':');
-        const [endHour, endMinute] = timeEnd.split(':');
-        const [breakStartHour, breakStartMinute] = breakStart.split(':');
-        const [breakEndHour, breakEndMinute] = breakEnd.split(':');
         
         container.innerHTML += `
             <div class="schedule-day-card" style="background: #F9FAFB; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
@@ -3540,14 +2994,14 @@ function openScheduleModal(doctorId, day) {
                     <div class="form-group">
                         <label class="checkbox-label">
                             <input type="checkbox" class="schedule-working" data-day="${currentDayKey}" ${isWorking ? 'checked' : ''}> 
-                            <span>Рабочий день</span>
+                            <span>${getScheduleLabel('working_day')}</span>
                         </label>
                     </div>
                 </div>
                 <div class="form-row work-hours-row" style="display: flex; flex-direction: column; gap: 15px; margin-top: 10px;" data-day="${currentDayKey}">
                     <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                         <div style="flex: 1; min-width: 180px;">
-                            <label>Начало работы</label>
+                            <label>${getScheduleLabel('start_time')}</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <select class="schedule-start-hour" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
                                     ${hourOptions}
@@ -3559,7 +3013,7 @@ function openScheduleModal(doctorId, day) {
                             </div>
                         </div>
                         <div style="flex: 1; min-width: 180px;">
-                            <label>Конец работы</label>
+                            <label>${getScheduleLabel('end_time')}</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <select class="schedule-end-hour" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
                                     ${hourOptions}
@@ -3573,7 +3027,7 @@ function openScheduleModal(doctorId, day) {
                     </div>
                     <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                         <div style="flex: 1; min-width: 180px;">
-                            <label>Начало перерыва</label>
+                            <label>${getScheduleLabel('break_start')}</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <select class="schedule-break-start-hour" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
                                     ${hourOptions}
@@ -3585,7 +3039,7 @@ function openScheduleModal(doctorId, day) {
                             </div>
                         </div>
                         <div style="flex: 1; min-width: 180px;">
-                            <label>Конец перерыва</label>
+                            <label>${getScheduleLabel('break_end')}</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <select class="schedule-break-end-hour" data-day="${currentDayKey}" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" ${!isWorking ? 'disabled' : ''}>
                                     ${hourOptions}
@@ -3670,7 +3124,7 @@ function openScheduleModal(doctorId, day) {
             if (breakEndHour) breakEndHour.value = '14';
             if (breakEndMinute) breakEndMinute.value = '00';
             
-            const isDefaultWorking = idx < 5; 
+            const isDefaultWorking = idx < 5;
             workingCheckbox.checked = isDefaultWorking;
             
             const selects = card.querySelectorAll('select');
@@ -3700,8 +3154,18 @@ function openScheduleModal(doctorId, day) {
         doctorName = doctorName[lang] || doctorName.ru || '';
     }
     
-    const dayNameRu = getDayNameRussian(day);
-    document.getElementById('scheduleModalTitle').textContent = `Настройка расписания - ${doctorName} (${dayNameRu})`;
+    const dayNamesLocalized = {
+        monday: getUIText('monday'),
+        tuesday: getUIText('tuesday'),
+        wednesday: getUIText('wednesday'),
+        thursday: getUIText('thursday'),
+        friday: getUIText('friday'),
+        saturday: getUIText('saturday'),
+        sunday: getUIText('sunday')
+    };
+    const localizedDayName = dayNamesLocalized[day] || day;
+    
+    document.getElementById('scheduleModalTitle').textContent = `${getUIText('configure_schedule')} - ${doctorName} (${localizedDayName})`;
     document.getElementById('scheduleModal').style.display = 'flex';
     
     const modal = document.getElementById('scheduleModal');
@@ -3801,7 +3265,6 @@ async function saveSchedule(event) {
     }
 }
 
-// ========== СКИДКИ ==========
 
 async function renderAdminDiscounts() {
     const tbody = document.getElementById('discountsList');
@@ -4298,6 +3761,1004 @@ function exportPricesToJSON() {
     URL.revokeObjectURL(url);
     
     showToast('Прайс-лист экспортирован', 'success');
+}
+
+
+async function refreshPricesData() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/prices`);
+        if (response.ok) {
+            const freshData = await response.json();
+            if (freshData) {
+                pricesData = freshData;
+                
+                if (pricesData.categories) {
+                    pricesData.categories = localizeArray(pricesData.categories, ['name']);
+                }
+                if (pricesData.services) {
+                    pricesData.services = localizeArray(pricesData.services, ['name', 'description']);
+                }
+                
+                console.log('🔄 Данные прайс-листа обновлены, категорий:', pricesData.categories?.length || 0);
+                return true;
+            }
+        }
+    } catch (error) {
+        console.error('❌ Ошибка обновления данных прайс-листа:', error);
+    }
+    return false;
+}
+
+async function openAddCategoryModal() {
+    await refreshPricesData();
+    
+    if (!pricesData) {
+        pricesData = { version: '2.0', categories: [], services: [] };
+    }
+    if (!pricesData.categories) pricesData.categories = [];
+    
+    document.getElementById('categoryId').value = '';
+    document.getElementById('categoryName').value = '';
+    const maxOrder = Math.max(...pricesData.categories.map(c => c.order || 0), 0);
+    document.getElementById('categoryOrder').value = maxOrder + 1;
+    document.getElementById('categoryActive').checked = true;
+    
+    document.getElementById('categoryModalTitle').textContent = getUIText('modal_add_category');
+    document.getElementById('categoryModal').style.display = 'flex';
+}
+
+async function editCategory(categoryId) {
+    await refreshPricesData();
+    
+    const category = pricesData?.categories?.find(c => c.id === categoryId);
+    if (!category) return;
+    
+    document.getElementById('categoryId').value = category.id;
+    document.getElementById('categoryName').value = typeof category.name === 'object' ? (category.name.ru || category.name) : category.name;
+    document.getElementById('categoryOrder').value = category.order || 0;
+    document.getElementById('categoryActive').checked = category.active !== false;
+    
+    document.getElementById('categoryModalTitle').textContent = getUIText('modal_edit_category');
+    document.getElementById('categoryModal').style.display = 'flex';
+}
+
+async function deleteCategory(categoryId) {
+    await refreshPricesData();
+    
+    const category = pricesData?.categories?.find(c => c.id === categoryId);
+    if (!category) return;
+    
+    const categoryName = typeof category.name === 'object' ? (category.name.ru || category.name) : category.name;
+    const servicesInCategory = pricesData?.services?.filter(s => s.categoryId === categoryId) || [];
+    
+    let confirmMessage = `Удалить категорию "${categoryName}"?`;
+    if (servicesInCategory.length > 0) {
+        confirmMessage += `\n\n⚠️ ВНИМАНИЕ: В этой категории ${servicesInCategory.length} услуг(а). Они также будут удалены!`;
+    }
+    
+    if (confirm(confirmMessage)) {
+        if (servicesInCategory.length > 0) {
+            pricesData.services = pricesData.services.filter(s => s.categoryId !== categoryId);
+        }
+        
+        pricesData.categories = pricesData.categories.filter(c => c.id !== categoryId);
+        
+        pricesData.categories.forEach((cat, index) => {
+            cat.order = index + 1;
+        });
+        
+        const saved = await savePricesData();
+        if (saved) {
+            await refreshPricesData();
+            await renderAdminPrices();
+            await updateCategoryFilters();
+            showToast(`Категория "${categoryName}" удалена`, 'success');
+        }
+    }
+}
+
+async function saveCategory(event) {
+    event.preventDefault();
+    
+    const id = parseInt(document.getElementById('categoryId').value);
+    let name = document.getElementById('categoryName').value.trim();
+    const order = parseInt(document.getElementById('categoryOrder').value) || 999;
+    const active = document.getElementById('categoryActive').checked;
+    
+    if (!name) {
+        showToast('Введите название категории', 'error');
+        return;
+    }
+    
+    await refreshPricesData();
+    
+    if (!pricesData) {
+        pricesData = { version: '2.0', categories: [], services: [] };
+    }
+    if (!pricesData.categories) pricesData.categories = [];
+    
+    if (typeof name === 'string') {
+        name = { ru: name, en: name };
+    }
+    
+    if (id && id > 0) {
+        const index = pricesData.categories.findIndex(c => c.id === id);
+        if (index !== -1) {
+            pricesData.categories[index] = {
+                ...pricesData.categories[index],
+                name: name,
+                order: order,
+                active: active
+            };
+        }
+        showToast(`Категория обновлена`, 'success');
+    } else {
+        const newId = getNextPriceCategoryId(pricesData);
+        pricesData.categories.push({
+            id: newId,
+            name: name,
+            order: order,
+            active: active
+        });
+        showToast(`Категория добавлена`, 'success');
+    }
+    
+    pricesData.categories.sort((a, b) => (a.order || 0) - (b.order || 0));
+    
+    const saved = await savePricesData();
+    
+    if (saved) {
+        await refreshPricesData();
+        await updateCategoryFilters();
+        await renderAdminPrices();
+        
+        const discountCategoryFilter = document.getElementById('discountCategoryFilter');
+        if (discountCategoryFilter && pricesData?.categories) {
+            const currentValue = discountCategoryFilter.value;
+            discountCategoryFilter.innerHTML = '<option value="all">Все категории</option>';
+            pricesData.categories.filter(c => c.active !== false).forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                let categoryName = cat.name;
+                if (typeof categoryName === 'object') {
+                    const lang = getCurrentAdminLang();
+                    categoryName = categoryName[lang] || categoryName.ru || cat.name;
+                }
+                option.textContent = categoryName;
+                discountCategoryFilter.appendChild(option);
+            });
+            if (currentValue && discountCategoryFilter.querySelector(`option[value="${currentValue}"]`)) {
+                discountCategoryFilter.value = currentValue;
+            }
+        }
+        
+        const totalCategories = document.getElementById('totalCategories');
+        if (totalCategories) {
+            totalCategories.textContent = pricesData.categories.length;
+        }
+    }
+    
+    document.getElementById('categoryModal').style.display = 'none';
+    document.getElementById('categoryForm').reset();
+}
+
+async function savePricesData() {
+    try {
+        if (!pricesData) {
+            pricesData = { version: '2.0', categories: [], services: [] };
+        }
+        if (!pricesData.categories) pricesData.categories = [];
+        if (!pricesData.services) pricesData.services = [];
+        if (!pricesData.version) pricesData.version = '2.0';
+        
+        const response = await fetch(`${API_BASE_URL}/prices`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pricesData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        console.log('✅ Данные прайс-листа сохранены в JSON Server');
+        return true;
+    } catch (error) {
+        console.error('❌ Ошибка сохранения прайс-листа:', error);
+        showToast('Ошибка сохранения', 'error');
+        return false;
+    }
+}
+
+async function updateCategoryFilters() {
+    const lang = getCurrentAdminLang();
+    
+    const categoryFilter = document.getElementById('priceCategoryFilter');
+    if (categoryFilter && pricesData?.categories) {
+        const currentValue = categoryFilter.value;
+        categoryFilter.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
+        
+        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        sortedCategories.filter(c => c.active !== false).forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
+            categoryFilter.appendChild(option);
+        });
+        
+        if (currentValue && categoryFilter.querySelector(`option[value="${currentValue}"]`)) {
+            categoryFilter.value = currentValue;
+        }
+    }
+    
+    const discountCategoryFilter = document.getElementById('discountCategoryFilter');
+    if (discountCategoryFilter && pricesData?.categories) {
+        const currentValue = discountCategoryFilter.value;
+        discountCategoryFilter.innerHTML = `<option value="all">${getUIText('filter_all_categories')}</option>`;
+        
+        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        sortedCategories.filter(c => c.active !== false).forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
+            discountCategoryFilter.appendChild(option);
+        });
+        
+        if (currentValue && discountCategoryFilter.querySelector(`option[value="${currentValue}"]`)) {
+            discountCategoryFilter.value = currentValue;
+        }
+    }
+    
+    const priceServiceCategory = document.getElementById('priceServiceCategoryId');
+    if (priceServiceCategory && pricesData?.categories) {
+        const currentValue = priceServiceCategory.value;
+        priceServiceCategory.innerHTML = '<option value="" data-translate="select_category_option">-- Выберите категорию --</option>';
+        
+        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        sortedCategories.filter(c => c.active !== false).forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
+            priceServiceCategory.appendChild(option);
+        });
+        
+        const firstOption = priceServiceCategory.options[0];
+        if (firstOption) firstOption.textContent = getUIText('select_category_option');
+        if (currentValue && priceServiceCategory.querySelector(`option[value="${currentValue}"]`)) {
+            priceServiceCategory.value = currentValue;
+        }
+    }
+    
+    const discountServiceId = document.getElementById('discountServiceId');
+    if (discountServiceId && pricesData?.categories) {
+        const currentValue = discountServiceId.value;
+        discountServiceId.innerHTML = '<option value="" data-translate="select_category_option">-- Выберите категорию --</option>';
+        
+        const sortedCategories = [...pricesData.categories].sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        sortedCategories.filter(c => c.active !== false).forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            let categoryName = cat.name;
+            if (typeof categoryName === 'object') {
+                categoryName = categoryName[lang] || categoryName.ru || cat.name;
+            }
+            option.textContent = categoryName;
+            discountServiceId.appendChild(option);
+        });
+        
+        const firstOption = discountServiceId.options[0];
+        if (firstOption) firstOption.textContent = getUIText('select_category_option');
+        if (currentValue && discountServiceId.querySelector(`option[value="${currentValue}"]`)) {
+            discountServiceId.value = currentValue;
+        }
+    }
+    
+    console.log('✅ Фильтры категорий обновлены, категорий:', pricesData?.categories?.length || 0);
+}
+
+async function renderAdminPrices() {
+    const container = document.getElementById('pricesAdminContainer');
+    if (!container) return;
+    
+    await refreshPricesData();
+    
+    const lang = getCurrentAdminLang();
+    const categoryFilter = document.getElementById('priceCategoryFilter')?.value || 'all';
+    const searchFilter = document.getElementById('priceSearchFilter')?.value.toLowerCase() || '';
+    
+    let categories = pricesData?.categories || [];
+    let servicesList = pricesData?.services || [];
+    
+    categories = categories.map(cat => ({
+        ...cat,
+        localizedName: getLocalizedText(cat.name)
+    }));
+    
+    if (categoryFilter !== 'all') {
+        servicesList = servicesList.filter(s => s.categoryId == categoryFilter);
+        categories = categories.filter(c => c.id == categoryFilter);
+    }
+    
+    if (searchFilter) {
+        servicesList = servicesList.filter(s => s.name.toLowerCase().includes(searchFilter));
+        const categoryIds = [...new Set(servicesList.map(s => s.categoryId))];
+        categories = categories.filter(c => categoryIds.includes(c.id));
+    }
+    
+    categories.sort((a, b) => (a.order || 0) - (b.order || 0));
+    
+    const totalCategories = document.getElementById('totalCategories');
+    const totalPriceServices = document.getElementById('totalPriceServices');
+    if (totalCategories) totalCategories.textContent = categories.length;
+    if (totalPriceServices) totalPriceServices.textContent = servicesList.length;
+    
+    const categorySelect = document.getElementById('priceCategoryFilter');
+    if (categorySelect && categorySelect.options.length <= 1 && pricesData?.categories) {
+        await updateCategoryFilters();
+    }
+    
+    if (categories.length === 0) {
+        container.innerHTML = '<div class="empty-prices" style="text-align: center; padding: 40px; color: #6B7280;">Нет категорий для отображения</div>';
+        return;
+    }
+    
+    let html = '';
+    
+    for (const category of categories) {
+        const categoryServices = servicesList.filter(s => s.categoryId === category.id);
+        
+        const categoryDiscount = getDiscountByCategoryId(category.id);
+        
+        let discountHtml = '';
+        if (categoryDiscount) {
+            const discountValue = categoryDiscount.type === 'percentage' 
+                ? categoryDiscount.value + '%' 
+                : categoryDiscount.value + ' BYN';
+            const dateText = categoryDiscount.endDate ? ` ${getUIText('until_label')} ${categoryDiscount.endDate}` : '';
+            discountHtml = `
+                <span style="background: #EF4444; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-left: 12px;">
+                    ${getUIText('discount_label')}: ${discountValue}${dateText}
+                </span>
+            `;
+        }
+        
+        const categoryOpacity = category.active !== false ? '1' : '0.6';
+        const categoryBg = category.active !== false ? 'white' : '#f5f5f5';
+        const categoryStatusText = category.active !== false ? getUIText('status_active') : getUIText('status_inactive');
+        
+        html += `
+            <div class="price-category-card" style="background: ${categoryBg}; border-radius: 16px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); opacity: ${categoryOpacity};" data-category-id="${category.id}">
+                <div class="price-category-header" style="cursor: pointer; background: #2F353B; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; flex-wrap: wrap;">
+                        <h3 style="color: white; margin: 0;">${escapeHtml(category.localizedName)}</h3>
+                        <span class="status-badge ${category.active !== false ? 'status-active' : 'status-inactive'}" style="margin-left: 15px;">${categoryStatusText}</span>
+                        ${discountHtml}
+                    </div>
+                    <div>
+                        <span style="background: #A5C33C; color: #1a1e22; padding: 4px 10px; border-radius: 20px; font-size: 12px; margin-right: 15px;">${categoryServices.length} ${getUIText('stat_services_count')}</span>
+                        <button class="btn-edit-category" data-id="${category.id}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;" title="Редактировать категорию">✏️</button>
+                        <button class="btn-toggle-category" data-id="${category.id}" style="background: #FEF3C7; color: #D97706; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;" title="${category.active !== false ? 'Скрыть' : 'Показать'}">${category.active !== false ? '🙈' : '👁️'}</button>
+                        <span class="price-category-toggle" style="color: white; font-size: 20px; margin-left: 10px;">▼</span>
+                    </div>
+                </div>
+                <div class="category-content" style="display: block; padding: 20px; background: ${categoryBg}; overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <colgroup>
+                            <col style="width: 35%;">
+                            <col style="width: 20%;">
+                            <col style="width: 15%;">
+                            <col style="width: 20%;">
+                            <col style="width: 10%;">
+                        </colgroup>
+                        <thead>
+                            <tr style="background: #F3F4F6;">
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_name')}</th>
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_price')}</th>
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_currency')}</th>
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${getUIText('th_note')}</th>
+                                <th style="padding: 12px 15px; text-align: left; font-weight: 600; width: 100px;">${getUIText('th_actions')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        `;
+        
+        if (categoryServices.length === 0) {
+            html += `
+                <tr style="border-bottom: 1px solid #E5E7EB;">
+                    <td colspan="5" style="padding: 30px; text-align: center; color: #9CA3AF;">
+                        Нет услуг в этой категории
+                    </td>
+                </tr>
+            `;
+        } else {
+            for (const service of categoryServices) {
+                let priceDisplay = '';
+                const originalPrice = parseFloat(service.price);
+                
+                let serviceName = service.name;
+                if (typeof serviceName === 'object') {
+                    serviceName = serviceName[lang] || serviceName.ru || service.name;
+                }
+                
+                let serviceDescription = service.description || '—';
+                if (typeof serviceDescription === 'object') {
+                    serviceDescription = serviceDescription[lang] || serviceDescription.ru || '—';
+                }
+                
+                if (service.price === '0') {
+                    priceDisplay = getUIText('price_free');
+                } else if (categoryDiscount) {
+                    let discountedPrice = originalPrice;
+                    if (categoryDiscount.type === 'percentage') {
+                        discountedPrice = originalPrice * (1 - categoryDiscount.value / 100);
+                        priceDisplay = `
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <span style="text-decoration: line-through; color: #9CA3AF; font-size: 12px;">${originalPrice}</span>
+                                <span style="color: #EF4444; font-weight: 700; font-size: 15px;">${discountedPrice.toFixed(0)} <span style="font-size: 11px;">${getUIText('price_with_discount')}</span></span>
+                            </div>
+                        `;
+                    } else {
+                        discountedPrice = Math.max(0, originalPrice - categoryDiscount.value);
+                        priceDisplay = `
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <span style="text-decoration: line-through; color: #9CA3AF; font-size: 12px;">${originalPrice}</span>
+                                <span style="color: #EF4444; font-weight: 700; font-size: 15px;">${discountedPrice.toFixed(0)} <span style="font-size: 11px;">${getUIText('price_with_discount')}</span></span>
+                            </div>
+                        `;
+                    }
+                } else {
+                    priceDisplay = `<span style="font-size: 15px;">${originalPrice}</span>`;
+                }
+                
+                const serviceOpacity = service.active !== false ? '1' : '0.6';
+                const serviceBg = service.active !== false ? 'transparent' : '#fff3e0';
+                const serviceStatusText = service.active !== false ? getUIText('status_active') : getUIText('status_inactive');
+                
+                html += `
+                    <tr style="border-bottom: 1px solid #E5E7EB; opacity: ${serviceOpacity}; background: ${serviceBg};">
+                        <td style="padding: 12px 15px; word-break: break-word;">
+                            <strong>${escapeHtml(serviceName)}</strong>
+                            <span class="status-badge ${service.active !== false ? 'status-active' : 'status-inactive'}" style="margin-left: 10px; font-size: 10px; padding: 2px 8px;">${serviceStatusText}</span>
+                        </td>
+                        <td style="padding: 12px 15px; vertical-align: top;">${priceDisplay}</td>
+                        <td style="padding: 12px 15px; vertical-align: top;">${getCurrencyHtml(service.unit)}</td>
+                        <td style="padding: 12px 15px; vertical-align: top; word-break: break-word;">${escapeHtml(serviceDescription)}</td>
+                        <td style="padding: 12px 15px; vertical-align: top; white-space: nowrap;">
+                            <button class="btn-edit-price-service" data-id="${service.id}" data-category-id="${category.id}" style="background: #E0E7FF; color: #4338CA; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;" title="Редактировать">✏️</button>
+                            <button class="btn-toggle-price-service" data-id="${service.id}" data-category-id="${category.id}" style="background: #FEF3C7; color: #D97706; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;" title="${service.active !== false ? 'Скрыть' : 'Показать'}">
+                                ${service.active !== false ? '🙈' : '👁️'}
+                            </button>
+                        </td>
+                     </tr>
+                `;
+            }
+        }
+        
+        html += `
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    }
+    
+    container.innerHTML = html;
+    
+    document.querySelectorAll('.price-category-header').forEach(header => {
+        const newHeader = header.cloneNode(true);
+        header.parentNode.replaceChild(newHeader, header);
+        
+        newHeader.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') return;
+            const card = this.closest('.price-category-card');
+            const content = card.querySelector('.category-content');
+            const toggle = this.querySelector('.price-category-toggle');
+            
+            if (content) {
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                    if (toggle) toggle.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.display = 'none';
+                    if (toggle) toggle.style.transform = 'rotate(180deg)';
+                }
+            }
+        });
+    });
+    
+    document.querySelectorAll('.btn-edit-category').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            editCategory(parseInt(newBtn.dataset.id));
+        });
+    });
+    
+    document.querySelectorAll('.btn-toggle-category').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const categoryId = parseInt(newBtn.dataset.id);
+            await toggleCategoryVisibility(categoryId);
+        });
+    });
+    
+    document.querySelectorAll('.btn-edit-price-service').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const serviceId = parseInt(newBtn.dataset.id);
+            const categoryId = parseInt(newBtn.dataset.categoryId);
+            editPriceService(serviceId, categoryId);
+        });
+    });
+    
+    document.querySelectorAll('.btn-toggle-price-service').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const serviceId = parseInt(newBtn.dataset.id);
+            await togglePriceServiceVisibility(serviceId);
+        });
+    });
+}
+
+async function toggleCategoryVisibility(categoryId) {
+    const category = pricesData.categories.find(c => c.id === categoryId);
+    if (!category) return;
+    
+    category.active = category.active === false ? true : false;
+    
+    const saved = await savePricesData();
+    if (saved) {
+        await refreshPricesData();
+        await renderAdminPrices();
+        await updateCategoryFilters();
+        showToast(`Категория ${category.active ? 'показана' : 'скрыта'}`, 'success');
+    }
+}
+
+async function editPriceService(id, categoryId) {
+    await refreshPricesData();
+    
+    const service = pricesData?.services?.find(s => s.id === id);
+    if (!service) return;
+    
+    const categorySelect = document.getElementById('priceServiceCategoryId');
+    categorySelect.innerHTML = '<option value="">-- Выберите категорию --</option>';
+    pricesData?.categories?.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.id;
+        let categoryName = cat.name;
+        if (typeof categoryName === 'object') {
+            const lang = getCurrentAdminLang();
+            categoryName = categoryName[lang] || categoryName.ru || cat.name;
+        }
+        option.textContent = categoryName;
+        categorySelect.appendChild(option);
+    });
+    
+    const currentDiscount = getDiscountByCategoryId(categoryId || service.categoryId);
+    
+    document.getElementById('priceServiceId').value = service.id;
+    document.getElementById('priceServiceCategoryId').value = service.categoryId;
+    document.getElementById('priceServiceName').value = service.name;
+    document.getElementById('priceServicePrice').value = service.price;
+    document.getElementById('priceServiceUnit').value = service.unit;
+    document.getElementById('priceServiceDescription').value = service.description || '';
+    document.getElementById('priceServiceOrder').value = service.order || '';
+    document.getElementById('priceServiceActive').checked = service.active;
+    
+    const discountInfoContainer = document.getElementById('priceServiceDiscountInfo');
+    if (discountInfoContainer) {
+        if (currentDiscount) {
+            const activeDiscountText = getUIText('active_discount_on_category');
+            const validUntilText = getUIText('valid_until');
+            discountInfoContainer.innerHTML = `
+                <div style="background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 12px; margin-top: 10px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 20px;">🏷️</span>
+                        <div>
+                            <strong style="color: #D97706;">${activeDiscountText}</strong><br>
+                            <span style="font-size: 13px;">${escapeHtml(currentDiscount.name)}: ${currentDiscount.type === 'percentage' ? currentDiscount.value + '%' : currentDiscount.value + ' BYN'}</span>
+                            ${currentDiscount.endDate ? `<span style="font-size: 12px; color: #6B7280;"> (${validUntilText} ${currentDiscount.endDate})</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            discountInfoContainer.style.display = 'block';
+        } else {
+            discountInfoContainer.innerHTML = '';
+            discountInfoContainer.style.display = 'none';
+        }
+    }
+    
+    document.getElementById('priceServiceModalTitle').textContent = 'Редактировать услугу';
+    document.getElementById('priceServiceModal').style.display = 'flex';
+}
+
+async function deletePriceService(id) {
+    if (confirm('Удалить эту услугу из прайс-листа?')) {
+        pricesData.services = pricesData.services.filter(s => s.id !== id);
+        await savePricesData();
+        await refreshPricesData();
+        await renderAdminPrices();
+        showToast('Услуга удалена', 'success');
+    }
+}
+
+async function savePriceService(event) {
+    event.preventDefault();
+    const id = parseInt(document.getElementById('priceServiceId').value);
+    const categoryId = parseInt(document.getElementById('priceServiceCategoryId').value);
+    const name = document.getElementById('priceServiceName').value.trim();
+    const price = document.getElementById('priceServicePrice').value.trim();
+    const unit = document.getElementById('priceServiceUnit').value;
+    const description = document.getElementById('priceServiceDescription').value.trim();
+    const order = parseInt(document.getElementById('priceServiceOrder').value) || 999;
+    const active = document.getElementById('priceServiceActive').checked;
+    
+    if (!categoryId || !name) {
+        showToast('Заполните обязательные поля', 'error');
+        return;
+    }
+    
+    if (id) {
+        const index = pricesData.services.findIndex(s => s.id === id);
+        if (index !== -1) {
+            pricesData.services[index] = { ...pricesData.services[index], categoryId, name, price, unit, description, order, active };
+        }
+    } else {
+        const newId = getNextPriceServiceId(pricesData);
+        pricesData.services.push({ id: newId, categoryId, name, price, unit, description, order, active });
+    }
+    
+    try {
+        await savePricesData();
+        await refreshPricesData();
+        await renderAdminPrices();
+        showToast('Услуга сохранена', 'success');
+        document.getElementById('priceServiceModal').style.display = 'none';
+        document.getElementById('priceServiceForm').reset();
+    } catch (error) {
+        showToast('Ошибка сохранения', 'error');
+    }
+}
+
+function updateAdminUITranslations() {
+    const currentLang = getCurrentAdminLang();
+    
+    const dateFilterInput = document.getElementById('appointmentDateFilter');
+    if (dateFilterInput) {
+        dateFilterInput.placeholder = getDatePlaceholder();
+    }
+    
+    document.querySelectorAll('[data-admin-translate]').forEach(el => {
+        const key = el.getAttribute('data-admin-translate');
+        if (key) {
+            const translated = getUIText(key);
+            if (translated) {
+                el.textContent = translated;
+            }
+        }
+    });
+    
+    const doctorFilter = document.getElementById('appointmentDoctorFilter');
+    if (doctorFilter && doctorFilter.options.length > 0) {
+        const firstOption = doctorFilter.options[0];
+        if (firstOption) {
+            firstOption.textContent = getUIText('filter_all_doctors');
+        }
+    }
+    
+    const statusFilter = document.getElementById('appointmentStatusFilter');
+    if (statusFilter && statusFilter.options.length > 1) {
+        const statusOptions = ['filter_all_statuses', 'status_pending', 'status_confirmed', 'status_completed', 'status_cancelled'];
+        statusFilter.querySelectorAll('option').forEach((opt, idx) => {
+            if (statusOptions[idx]) {
+                opt.textContent = getUIText(statusOptions[idx]);
+            }
+        });
+    }
+    
+    const serviceNameInput = document.getElementById('serviceName');
+    if (serviceNameInput && serviceNameInput.hasAttribute('placeholder')) {
+        serviceNameInput.placeholder = getUIText('service_name_placeholder');
+    }
+    
+    const servicePageInput = document.getElementById('servicePage');
+    if (servicePageInput && servicePageInput.hasAttribute('placeholder')) {
+        servicePageInput.placeholder = getUIText('service_url_label');
+    }
+    
+    const serviceTitleInput = document.getElementById('serviceTitle');
+    if (serviceTitleInput && serviceTitleInput.hasAttribute('placeholder')) {
+        serviceTitleInput.placeholder = getUIText('service_title_placeholder');
+    }
+    
+    const doctorScheduleInput = document.getElementById('doctorSchedule');
+    if (doctorScheduleInput && doctorScheduleInput.hasAttribute('placeholder')) {
+        doctorScheduleInput.placeholder = getUIText('schedule_placeholder');
+    }
+    
+    const priceServicePriceInput = document.getElementById('priceServicePrice');
+    if (priceServicePriceInput && priceServicePriceInput.hasAttribute('placeholder')) {
+        priceServicePriceInput.placeholder = getUIText('price_placeholder');
+    }
+    
+    const priceServiceDescriptionInput = document.getElementById('priceServiceDescription');
+    if (priceServiceDescriptionInput && priceServiceDescriptionInput.hasAttribute('placeholder')) {
+        priceServiceDescriptionInput.placeholder = getUIText('note_placeholder');
+    }
+    
+    const categoryNameInput = document.getElementById('categoryName');
+    if (categoryNameInput && categoryNameInput.hasAttribute('placeholder')) {
+        categoryNameInput.placeholder = getUIText('category_name_placeholder');
+    }
+    
+    const detailServiceSelect = document.getElementById('detailServiceId');
+    if (detailServiceSelect && detailServiceSelect.options.length > 0) {
+        const firstOption = detailServiceSelect.options[0];
+        if (firstOption && firstOption.getAttribute('data-translate') === 'select_service_option') {
+            firstOption.textContent = getUIText('select_service_option');
+        }
+    }
+    
+    const appointmentDoctorSelect = document.getElementById('appointmentDoctorId');
+    if (appointmentDoctorSelect && appointmentDoctorSelect.options.length > 0) {
+        const firstOption = appointmentDoctorSelect.options[0];
+        if (firstOption && firstOption.getAttribute('data-translate') === 'select_doctor_option') {
+            firstOption.textContent = getUIText('select_doctor_option');
+        }
+    }
+    
+    const appointmentServiceSelect = document.getElementById('appointmentServiceId');
+    if (appointmentServiceSelect && appointmentServiceSelect.options.length > 0) {
+        const firstOption = appointmentServiceSelect.options[0];
+        if (firstOption && firstOption.getAttribute('data-translate') === 'select_service_option') {
+            firstOption.textContent = getUIText('select_service_option');
+        }
+    }
+    
+    const appointmentTimeSelect = document.getElementById('appointmentTime');
+    if (appointmentTimeSelect && appointmentTimeSelect.options.length > 0) {
+        const firstOption = appointmentTimeSelect.options[0];
+        if (firstOption && firstOption.getAttribute('data-translate') === 'select_time_option') {
+            firstOption.textContent = getUIText('select_time_option');
+        }
+    }
+    
+    const discountCategorySelect = document.getElementById('discountServiceId');
+    if (discountCategorySelect && discountCategorySelect.options.length > 0) {
+        const firstOption = discountCategorySelect.options[0];
+        if (firstOption && firstOption.getAttribute('data-translate') === 'select_category_option') {
+            firstOption.textContent = getUIText('select_category_option');
+        }
+    }
+    
+    const priceServiceCategorySelect = document.getElementById('priceServiceCategoryId');
+    if (priceServiceCategorySelect && priceServiceCategorySelect.options.length > 0) {
+        const firstOption = priceServiceCategorySelect.options[0];
+        if (firstOption && firstOption.getAttribute('data-translate') === 'select_category_option') {
+            firstOption.textContent = getUIText('select_category_option');
+        }
+    }
+    
+    const scheduleDoctorSelect = document.getElementById('scheduleDoctorSelect');
+    if (scheduleDoctorSelect && scheduleDoctorSelect.options.length > 0) {
+        const firstOption = scheduleDoctorSelect.options[0];
+        if (firstOption && firstOption.getAttribute('data-translate') === 'select_doctor_option') {
+            firstOption.textContent = getUIText('select_doctor_option');
+        }
+    }
+    
+    const scheduleLabels = document.querySelectorAll('#scheduleModal .schedule-day-card label');
+    scheduleLabels.forEach(label => {
+        const text = label.textContent.trim();
+        if (text === 'Рабочий день' || text === 'Working day') {
+            label.textContent = getUIText('working_day_label');
+        } else if (text === 'Начало работы' || text === 'Start time') {
+            label.textContent = getUIText('work_start_label');
+        } else if (text === 'Конец работы' || text === 'End time') {
+            label.textContent = getUIText('work_end_label');
+        } else if (text === 'Начало перерыва' || text === 'Break start') {
+            label.textContent = getUIText('break_start_label');
+        } else if (text === 'Конец перерыва' || text === 'Break end') {
+            label.textContent = getUIText('break_end_label');
+        }
+    });
+    
+    const workingDayCheckboxes = document.querySelectorAll('#scheduleModal .checkbox-label span');
+    workingDayCheckboxes.forEach(checkbox => {
+        const text = checkbox.textContent.trim();
+        if (text === 'Рабочий день' || text === 'Working day') {
+            checkbox.textContent = getUIText('working_day_label');
+        }
+    });
+    
+    const mainTextarea = document.getElementById('detailMainText');
+    if (mainTextarea && mainTextarea.hasAttribute('placeholder')) {
+        mainTextarea.placeholder = getUIText('main_text_placeholder');
+    }
+    
+    const secondaryTextarea = document.getElementById('detailSecondaryText');
+    if (secondaryTextarea && secondaryTextarea.hasAttribute('placeholder')) {
+        secondaryTextarea.placeholder = getUIText('secondary_text_placeholder');
+    }
+    
+    const featuresTextarea = document.getElementById('detailFeatures');
+    if (featuresTextarea && featuresTextarea.hasAttribute('placeholder')) {
+        featuresTextarea.placeholder = getUIText('features_placeholder');
+    }
+    
+    const stepsTextarea = document.getElementById('detailSteps');
+    if (stepsTextarea && stepsTextarea.hasAttribute('placeholder')) {
+        stepsTextarea.placeholder = getUIText('steps_placeholder');
+    }
+    
+    const modalTitles = {
+        'serviceModalTitle': 'modal_add_service',
+        'detailModalTitle': 'modal_add_service_detail',
+        'doctorModalTitle': 'modal_add_doctor',
+        'appointmentModalTitle': 'modal_new_appointment',
+        'discountModalTitle': 'modal_add_discount',
+        'priceServiceModalTitle': 'add_price_service',
+        'scheduleModalTitle': 'configure_schedule',
+        'categoryModalTitle': 'modal_add_category'
+    };
+    
+    for (const [id, key] of Object.entries(modalTitles)) {
+        const el = document.getElementById(id);
+        if (el) {
+            const translated = getUIText(key);
+            if (translated) el.textContent = translated;
+        }
+    }
+    
+    const viewReviewTitle = document.querySelector('#viewReviewModal .modal-header h2');
+    if (viewReviewTitle) {
+        viewReviewTitle.textContent = getUIText('view_review_title');
+    }
+    
+    const labelMappings = [
+        { selector: '#serviceForm label[for="serviceName"]', key: 'service_name_label' },
+        { selector: '#serviceForm label[for="servicePage"]', key: 'service_url_label' },
+        { selector: '#serviceForm .checkbox-label span', key: 'service_active_label' },
+        { selector: '#detailForm label[for="detailServiceId"]', key: 'service_select_label' },
+        { selector: '#detailForm label[for="detailMainText"]', key: 'main_text_label' },
+        { selector: '#detailForm label[for="detailSecondaryText"]', key: 'secondary_text_label' },
+        { selector: '#detailForm label[for="detailFeatures"]', key: 'features_label' },
+        { selector: '#detailForm label[for="detailSteps"]', key: 'steps_label' },
+        { selector: '#detailForm label[for="detailImages"]', key: 'images_label' },
+        { selector: '#doctorForm label[for="doctorLastName"]', key: 'last_name_label' },
+        { selector: '#doctorForm label[for="doctorFirstName"]', key: 'first_name_label' },
+        { selector: '#doctorForm label[for="doctorMiddleName"]', key: 'middle_name_label' },
+        { selector: '#doctorForm label[for="doctorSpecialization"]', key: 'specialization_label' },
+        { selector: '#doctorForm label[for="doctorPhoto"]', key: 'photo_label' },
+        { selector: '#doctorForm label[for="doctorEducation"]', key: 'education_label' },
+        { selector: '#doctorForm label[for="doctorExperience"]', key: 'experience_label' },
+        { selector: '#doctorForm label[for="doctorImprovement"]', key: 'improvement_label' },
+        { selector: '#doctorForm label[for="doctorSchedule"]', key: 'schedule_label' },
+        { selector: '#doctorForm .checkbox-label span', key: 'doctor_active_label' },
+        { selector: '#appointmentForm label[for="appointmentPatientName"]', key: 'patient_name_label' },
+        { selector: '#appointmentForm label[for="appointmentPhone"]', key: 'phone_label' },
+        { selector: '#appointmentForm label[for="appointmentEmail"]', key: 'email_label' },
+        { selector: '#appointmentForm label[for="appointmentDoctorId"]', key: 'doctor_label' },
+        { selector: '#appointmentForm label[for="appointmentServiceId"]', key: 'service_label' },
+        { selector: '#appointmentForm label[for="appointmentDate"]', key: 'date_label' },
+        { selector: '#appointmentForm label[for="appointmentTime"]', key: 'time_label' },
+        { selector: '#appointmentForm label[for="appointmentStatus"]', key: 'status_label' },
+        { selector: '#appointmentForm label[for="appointmentComment"]', key: 'comment_label' },
+        { selector: '#discountForm label[for="discountServiceId"]', key: 'category_label' },
+        { selector: '#discountForm label[for="discountName"]', key: 'discount_name_label' },
+        { selector: '#discountForm label[for="discountType"]', key: 'discount_type_label' },
+        { selector: '#discountForm label[for="discountValue"]', key: 'discount_value_label' },
+        { selector: '#discountForm label[for="discountStartDate"]', key: 'start_date_label' },
+        { selector: '#discountForm label[for="discountEndDate"]', key: 'end_date_label' },
+        { selector: '#discountForm label[for="discountDescription"]', key: 'description_label' },
+        { selector: '#discountForm .checkbox-label span', key: 'discount_active_label' },
+        { selector: '#priceServiceForm label[for="priceServiceCategoryId"]', key: 'category_label' },
+        { selector: '#priceServiceForm label[for="priceServiceName"]', key: 'service_name_label' },
+        { selector: '#priceServiceForm label[for="priceServicePrice"]', key: 'price_label' },
+        { selector: '#priceServiceForm label[for="priceServiceUnit"]', key: 'currency_label' },
+        { selector: '#priceServiceForm label[for="priceServiceDescription"]', key: 'note_label' },
+        { selector: '#priceServiceForm label[for="priceServiceOrder"]', key: 'order_label' },
+        { selector: '#priceServiceForm .checkbox-label span', key: 'active_label' },
+        { selector: '#categoryForm label[for="categoryName"]', key: 'category_name_label' },
+        { selector: '#categoryForm label[for="categoryOrder"]', key: 'category_order_label' },
+        { selector: '#categoryForm .checkbox-label span', key: 'category_active_label' },
+        { selector: '#viewReviewModal .review-view-author strong', key: 'author_label' },
+        { selector: '#viewReviewModal .review-view-user strong', key: 'about_label' },
+        { selector: '#viewReviewModal .review-view-rating strong', key: 'rating_label' },
+        { selector: '#viewReviewModal .review-view-text strong', key: 'review_text_label' },
+        { selector: '#viewReviewModal .review-view-date strong', key: 'date_label' }
+    ];
+    
+    labelMappings.forEach(mapping => {
+        const el = document.querySelector(mapping.selector);
+        if (el && !el.hasAttribute('data-admin-translate')) {
+            const translated = getUIText(mapping.key);
+            if (translated && translated !== mapping.key) {
+                el.textContent = translated;
+            }
+        }
+    });
+    
+    document.querySelectorAll('.modal .btn-save').forEach(btn => {
+        btn.textContent = getUIText('save_btn');
+    });
+    document.querySelectorAll('.modal .btn-cancel').forEach(btn => {
+        btn.textContent = getUIText('cancel_btn');
+    });
+    document.querySelectorAll('#viewReviewModal .btn-cancel').forEach(btn => {
+        btn.textContent = getUIText('close_btn');
+    });
+    
+    const resetBtn = document.getElementById('resetAppointmentFilters');
+    if (resetBtn) resetBtn.textContent = getUIText('btn_reset');
+    
+    const resetReviewBtn = document.getElementById('resetReviewFilters');
+    if (resetReviewBtn) resetReviewBtn.textContent = getUIText('btn_reset');
+    
+    const resetDiscountBtn = document.getElementById('resetDiscountFilters');
+    if (resetDiscountBtn) resetDiscountBtn.textContent = getUIText('btn_reset');
+    
+    const statLabels = document.querySelectorAll('.stat-label');
+    const statKeys = [
+        'stat_total_services', 'stat_active_services',
+        'stat_total_doctors', 'stat_total_appointments',
+        'stat_today_appointments', 'stat_week_appointments',
+        'stat_total_reviews', 'stat_published_reviews',
+        'stat_hidden_reviews', 'stat_categories',
+        'stat_services_count', 'stat_active_discounts',
+        'stat_expired_discounts', 'stat_upcoming_discounts'
+    ];
+    statLabels.forEach((label, idx) => {
+        if (statKeys[idx]) label.textContent = getUIText(statKeys[idx]);
+    });
+    
+    const reviewSearch = document.getElementById('reviewSearchFilter');
+    if (reviewSearch) reviewSearch.placeholder = getUIText('search_by_name_text');
+    
+    const priceSearch = document.getElementById('priceSearchFilter');
+    if (priceSearch) priceSearch.placeholder = getUIText('search_by_service');
+    
+    const discountSearch = document.getElementById('discountSearchFilter');
+    if (discountSearch) discountSearch.placeholder = getUIText('search_by_name');
+    
+    const patientHeader = document.querySelector('#tab-appointments .data-table th:nth-child(2)');
+    if (patientHeader) {
+        patientHeader.textContent = getUIText('th_patient');
+    }
+    
+    const adminLangToggle = document.getElementById('adminLangToggle');
+    if (adminLangToggle) {
+        adminLangToggle.innerHTML = currentLang === 'ru' ? '🌐 RUS / ENG' : '🌐 ENG / RUS';
+    }
 }
 
 async function init() {

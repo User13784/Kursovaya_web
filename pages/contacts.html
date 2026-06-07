@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/theme.css">
     <link rel="stylesheet" href="../css/special-version.css">
     
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_ключ&lang=ru_RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_ключ&lang=ru_RU"></script>
     
     <style>
         .validation-error {
@@ -20,10 +20,8 @@
             font-size: 12px;
             color: #EF4444;
             margin-top: 5px;
-                padding-left: 200px;  
-
+            padding-left: 200px;
         }
-        ы
         .feedback-form input.error,
         .feedback-form textarea.error {
             border-bottom-color: #9F9F9F !important;
@@ -90,11 +88,19 @@
                         <a href="mailto:dentalclubreception@gmail.com" class="email">dentalclubreception@gmail.com</a>
                         
                         <div class="social-icons">
-                            <a href="#"><img src="../assets/images/icons/instagram.png" alt="Instagram"></a>
-                            <a href="#"><img src="../assets/images/icons/youtube.png" alt="YouTube"></a>
-                            <a href="#"><img src="../assets/images/icons/vk.png" alt="VK"></a>
-                            <a href="#"><img src="../assets/images/icons/whatsapp.png" alt="WhatsApp"></a>
-                        </div>
+    <a href="javascript:void(0);" class="social-link" data-social="instagram" data-translate="social_instagram">
+        <img src="../assets/images/icons/instagram.png" alt="Instagram">
+    </a>
+    <a href="javascript:void(0);" class="social-link" data-social="youtube" data-translate="social_youtube">
+        <img src="../assets/images/icons/youtube.png" alt="YouTube">
+    </a>
+    <a href="javascript:void(0);" class="social-link" data-social="vk" data-translate="social_vk">
+        <img src="../assets/images/icons/vk.png" alt="VK">
+    </a>
+    <a href="javascript:void(0);" class="social-link" data-social="whatsapp" data-translate="social_whatsapp">
+        <img src="../assets/images/icons/whatsapp.png" alt="WhatsApp">
+    </a>
+</div>
                     </div>
                     <div class="contacts-cta">
                          <button class="btn-outline" id="openAppointmentBtn2" data-translate="appointment_btn">ЗАПИСАТЬСЯ НА ПРИЕМ</button>
@@ -113,19 +119,19 @@
         </section>
 
         <section class="feedback-section">
-    <div class="container feedback-flex">
-        <div class="feedback-title">
-            <h2 data-translate="feedback_title">ОБРАТНАЯ <br>СВЯЗЬ</h2>
-        </div>
-        <form class="feedback-form" id="feedbackForm">
-            <input type="text" data-translate="name_placeholder" placeholder="Ваше имя" id="feedbackName">
-            <input type="email" data-translate="email_placeholder" placeholder="Email" id="feedbackEmail">
-            <input type="tel" data-translate="phone_placeholder" placeholder="+375 (29) 123-45-67" id="feedbackPhone">
-            <textarea data-translate="question_placeholder" placeholder="Введите ваш вопрос" id="feedbackQuestion"></textarea>
-            <button type="submit" class="btn-submit" data-translate="send_request">ОТПРАВИТЬ ЗАЯВКУ</button>
-        </form>
-    </div>
-</section>
+            <div class="container feedback-flex">
+                <div class="feedback-title">
+                    <h2 data-translate="feedback_title">ОБРАТНАЯ <br>СВЯЗЬ</h2>
+                </div>
+                <form class="feedback-form" id="feedbackForm">
+                    <input type="text" data-translate="name_placeholder" placeholder="Ваше имя" id="feedbackName">
+                    <input type="email" data-translate="email_placeholder" placeholder="Email" id="feedbackEmail">
+                    <input type="tel" data-translate="phone_placeholder" placeholder="+375 (29) 123-45-67" id="feedbackPhone">
+                    <textarea data-translate="question_placeholder" placeholder="Введите ваш вопрос" id="feedbackQuestion"></textarea>
+                    <button type="submit" class="btn-submit" data-translate="send_request">ОТПРАВИТЬ ЗАЯВКУ</button>
+                </form>
+            </div>
+        </section>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -468,6 +474,7 @@
                     }
                     
                     updatePlaceholders();
+                    initYandexMap(); // Перезагружаем карту при смене языка
                     
                     const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
                     document.dispatchEvent(event);
@@ -542,11 +549,44 @@
             
             ymaps.ready(function() {
                 var coords = [53.9025, 30.3319];
+                var currentLang = localStorage.getItem('dental_language') || 'ru';
+                
+                // Текст балуна в зависимости от языка
+                var balloonContent;
+                if (currentLang === 'ru') {
+                    balloonContent = {
+                        hint: 'Dental Club - Стоматологическая клиника',
+                        header: '<div style="font-weight: bold; color: #A5C33C;">🦷 DENTAL CLUB</div>',
+                        body: [
+                            '<div style="padding: 5px 0;">',
+                            '<span style="font-size: 13px;">📍 ул. Ленинская, 25, Могилев</span><br>',
+                            '<span style="font-size: 13px;">📞 +375 (29) 123-45-67</span><br>',
+                            '<span style="font-size: 13px;">🕐 Пн-Сб: 10:00 - 20:00</span>',
+                            '</div>'
+                        ].join(''),
+                        footer: '<div style="margin-top: 8px;"><button onclick="openVisitorAppointmentModal()" style="background: #A5C33C; color: #1a1e22; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 11px;">📅 Записаться</button></div>'
+                    };
+                } else {
+                    balloonContent = {
+                        hint: 'Dental Club - Dental Clinic',
+                        header: '<div style="font-weight: bold; color: #A5C33C;">🦷 DENTAL CLUB</div>',
+                        body: [
+                            '<div style="padding: 5px 0;">',
+                            '<span style="font-size: 13px;">📍 Leninskaya str., 25, Mogilev</span><br>',
+                            '<span style="font-size: 13px;">📞 +375 (29) 123-45-67</span><br>',
+                            '<span style="font-size: 13px;">🕐 Mon-Sat: 10:00 - 20:00</span>',
+                            '</div>'
+                        ].join(''),
+                        footer: '<div style="margin-top: 8px;"><button onclick="openVisitorAppointmentModal()" style="background: #A5C33C; color: #1a1e22; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 11px;">📅 Book appointment</button></div>'
+                    };
+                }
                 
                 var map = new ymaps.Map('yandexMap', {
                     center: coords,
                     zoom: 17,
                     controls: ['zoomControl', 'fullscreenControl']
+                }, {
+                    lang: currentLang === 'ru' ? 'ru_RU' : 'en_US'
                 });
                 
                 map.controls.remove('geolocationControl');
@@ -556,16 +596,10 @@
                 map.controls.remove('rulerControl');
                 
                 var placemark = new ymaps.Placemark(coords, {
-                    hintContent: 'Dental Club - Стоматологическая клиника',
-                    balloonContentHeader: '<div style="font-weight: bold; color: #A5C33C;">🦷 DENTAL CLUB</div>',
-                    balloonContentBody: [
-                        '<div style="padding: 5px 0;">',
-                        '<span style="font-size: 13px;">📍 ул. Ленинская, 25, Могилев</span><br>',
-                        '<span style="font-size: 13px;">📞 +375 (29) 123-45-67</span><br>',
-                        '<span style="font-size: 13px;">🕐 Пн-Сб: 10:00 - 20:00</span>',
-                        '</div>'
-                    ].join(''),
-                    balloonContentFooter: '<div style="margin-top: 8px;"><button onclick="openVisitorAppointmentModal()" style="background: #A5C33C; color: #1a1e22; border: none; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 11px;">📅 Записаться</button></div>'
+                    hintContent: balloonContent.hint,
+                    balloonContentHeader: balloonContent.header,
+                    balloonContentBody: balloonContent.body,
+                    balloonContentFooter: balloonContent.footer
                 }, {
                     preset: 'islands#redIcon',
                     iconShadow: true,
@@ -601,6 +635,7 @@
             updateMobileLangButton();
             initMobileLangSwitcher();
             updatePlaceholders();
+            initYandexMap();
         });
 
         document.addEventListener('languageChanged', function() {
@@ -627,8 +662,6 @@
             attributes: true,
             attributeFilter: ['data-theme']
         });
-
-        initYandexMap();
     </script>
     <script src="../js/special-version.js"></script>
 

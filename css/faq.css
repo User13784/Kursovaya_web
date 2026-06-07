@@ -29,7 +29,7 @@ main {
     height: 50vh;
     min-height: 400px;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                url('../assets/images/faq/faq-hero.jpg') center/cover no-repeat;
+                url('') center/cover no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -701,4 +701,37 @@ body {
 .search-input:focus {
     border-color: #A5C33C !important;
     outline: none !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.header,
+#header-placeholder .header {
+    position: relative !important;
+    top: 0 !important;
+    transform: none !important;
+    background-color: #0d0e10 !important;
+    background: rgb(21, 23, 26) !important;
+}
+
+.header .menu-btn span,
+.header .lang-selector span,
+.header .login-link,
+.header .burger-icon span {
+    color: #FFFFFF !important;
+}
+
+.header .menu-logo,
+.header .lang-logo {
+    filter: brightness(0) invert(1) !important;
 }

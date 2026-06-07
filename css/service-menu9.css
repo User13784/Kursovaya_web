@@ -617,3 +617,28 @@ body.menu-open {
 #openAppointmentBtn3, #openAppointmentBtn4 {
     display: none !important;
 }
+[data-theme="dark"] .tomograph-text-block h2,
+[data-theme="dark"] .tomograph-text-block h2[data-translate="luminirs_title"],
+[data-theme="dark"] .white-bg-section h2,
+[data-theme="dark"] .white-bg-section h2[data-translate] {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .hero-diagnostics h1,
+[data-theme="dark"] .tomograph-text-block h2,
+[data-theme="dark"] .specialists-text-block h2,
+[data-theme="dark"] .steps-text-block h2 {
+    color: #FFFFFF !important;
+}
+
+body.special-mode[data-special-font="xxlarge"] [data-translate="veneers_durability"] {
+    display: none !important;
+}
+
+body.special-mode #openAppointmentBtn3,
+body.special-mode button#openAppointmentBtn3,
+body.special-mode .diagnost-btn#openAppointmentBtn3 {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}

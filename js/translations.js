@@ -7,6 +7,70 @@ const translations = {
         'logout': 'ВЫЙТИ',
         'lang': 'АНГЛ',
         
+        'special_panel_title': '👁️ Настройки для слабовидящих',
+        'special_font_size': '📏 Размер шрифта',
+        'special_color_scheme': '🎨 Цвет фона и текста',
+        'special_images': '🖼️ Изображения',
+        'special_font_normal': 'Обычный',
+        'special_font_large': 'Увеличенный',
+        'special_font_xlarge': 'Крупный',
+        'special_font_xxlarge': 'Очень крупный',
+        'special_reset': '🔄 Сбросить',
+        'special_enable': '🟢 Включить режим',
+        'special_disable': '🔴 Выключить режим',
+        'special_hide_images': 'Скрыть фото',
+        'special_show_images': 'Показать фото',
+        
+            'show_more_reviews': '📖 Показать еще 3 отзыва',
+    'show_less_reviews': '📖 Скрыть лишние',
+        'special_scheme_black_yellow': 'Чёрный на жёлтом',
+        'special_scheme_white_black': 'Белый на чёрном',
+        'special_scheme_blue_yellow': 'Синий на жёлтом',
+        'special_scheme_black_white': 'Чёрный на белом',
+        'special_scheme_dark_blue_light': 'Тёмно-синий на светлом',
+        'profile_validation_last_name_required': 'Введите фамилию',
+'profile_validation_last_name_min': 'Фамилия должна содержать минимум 2 символа',
+'profile_validation_first_name_required': 'Введите имя',
+'profile_validation_first_name_min': 'Имя должно содержать минимум 2 символа',
+'profile_validation_email_required': 'Введите email',
+'profile_validation_email_invalid': 'Введите корректный email (например: name@domain.com)',
+'profile_validation_phone_required': 'Введите номер телефона',
+'profile_validation_phone_invalid': 'Введите корректный номер телефона (например: +375 29 123-45-67)',
+'profile_validation_email_exists': '❌ Пользователь с таким email уже существует!',
+'profile_validation_phone_exists': '❌ Пользователь с таким номером телефона уже существует!',
+        'signup_first_name_placeholder': 'Введите ваше имя',
+'signup_last_name_placeholder': 'Введите вашу фамилию',
+'signup_email_placeholder': 'example@mail.com',
+'signup_phone_placeholder': '+375 (29) 123-45-67',
+'signup_password_placeholder': 'Минимум 6 символов',
+'signup_confirm_password_placeholder': 'Повторите пароль',
+'signup_terms_error': '⚠️ Необходимо согласиться с условиями использования и политикой конфиденциальности',
+        'appointment_btn': 'ЗАПИСАТЬСЯ НА ПРИЕМ',
+        'features_title': 'Особенности',
+        'steps_title': 'Этапы',
+        'schedule_modal_title': 'Настройка расписания',
+        'schedule_doctor_label': 'Врач',
+        'schedule_select_doctor': '-- Выберите врача --',
+        'schedule_working_day': 'Рабочий день',
+        'schedule_start_time': 'Начало работы',
+        'schedule_end_time': 'Конец работы',
+        'schedule_break_start': 'Начало перерыва',
+        'schedule_break_end': 'Конец перерыва',
+        'schedule_save_btn': '💾 Сохранить расписание',
+        'schedule_cancel_btn': '❌ Отмена',
+        
+        'monday': 'Понедельник',
+        'tuesday': 'Вторник',
+        'wednesday': 'Среда',
+        'thursday': 'Четверг',
+        'friday': 'Пятница',
+        'saturday': 'Суббота',
+        'sunday': 'Воскресенье',
+        'not_specified': 'Не указано',
+'select_discount_type': '-- Выберите тип скидки --',
+'discount_percentage': 'Процентная (%)',
+'discount_fixed': 'Фиксированная (BYN)',
+'edit_detail_info': 'Редактировать детальную информацию',
          'review_rating': 'Ваша оценка:',
          'profile_title': 'Личный кабинет',
         'profile_personal_data': '📋 Личные данные',
@@ -46,7 +110,6 @@ const translations = {
         'profile_loading': 'Загрузка...',
         'profile_login_required': 'Войдите в аккаунт',
 
-         // Страница входа (login)
         'login_title': 'ВХОД В АККАУНТ',
         'login_subtitle': 'Добро пожаловать обратно!',
         'login_email_phone': 'Email или телефон',
@@ -63,7 +126,6 @@ const translations = {
         'login_success': 'Вход выполнен успешно! Перенаправление...',
         'login_server_error': 'Ошибка подключения к серверу. Запустите json-server',
 
-        // Страница регистрации (signup)
         'signup_title': 'СОЗДАНИЕ АККАУНТА',
         'signup_subtitle': 'Заполните форму для регистрации',
         'signup_first_name': 'Имя',
@@ -378,7 +440,71 @@ const translations = {
         'profile': 'PROFILE',
         'logout': 'LOGOUT',
         'lang': 'RUS',
+
+        'special_panel_title': '👁️ Accessibility Settings',
+        'special_font_size': '📏 Font Size',
+        'special_color_scheme': '🎨 Color Scheme',
+        'special_images': '🖼️ Images',
+        'special_font_normal': 'Normal',
+        'special_font_large': 'Large',
+        'special_font_xlarge': 'X-Large',
+        'special_font_xxlarge': 'XX-Large',
+        'special_reset': '🔄 Reset',
+        'special_enable': '🟢 Enable mode',
+        'special_disable': '🔴 Disable mode',
+        'special_hide_images': 'Hide Images',
+        'special_show_images': 'Show Images',
         
+            'show_more_reviews': '📖 Show 3 more reviews',
+    'show_less_reviews': '📖 Hide extra',
+        'special_scheme_black_yellow': 'Black on Yellow',
+        'special_scheme_white_black': 'White on Black',
+        'special_scheme_blue_yellow': 'Blue on Yellow',
+        'special_scheme_black_white': 'Black on White',
+        'special_scheme_dark_blue_light': 'Dark Blue on Light',
+                'profile_validation_last_name_required': 'Enter your last name',
+'profile_validation_last_name_min': 'Last name must contain at least 2 characters',
+'profile_validation_first_name_required': 'Enter your first name',
+'profile_validation_first_name_min': 'First name must contain at least 2 characters',
+'profile_validation_email_required': 'Enter email',
+'profile_validation_email_invalid': 'Enter a valid email (e.g., name@domain.com)',
+'profile_validation_phone_required': 'Enter phone number',
+'profile_validation_phone_invalid': 'Enter a valid phone number (e.g., +375 29 123-45-67)',
+'profile_validation_email_exists': '❌ User with this email already exists!',
+'profile_validation_phone_exists': '❌ User with this phone number already exists!',
+        'signup_first_name_placeholder': 'Enter your first name',
+'signup_last_name_placeholder': 'Enter your last name',
+'signup_email_placeholder': 'example@mail.com',
+'signup_phone_placeholder': '+375 (29) 123-45-67',
+'signup_password_placeholder': 'Minimum 6 characters',
+'signup_confirm_password_placeholder': 'Repeat password',
+'signup_terms_error': '⚠️ You must agree to the Terms of Use and Privacy Policy',
+                'appointment_btn': 'BOOK APPOINTMENT',
+        'features_title': 'Features',
+        'steps_title': 'Steps',
+        'schedule_modal_title': 'Настройка расписания',
+        'schedule_doctor_label': 'Врач',
+        'schedule_select_doctor': '-- Выберите врача --',
+        'schedule_working_day': 'Рабочий день',
+        'schedule_start_time': 'Начало работы',
+        'schedule_end_time': 'Конец работы',
+        'schedule_break_start': 'Начало перерыва',
+        'schedule_break_end': 'Конец перерыва',
+        'schedule_save_btn': '💾 Сохранить расписание',
+        'schedule_cancel_btn': '❌ Отмена',
+        
+        'monday': 'Понедельник',
+        'tuesday': 'Вторник',
+        'wednesday': 'Среда',
+        'thursday': 'Четверг',
+        'friday': 'Пятница',
+        'saturday': 'Суббота',
+        'sunday': 'Воскресенье',
+        'not_specified': 'Not specified',
+'select_discount_type': '-- Select discount type --',
+'discount_percentage': 'Percentage (%)',
+'discount_fixed': 'Fixed (BYN)',
+'edit_detail_info': 'Edit detailed information',
         'review_rating': 'Your rating:',
         'profile_title': 'Profile',
         'profile_personal_data': '📋 Personal Data',
@@ -418,7 +544,6 @@ const translations = {
         'profile_loading': 'Loading...',
         'profile_login_required': 'Please log in',
 
-         // Login page
         'login_title': 'LOGIN',
         'login_subtitle': 'Welcome back!',
         'login_email_phone': 'Email or phone',
@@ -435,7 +560,6 @@ const translations = {
         'login_success': 'Login successful! Redirecting...',
         'login_server_error': 'Server connection error. Please start json-server',
 
-        // Signup page
         'signup_title': 'CREATE ACCOUNT',
         'signup_subtitle': 'Fill out the form to register',
         'signup_first_name': 'First Name',
@@ -502,7 +626,7 @@ const translations = {
         'hero_title_full': 'DENTAL CLINIC',
         'city_text': 'IN MOGILEV',
         'appointment_btn': 'BOOK APPOINTMENT',
-        'clinic_name': 'CLINIC DENTAL CLUB',
+        'clinic_name': 'CLINIC',
         'clinic_desc': 'The first clinic in Belarus providing a full range of dental services at European level. We use advanced equipment and digital technologies.',
         'advantages_title': 'OUR',
         'advantages_subtitle': 'ADVANTAGES',
@@ -807,18 +931,17 @@ function applyTranslations() {
                     option.textContent = t[key];
                 }
             } else {
-                element.innerHTML = t[key];  
+                element.innerHTML = t[key];
             }
         }
     });
     
-    const categoryFilter = document.getElementById('priceCategoryFilter');
-    if (categoryFilter) {
-        const allOption = categoryFilter.querySelector('option[value="all"]');
-        if (allOption && allOption.getAttribute('data-translate') === 'all_services') {
-            allOption.textContent = t['all_services'] || 'Все услуги';
+    document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-translate-placeholder');
+        if (t[key] && (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA')) {
+            element.placeholder = t[key];
         }
-    }
+    });
     
     const headerLangSelector = document.getElementById('headerLangSelector');
     if (headerLangSelector) {

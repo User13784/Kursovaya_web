@@ -2906,3 +2906,66 @@ td .currency-icon {
 .btn-delete-service {
     display: none !important;
 }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.data-table td:last-child {
+    border-bottom: none !important;
+}
+
+.data-table td.action-buttons,
+.data-table td:last-child {
+    border-bottom: none !important;
+    vertical-align: middle !important;
+}
+
+.btn-delete-category {
+    display: none !important;
+}
+
+.btn-toggle-service {
+    background: #FEF3C7;
+    color: #D97706;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-toggle-service:hover {
+    background: #FDE68A;
+}
+
+[data-theme="dark"] .btn-toggle-service {
+    background: #374151;
+    color: #FDE68A;
+}
+
+[data-theme="dark"] .btn-toggle-service:hover {
+    background: #4B5563;
+}
+
+.btn-toggle-price-service {
+    display: none !important;
+}
+
+#tab-schedule .stats-row .stat-card:first-child {
+    display: none !important;
+}
+
+.btn-toggle-service {
+    display: none !important;
+}

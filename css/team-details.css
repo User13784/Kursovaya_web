@@ -361,3 +361,44 @@ body.menu-open {
     }
 }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+body.special-mode[data-special-scheme="black-yellow"] .doctor-profile {
+    background-color: #000000 !important;
+}
+
+body.special-mode[data-special-scheme="white-black"] .doctor-profile {
+    background-color: #FFFFFF !important;
+}
+
+body.special-mode[data-special-scheme="blue-yellow"] .doctor-profile {
+    background-color: #00008B !important;
+}
+
+body.special-mode[data-special-scheme="black-white"] .doctor-profile {
+    background-color: #000000 !important;
+}
+
+body.special-mode[data-special-scheme="dark-blue-light"] .doctor-profile {
+    background-color: #0a0e27 !important;
+}
+
+body.special-mode.photo-hidden-mode #openAppointmentBtn,
+body.special-mode.photo-hidden-mode .btn-submit,
+body.special-mode.photo-hidden-mode button#openAppointmentBtn,
+body.special-mode.photo-hidden-mode .doctor-details .btn-submit {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}

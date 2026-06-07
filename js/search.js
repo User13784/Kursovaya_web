@@ -57,7 +57,12 @@ async function performSearch(query) {
     const { services, doctors, faq, prices } = searchCache;
     const results = [];
     
-    services.forEach(service => {
+    // Фильтруем услуги - исключаем те, у которых page содержит service-template.html
+    const filteredServices = services.filter(service => 
+        !service.page || !service.page.includes('service-template.html')
+    );
+    
+    filteredServices.forEach(service => {
         const serviceName = getLocalizedText(service.name).toLowerCase();
         const serviceTitle = getLocalizedText(service.title || service.name).toLowerCase();
         

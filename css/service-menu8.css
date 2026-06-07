@@ -690,3 +690,31 @@ body.menu-open {
 #openAppointmentBtn4, #openAppointmentBtn5 {
     display: none !important;
 }
+
+[data-theme="dark"] .steps-text-block li,
+[data-theme="dark"] .steps-text-block [data-translate],
+[data-theme="dark"] .specialists-text-block li,
+[data-theme="dark"] .specialists-text-block [data-translate],
+[data-theme="dark"] .steps-list li,
+[data-theme="dark"] .steps-list2 li,
+[data-theme="dark"] .visit-title-first strong,
+[data-theme="dark"] .visit-title-second strong,
+[data-theme="dark"] strong[data-translate="visit_1"],
+[data-theme="dark"] strong[data-translate="visit_2"] {
+    color: #FFFFFF !important;
+}
+
+body.special-mode #openAppointmentBtn2,
+body.special-mode .first-btn {
+    white-space: nowrap !important;
+    min-width: 280px !important;
+    width: auto !important;
+    display: inline-flex !important;
+    padding: 12px 32px !important;
+    margin-top: -15px !important; 
+}
+
+body.special-mode[data-special-font="xxlarge"] [data-translate="aligners_text_3"] {
+    display: none !important;
+}
+

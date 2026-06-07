@@ -1223,3 +1223,85 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(165, 195, 60, 0.4);
 }
+
+.review-author strong,
+.review-author {
+    color: #000000 !important;
+}
+
+[data-theme="dark"] .review-author strong,
+[data-theme="dark"] .review-author {
+    color: #000000 !important;
+}
+
+[data-theme="light"] .review-author strong,
+[data-theme="light"] .review-author {
+    color: #000000 !important;
+}
+
+[data-theme="system"] .review-author strong,
+[data-theme="system"] .review-author {
+    color: #000000 !important;
+}
+
+body.special-mode .review-author strong,
+body.special-mode .review-author {
+    color: var(--special-text, #FFFF00) !important;
+}
+
+.visits-filter-btn,
+.visits-filter-btn.active,
+.reviews-filter-btn,
+.reviews-filter-btn.active {
+    background-color: #FFFFFF !important;
+    color: #2F353B !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 30px !important;
+    padding: 8px 20px !important;
+    font-weight: 500 !important;
+}
+
+.visits-filter-btn:hover,
+.reviews-filter-btn:hover {
+    background-color: #F9FAFB !important;
+    border-color: #A5C33C !important;
+}
+
+[data-theme="light"] .profile-edit-btn,
+[data-theme="light"] .profile-save-btn,
+[data-theme="light"] .profile-cancel-btn,
+[data-theme="light"] .profile-logout-btn {
+    color: #FFFFFF !important;
+}
+
+[data-theme="light"] .profile-logout-btn {
+    background-color: #EF4444 !important;
+    color: #FFFFFF !important;
+    border-color: #EF4444 !important;
+}
+
+[data-theme="light"] .profile-edit-btn {
+    background-color: #2F353B !important;
+    color: #FFFFFF !important;
+    border: none !important;
+}
+
+[data-theme="light"] .profile-save-btn {
+    background-color: #10B981 !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="light"] .profile-cancel-btn {
+    background-color: #6B7280 !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="light"] .user-avatar-btn .avatar-circle,
+[data-theme="light"] .user-avatar-btn .avatar-name,
+[data-theme="light"] .user-avatar-btn span {
+    color: #FFFFFF !important;
+}
+
+[data-theme="light"] .user-avatar-btn span[style*="background: #EF4444"] {
+    color: #FFFFFF !important;
+}

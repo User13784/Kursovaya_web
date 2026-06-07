@@ -81,13 +81,16 @@
         <div class="container">
             <div class="doctor-card">
                 <div class="doctor-photo">
-                    <img id="doctor-photo" src="" alt="Фото врача">
-                </div>
+    <img id="doctor-photo" 
+         src="../assets/images/team/placeholder.jpg" 
+         onerror="this.src='../assets/images/team/photo.jpg'">
+</div>
 
                 <div class="doctor-details">
                     <p id="doctor-subtitle" class="doctor-subtitle"></p>
-                    <h1 id="doctor-name" class="doctor-name"></h1>
-
+                    <h1 id="doctor-name" class="doctor-name">Загрузка...</h1>
+                    <h2 class="visually-hidden">Информация о враче</h2>
+<h3 class="visually-hidden">Детали</h3>
                     <div class="info-block spec">
                         <h4 class="spec-title" data-translate="specialization">Специализация:</h4>
                         <p id="spec-desc" class="spec-desc"></p>
@@ -357,63 +360,100 @@
             }
         }
 
-        async function loadDoctorData() {
-            const doctorId = sessionStorage.getItem('selectedDoctorId') || '1';
-            const apiUrl = `http://localhost:3000/doctors/${doctorId}`;
-            const currentLang = localStorage.getItem('dental_language') || 'ru';
-            
-            console.log('🔄 Загрузка данных врача из API:', apiUrl);
-            console.log('🌐 Текущий язык:', currentLang);
-            
-            document.getElementById('doctor-name').innerHTML = 'Загрузка...';
-            
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const doctor = await response.json();
-                
-                let lastName = getLocalizedTextFromField(doctor.lastName, currentLang, '');
-                let firstName = getLocalizedTextFromField(doctor.firstName, currentLang, '');
-                let middleName = getLocalizedTextFromField(doctor.middleName, currentLang, '');
-                let specialization = getLocalizedTextFromField(doctor.specialization, currentLang, '');
-                let education = getLocalizedTextFromField(doctor.education, currentLang, '');
-                let experience = getLocalizedTextFromField(doctor.experience, currentLang, '');
-                let improvement = getLocalizedTextFromField(doctor.improvement, currentLang, '');
-                let schedule = getLocalizedTextFromField(doctor.schedule, currentLang, 'Не указано');
-                
-                console.log('✅ Данные врача загружены:', doctor);
-                console.log('📅 Расписание (локализованное):', schedule);
-                
-                document.getElementById('doctor-photo').src = doctor.photo || '../assets/images/team/placeholder.jpg';
-                document.getElementById('doctor-photo').alt = `${lastName} ${firstName}`;
-                
-                document.getElementById('doctor-subtitle').textContent = specialization;
-                
-                let fullName = '';
-                if (lastName) fullName += lastName;
-                if (firstName) fullName += ' ' + firstName;
-                if (middleName) fullName += '<br>' + middleName;
-                document.getElementById('doctor-name').innerHTML = fullName || 'Врач';
-                
-                document.getElementById('spec-desc').textContent = specialization || 'Не указана';
-                document.getElementById('edu-desc').textContent = education || 'Не указано';
-                document.getElementById('exp-desc').textContent = experience || 'Не указан';
-                document.getElementById('improve-desc').textContent = improvement || 'Не указано';
-                document.getElementById('time-desc').textContent = schedule;
-                
-                const plainName = `${lastName} ${firstName} ${middleName}`.trim();
-                document.title = `${plainName || 'Врач'} | Dental Club`;
-                
-                setTimeout(fixTextPositionForLanguage, 50);
-                
-            } catch (error) {
-                console.error('❌ Ошибка загрузки данных врача:', error);
-                document.getElementById('doctor-name').innerHTML = 'Ошибка загрузки данных';
-                showErrorMessage('Не удалось загрузить данные врача. Проверьте подключение к серверу.');
-            }
+       async function loadDoctorData() {
+    const doctorId = sessionStorage.getItem('selectedDoctorId') || '1';
+    const apiUrl = `http://localhost:3000/doctors/${doctorId}`;
+    const currentLang = localStorage.getItem('dental_language') || 'ru';
+    
+    console.log('🔄 Загрузка данных врача из API:', apiUrl);
+    console.log('🌐 Текущий язык:', currentLang);
+    
+    document.getElementById('doctor-name').innerHTML = 'Загрузка...';
+    
+    function getNotSpecifiedText(type = 'default') {
+        if (currentLang === 'en') {
+            return 'Not specified';
         }
+        const variants = {
+            default: 'Не указано',
+            feminine: 'Не указана',
+            masculine: 'Не указан'
+        };
+        return variants[type] || 'Не указано';
+    }
+    
+    function formatField(value, ruNotSpecified, type = 'default') {
+        if (!value || value === '') return getNotSpecifiedText(type);
+        if (value === 'Не указано' || value === 'Не указана' || value === 'Не указан') {
+            return getNotSpecifiedText(type);
+        }
+        return value;
+    }
+    
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const doctor = await response.json();
+        
+        let lastName = getLocalizedTextFromField(doctor.lastName, currentLang, '');
+        let firstName = getLocalizedTextFromField(doctor.firstName, currentLang, '');
+        let middleName = getLocalizedTextFromField(doctor.middleName, currentLang, '');
+        let specialization = getLocalizedTextFromField(doctor.specialization, currentLang, '');
+        let education = getLocalizedTextFromField(doctor.education, currentLang, '');
+        let experience = getLocalizedTextFromField(doctor.experience, currentLang, '');
+        let improvement = getLocalizedTextFromField(doctor.improvement, currentLang, '');
+        let schedule = getLocalizedTextFromField(doctor.schedule, currentLang, '');
+        
+        const notSpecifiedDefault = getNotSpecifiedText('default');
+        const notSpecifiedFeminine = getNotSpecifiedText('feminine');
+        const notSpecifiedMasculine = getNotSpecifiedText('masculine');
+        
+        specialization = formatField(specialization, notSpecifiedFeminine, 'feminine');
+        education = formatField(education, notSpecifiedDefault, 'default');
+        experience = formatField(experience, notSpecifiedMasculine, 'masculine');
+        improvement = formatField(improvement, notSpecifiedDefault, 'default');
+        
+        if (!schedule || schedule === '' || schedule === 'Не указано') {
+            schedule = currentLang === 'ru' ? 'Не указано' : 'Not specified';
+        }
+        
+        console.log('✅ Данные врача загружены:', doctor);
+        console.log('📅 Расписание (локализованное):', schedule);
+        
+        document.getElementById('doctor-photo').src = doctor.photo || '../assets/images/team/placeholder.jpg';
+        document.getElementById('doctor-photo').alt = `${lastName} ${firstName}`;
+        
+        document.getElementById('doctor-subtitle').textContent = specialization;
+        
+        let fullName = '';
+        if (lastName) fullName += lastName;
+        if (firstName) fullName += ' ' + firstName;
+        if (middleName) fullName += '<br>' + middleName;
+        document.getElementById('doctor-name').innerHTML = fullName || (currentLang === 'ru' ? 'Врач' : 'Doctor');
+        
+        document.getElementById('spec-desc').textContent = specialization;
+        document.getElementById('edu-desc').textContent = education;
+        document.getElementById('exp-desc').textContent = experience;
+        document.getElementById('improve-desc').textContent = improvement;
+        document.getElementById('time-desc').textContent = schedule;
+        
+        const plainName = `${lastName} ${firstName} ${middleName}`.trim();
+        document.title = `${plainName || (currentLang === 'ru' ? 'Врач' : 'Doctor')} | Dental Club`;
+        
+        setTimeout(fixTextPositionForLanguage, 50);
+        
+    } catch (error) {
+        console.error('❌ Ошибка загрузки данных врача:', error);
+        const errorText = currentLang === 'ru' ? 'Ошибка загрузки данных' : 'Error loading data';
+        document.getElementById('doctor-name').innerHTML = errorText;
+        const errorMessage = currentLang === 'ru' 
+            ? 'Не удалось загрузить данные врача. Проверьте подключение к серверу.'
+            : 'Failed to load doctor data. Check your connection to the server.';
+        showErrorMessage(errorMessage);
+    }
+}
         
         function showErrorMessage(message) {
             const errorDiv = document.createElement('div');

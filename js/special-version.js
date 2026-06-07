@@ -1,4 +1,3 @@
-
 (function() {
     let currentSettings = {
         fontSize: 'normal',
@@ -110,6 +109,71 @@
             socialIconFilter: 'brightness(1.2) contrast(1.1)'
         }
     };
+    
+    function translateSpecialPanel() {
+        const panel = document.getElementById('specialPanel');
+        if (!panel) return;
+        
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        
+        const header = panel.querySelector('.special-panel-header h3');
+        if (header) {
+            header.innerHTML = currentLang === 'ru' ? '👁️ Настройки для слабовидящих' : '👁️ Accessibility Settings';
+        }
+        
+        const labels = panel.querySelectorAll('.special-setting-group label');
+        if (labels[0]) labels[0].innerHTML = currentLang === 'ru' ? '📏 Размер шрифта' : '📏 Font Size';
+        if (labels[1]) labels[1].innerHTML = currentLang === 'ru' ? '🎨 Цвет фона и текста' : '🎨 Color Scheme';
+        if (labels[2]) labels[2].innerHTML = currentLang === 'ru' ? '🖼️ Изображения' : '🖼️ Images';
+        
+        const sizeBtns = panel.querySelectorAll('#fontSizeButtons .special-btn');
+        const sizeTexts = currentLang === 'ru' 
+            ? ['Обычный', 'Увеличенный', 'Крупный', 'Очень крупный']
+            : ['Normal', 'Large', 'X-Large', 'XX-Large'];
+        sizeBtns.forEach((btn, idx) => {
+            if (sizeTexts[idx]) btn.textContent = sizeTexts[idx];
+        });
+        
+        const resetBtn = document.getElementById('specialResetBtn');
+        if (resetBtn) {
+            resetBtn.innerHTML = currentLang === 'ru' ? '🔄 Сбросить' : '🔄 Reset';
+        }
+        
+        const imagesBtn = document.getElementById('toggleImagesBtn');
+        if (imagesBtn) {
+            if (currentSettings.hideImages) {
+                imagesBtn.textContent = currentLang === 'ru' ? 'Показать фото' : 'Show Images';
+            } else {
+                imagesBtn.textContent = currentLang === 'ru' ? 'Скрыть фото' : 'Hide Images';
+            }
+        }
+        
+        const toggleBtn = document.getElementById('specialToggleBtn');
+        if (toggleBtn) {
+            if (currentSettings.isActive) {
+                toggleBtn.innerHTML = currentLang === 'ru' ? '🔴 Выключить режим' : '🔴 Disable mode';
+            } else {
+                toggleBtn.innerHTML = currentLang === 'ru' ? '🟢 Включить режим' : '🟢 Enable mode';
+            }
+        }
+        
+        const colorOptions = panel.querySelectorAll('.color-option');
+        const colorTitles = {
+            'black-yellow': { ru: 'Чёрный на жёлтом', en: 'Black on Yellow' },
+            'white-black': { ru: 'Белый на чёрном', en: 'White on Black' },
+            'blue-yellow': { ru: 'Синий на жёлтом', en: 'Blue on Yellow' },
+            'black-white': { ru: 'Чёрный на белом', en: 'Black on White' },
+            'dark-blue-light': { ru: 'Тёмно-синий на светлом', en: 'Dark Blue on Light' }
+        };
+        colorOptions.forEach(option => {
+            const scheme = option.dataset.scheme;
+            if (scheme && colorTitles[scheme]) {
+                option.title = colorTitles[scheme][currentLang];
+            }
+        });
+        
+        console.log('🌐 Панель переведена на:', currentLang);
+    }
     
     function resetMoreButtonStyles() {
         const moreBtn = document.getElementById('moreBtn');
@@ -3502,6 +3566,7 @@
         startDynamicObserver();
         ensureMoreButtonVisible();
         applyLoginButtonAndTitleStyles();
+        translateSpecialPanel();
     }
     
     function startDynamicObserver() {
@@ -3586,6 +3651,7 @@
         updateToggleButtonStyle();
         updateToggleButtonText();
         resetLoginButtonAndTitleStyles();
+        translateSpecialPanel();
     }
     
     function toggleSpecialMode() {
@@ -3679,12 +3745,18 @@
         }
         saveSettings();
         updatePanelActiveState();
+        translateSpecialPanel();
         
         const hideImagesText = currentSettings.hideImages ? '🖼️ Все фото скрыты, контент сжат' : '🖼️ Фото показаны';
         showNotification(hideImagesText);
         
         const imagesBtn = document.getElementById('toggleImagesBtn');
-        if (imagesBtn) imagesBtn.textContent = currentSettings.hideImages ? 'Показать фото' : 'Скрыть фото';
+        if (imagesBtn) {
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
+            imagesBtn.textContent = currentSettings.hideImages 
+                ? (currentLang === 'ru' ? 'Показать фото' : 'Show Images')
+                : (currentLang === 'ru' ? 'Скрыть фото' : 'Hide Images');
+        }
     }
     
     function getFontSizeName(size) {
@@ -3727,18 +3799,23 @@
         updatePanelActiveState();
         showNotification('🔄 Настройки сброшены');
         const imagesBtn = document.getElementById('toggleImagesBtn');
-        if (imagesBtn) imagesBtn.textContent = 'Скрыть фото';
+        if (imagesBtn) {
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
+            imagesBtn.textContent = currentLang === 'ru' ? 'Скрыть фото' : 'Hide Images';
+        }
         resetLoginButtonAndTitleStyles();
         resetMoreButtonStyles();
+        translateSpecialPanel();
     }
     
     function updateToggleButtonText() {
         const toggleBtn = document.getElementById('specialToggleBtn');
         if (toggleBtn) {
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
             if (currentSettings.isActive) {
-                toggleBtn.innerHTML = '🔴 Выключить<br>режим';
+                toggleBtn.innerHTML = currentLang === 'ru' ? '🔴 Выключить режим' : '🔴 Disable mode';
             } else {
-                toggleBtn.innerHTML = '🟢 Включить<br>режим';
+                toggleBtn.innerHTML = currentLang === 'ru' ? '🟢 Включить режим' : '🟢 Enable mode';
             }
         }
     }
@@ -3746,46 +3823,48 @@
     function createSettingsPanel() {
         if (panelElement) return;
         
+        const currentLang = localStorage.getItem('dental_language') || 'ru';
+        
         panelElement = document.createElement('div');
         panelElement.className = 'special-panel';
         panelElement.id = 'specialPanel';
         panelElement.innerHTML = `
             <div class="special-panel-header">
-                <h3>👁️ Настройки для слабовидящих</h3>
+                <h3>${currentLang === 'ru' ? '👁️ Настройки для слабовидящих' : '👁️ Accessibility Settings'}</h3>
                 <button class="special-panel-close" id="specialPanelClose">&times;</button>
             </div>
             <div class="special-panel-content">
                 <div class="special-setting-group">
-                    <label>📏 Размер шрифта</label>
+                    <label>${currentLang === 'ru' ? '📏 Размер шрифта' : '📏 Font Size'}</label>
                     <div class="special-buttons" id="fontSizeButtons">
-                        <button data-size="normal" class="special-btn ${currentSettings.fontSize === 'normal' ? 'active' : ''}">Обычный</button>
-                        <button data-size="large" class="special-btn ${currentSettings.fontSize === 'large' ? 'active' : ''}">Увеличенный</button>
-                        <button data-size="xlarge" class="special-btn ${currentSettings.fontSize === 'xlarge' ? 'active' : ''}">Крупный</button>
-                        <button data-size="xxlarge" class="special-btn ${currentSettings.fontSize === 'xxlarge' ? 'active' : ''}">Очень крупный</button>
+                        <button data-size="normal" class="special-btn ${currentSettings.fontSize === 'normal' ? 'active' : ''}">${currentLang === 'ru' ? 'Обычный' : 'Normal'}</button>
+                        <button data-size="large" class="special-btn ${currentSettings.fontSize === 'large' ? 'active' : ''}">${currentLang === 'ru' ? 'Увеличенный' : 'Large'}</button>
+                        <button data-size="xlarge" class="special-btn ${currentSettings.fontSize === 'xlarge' ? 'active' : ''}">${currentLang === 'ru' ? 'Крупный' : 'X-Large'}</button>
+                        <button data-size="xxlarge" class="special-btn ${currentSettings.fontSize === 'xxlarge' ? 'active' : ''}">${currentLang === 'ru' ? 'Очень крупный' : 'XX-Large'}</button>
                     </div>
                 </div>
                 
                 <div class="special-setting-group">
-                    <label>🎨 Цвет фона и текста</label>
+                    <label>${currentLang === 'ru' ? '🎨 Цвет фона и текста' : '🎨 Color Scheme'}</label>
                     <div class="color-preview" id="colorButtons">
-                        <div data-scheme="black-yellow" class="color-option black-yellow ${currentSettings.colorScheme === 'black-yellow' ? 'active' : ''}" title="Чёрный на жёлтом">Aa</div>
-                        <div data-scheme="white-black" class="color-option white-black ${currentSettings.colorScheme === 'white-black' ? 'active' : ''}" title="Белый на чёрном">Aa</div>
-                        <div data-scheme="blue-yellow" class="color-option blue-yellow ${currentSettings.colorScheme === 'blue-yellow' ? 'active' : ''}" title="Синий на жёлтом">Aa</div>
-                        <div data-scheme="black-white" class="color-option black-white ${currentSettings.colorScheme === 'black-white' ? 'active' : ''}" title="Чёрный на белом">Aa</div>
-                        <div data-scheme="dark-blue-light" class="color-option dark-blue-light ${currentSettings.colorScheme === 'dark-blue-light' ? 'active' : ''}" title="Тёмно-синий на светлом">Aa</div>
+                        <div data-scheme="black-yellow" class="color-option black-yellow ${currentSettings.colorScheme === 'black-yellow' ? 'active' : ''}" title="${currentLang === 'ru' ? 'Чёрный на жёлтом' : 'Black on Yellow'}">Aa</div>
+                        <div data-scheme="white-black" class="color-option white-black ${currentSettings.colorScheme === 'white-black' ? 'active' : ''}" title="${currentLang === 'ru' ? 'Белый на чёрном' : 'White on Black'}">Aa</div>
+                        <div data-scheme="blue-yellow" class="color-option blue-yellow ${currentSettings.colorScheme === 'blue-yellow' ? 'active' : ''}" title="${currentLang === 'ru' ? 'Синий на жёлтом' : 'Blue on Yellow'}">Aa</div>
+                        <div data-scheme="black-white" class="color-option black-white ${currentSettings.colorScheme === 'black-white' ? 'active' : ''}" title="${currentLang === 'ru' ? 'Чёрный на белом' : 'Black on White'}">Aa</div>
+                        <div data-scheme="dark-blue-light" class="color-option dark-blue-light ${currentSettings.colorScheme === 'dark-blue-light' ? 'active' : ''}" title="${currentLang === 'ru' ? 'Тёмно-синий на светлом' : 'Dark Blue on Light'}">Aa</div>
                     </div>
                 </div>
                 
                 <div class="special-setting-group">
-                    <label>🖼️ Изображения</label>
+                    <label>${currentLang === 'ru' ? '🖼️ Изображения' : '🖼️ Images'}</label>
                     <div class="special-buttons">
-                        <button class="special-btn" id="toggleImagesBtn">${currentSettings.hideImages ? 'Показать фото' : 'Скрыть фото'}</button>
+                        <button class="special-btn" id="toggleImagesBtn">${currentSettings.hideImages ? (currentLang === 'ru' ? 'Показать фото' : 'Show Images') : (currentLang === 'ru' ? 'Скрыть фото' : 'Hide Images')}</button>
                     </div>
                 </div>
                 
                 <div class="special-actions">
-                    <button class="special-btn" id="specialToggleBtn">${currentSettings.isActive ? '🔴 Выключить режим' : '🟢 Включить режим'}</button>
-                    <button class="special-btn btn-reset" id="specialResetBtn">🔄 Сбросить</button>
+                    <button class="special-btn" id="specialToggleBtn">${currentSettings.isActive ? (currentLang === 'ru' ? '🔴 Выключить режим' : '🔴 Disable mode') : (currentLang === 'ru' ? '🟢 Включить режим' : '🟢 Enable mode')}</button>
+                    <button class="special-btn btn-reset" id="specialResetBtn">${currentLang === 'ru' ? '🔄 Сбросить' : '🔄 Reset'}</button>
                 </div>
             </div>
         `;
@@ -3825,6 +3904,7 @@
             btn.addEventListener('click', () => {
                 setFontSize(btn.dataset.size);
                 updatePanelActiveState();
+                translateSpecialPanel();
             });
         });
         
@@ -3832,6 +3912,7 @@
             btn.addEventListener('click', () => {
                 setColorScheme(btn.dataset.scheme);
                 updatePanelActiveState();
+                translateSpecialPanel();
             });
         });
         
@@ -3843,6 +3924,8 @@
                 panelElement.classList.remove('active');
             }
         });
+        
+        translateSpecialPanel();
     }
     
     function updatePanelActiveState() {
@@ -3865,7 +3948,14 @@
         });
         
         const imagesBtn = document.getElementById('toggleImagesBtn');
-        if (imagesBtn) imagesBtn.textContent = currentSettings.hideImages ? 'Показать фото' : 'Скрыть фото';
+        if (imagesBtn) {
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
+            imagesBtn.textContent = currentSettings.hideImages 
+                ? (currentLang === 'ru' ? 'Показать фото' : 'Show Images')
+                : (currentLang === 'ru' ? 'Скрыть фото' : 'Hide Images');
+        }
+        
+        translateSpecialPanel();
     }
     
     function updateSpecialButtonUI() {
@@ -3962,11 +4052,32 @@
         }
     }
     
+    document.addEventListener('languageChanged', function() {
+        console.log('🌐 Смена языка в special-version.js');
+        translateSpecialPanel();
+        updateToggleButtonText();
+        
+        if (currentSettings.isActive) {
+            applyStyles();
+        }
+        
+        const imagesBtn = document.getElementById('toggleImagesBtn');
+        if (imagesBtn) {
+            const currentLang = localStorage.getItem('dental_language') || 'ru';
+            if (currentSettings.hideImages) {
+                imagesBtn.textContent = currentLang === 'ru' ? 'Показать фото' : 'Show Images';
+            } else {
+                imagesBtn.textContent = currentLang === 'ru' ? 'Скрыть фото' : 'Hide Images';
+            }
+        }
+    });
+    
     function initPlugin() {
         if (window._specialVersionInitialized) return;
         window._specialVersionInitialized = true;
         
         createSettingsPanel();
+        translateSpecialPanel();
         updatePanelActiveState();
         updateSpecialButtonUI();
         initMobileSpecialButton();
@@ -4034,6 +4145,7 @@
             if (event.persisted || document.body.classList.contains('special-mode')) {
                 loadSettings();
                 ensureMoreButtonVisible();
+                translateSpecialPanel();
             }
         });
     }
@@ -4046,6 +4158,7 @@
         setColorScheme: setColorScheme,
         toggleHideImages: toggleHideImages,
         reset: resetSettings,
-        ensureMoreButtonVisible: ensureMoreButtonVisible
+        ensureMoreButtonVisible: ensureMoreButtonVisible,
+        translatePanel: translateSpecialPanel
     };
 })();

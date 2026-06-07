@@ -1539,3 +1539,14 @@
         padding-bottom: 50px !important;
     }
 }
+
+body.special-mode[data-special-font="xxlarge"] #exp-desc {
+    transform: translate(100px, 130px) !important;
+    margin-left: 20px !important;
+}
+
+body.special-mode[data-special-font="xxlarge"] #time-desc {
+    transform: translate(120px, 180px) !important;
+    width: 400px !important;
+    margin-left: 20px !important;
+}

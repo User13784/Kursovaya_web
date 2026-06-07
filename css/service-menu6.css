@@ -538,3 +538,23 @@ body.menu-open {
         display: none !important;
     }
 }
+
+body.special-mode .diagnost-btn,
+body.special-mode .steps-btn,
+body.special-mode .first-btn {
+    white-space: nowrap !important;
+    min-width: 260px !important;
+    width: auto !important;
+    display: inline-flex !important;
+    margin-top: -10px !important; 
+}
+
+body.special-mode .info-text {
+    width: 100% !important;
+}
+
+body.special-mode .btn-outline {
+    display: inline-flex !important;
+    white-space: nowrap !important;
+    margin-top: -10px !important; 
+}

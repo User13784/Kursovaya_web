@@ -248,3 +248,100 @@
     }
 }
 
+body.special-mode[data-theme="light"] .hero h1 span[data-translate="hero_title_full"] {
+    color: #FFFFFF !important;
+}
+
+body.special-mode[data-theme="light"] .hero h1 .city-text,
+body.special-mode[data-theme="light"] .hero h1 span[data-translate="city_text"] {
+    color: #FFFFFF !important;
+}
+
+@media (prefers-color-scheme: light) {
+    body.special-mode[data-theme="system"] .hero h1 span[data-translate="hero_title_full"] {
+        color: #FFFFFF !important;
+    }
+    
+    body.special-mode[data-theme="system"] .hero h1 .city-text,
+    body.special-mode[data-theme="system"] .hero h1 span[data-translate="city_text"] {
+        color: #FFFFFF !important;
+    }
+}
+
+body.special-mode[data-special-scheme="white-black"] .hero h1 span[data-translate="hero_title_full"],
+body.special-mode[data-special-scheme="white-black"] .hero h1 .city-text,
+body.special-mode[data-special-scheme="black-white"] .hero h1 span[data-translate="hero_title_full"],
+body.special-mode[data-special-scheme="black-white"] .hero h1 .city-text {
+    color: #FFFFFF !important;
+}
+
+body.special-mode .hero h1 span[data-translate="hero_title_full"],
+body.special-mode .hero h1 .city-text {
+    font-size: clamp(24px, 6vw, 60px) !important;
+    font-weight: 300 !important;
+}
+
+body.special-mode[data-special-font="large"] .hero h1 span[data-translate="hero_title_full"],
+body.special-mode[data-special-font="large"] .hero h1 .city-text,
+body.special-mode[data-special-font="xlarge"] .hero h1 span[data-translate="hero_title_full"],
+body.special-mode[data-special-font="xlarge"] .hero h1 .city-text,
+body.special-mode[data-special-font="xxlarge"] .hero h1 span[data-translate="hero_title_full"],
+body.special-mode[data-special-font="xxlarge"] .hero h1 .city-text {
+    font-size: clamp(24px, 6vw, 60px) !important;
+}
+
+body.special-mode.photo-hidden-mode .btn-primary,
+body.special-mode.photo-hidden-mode .btn-outline,
+body.special-mode.photo-hidden-mode #openAppointmentBtn,
+body.special-mode.photo-hidden-mode #openAppointmentBtn2,
+body.special-mode.photo-hidden-mode #openAppointmentBtn3 {
+    position: relative !important;
+    margin: 20px auto 0 auto !important;
+    display: inline-flex !important;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+}
+
+body.special-mode.photo-hidden-mode .hero,
+body.special-mode.photo-hidden-mode .hero-content,
+body.special-mode.photo-hidden-mode .clinic-info .content-block,
+body.special-mode.photo-hidden-mode .advantages .content-block {
+    min-height: auto !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+body.special-mode [data-translate="implantation_implants_text"] {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+body.special-mode.photo-hidden-mode .tomograph-text.first-paragraph,
+body.special-mode.photo-hidden-mode [data-translate="complex_navigation_text"] {
+    margin-left: 80px !important;
+    padding-left: 40px !important;
+}
+
+body.special-mode #openAppointmentBtn3 {
+    display: none !important;
+}
+
+body.special-mode .diagnost-btn {
+    display: none !important;
+}
+
+body.special-mode .profile-tabs .profile-tab-btn,
+body.special-mode .visits-filters .visits-filter-btn,
+body.special-mode .reviews-filters .reviews-filter-btn,
+body.special-mode .profile-tabs button.profile-tab-btn[style*="color"],
+body.special-mode .visits-filters button.visits-filter-btn[style*="color"],
+body.special-mode .reviews-filters button.reviews-filter-btn[style*="color"] {
+    color: #FFFFFF !important;
+}
+

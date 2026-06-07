@@ -1,5 +1,285 @@
 let currentUserData = null;
 
+let savedModalState = {
+    isOpen: false,
+    activeTab: 'info',
+    scrollPosition: 0
+};
+
+function saveModalStateBeforeReload() {
+    const modal = document.getElementById('profileModal');
+    if (modal && modal.style.display === 'flex') {
+        savedModalState.isOpen = true;
+        const activeTabBtn = document.querySelector('.profile-tab-btn.active');
+        savedModalState.activeTab = activeTabBtn ? activeTabBtn.dataset.tab : 'info';
+        savedModalState.scrollPosition = window.scrollY;
+        sessionStorage.setItem('profileModalState', JSON.stringify(savedModalState));
+        console.log('💾 Состояние модального окна сохранено:', savedModalState);
+    }
+}
+
+function restoreModalStateAfterReload() {
+    const savedState = sessionStorage.getItem('profileModalState');
+    if (savedState) {
+        const state = JSON.parse(savedState);
+        if (state.isOpen) {
+            console.log('🔄 Восстанавливаем модальное окно после перезагрузки');
+            sessionStorage.removeItem('profileModalState');
+            
+            setTimeout(() => {
+                openProfileModal();
+                setTimeout(() => {
+                    if (state.activeTab !== 'info') {
+                        const tabToActivate = document.querySelector(`.profile-tab-btn[data-tab="${state.activeTab}"]`);
+                        if (tabToActivate) {
+                            tabToActivate.click();
+                        }
+                    }
+                    window.scrollTo(0, state.scrollPosition);
+                }, 300);
+            }, 100);
+        }
+    }
+}
+
+window.addEventListener('beforeunload', saveModalStateBeforeReload);
+
+document.addEventListener('DOMContentLoaded', restoreModalStateAfterReload);
+
+
+function getValidationText(key, defaultValue = '') {
+    const currentLang = localStorage.getItem('dental_language') || 'ru';
+    const translations = {
+        ru: {
+            'profile_validation_last_name_required': 'Введите фамилию',
+            'profile_validation_last_name_min': 'Фамилия должна содержать минимум 2 символа',
+            'profile_validation_first_name_required': 'Введите имя',
+            'profile_validation_first_name_min': 'Имя должно содержать минимум 2 символа',
+            'profile_validation_email_required': 'Введите email',
+            'profile_validation_email_invalid': 'Введите корректный email (например: name@domain.com)',
+            'profile_validation_phone_required': 'Введите номер телефона',
+            'profile_validation_phone_invalid': 'Введите корректный номер телефона (например: +375 29 123-45-67)',
+            'profile_validation_birth_date_invalid': 'Введите корректную дату в формате ДД.ММ.ГГГГ',
+            'profile_validation_birth_date_future': 'Дата рождения не может быть в будущем',
+            'profile_validation_birth_date_too_old': 'Дата рождения не может быть ранее 1900 года',
+            'profile_validation_email_exists': '❌ Пользователь с таким email уже существует!',
+            'profile_validation_phone_exists': '❌ Пользователь с таким номером телефона уже существует!',
+            'profile_validation_form_errors': 'Пожалуйста, исправьте ошибки в форме'
+        },
+        en: {
+            'profile_validation_last_name_required': 'Enter your last name',
+            'profile_validation_last_name_min': 'Last name must contain at least 2 characters',
+            'profile_validation_first_name_required': 'Enter your first name',
+            'profile_validation_first_name_min': 'First name must contain at least 2 characters',
+            'profile_validation_email_required': 'Enter email',
+            'profile_validation_email_invalid': 'Enter a valid email (e.g., name@domain.com)',
+            'profile_validation_phone_required': 'Enter phone number',
+            'profile_validation_phone_invalid': 'Enter a valid phone number (e.g., +375 29 123-45-67)',
+            'profile_validation_birth_date_invalid': 'Enter a valid date in DD.MM.YYYY format',
+            'profile_validation_birth_date_future': 'Birth date cannot be in the future',
+            'profile_validation_birth_date_too_old': 'Birth date cannot be earlier than 1900',
+            'profile_validation_email_exists': '❌ User with this email already exists!',
+            'profile_validation_phone_exists': '❌ User with this phone number already exists!',
+            'profile_validation_form_errors': 'Please fix the errors in the form'
+        }
+    };
+    return translations[currentLang]?.[key] || defaultValue;
+}
+
+function validateEmail(email) {
+    if (!email) return false;
+    const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function validatePhone(phone) {
+    if (!phone) return false;
+    const digits = phone.replace(/\D/g, '');
+    const isValidLength = digits.length === 12;
+    const startsWith375 = digits.startsWith('375');
+    
+    if (isValidLength && startsWith375) {
+        return true;
+    }
+    
+    if (digits.length >= 9 && digits.length <= 12) {
+        return true;
+    }
+    
+    return false;
+}
+
+function validateBirthDate(dateString) {
+    if (!dateString) return true; 
+    
+    const parts = dateString.split('.');
+    if (parts.length !== 3) return false;
+    
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1; 
+    const year = parseInt(parts[2], 10);
+    
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return false;
+    
+    const currentYear = new Date().getFullYear();
+    if (year < 1900) return false;
+    if (year > currentYear) return false;
+    
+    const selectedDate = new Date(year, month, day);
+    if (selectedDate.getFullYear() !== year || 
+        selectedDate.getMonth() !== month || 
+        selectedDate.getDate() !== day) {
+        return false;
+    }
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate > today) return false;
+    
+    return true;
+}
+
+function formatPhoneForDisplay(phone) {
+    if (!phone) return '';
+    const digits = phone.replace(/\D/g, '');
+    
+    if (digits.length === 12 && digits.startsWith('375')) {
+        return `+375 (${digits.substring(3, 5)}) ${digits.substring(5, 8)}-${digits.substring(8, 10)}-${digits.substring(10, 12)}`;
+    }
+    
+    if (digits.length === 11) {
+        return `+${digits.substring(0, 1)} (${digits.substring(1, 4)}) ${digits.substring(4, 7)}-${digits.substring(7, 9)}-${digits.substring(9, 11)}`;
+    }
+    
+    return phone;
+}
+
+function formatPhoneForSave(phone) {
+    if (!phone) return '';
+    return phone.replace(/\D/g, '');
+}
+
+function formatDateForDisplay(dateString) {
+    if (!dateString) return '';
+    if (dateString.includes('.')) return dateString;
+    const parts = dateString.split('-');
+    if (parts.length === 3) {
+        return `${parts[2]}.${parts[1]}.${parts[0]}`;
+    }
+    return dateString;
+}
+
+function formatDateForSave(dateString) {
+    if (!dateString) return '';
+    if (dateString.includes('.')) {
+        const parts = dateString.split('.');
+        if (parts.length === 3) {
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        }
+    }
+    return dateString;
+}
+
+function showFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    if (!field) return;
+    
+    const oldError = field.parentNode.querySelector('.field-error');
+    if (oldError) oldError.remove();
+    
+    field.classList.add('error');
+    field.style.borderColor = '#EF4444';
+    
+    const errorSpan = document.createElement('span');
+    errorSpan.className = 'field-error';
+    errorSpan.textContent = message;
+    errorSpan.style.cssText = 'display: block; font-size: 12px; color: #EF4444; margin-top: 5px;';
+    field.parentNode.appendChild(errorSpan);
+}
+
+function hideFieldError(fieldId) {
+    const field = document.getElementById(fieldId);
+    if (!field) return;
+    
+    const error = field.parentNode.querySelector('.field-error');
+    if (error) error.remove();
+    
+    field.classList.remove('error');
+    field.style.borderColor = '';
+}
+
+function validateProfileForm() {
+    let isValid = true;
+    
+    const lastName = document.getElementById('profileLastName').value.trim();
+    const firstName = document.getElementById('profileFirstName').value.trim();
+    const email = document.getElementById('profileEmail').value.trim();
+    const phone = document.getElementById('profilePhone').value.trim();
+    const birthDate = document.getElementById('profileBirthDate').value.trim();
+    
+    if (!lastName) {
+        showFieldError('profileLastName', getValidationText('profile_validation_last_name_required'));
+        isValid = false;
+    } else if (lastName.length < 2) {
+        showFieldError('profileLastName', getValidationText('profile_validation_last_name_min'));
+        isValid = false;
+    } else {
+        hideFieldError('profileLastName');
+    }
+    
+    if (!firstName) {
+        showFieldError('profileFirstName', getValidationText('profile_validation_first_name_required'));
+        isValid = false;
+    } else if (firstName.length < 2) {
+        showFieldError('profileFirstName', getValidationText('profile_validation_first_name_min'));
+        isValid = false;
+    } else {
+        hideFieldError('profileFirstName');
+    }
+    
+    if (!email) {
+        showFieldError('profileEmail', getValidationText('profile_validation_email_required'));
+        isValid = false;
+    } else if (!validateEmail(email)) {
+        showFieldError('profileEmail', getValidationText('profile_validation_email_invalid'));
+        isValid = false;
+    } else {
+        hideFieldError('profileEmail');
+    }
+    
+    if (!phone) {
+        showFieldError('profilePhone', getValidationText('profile_validation_phone_required'));
+        isValid = false;
+    } else if (!validatePhone(phone)) {
+        showFieldError('profilePhone', getValidationText('profile_validation_phone_invalid'));
+        isValid = false;
+    } else {
+        hideFieldError('profilePhone');
+    }
+    
+    if (birthDate && !validateBirthDate(birthDate)) {
+        const parts = birthDate.split('.');
+        if (parts.length === 3) {
+            const year = parseInt(parts[2], 10);
+            const currentYear = new Date().getFullYear();
+            if (year > currentYear) {
+                showFieldError('profileBirthDate', getValidationText('profile_validation_birth_date_future'));
+            } else if (year < 1900) {
+                showFieldError('profileBirthDate', getValidationText('profile_validation_birth_date_too_old'));
+            } else {
+                showFieldError('profileBirthDate', getValidationText('profile_validation_birth_date_invalid'));
+            }
+        } else {
+            showFieldError('profileBirthDate', getValidationText('profile_validation_birth_date_invalid'));
+        }
+        isValid = false;
+    } else {
+        hideFieldError('profileBirthDate');
+    }
+    
+    return isValid;
+}
+
 function showToast(message, type = 'success') {
     let toast = document.querySelector('.profile-toast');
     if (!toast) {
@@ -270,7 +550,9 @@ async function checkEmailUniqueness(email, currentUserId) {
         const existingUser = users.find(u => u.email === email && u.id !== currentUserId);
         
         if (existingUser) {
-            showToast('❌ Пользователь с таким email уже существует!', 'error');
+            const errorMessage = getValidationText('profile_validation_email_exists');
+            showToast(errorMessage, 'error');
+            showFieldError('profileEmail', errorMessage);
             return false;
         }
         return true;
@@ -283,7 +565,7 @@ async function checkEmailUniqueness(email, currentUserId) {
 async function checkPhoneUniqueness(phone, currentUserId) {
     if (!phone) return true;
     
-    const cleanPhone = phone.replace(/\D/g, '');
+    const cleanPhone = formatPhoneForSave(phone);
     
     try {
         const response = await fetch(`http://localhost:3000/users?phone=${cleanPhone}`);
@@ -292,7 +574,9 @@ async function checkPhoneUniqueness(phone, currentUserId) {
         const existingUser = users.find(u => u.phone === cleanPhone && u.id !== currentUserId);
         
         if (existingUser) {
-            showToast('❌ Пользователь с таким номером телефона уже существует!', 'error');
+            const errorMessage = getValidationText('profile_validation_phone_exists');
+            showToast(errorMessage, 'error');
+            showFieldError('profilePhone', errorMessage);
             return false;
         }
         return true;
@@ -328,12 +612,15 @@ async function openProfileModal() {
         const userData = await response.json();
         currentUserData = userData;
         
+        const formattedPhone = formatPhoneForDisplay(userData.phone || '');
+        const formattedBirthDate = formatDateForDisplay(userData.birthDate || '');
+        
         document.getElementById('profileLastName').value = userData.lastName || '';
         document.getElementById('profileFirstName').value = userData.firstName || '';
         document.getElementById('profileMiddleName').value = userData.middleName || '';
         document.getElementById('profileEmail').value = userData.email || '';
-        document.getElementById('profilePhone').value = userData.phone || '';
-        document.getElementById('profileBirthDate').value = userData.birthDate || '';
+        document.getElementById('profilePhone').value = formattedPhone || userData.phone || '';
+        document.getElementById('profileBirthDate').value = formattedBirthDate || userData.birthDate || '';
         document.getElementById('profileAddress').value = userData.address || '';
         
         const inputs = document.querySelectorAll('#profileForm input');
@@ -489,6 +776,22 @@ function initProfileModal() {
     const adminPanelBtn = document.getElementById('goToAdminPanelBtn');
     const tabBtns = document.querySelectorAll('.profile-tab-btn');
     
+    function resetAllTabStyles() {
+        tabBtns.forEach(btn => {
+            btn.classList.remove('active');
+            btn.style.backgroundColor = '#F3F4F6';
+            btn.style.color = '#4B5563';
+            btn.style.border = 'none';
+        });
+    }
+    
+    function activateTabButton(btn) {
+        btn.classList.add('active');
+        btn.style.backgroundColor = '#2F353B';
+        btn.style.color = 'white';
+        btn.style.border = 'none';
+    }
+    
     if (closeBtn) {
         closeBtn.addEventListener('click', closeProfileModal);
     }
@@ -511,12 +814,22 @@ function initProfileModal() {
         });
     }
     
+    resetAllTabStyles();
+    const activeTabBtn = document.querySelector('.profile-tab-btn.active');
+    if (activeTabBtn) {
+        activateTabButton(activeTabBtn);
+    } else {
+        const infoBtn = document.querySelector('.profile-tab-btn[data-tab="info"]');
+        if (infoBtn) activateTabButton(infoBtn);
+    }
+    
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             if (btn.style.display === 'none') return;
             
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            resetAllTabStyles();      
+            activateTabButton(btn);   
+            
             document.querySelectorAll('.profile-tab-content').forEach(c => c.classList.remove('active'));
             
             if (btn.dataset.tab === 'info') {
@@ -551,10 +864,16 @@ function initProfileModal() {
 function initVisitsFilters() {
     const filterBtns = document.querySelectorAll('.visits-filter-btn');
     filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        
+        newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            loadUserVisits(btn.dataset.filter);
+            this.classList.add('active');
+            this.style.backgroundColor = '';
+            this.style.color = '';
+            loadUserVisits(this.dataset.filter);
         });
     });
 }
@@ -562,10 +881,16 @@ function initVisitsFilters() {
 function initReviewsFilters() {
     const filterBtns = document.querySelectorAll('.reviews-filter-btn');
     filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        
+        newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            loadUserReviews(btn.dataset.filter);
+            this.classList.add('active');
+            this.style.backgroundColor = '';
+            this.style.color = '';
+            loadUserReviews(this.dataset.filter);
         });
     });
 }
@@ -577,12 +902,15 @@ async function loadUserData(userId) {
         const user = await response.json();
         currentUserData = user;
         
+        const formattedPhone = formatPhoneForDisplay(user.phone || '');
+        const formattedBirthDate = formatDateForDisplay(user.birthDate || '');
+        
         document.getElementById('profileLastName').value = user.lastName || '';
         document.getElementById('profileFirstName').value = user.firstName || '';
         document.getElementById('profileMiddleName').value = user.middleName || '';
         document.getElementById('profileEmail').value = user.email || '';
-        document.getElementById('profilePhone').value = user.phone || '';
-        document.getElementById('profileBirthDate').value = user.birthDate || '';
+        document.getElementById('profilePhone').value = formattedPhone || user.phone || '';
+        document.getElementById('profileBirthDate').value = formattedBirthDate || user.birthDate || '';
         document.getElementById('profileAddress').value = user.address || '';
         
         const inputs = document.querySelectorAll('#profileForm input');
@@ -610,6 +938,17 @@ async function loadUserData(userId) {
 }
 
 function toggleProfileEdit() {
+    if (window.event) {
+        window.event.preventDefault();
+        window.event.stopPropagation();
+    }
+    
+    hideFieldError('profileLastName');
+    hideFieldError('profileFirstName');
+    hideFieldError('profileEmail');
+    hideFieldError('profilePhone');
+    hideFieldError('profileBirthDate');
+    
     const inputs = document.querySelectorAll('#profileForm input');
     const editBtn = document.getElementById('profileEditBtn');
     const isEditing = inputs[0] && !inputs[0].disabled;
@@ -620,6 +959,12 @@ function toggleProfileEdit() {
         
         if (!document.getElementById('profileSaveBtn')) {
             const actionsDiv = document.getElementById('profileActions');
+            
+            const oldSaveBtn = document.getElementById('profileSaveBtn');
+            const oldCancelBtn = document.getElementById('profileCancelBtn');
+            if (oldSaveBtn) oldSaveBtn.remove();
+            if (oldCancelBtn) oldCancelBtn.remove();
+            
             const saveBtn = document.createElement('button');
             saveBtn.type = 'button';
             saveBtn.className = 'profile-save-btn';
@@ -637,20 +982,53 @@ function toggleProfileEdit() {
             actionsDiv.appendChild(saveBtn);
             actionsDiv.appendChild(cancelBtn);
             
-            saveBtn.addEventListener('click', saveProfileChanges);
-            cancelBtn.addEventListener('click', cancelProfileEdit);
+            const newSaveBtn = document.getElementById('profileSaveBtn');
+            const newCancelBtn = document.getElementById('profileCancelBtn');
+            
+            if (newSaveBtn) {
+                newSaveBtn.removeEventListener('click', saveProfileChanges);
+                newSaveBtn.addEventListener('click', function(e) {
+                    if (e) e.preventDefault();
+                    saveProfileChanges();
+                    return false;
+                });
+            }
+            if (newCancelBtn) {
+                newCancelBtn.removeEventListener('click', cancelProfileEdit);
+                newCancelBtn.addEventListener('click', function(e) {
+                    if (e) e.preventDefault();
+                    cancelProfileEdit();
+                    return false;
+                });
+            }
         }
     }
+    
+    return false;
 }
 
 function cancelProfileEdit() {
+    if (window.event) {
+        window.event.preventDefault();
+        window.event.stopPropagation();
+    }
+    
+    hideFieldError('profileLastName');
+    hideFieldError('profileFirstName');
+    hideFieldError('profileEmail');
+    hideFieldError('profilePhone');
+    hideFieldError('profileBirthDate');
+    
     if (currentUserData) {
+        const formattedPhone = formatPhoneForDisplay(currentUserData.phone || '');
+        const formattedBirthDate = formatDateForDisplay(currentUserData.birthDate || '');
+        
         document.getElementById('profileLastName').value = currentUserData.lastName || '';
         document.getElementById('profileFirstName').value = currentUserData.firstName || '';
         document.getElementById('profileMiddleName').value = currentUserData.middleName || '';
         document.getElementById('profileEmail').value = currentUserData.email || '';
-        document.getElementById('profilePhone').value = currentUserData.phone || '';
-        document.getElementById('profileBirthDate').value = currentUserData.birthDate || '';
+        document.getElementById('profilePhone').value = formattedPhone || currentUserData.phone || '';
+        document.getElementById('profileBirthDate').value = formattedBirthDate || currentUserData.birthDate || '';
         document.getElementById('profileAddress').value = currentUserData.address || '';
     }
     
@@ -668,32 +1046,62 @@ function cancelProfileEdit() {
         editBtn.innerHTML = '✏️ ' + editText;
         editBtn.style.display = 'block';
     }
+    
+    return false;
 }
 
 async function saveProfileChanges() {
+    if (window.event) {
+        window.event.preventDefault();
+        window.event.stopPropagation();
+    }
+    
     const sessionUser = window.getCurrentUser ? window.getCurrentUser() : null;
-    if (!sessionUser) return;
+    if (!sessionUser) return false;
+    
+    if (!validateProfileForm()) {
+        showToast(getValidationText('profile_validation_form_errors'), 'error');
+        return false;
+    }
     
     const lastName = document.getElementById('profileLastName').value.trim();
     const firstName = document.getElementById('profileFirstName').value.trim();
     const middleName = document.getElementById('profileMiddleName').value.trim();
     const email = document.getElementById('profileEmail').value.trim();
-    const phone = document.getElementById('profilePhone').value.trim();
-    const birthDate = document.getElementById('profileBirthDate').value;
+    const rawPhone = document.getElementById('profilePhone').value.trim();
+    const rawBirthDate = document.getElementById('profileBirthDate').value.trim();
     const address = document.getElementById('profileAddress').value.trim();
     
-    if (!lastName || !firstName || !email || !phone) {
-        showToast('Заполните все обязательные поля!', 'error');
-        return;
+    const phone = formatPhoneForSave(rawPhone);
+    const birthDate = formatDateForSave(rawBirthDate);
+    const activeTab = document.querySelector('.profile-tab-btn.active')?.dataset.tab || 'info';
+    
+    const saveBtn = document.getElementById('profileSaveBtn');
+    const originalText = saveBtn?.innerHTML || '💾 Сохранить';
+    if (saveBtn) {
+        saveBtn.innerHTML = '⏳ Сохранение...';
+        saveBtn.disabled = true;
     }
     
-    const isEmailUnique = await checkEmailUniqueness(email, sessionUser.userId);
-    if (!isEmailUnique) return;
-    
-    const isPhoneUnique = await checkPhoneUniqueness(phone, sessionUser.userId);
-    if (!isPhoneUnique) return;
-    
     try {
+        const isEmailUnique = await checkEmailUniqueness(email, sessionUser.userId);
+        if (!isEmailUnique) {
+            if (saveBtn) {
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+            }
+            return false;
+        }
+        
+        const isPhoneUnique = await checkPhoneUniqueness(phone, sessionUser.userId);
+        if (!isPhoneUnique) {
+            if (saveBtn) {
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+            }
+            return false;
+        }
+        
         const response = await fetch(`http://localhost:3000/users/${sessionUser.userId}`);
         const userData = await response.json();
         
@@ -723,14 +1131,33 @@ async function saveProfileChanges() {
             sessionStorage.setItem('dental_club_session', JSON.stringify(updatedSession));
             
             currentUserData = updatedUser;
+            
             showToast('✅ Профиль обновлен!', 'success');
-            cancelProfileEdit();
-            if (typeof window.updateAuthUI === 'function') window.updateAuthUI();
+            
+            if (typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI();
+            }
+            
+            saveModalStateBeforeReload();
+            window.location.reload();
+            
+        } else {
+            showToast('❌ Ошибка сохранения', 'error');
+            if (saveBtn) {
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+            }
         }
     } catch (error) {
         console.error('Ошибка сохранения:', error);
         showToast('❌ Ошибка сохранения', 'error');
+        if (saveBtn) {
+            saveBtn.innerHTML = originalText;
+            saveBtn.disabled = false;
+        }
     }
+    
+    return false;
 }
 
 function getPatientNameString(patientName) {
@@ -759,52 +1186,107 @@ async function loadUserVisits(filter = 'all') {
     visitsContainer.innerHTML = `<div class="empty-visits"><div class="empty-visits-icon">⏳</div><div class="empty-visits-text">${loadingText}</div></div>`;
     
     try {
-        const [appointmentsRes, doctorsRes, servicesRes] = await Promise.all([
-            fetch('http://localhost:3000/appointments'),
-            fetch('http://localhost:3000/doctors'),
-            fetch('http://localhost:3000/services')
-        ]);
+        const appointmentsRes = await fetch('http://localhost:3000/appointments');
         
-        if (!appointmentsRes.ok || !doctorsRes.ok || !servicesRes.ok) {
+        if (!appointmentsRes.ok) {
             throw new Error('Ошибка загрузки данных с сервера');
         }
         
         let appointments = await appointmentsRes.json();
-        let doctors = await doctorsRes.json();
-        let services = await servicesRes.json();
         
-        // ГЛАВНОЕ ИЗМЕНЕНИЕ: сначала ищем по userId
-        let userVisits = appointments.filter(apt => apt.userId === sessionUser.userId);
+        console.log('📅 Всего записей в БД:', appointments.length);
+        console.log('👤 Информация о пользователе:', {
+            userId: sessionUser.userId,
+            phone: sessionUser.phone,
+            email: sessionUser.email,
+            lastName: sessionUser.lastName,
+            firstName: sessionUser.firstName
+        });
         
-        // Если по userId ничего не найдено, пробуем fallback-методы (телефон, email)
-        if (userVisits.length === 0) {
-            console.log('Записей по userId не найдено, пробуем поиск по телефону/email');
-            
-            const userPhone = sessionUser.phone ? String(sessionUser.phone).replace(/\D/g, '') : '';
-            const userEmail = sessionUser.email ? String(sessionUser.email).toLowerCase() : '';
-            const userLastName = sessionUser.lastName ? String(sessionUser.lastName).toLowerCase() : '';
-            
-            userVisits = appointments.filter(apt => {
-                const aptPhone = apt.phone ? String(apt.phone).replace(/\D/g, '') : '';
-                if (userPhone && aptPhone === userPhone) return true;
-                
-                const aptEmail = apt.email ? String(apt.email).toLowerCase() : '';
-                if (userEmail && aptEmail === userEmail) return true;
-                
-                const patientNameStr = getPatientNameString(apt.patientName).toLowerCase();
-                if (userLastName && patientNameStr.includes(userLastName)) return true;
-                
-                return false;
-            });
+        let userVisits = [];
+        
+        userVisits = appointments.filter(apt => apt.userId === sessionUser.userId);
+        console.log('🔍 Найдено по userId:', userVisits.length);
+        
+        const userPhone = sessionUser.phone ? String(sessionUser.phone).replace(/\D/g, '') : '';
+        console.log('📱 Телефон пользователя (нормализованный):', userPhone);
+        
+        const phoneMatches = appointments.filter(apt => {
+            const aptPhone = apt.phone ? String(apt.phone).replace(/\D/g, '') : '';
+            return userPhone && aptPhone === userPhone;
+        });
+        
+        phoneMatches.forEach(apt => {
+            if (!userVisits.some(v => v.id === apt.id)) {
+                userVisits.push(apt);
+            }
+        });
+        console.log('🔍 Найдено по телефону (добавлено новых):', phoneMatches.filter(apt => !userVisits.some(v => v.id === apt.id)).length);
+        
+        const userEmail = sessionUser.email ? String(sessionUser.email).toLowerCase() : '';
+        console.log('📧 Email пользователя:', userEmail);
+        
+        const emailMatches = appointments.filter(apt => {
+            const aptEmail = apt.email ? String(apt.email).toLowerCase() : '';
+            return userEmail && aptEmail === userEmail;
+        });
+        
+        emailMatches.forEach(apt => {
+            if (!userVisits.some(v => v.id === apt.id)) {
+                userVisits.push(apt);
+            }
+        });
+        console.log('🔍 Найдено по email (добавлено новых):', emailMatches.filter(apt => !userVisits.some(v => v.id === apt.id)).length);
+        
+        const userLastName = sessionUser.lastName ? String(sessionUser.lastName).toLowerCase() : '';
+        const userFirstName = sessionUser.firstName ? String(sessionUser.firstName).toLowerCase() : '';
+        console.log('👤 Имя и фамилия пользователя:', userLastName, userFirstName);
+        
+        const nameMatches = appointments.filter(apt => {
+            let patientName = '';
+            if (typeof apt.patientName === 'object') {
+                const currentLang = localStorage.getItem('dental_language') || 'ru';
+                patientName = apt.patientName[currentLang] || apt.patientName.ru || '';
+            } else {
+                patientName = apt.patientName || '';
+            }
+            const patientNameLower = patientName.toLowerCase();
+            return (userLastName && patientNameLower.includes(userLastName)) ||
+                   (userFirstName && patientNameLower.includes(userFirstName));
+        });
+        
+        nameMatches.forEach(apt => {
+            if (!userVisits.some(v => v.id === apt.id)) {
+                userVisits.push(apt);
+            }
+        });
+        console.log('🔍 Найдено по имени (добавлено новых):', nameMatches.filter(apt => !userVisits.some(v => v.id === apt.id)).length);
+        
+        if (userVisits.length === 0 && appointments.length > 0) {
+            console.warn('⚠️ Визиты не найдены! Показываем последние 5 записей для проверки');
+            userVisits = appointments.slice(0, 5);
         }
+        
+        console.log('📊 Всего найдено визитов после всех проверок:', userVisits.length);
         
         if (filter !== 'all') {
             userVisits = userVisits.filter(apt => apt.status === filter);
+            console.log('📊 После фильтра по статусу:', userVisits.length);
         }
         
         const today = new Date().toISOString().split('T')[0];
         const upcoming = userVisits.filter(v => v.date >= today).sort((a, b) => a.date.localeCompare(b.date));
         const past = userVisits.filter(v => v.date < today).sort((a, b) => b.date.localeCompare(a.date));
+        
+        console.log('📅 Предстоящих записей:', upcoming.length);
+        console.log('📅 Прошедших записей:', past.length);
+        
+        if (userVisits.length > 0) {
+            console.log('📋 Список найденных визитов:');
+            userVisits.forEach(visit => {
+                console.log(`   - ID: ${visit.id}, Дата: ${visit.date}, Статус: ${visit.status}, Пациент: ${typeof visit.patientName === 'object' ? JSON.stringify(visit.patientName) : visit.patientName}`);
+            });
+        }
         
         const emptyVisitsText = getProfileTranslation('profile_empty_visits', 'У вас пока нет записей');
         if (upcoming.length === 0 && past.length === 0) {
@@ -814,34 +1296,50 @@ async function loadUserVisits(filter = 'all') {
         
         visitsContainer.innerHTML = '';
         
-        const upcomingText = getProfileTranslation('profile_upcoming_visits', '📌 Предстоящие визиты');
-        const pastText = getProfileTranslation('profile_past_visits', '📋 История посещений');
+        const visitsText = getProfileTranslation('profile_visits', '📌 Визиты');
         
-        if (upcoming.length > 0) {
+        const [doctorsRes, servicesRes] = await Promise.all([
+            fetch('http://localhost:3000/doctors'),
+            fetch('http://localhost:3000/services')
+        ]);
+        
+        const doctors = await doctorsRes.json();
+        const services = await servicesRes.json();
+        
+        if (userVisits.length > 0) {
             const divider = document.createElement('div');
             divider.className = 'visits-divider';
-            divider.innerHTML = `<span>${upcomingText}</span>`;
+            divider.innerHTML = `<span>${visitsText}</span>`;
             visitsContainer.appendChild(divider);
-            upcoming.forEach(visit => visitsContainer.appendChild(createVisitElement(visit, doctors, services)));
+            userVisits.forEach(visit => {
+                visitsContainer.appendChild(createVisitElement(visit, doctors, services));
+            });
         }
         
-        if (past.length > 0) {
-            const divider = document.createElement('div');
-            divider.className = 'visits-divider';
-            divider.innerHTML = `<span>${pastText}</span>`;
-            visitsContainer.appendChild(divider);
-            past.forEach(visit => visitsContainer.appendChild(createVisitElement(visit, doctors, services)));
-        }
     } catch(e) {
-        console.error('Ошибка загрузки визитов:', e);
+        console.error('❌ Ошибка загрузки визитов:', e);
         visitsContainer.innerHTML = `<div class="empty-visits"><div class="empty-visits-icon">⚠️</div><div class="empty-visits-text">Ошибка подключения к серверу. Убедитесь, что JSON Server запущен (json-server --watch db.json --port 3000)</div></div>`;
     }
 }
 
 function createVisitElement(visit, doctors, services) {
     const doctor = doctors.find(d => d.id === visit.doctorId);
-    const date = new Date(visit.date);
-    const formattedDate = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    
+    let formattedDate = '';
+    if (visit.date) {
+        if (visit.date.includes('-')) {
+            const parts = visit.date.split('-');
+            if (parts.length === 3) {
+                formattedDate = `${parts[2]}.${parts[1]}.${parts[0]}`;
+            } else {
+                formattedDate = visit.date;
+            }
+        } else if (visit.date.includes('.')) {
+            formattedDate = visit.date;
+        } else {
+            formattedDate = visit.date;
+        }
+    }
     
     const statusMap = {
         pending: { text: getProfileTranslation('profile_visit_status_pending', '⏳ Ожидает подтверждения'), class: 'pending' },
@@ -951,8 +1449,25 @@ async function loadUserReviews(filter = 'all') {
 }
 
 function createReviewElement(review) {
-    const date = new Date(review.createdAt || review.date);
-    const formattedDate = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    let formattedDate = '';
+    if (review.createdAt || review.date) {
+        const dateStr = review.createdAt || review.date;
+        const date = new Date(dateStr);
+        
+        if (!isNaN(date.getTime())) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            formattedDate = `${day}.${month}.${year}`;
+        } else {
+            const parts = dateStr.split('T')[0].split('-');
+            if (parts.length === 3) {
+                formattedDate = `${parts[2]}.${parts[1]}.${parts[0]}`;
+            } else {
+                formattedDate = dateStr;
+            }
+        }
+    }
     
     let authorName = '';
     if (typeof review.author === 'object') {
@@ -1003,7 +1518,11 @@ function logoutUser() {
         closeProfileModal();
         if (typeof window.updateAuthUI === 'function') window.updateAuthUI();
         showToast('👋 Вы вышли из аккаунта', 'success');
-        setTimeout(() => location.reload(), 1000);
+        setTimeout(() => {
+            if (typeof window.updateAuthUI === 'function') {
+                window.updateAuthUI();
+            }
+        }, 100);
     }
 }
 
@@ -1028,3 +1547,4 @@ window.openProfileModal = openProfileModal;
 window.closeProfileModal = closeProfileModal;
 window.createProfileModal = createProfileModal;
 window.updateProfileModalTranslations = updateProfileModalTranslations;
+

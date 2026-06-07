@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/reviews.css">
     <link rel="stylesheet" href="../media/reviews_media.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="../css/modal-appointment.css">
     <link rel="stylesheet" href="../css/modal-profile.css">
     <link rel="stylesheet" href="../css/theme.css">
@@ -47,6 +47,105 @@
         .review-rating-stars .star-empty {
             color: #ddd;
             font-size: 16px;
+        }
+        
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .video-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .video-modal-close {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-modal-close:hover {
+            color: #A5C33C;
+            transform: scale(1.1);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .swiper-slide {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .swiper-slide:hover {
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .video-modal-close {
+                top: -40px;
+                font-size: 30px;
+            }
+            .video-modal-content {
+                width: 95%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .video-modal-close {
+                top: -35px;
+                font-size: 28px;
+            }
         }
     </style>
 </head>
@@ -111,6 +210,7 @@
 
         <section class="reviews-list" id="reviewsSection">
             <div class="container">
+                <h2 class="visually-hidden" data-translate="reviews_section_title">Отзывы наших клиентов</h2>
                 <div id="reviewsListContainer">
                     <div class="loading-reviews" data-translate="loading">Загрузка отзывов...</div>
                 </div>
@@ -148,7 +248,7 @@
                             <img src="../assets/images/reviews/reviews5.png" alt="Фото 2">
                             <div class="slide-caption" data-translate="treatment_process">Процесс лечения</div>
                         </div>
-                        <div class="swiper-slide">
+                        <div class="swiper-slide" data-video-id="L8AhotNxSeA">
                             <img src="../assets/images/reviews/reviews6.png" alt="Фото 3">
                             <div class="slide-caption" data-translate="team_caption">Команда Dental Club</div>
                         </div>
@@ -171,6 +271,15 @@
 
     <div id="footer-placeholder"></div>
 
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <button class="video-modal-close">&times;</button>
+            <div class="video-container">
+                <iframe id="videoIframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <div id="reviewModal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
@@ -180,18 +289,17 @@
                 <input type="email" data-translate="review_email" placeholder="Email" id="reviewEmail" required>
                 <input type="tel" data-translate="review_phone" placeholder="+7 (___) ___ __ __" id="reviewPhone" required>
                 
-
-<div class="rating-input-container" style="margin-bottom: 15px;">
-    <label style="display: block; margin-bottom: 8px; font-weight: 500;" data-translate="review_rating">Ваша оценка:</label>
-    <div class="star-rating-selector" id="starRatingSelector">
-        <span data-value="1" class="star">☆</span>
-        <span data-value="2" class="star">☆</span>
-        <span data-value="3" class="star">☆</span>
-        <span data-value="4" class="star">☆</span>
-        <span data-value="5" class="star">☆</span>
-    </div>
-    <input type="hidden" id="reviewRating" value="5">
-</div>
+                <div class="rating-input-container" style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;" data-translate="review_rating">Ваша оценка:</label>
+                    <div class="star-rating-selector" id="starRatingSelector">
+                        <span data-value="1" class="star">☆</span>
+                        <span data-value="2" class="star">☆</span>
+                        <span data-value="3" class="star">☆</span>
+                        <span data-value="4" class="star">☆</span>
+                        <span data-value="5" class="star">☆</span>
+                    </div>
+                    <input type="hidden" id="reviewRating" value="5">
+                </div>
                 
                 <textarea data-translate="review_text" placeholder="Ваш отзыв" rows="5" id="reviewText" required></textarea>
                 <button type="submit" class="modal-submit-btn" data-translate="submit_review">ОТПРАВИТЬ ОТЗЫВ</button>
@@ -211,6 +319,30 @@
     <script src="../js/preloader.js"></script>
 
     <script>
+        function openVideo(videoId) {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoIframe');
+            
+            if (iframe && modal) {
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoIframe');
+            
+            if (iframe) {
+                iframe.src = '';
+            }
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
         if (typeof Swiper !== 'undefined') {
             new Swiper('.mySwiper', {
                 slidesPerView: 1,
@@ -432,6 +564,44 @@
                 });
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const closeBtn = document.querySelector('.video-modal-close');
+            const modal = document.getElementById('videoModal');
+            
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeVideoModal);
+            }
+            
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeVideoModal();
+                    }
+                });
+            }
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+                    closeVideoModal();
+                }
+            });
+            
+            const swiperSlides = document.querySelectorAll('.swiper-slide');
+            if (swiperSlides.length >= 3) {
+                const videoSlide = swiperSlides[2]; // 3-й слайд (индекс 2)
+                const videoId = videoSlide.dataset.videoId;
+                
+                if (videoId) {
+                    const newSlide = videoSlide.cloneNode(true);
+                    videoSlide.parentNode.replaceChild(newSlide, videoSlide);
+                    
+                    newSlide.addEventListener('click', function(e) {
+                        openVideo(videoId);
+                    });
+                }
+            }
+        });
 
         const openAppointmentBtns = document.querySelectorAll('#openAppointmentBtn, #openAppointmentBtn2, #openAppointmentBtn3');
         openAppointmentBtns.forEach(btn => {
